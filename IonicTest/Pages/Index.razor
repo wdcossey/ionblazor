@@ -1,0 +1,293 @@
+﻿@page "/"
+@using System.Text.Json.Nodes
+@using IonicTest.Components
+
+@inject IJSRuntime jsRuntime
+
+<div class="ion-page" id="main-content">
+    <div class="container">
+        <ion-list inset="true">
+            <ion-item button="true" detail="false" id="select-fruits">
+                <ion-label>Favorite Fruits</ion-label>
+                <div slot="end" id="#selected-fruits">0 Items</div>
+            </ion-item>
+            <IonButton Expand="ButtonExpand.Block" OnClick="@(() => presentToast("bottom"))">Present Toast At the Bottom</IonButton>
+
+        </ion-list>
+        
+        <ion-toast isOpen=true message="Hello World!" duration=1500 ></ion-toast>
+        
+        <ion-list>
+            <ion-item-sliding>
+                <ion-item>
+                    <ion-label>Sliding Item with End Options</ion-label>
+                </ion-item>
+
+                <ion-item-options>
+                    <ion-item-option>Favorite</ion-item-option>
+                    <ion-item-option color="danger">Delete</ion-item-option>
+                </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding>
+                <ion-item-options side="start">
+                    <ion-item-option color="success">Archive</ion-item-option>
+                </ion-item-options>
+
+                <ion-item>
+                    <ion-label>Sliding Item with Start Options</ion-label>
+                </ion-item>
+            </ion-item-sliding>
+
+            <ion-item-sliding>
+                <ion-item-options side="start">
+                    <ion-item-option color="success">Archive</ion-item-option>
+                </ion-item-options>
+
+                <ion-item>
+                    <ion-label>Sliding Item with Options on Both Sides</ion-label>
+                </ion-item>
+
+                <ion-item-options side="end">
+                    <ion-item-option>Favorite</ion-item-option>
+                    <ion-item-option color="danger">Delete</ion-item-option>
+                </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding>
+                <ion-item-options side="start">
+                    <ion-item-option color="success">Archive</ion-item-option>
+                </ion-item-options>
+
+                <ion-item>
+                    <FlowObjectPanel DataSource="@(new {One = "FlowObjectPanel", Two = "Sample"})" Options="@(new ObjectFieldOptionsCollection { new ObjectFieldOptions() { Row = 0, Column = 0, Width = "16px", Height = "16px", Padding = "4px", BackgroundColor = "#ff0000"}, new ObjectFieldOptions() { Row = 0, Column = 1, Template = "{{One}}"}, new ObjectFieldOptions() { Row = 1, Column = 1, Template = "{{Two}}"} })"></FlowObjectPanel>
+                </ion-item>
+
+                <ion-item-options side="end">
+                    <ion-item-option>Favorite</ion-item-option>
+                    <ion-item-option color="danger">Delete</ion-item-option>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
+
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+        <ion-modal>
+            <ion-datetime id="datetime"></ion-datetime>
+        </ion-modal>
+    </div>
+    
+    <ion-modal trigger="select-fruits" id="selected-fruits" @ref="modal">
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <IonButton OnClick="@confirmChanges">Cancel</IonButton>
+                </ion-buttons>
+                <ion-title>Favorite Fruits</ion-title>
+                <ion-buttons slot="end">
+                    <IonButton OnClick="@confirmChanges">Done</IonButton>
+                </ion-buttons>
+            </ion-toolbar>
+            <ion-toolbar>
+                <ion-searchbar value="@searchbarValue" @ref="searchbar"></ion-searchbar>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content color="light" class="ion-padding">
+            <ion-list id="modal-list" inset="true">
+                @foreach (var item in renderList) {
+                    var @checked = workingSelectedFruits.Contains(item.value);
+                    <ion-item>
+                        <ion-label>@item.text</ion-label>
+                        <ion-checkbox slot="end" value="@item.value" checked="@(@checked)"></ion-checkbox>
+                    </ion-item>
+                }
+            </ion-list>
+        </ion-content>
+    </ion-modal>
+
+</div>
+
+@code {
+
+    ElementReference list;// = document.querySelector('ion-list#modal-list');
+    ElementReference modal;// = document.querySelector('ion-modal');
+    ElementReference searchbar;// = document.querySelector('ion-searchbar');
+    //IJSObjectReference selectedFruitsText;// = document.querySelector('#selected-fruits');
+    private DotNetObjectReference<CustomEventHelper<JsonObject?>> ModalReference;
+    private DotNetObjectReference<CustomEventHelper<JsonObject?>> ModalDidDismissReference;
+    private DotNetObjectReference<CustomEventHelper<string?>> Reference;
+
+    private List<dynamic> cards = new List<dynamic>();
+    private string Title;
+    private string Content;
+    private string? searchbarValue;
+
+    private (string text, string value)[] fruits = new (string text, string value)[]
+    { 
+        (text: "Apple", value: "apple"),
+        (text: "Apricot", value: "apricot") ,
+        (text: "Banana", value: "banana") ,
+        (text: "Blackberry", value: "blackberry") ,
+        (text: "Blueberry", value: "blueberry") ,
+        (text: "Cherry", value: "cherry") ,
+        (text: "Cranberry", value: "cranberry") ,
+        (text: "Grape", value: "grape") ,
+        (text: "Grapefruit", value: "grapefruit") ,
+        (text: "Guava", value: "guava") ,
+        (text: "Jackfruit", value: "jackfruit") ,
+        (text: "Lime", value: "lime") ,
+        (text: "Mango", value: "mango") ,
+        (text: "Nectarine", value: "nectarine") ,
+        (text: "Orange", value: "orange") ,
+        (text: "Papaya", value: "papaya") ,
+        (text: "Passionfruit", value: "passionfruit") ,
+        (text: "Peach", value: "peach") ,
+        (text: "Pear", value: "pear") ,
+        (text: "Plantain", value: "plantain") ,
+        (text: "Plum", value: "plum") ,
+        (text: "Pineapple", value: "pineapple") ,
+        (text: "Pomegranate", value: "pomegranate") ,
+        (text: "Raspberry", value: "raspberry") ,
+        (text: "Strawberry", value: "strawberry") 
+    };
+
+    private List<string> selectedFruits = new List<string>();
+    private HashSet<string> workingSelectedFruits = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+
+    private (string text, string value)[] renderList { get; set; }
+
+    private (string text, string value)[] filterList(string? searchQuery)
+    {
+        if (string.IsNullOrWhiteSpace(searchQuery))
+            return fruits;
+
+        var normalizedQuery = searchQuery.ToLowerInvariant();
+
+        return fruits.Where(fruit => fruit.value.Contains(normalizedQuery)).ToArray();
+    }
+
+    protected override void OnInitialized()
+    {
+        renderList = filterList(null);
+        base.OnInitialized();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+
+
+    //modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal");
+    //var searchbar = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-searchbar");
+
+    //document.querySelector('ion-searchbar').addEventListener('ionInput', e => console.log(e.target.value));
+
+    //await searchbar.InvokeVoidAsync("addCustomEventListener", "ionInput", EventCallback.Factory.Create<string>(this, val => { throw new InvalidOperationException(); }));
+
+        Reference = DotNetObjectReference.Create(new CustomEventHelper<string?>(args =>
+        {
+            renderList = filterList(args);
+            StateHasChanged();
+            return Task.CompletedTask;
+        }));
+
+
+        await jsRuntime.InvokeVoidAsync("addCustomEventListener", searchbar, Reference);
+
+        ModalReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
+        {
+            //{"checked":true,"value":"apricot"}
+            var tagName = args["tagName"]?.GetValue<string>();
+
+            if (tagName?.Equals("ION-CHECKBOX", StringComparison.InvariantCultureIgnoreCase) is not true)
+                return Task.CompletedTask;
+
+
+            var detail = (@checked: args["detail"]?["checked"]?.GetValue<bool>(), @value: args["detail"]?["value"]?.GetValue<string>());
+
+            if (detail.@checked is true)
+            {
+                workingSelectedFruits.Add(detail.value);
+            }
+            else
+            {
+                workingSelectedFruits.Remove(detail.value);
+            }
+
+            return Task.CompletedTask;
+        }));
+
+        ModalDidDismissReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
+        {
+            searchbarValue = null;
+            StateHasChanged();
+            return Task.CompletedTask;
+        }));
+
+        await jsRuntime.InvokeVoidAsync("addIonEventListener", "ionChange", modal, ModalReference);
+        await jsRuntime.InvokeVoidAsync("addIonEventListener", "ionModalDidDismiss", modal, ModalDidDismissReference);
+
+        //(ev) => {renderList(ev.target.value); }
+        //selectedFruitsText = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "#selected-fruits");
+
+    }
+
+    public class CustomEventHelper<TArgs>
+    {
+        private readonly Func<TArgs, Task> _callback;
+
+        public CustomEventHelper(Func<TArgs, Task> callback) => _callback = callback;
+
+        [JSInvokable]
+        public Task OnCallbackEvent(TArgs args) => _callback(args);
+    }
+
+    /**
+   * Reset any working changes
+   * and dismiss the modal.
+   */
+    private async void cancelChanges() {
+        workingSelectedFruits = selectedFruits.ToHashSet();
+        var modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
+        await modal.InvokeVoidAsync("dismiss", null, "cancel"); //modal.dismiss(undefined, 'cancel');
+        //StateHasChanged();
+    }
+
+    /**
+   * Return the selected
+   * fruits to the parent page.
+   */
+    private async void confirmChanges() {
+        selectedFruits = workingSelectedFruits.ToList();
+        var modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
+        await modal.InvokeVoidAsync("dismiss", selectedFruits); //modal.dismiss(selectedFruits)
+        //StateHasChanged();
+    }
+
+    private async Task AddCard()
+    {
+        if (!string.IsNullOrEmpty(Title))
+        {
+            if (cards.Any(x => x.Title == Title))
+            {
+                @* If Title already exists, show a message *@
+                await jsRuntime.InvokeVoidAsync("showIonAlert");
+                return;
+            }
+            cards.Add(new { Title = Title, Content = Content });
+            Title = string.Empty;
+            Content = string.Empty;
+        }
+    }
+}
+@code {
+    private async void presentToast(string position) {
+        await jsRuntime.InvokeVoidAsync("presentToast", position);
+        //throw new NotImplementedException();
+    }
+
+}
+
