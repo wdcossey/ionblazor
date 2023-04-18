@@ -1,5 +1,4 @@
-﻿using Windows.Devices.Input;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace IonicTest.Components;
 
