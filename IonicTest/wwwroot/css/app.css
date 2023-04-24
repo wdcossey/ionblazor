@@ -1,4 +1,32 @@
-﻿/*
+﻿/*.ion-page {
+    contain: none !important;
+    overflow: scroll !important;
+}*/
+
+.playground__container {
+    border: 1px solid #dee3ea;
+    border-radius: 0.4rem;
+    margin: 1rem 2rem;
+}
+
+.playground__preview {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 18px 0;
+    overflow: auto;
+    padding: 16px 0;
+    position: relative;
+    min-height: 200px;
+}
+
+.playground__frame {
+    background: 0 0;
+    box-shadow: none;
+    width: 100%;
+}
+
+/*
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {

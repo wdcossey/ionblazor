@@ -1,0 +1,94 @@
+﻿@page "/samples/toggle"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonToggle>Default Toggle</IonToggle><br /><br />
+                    <IonToggle Checked="true">Checked Toggle</IonToggle><br /><br />
+                    <IonToggle Disabled="true">Disabled Toggle</IonToggle><br /><br />
+                    <IonToggle Checked="true" Disabled="true">Disabled Checked Toggle</IonToggle>
+                </div>
+            </div>
+        </div>
+        
+        <h2>On / Off Labels</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonToggle EnableOnOffLabels="true">Enable Notifications</IonToggle>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Toggles in a List</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <ion-list>
+                      <ion-item>
+                        <IonToggle>Receive Push Notifications</IonToggle>
+                      </ion-item>
+                      <ion-item>
+                        <IonToggle>Receive Emails</IonToggle>
+                      </ion-item>
+                      <ion-item>
+                        <IonToggle>Receive Text Messages</IonToggle>
+                      </ion-item>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Label Placement</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonToggle LabelPlacement="@IonLabelPlacement.Start">Label at the Start</IonToggle><br /><br />
+                    <IonToggle LabelPlacement="@IonLabelPlacement.End">Label at the End</IonToggle><br /><br />
+                    <IonToggle LabelPlacement="@IonLabelPlacement.Fixed">Fixed Width Label</IonToggle><br /><br />
+                </div>
+            </div>
+        </div>
+        
+        <h2>Justification</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <ion-list>
+                      <ion-item>
+                        <IonToggle Justify="@IonJustify.Start">Packed at the Start of Line</IonToggle>
+                      </ion-item>
+                      <ion-item>
+                        <IonToggle Justify="@IonJustify.End">Packed at the End of Line</IonToggle>
+                      </ion-item>
+                      <ion-item>
+                        <IonToggle Justify="@IonJustify.SpaceBetween">Space Between Label and Control</IonToggle>
+                      </ion-item>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Theming</h2>
+        <h3>Colors</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonToggle aria-label="Primary toggle" Color="primary" Checked="true"></IonToggle>
+                    <IonToggle aria-label="Secondary toggle" Color="secondary" Checked="true"></IonToggle>
+                    <IonToggle aria-label="Tertiary toggle" Color="tertiary" Checked="true"></IonToggle>
+                    <IonToggle aria-label="Success toggle" Color="success" Checked="true"></IonToggle>
+                    <IonToggle aria-label="Warning toggle" Color="warning" Checked="true"></IonToggle>
+                    <IonToggle aria-label="Danger toggle" Color="danger" Checked="true"></IonToggle>
+                    <IonToggle aria-label="Light toggle" Color="light" Checked="true"></IonToggle>
+                    <IonToggle aria-label="Medium toggle" Color="medium" Checked="true"></IonToggle>
+                    <IonToggle aria-label="Dark toggle" Color="dark" Checked="true"></IonToggle>
+                </div>
+            </div>
+        </div>
+
+    </IonContent>
+</div>

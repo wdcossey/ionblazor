@@ -1,0 +1,56 @@
+﻿@page "/avatar"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonAvatar>
+                      <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                    </IonAvatar>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Chip Avatar</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonChip>
+                      <IonAvatar>
+                        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                      </IonAvatar>
+                      <ion-label>Chip Avatar</ion-label>
+                    </IonChip>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Item Avatar</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <ion-item>
+                      <IonAvatar slot="start">
+                        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                      </IonAvatar>
+                      <ion-label>Item Avatar</ion-label>
+                    </ion-item>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Theming</h2>
+        <h3>CSS Custom Properties</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <CustomAvatar />
+                </div>
+            </div>
+        </div>
+        
+
+    </IonContent>
+</div>

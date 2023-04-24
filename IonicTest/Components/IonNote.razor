@@ -1,0 +1,8 @@
+﻿@inherits IonSlotControl
+
+<ion-note @attributes="@Attributes"
+          color="@Color"
+          mode="@Mode?.ToString().ToLowerInvariant()"
+          slot="@Slot">
+    @ChildContent
+</ion-note>

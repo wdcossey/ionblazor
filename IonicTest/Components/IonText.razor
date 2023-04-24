@@ -1,0 +1,9 @@
+﻿@inherits IonControl
+
+<ion-text @ref="_self"
+          @attributes="@Attributes"
+          class="@Class"
+          color="@Color"
+          mode="@Mode?.ToString().ToLowerInvariant()">
+    @ChildContent
+</ion-text>

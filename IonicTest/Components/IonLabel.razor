@@ -1,0 +1,9 @@
+﻿@inherits IonControl
+
+<ion-label @attributes="@Attributes"
+           class="@Class"
+           color="@Color"
+           mode="@Mode?.ToString().ToLowerInvariant()"
+           position="@Position">
+    @ChildContent
+</ion-label>

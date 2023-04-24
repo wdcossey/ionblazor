@@ -1,5 +1,10 @@
-﻿<ion-button buttonType="@ButtonType" 
-            color="@Color" 
+﻿@inherits IonControl
+
+<ion-button @ref="@_self"
+            @attributes="@Attributes"
+            button-type="@ButtonType"
+            class="@Class"
+            color="@Color"
             disabled="@Disabled"
             download="@Download"
             expand="@Expand?.ToString().ToLowerInvariant()"
@@ -12,5 +17,7 @@
             size="@Size?.ToString().ToLowerInvariant()"
             strong="@Strong"
             target="@Target"
-            type="@Type.ToString().ToLowerInvariant()"
-            @onclick="@OnClick">@ChildContent</ion-button>
+            type="@Type?.ToLowerInvariant()"
+            @onclick="@OnClick">
+    @ChildContent
+</ion-button>

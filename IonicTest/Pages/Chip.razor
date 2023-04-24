@@ -1,0 +1,67 @@
+﻿@page "/chip"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonChip>Default</IonChip>
+                    <IonChip Disabled="true">Disabled</IonChip>
+                    <IonChip Outline="true">Outline</IonChip>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Slotting Components and Icons</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonChip>
+                      <IonAvatar>
+                        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                      </IonAvatar>
+                      <ion-label>Avatar Chip</ion-label>
+                      <IonIcon Name="close-circle"></IonIcon>
+                    </IonChip>
+                    
+                    <IonChip>
+                      <IonIcon Name="pin" Color="@IonicColor.Primary"></IonIcon>
+                      <ion-label>Icon Chip</ion-label>
+                      <IonIcon Name="close"></IonIcon>
+                    </IonChip>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Theming</h2>
+        <h3>Colors</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonChip>Default</IonChip>
+                    <IonChip Color="@IonicColor.Primary">Primary</IonChip>
+                    <IonChip Color="@IonicColor.Secondary">Secondary</IonChip>
+                    <IonChip Color="@IonicColor.Tertiary">Tertiary</IonChip>
+                    <IonChip Color="@IonicColor.Success">Success</IonChip>
+                    <IonChip Color="@IonicColor.Warning">Warning</IonChip>
+                    <IonChip Color="@IonicColor.Danger">Danger</IonChip>
+                    <IonChip Color="@IonicColor.Light">Light</IonChip>
+                    <IonChip Color="@IonicColor.Medium">Medium</IonChip>
+                    <IonChip Color="@IonicColor.Dark">Dark</IonChip>
+                </div>
+            </div>
+        </div>
+        
+        <h3>CSS Custom Properties</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <CustomChip/>
+                </div>
+            </div>
+        </div>
+        
+
+    </IonContent>
+</div>

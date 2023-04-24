@@ -1,0 +1,134 @@
+﻿@page "/samples/searchbar"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonSearchBar></IonSearchBar>
+                    <IonSearchBar Placeholder="Custom Placeholder"></IonSearchBar>
+                    <IonSearchBar Disabled="true" Placeholder="Disabled"></IonSearchBar>
+                    <IonSearchBar Value="Value"></IonSearchBar>
+                    <IonSearchBar Animated="true" Placeholder="Animated"></IonSearchBar>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Search Icon</h2>
+        <p>A search icon is displayed to the left of the input field in a searchbar. It can be customized to any <a href="https://ionic.io/ionicons/" target="_blank" rel="noopener noreferrer">Ionicon</a>.</p>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonSearchBar></IonSearchBar>
+                    <IonSearchBar SearchIcon="search-circle" Placeholder="Custom Search Icon"></IonSearchBar>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Clear Button</h2>
+        <p>A clear button is displayed when a searchbar has a value or upon entering input in the searchbar's text field. Clicking on the clear button will erase the text field and the input will remain focused. By default, the clear button is set to show when focusing the searchbar, but it can be set to always show or never show. The icon inside of the clear button can also be customized to any <a href="https://ionic.io/ionicons/" target="_blank" rel="noopener noreferrer">Ionicon</a>.</p>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonSearchBar ShowClearButton="ButtonBehavior.Focus" Value="Show on Focus"></IonSearchBar>
+                    <IonSearchBar ShowClearButton="ButtonBehavior.Always" Value="Always Show"></IonSearchBar>
+                    <IonSearchBar ShowClearButton="ButtonBehavior.Never" Value="Never Show"></IonSearchBar>
+                    <IonSearchBar ShowClearButton="ButtonBehavior.Always" ClearIcon="trash-bin" Value="Custom Clear Icon"></IonSearchBar>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Cancel Button</h2>
+        <p>A cancel button can be enabled which will clear the input and lose the focus upon click. By default, cancel buttons are set to never show, but they can be set to always show or only show when focusing the searchbar. The cancel button is displayed as text in <code>ios</code> mode, and as an icon in <code>md</code> mode. Both the text and icon can be customized using different properties, with the icon accepting any <a href="https://ionic.io/ionicons/" target="_blank" rel="noopener noreferrer">Ionicon</a>.</p>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonSearchBar ShowCancelButton="ButtonBehavior.Focus" Placeholder="Show on Focus"></IonSearchBar>
+                    <IonSearchBar ShowCancelButton="ButtonBehavior.Always" Placeholder="Always Show"></IonSearchBar>
+                    <IonSearchBar ShowCancelButton="ButtonBehavior.Never" Placeholder="Never Show"></IonSearchBar>
+                    <IonSearchBar ShowCancelButton="ButtonBehavior.Always" CancelButtonText="Custom Cancel" CancelButtonIcon="trash" Placeholder="Custom Cancel Button"></IonSearchBar>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Searchbars in Toolbars</h2>
+        <p>Searchbars are styled to look native when placed inside of a toolbar. In iOS, searchbars should be placed in their own toolbar, under a toolbar that contains the page title. In Material Design, searchbars are either persistently displayed in their own toolbar, or expand over a toolbar containing the page title.</p>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    
+                </div>
+            </div>
+        </div>
+        
+        <h2>Debounce</h2>
+        <p>A debounce can be set on the searchbar in order to delay triggering the <code>ionInput</code> event. This is useful when querying data, as it can be used to wait to make a request instead of requesting the data each time a character is entered in the input.</p>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonSearchBar Debounce="1000"></IonSearchBar>
+                    <ion-list></ion-list>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Theming</h2>
+        <h3>Colors</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonSearchBar Placeholder="Default"></IonSearchBar>
+                    <IonSearchBar Color="primary" Placeholder="Primary"></IonSearchBar>
+                    <IonSearchBar Color="secondary" Placeholder="Secondary"></IonSearchBar>
+                    <IonSearchBar Color="tertiary" Placeholder="Tertiary"></IonSearchBar>
+                    <IonSearchBar Color="success" Placeholder="Success"></IonSearchBar>
+                    <IonSearchBar Color="warning" Placeholder="Warning"></IonSearchBar>
+                    <IonSearchBar Color="danger" Placeholder="Danger"></IonSearchBar>
+                    <IonSearchBar Color="light" Placeholder="Light"></IonSearchBar>
+                    <IonSearchBar Color="medium" Placeholder="Medium"></IonSearchBar>
+                    <IonSearchBar Color="dark" Placeholder="Dark"></IonSearchBar>
+                </div>
+            </div>
+        </div>
+        
+        <h3>CSS Custom Properties</h3>
+        <p>Searchbar uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity" target="_blank" rel="noopener noreferrer">higher specificity</a> selector. Targeting the <code>ion-searchbar</code> for customization will not work, therefore we recommend adding a class and customizing it that way.</p>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <CustomIonSearchBar></CustomIonSearchBar>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Events</h2>
+        <h3>getInputElement</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonSearchBar @ref="ionSearchBarInputElementRef"></IonSearchBar>
+                    <p>
+                        <code>@inputElementMessage</code>
+                    </p>
+                    <IonButton OnClick="@GetInputElementAsync">Get Input Element</IonButton>
+                </div>
+            </div>
+        </div>
+        
+        <h3>setFocus</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonSearchBar @ref="ionSearchBarSetFocusRef" IonBlur="@(() => focusMessage = "Lost focus")" IonFocus="@(() => focusMessage = "Has focus")"></IonSearchBar>
+                    <p>
+                        <code>@focusMessage</code>
+                    </p>
+                    <IonButton OnClick="@SetFocusAsync">Set Focus</IonButton>
+                </div>
+            </div>
+        </div>
+        
+
+    </IonContent>
+</div>

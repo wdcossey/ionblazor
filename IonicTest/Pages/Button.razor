@@ -1,0 +1,110 @@
+﻿@page "/button"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonButton>Default</IonButton>
+                    <IonButton Disabled="true">Disabled</IonButton>
+                </div>
+            </div>
+        </div>
+
+        <h2>Expand</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonButton Expand="ButtonExpand.Block">Block</IonButton>
+                    <IonButton Expand="ButtonExpand.Full">Full</IonButton>
+                </div>
+            </div>
+        </div>
+
+        <h2>Shape</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonButton >Default</IonButton>
+                    <IonButton Shape="ButtonShape.Round">Round</IonButton>
+                </div>
+            </div>
+        </div>
+
+        <h2>Fill</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonButton Fill="ButtonFill.Default">Default</IonButton>
+                    <IonButton Fill="ButtonFill.Clear">Clear</IonButton>
+                    <IonButton Fill="ButtonFill.Outline">Outline</IonButton>
+                    <IonButton Fill="ButtonFill.Solid">Solid</IonButton>
+                </div>
+            </div>
+        </div>
+
+
+        <h2>Size</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonButton Size="ButtonSize.Small">Small</IonButton>
+                    <IonButton Size="ButtonSize.Default">Default</IonButton>
+                    <IonButton Size="ButtonSize.Large">Default</IonButton>
+                </div>
+            </div>
+        </div>
+
+
+        <h2>Icons</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonButton>
+                        <IonIcon Slot="start" Name="star"></IonIcon>
+                        Left Icon
+                    </IonButton>
+                    <IonButton>
+                        Right Icon
+                        <IonIcon Slot="end" Name="star"></IonIcon>
+                    </IonButton>
+                    <IonButton>
+                        <IonIcon Slot="icon-only" Name="star"></IonIcon>
+                    </IonButton>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Theming</h2>
+        <h3>Colors</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonButton>Default</IonButton>
+                    <IonButton Color="@IonicColor.Primary">Primary</IonButton>
+                    <IonButton Color="@IonicColor.Secondary">Secondary</IonButton>
+                    <IonButton Color="@IonicColor.Tertiary">Tertiary</IonButton>
+                    <IonButton Color="@IonicColor.Success">Success</IonButton>
+                    <IonButton Color="@IonicColor.Warning">Warning</IonButton>
+                    <IonButton Color="@IonicColor.Danger">Danger</IonButton>
+                    <IonButton Color="@IonicColor.Light">Light</IonButton>
+                    <IonButton Color="@IonicColor.Medium">Medium</IonButton>
+                    <IonButton Color="@IonicColor.Dark">Dark</IonButton>
+                </div>
+            </div>
+        </div>
+        
+        <h3>CSS Custom Properties</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <CustomButton/>
+                </div>
+            </div>
+        </div>
+
+        
+
+    </IonContent>
+</div>

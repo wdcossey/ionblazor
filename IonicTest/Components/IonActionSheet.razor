@@ -1,0 +1,19 @@
+﻿@inherits IonControl
+@typeparam TButtonData
+
+<ion-action-sheet @ref="@_self"
+                  @attributes="@Attributes"
+                  animated="@Animated"
+                  backdrop-dismiss="@BackdropDismiss"
+                  css-class="@CssClass"
+                  data-ionic-id="@(_id)"
+                  header="@Header"
+                  htmlAttributes="@(HtmlAttributes?.Invoke())"
+                  is-open="@IsOpen"
+                  keyboard-close="@KeyboardClose"
+                  mode="@Mode?.ToString().ToLowerInvariant()"
+                  sub-header="@SubHeader"
+                  translucent="@Translucent"
+                  trigger="@Trigger">
+</ion-action-sheet>
+

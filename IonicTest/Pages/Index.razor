@@ -1,26 +1,168 @@
 ﻿@page "/"
 @using System.Text.Json.Nodes
-@using IonicTest.Components
 
 @inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+
+<ion-menu content-id="main-content">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>Menu Content</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <IonContent Class="ion-padding">
+        <ion-list>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/button"))">ion-button</IonButton>
+                @*<IonLabel>Button</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/icon"))">ion-icon</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/chip"))">ion-chip</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/avatar"))">ion-avatar</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/image"))">ion-image</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/thumbnail"))">ion-thumbnail</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/note"))">ion-note</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/accordion"))">ion-accordion</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/badge"))">ion-badge</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/content"))">ion-content</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/samples/searchbar"))">ion-searchbar</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/samples/text"))">ion-text</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/samples/toggle"))">ion-toggle</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/samples/checkbox"))">ion-checkbox</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/samples/ripple-effect"))">ion-ripple-effect</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+          <ion-item>
+            <IonLabel>The Legend of Zelda</IonLabel>
+          </ion-item>
+          <ion-item>
+            <IonLabel>Pac-Man</IonLabel>
+          </ion-item>
+          <ion-item>
+            <IonLabel>Super Mario World</IonLabel>
+          </ion-item>
+        </ion-list>
+    </IonContent>
+</ion-menu>
 
 <div class="ion-page" id="main-content">
-    <div class="container">
+    <ion-header>
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    
+    <IonContent Class="container">
+        
+        <IonFab Slot="fixed" Vertical="@IonVerticalAlignment.Top" Horizontal="@IonHorizontalAlignment.Start">
+            <IonFabButton>
+              <IonIcon Name="chevron-forward-circle"></IonIcon>
+            </IonFabButton>
+            <ion-fab-list side="end">
+              <IonFabButton>
+                <IonIcon Name="document"></IonIcon>
+              </IonFabButton>
+              <IonFabButton>
+                <IonIcon Name="color-palette"></IonIcon>
+              </IonFabButton>
+              <IonFabButton>
+                <IonIcon Name="globe"></IonIcon>
+              </IonFabButton>
+            </ion-fab-list>
+          </IonFab>
+        
+          <IonFab Slot="fixed" Vertical="@IonVerticalAlignment.Top" Horizontal="@IonHorizontalAlignment.End" Edge="true">
+            <IonFabButton>
+              <IonIcon Name="chevron-down-circle"></IonIcon>
+            </IonFabButton>
+            <ion-fab-list side="bottom">
+              <IonFabButton>
+                <IonIcon Name="document"></IonIcon>
+              </IonFabButton>
+              <IonFabButton>
+                <IonIcon Name="color-palette"></IonIcon>
+              </IonFabButton>
+              <IonFabButton>
+                <IonIcon Name="globe"></IonIcon>
+              </IonFabButton>
+            </ion-fab-list>
+          </IonFab>
+              
+          <IonFab Slot="fixed" Vertical="@IonVerticalAlignment.Bottom" Horizontal="@IonHorizontalAlignment.End">
+            <IonFabButton>
+              <IonIcon Name="chevron-up-circle"></IonIcon>
+            </IonFabButton>
+            <ion-fab-list side="top">
+              <IonFabButton>
+                <IonIcon Name="document"></IonIcon>
+              </IonFabButton>
+              <IonFabButton>
+                <IonIcon Name="color-palette"></IonIcon>
+              </IonFabButton>
+              <IonFabButton>
+                <IonIcon Name="globe"></IonIcon>
+              </IonFabButton>
+            </ion-fab-list>
+          </IonFab>
+        
         <ion-list inset="true">
             <ion-item button="true" detail="false" id="select-fruits">
-                <ion-label>Favorite Fruits</ion-label>
-                <div slot="end" id="#selected-fruits">0 Items</div>
+                <IonLabel>Favorite Fruits</IonLabel>
+                <div slot="end" id="#selected-fruits">@($"{workingSelectedFruits.Count} Items")</div>
             </ion-item>
-            <IonButton Expand="ButtonExpand.Block" OnClick="@(() => presentToast("bottom"))">Present Toast At the Bottom</IonButton>
+            <IonButton Expand="ButtonExpand.Block" Color="@IonicColor.Danger" OnClick="@(() => presentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
 
         </ion-list>
-        
-        <ion-toast isOpen=true message="Hello World!" duration=1500 ></ion-toast>
-        
+
+        <ion-toast isOpen=true message="Hello World!" duration=1500></ion-toast>
+
         <ion-list>
             <ion-item-sliding>
                 <ion-item>
-                    <ion-label>Sliding Item with End Options</ion-label>
+                    <IonLabel>Sliding Item with End Options</IonLabel>
                 </ion-item>
 
                 <ion-item-options>
@@ -35,7 +177,7 @@
                 </ion-item-options>
 
                 <ion-item>
-                    <ion-label>Sliding Item with Start Options</ion-label>
+                    <IonLabel>Sliding Item with Start Options</IonLabel>
                 </ion-item>
             </ion-item-sliding>
 
@@ -45,7 +187,7 @@
                 </ion-item-options>
 
                 <ion-item>
-                    <ion-label>Sliding Item with Options on Both Sides</ion-label>
+                    <IonLabel>Sliding Item with Options on Both Sides</IonLabel>
                 </ion-item>
 
                 <ion-item-options side="end">
@@ -60,7 +202,7 @@
                 </ion-item-options>
 
                 <ion-item>
-                    <FlowObjectPanel DataSource="@(new {One = "FlowObjectPanel", Two = "Sample"})" Options="@(new ObjectFieldOptionsCollection { new ObjectFieldOptions() { Row = 0, Column = 0, Width = "16px", Height = "16px", Padding = "4px", BackgroundColor = "#ff0000"}, new ObjectFieldOptions() { Row = 0, Column = 1, Template = "{{One}}"}, new ObjectFieldOptions() { Row = 1, Column = 1, Template = "{{Two}}"} })"></FlowObjectPanel>
+                    <FlowObjectPanel DataSource="@(new { One = "FlowObjectPanel", Two = "Sample" })" Options="@(new ObjectFieldOptionsCollection { new ObjectFieldOptions() { Row = 0, Column = 0, Width = "16px", Height = "16px", Padding = "4px", BackgroundColor = "#ff0000" }, new ObjectFieldOptions() { Row = 0, Column = 1, Template = "{{One}}" }, new ObjectFieldOptions() { Row = 1, Column = 1, Template = "{{Two}}" } })"></FlowObjectPanel>
                 </ion-item>
 
                 <ion-item-options side="end">
@@ -75,13 +217,15 @@
         <ion-modal>
             <ion-datetime id="datetime"></ion-datetime>
         </ion-modal>
-    </div>
-    
+
+        <ion-button id="open-modal" expand="block">Open</ion-button>
+    </IonContent>
+
     <ion-modal trigger="select-fruits" id="selected-fruits" @ref="modal">
         <ion-header>
             <ion-toolbar>
                 <ion-buttons slot="start">
-                    <IonButton OnClick="@confirmChanges">Cancel</IonButton>
+                    <IonButton OnClick="@cancelChanges">Cancel</IonButton>
                 </ion-buttons>
                 <ion-title>Favorite Fruits</ion-title>
                 <ion-buttons slot="end">
@@ -89,38 +233,97 @@
                 </ion-buttons>
             </ion-toolbar>
             <ion-toolbar>
-                <ion-searchbar value="@searchbarValue" @ref="searchbar"></ion-searchbar>
+                <IonSearchBar Debounce="1000" Value="@searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchBar>
             </ion-toolbar>
         </ion-header>
-        <ion-content color="light" class="ion-padding">
+        <IonContent Color="@IonicColor.Light" Class="ion-padding">
             <ion-list id="modal-list" inset="true">
-                @foreach (var item in renderList) {
+                @foreach (var item in renderList)
+                {
                     var @checked = workingSelectedFruits.Contains(item.value);
                     <ion-item>
-                        <ion-label>@item.text</ion-label>
-                        <ion-checkbox slot="end" value="@item.value" checked="@(@checked)"></ion-checkbox>
+                        <IonLabel>@item.text</IonLabel>
+                        <IonCheckBox Slot="end" Value="@item.value" Checked="@(@checked)"></IonCheckBox>
                     </ion-item>
                 }
             </ion-list>
-        </ion-content>
+        </IonContent>
     </ion-modal>
 
+    <ion-modal trigger="open-modal" id="modal-test">
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <ion-button onclick="cancel()">Cancel</ion-button>
+                </ion-buttons>
+                <ion-title>Welcome</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button onclick="@confirm" strong="true">Confirm</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <IonContent Class="ion-padding">
+            <ion-item>
+                <IonLabel Position="@IonPosition.Stacked">Enter your name</IonLabel>
+                <ion-input id="input-name" type="text" placeholder="Your name" value="@inputNameValue" @ref="inputNameRef"></ion-input>
+            </ion-item>
+        </IonContent>
+    </ion-modal>
+    
+    <ion-button id="open-action-sheet">Open</ion-button>
+    <IonActionSheet
+        TButtonData="ActionSheetButtonData"
+        Trigger="open-action-sheet" 
+        Header="Actions" 
+        OnDidDismiss="@DidDismiss"
+        OnButtonHandler="@OnButtonHandler"
+        Buttons="@(() => { return new List<ActionSheetButton<ActionSheetButtonData>>() { 
+                                 new () { Text = "Delete", Role = "destructive", Icon = "trash-outline", Data = new ActionSheetButtonData { Action = "delete" } }, 
+                                 new () { Text = "Share", Icon = "share" }, 
+                                 new () { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })"></IonActionSheet>
+    
+    @*<ion-icon name="chevron-back"></ion-icon>*@
+    @*    {
+      text: 'Delete',
+      role: 'destructive',
+      data: {
+        action: 'delete'
+      }
+    },
+    {
+      text: 'Share',
+      data: {
+        action: 'share'
+      }
+    },
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      data: {
+        action: 'cancel'
+      }
+    }*@
+
+      
 </div>
 
 @code {
 
-    ElementReference list;// = document.querySelector('ion-list#modal-list');
-    ElementReference modal;// = document.querySelector('ion-modal');
-    ElementReference searchbar;// = document.querySelector('ion-searchbar');
+    ElementReference list;      //document.querySelector('ion-list#modal-list');
+    ElementReference modal;     //document.querySelector('ion-modal');
+    ElementReference inputNameRef; //ion-input#input-name
+    
     //IJSObjectReference selectedFruitsText;// = document.querySelector('#selected-fruits');
     private DotNetObjectReference<CustomEventHelper<JsonObject?>> ModalReference;
     private DotNetObjectReference<CustomEventHelper<JsonObject?>> ModalDidDismissReference;
-    private DotNetObjectReference<CustomEventHelper<string?>> Reference;
-
+    private DotNetObjectReference<CustomEventHelper<JsonObject?>> InputNameObjectReference;
+    private DotNetObjectReference<CustomEventHelper<JsonObject?>> InputNameInputObjectReference;
+    
     private List<dynamic> cards = new List<dynamic>();
     private string Title;
     private string Content;
     private string? searchbarValue;
+    private string? inputNameValue;
 
     private (string text, string value)[] fruits = new (string text, string value)[]
     { 
@@ -187,16 +390,6 @@
 
     //await searchbar.InvokeVoidAsync("addCustomEventListener", "ionInput", EventCallback.Factory.Create<string>(this, val => { throw new InvalidOperationException(); }));
 
-        Reference = DotNetObjectReference.Create(new CustomEventHelper<string?>(args =>
-        {
-            renderList = filterList(args);
-            StateHasChanged();
-            return Task.CompletedTask;
-        }));
-
-
-        await jsRuntime.InvokeVoidAsync("addCustomEventListener", searchbar, Reference);
-
         ModalReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
         {
             //{"checked":true,"value":"apricot"}
@@ -220,6 +413,19 @@
             return Task.CompletedTask;
         }));
 
+        InputNameObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
+        {
+            inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
+            return Task.CompletedTask;
+        }));
+
+
+        InputNameInputObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
+        {
+            inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
+            return Task.CompletedTask;
+        }));
+
         ModalDidDismissReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
         {
             searchbarValue = null;
@@ -230,6 +436,9 @@
         await jsRuntime.InvokeVoidAsync("addIonEventListener", "ionChange", modal, ModalReference);
         await jsRuntime.InvokeVoidAsync("addIonEventListener", "ionModalDidDismiss", modal, ModalDidDismissReference);
 
+        await jsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputNameRef, InputNameObjectReference);
+        await jsRuntime.InvokeVoidAsync("attachIonEventListener", "ionInput", inputNameRef, InputNameInputObjectReference);
+        
         //(ev) => {renderList(ev.target.value); }
         //selectedFruitsText = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "#selected-fruits");
 
@@ -253,7 +462,7 @@
         workingSelectedFruits = selectedFruits.ToHashSet();
         var modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
         await modal.InvokeVoidAsync("dismiss", null, "cancel"); //modal.dismiss(undefined, 'cancel');
-        //StateHasChanged();
+        StateHasChanged();
     }
 
     /**
@@ -264,7 +473,14 @@
         selectedFruits = workingSelectedFruits.ToList();
         var modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
         await modal.InvokeVoidAsync("dismiss", selectedFruits); //modal.dismiss(selectedFruits)
-        //StateHasChanged();
+        StateHasChanged();
+    }
+    
+    private async void confirm() {
+        var modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#modal-test");
+        //var input = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-input"); //const input = document.querySelector('ion-input');
+        //var value = await input.InvokeAsync<string>("getProperty", "value");
+        await modal.InvokeVoidAsync("dismiss",  inputNameValue, "confirm"); //modal.dismiss(input.value, 'confirm');
     }
 
     private async Task AddCard()
@@ -284,9 +500,22 @@
     }
 }
 @code {
-    private async void presentToast(string position) {
-        await jsRuntime.InvokeVoidAsync("presentToast", position);
-        //throw new NotImplementedException();
+    private async void presentToast(string position, string message) {
+        await jsRuntime.InvokeVoidAsync("presentToast", position, message);
+    }
+    
+    private void DidDismiss(ActionSheetDidDismissEventArgs<ActionSheetButtonData> args) {
+        //presentToast("bottom", $"Role: {args.Role}; Data: {args.Data}");
+    }
+    
+    private void OnButtonHandler(ActionSheetButtonHandlerEventArgs<ActionSheetButtonData> args) {
+        presentToast("bottom", $"Button Index: {args.Index}; Role: {args.Button?.Role}; Text: {args.Button?.Text}; Action: {args.Button?.Data?.Action};");
+    }
+
+    private void SearchbarCallback(IonSearchBarInputEventArgs args)
+    {
+        renderList = filterList(args.Value);
+        StateHasChanged();
     }
 
 }

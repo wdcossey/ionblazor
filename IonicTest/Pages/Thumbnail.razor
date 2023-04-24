@@ -1,0 +1,42 @@
+﻿@page "/thumbnail"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonThumbnail>
+                      <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                    </IonThumbnail>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Item Thumbnails</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <ion-item>
+                      <IonThumbnail slot="start">
+                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                      </IonThumbnail>
+                      <ion-label>Item Thumbnail</ion-label>
+                    </ion-item>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Theming</h2>
+        <h3>CSS Custom Properties</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <CustomThumbnail/>
+                </div>
+            </div>
+        </div>
+        
+
+    </IonContent>
+</div>

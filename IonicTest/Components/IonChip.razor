@@ -1,0 +1,10 @@
+﻿@inherits IonControl
+
+<ion-chip @attributes="@Attributes"
+          class="@Class"
+          color="@Color"
+          disabled="@Disabled"
+          mode="@Mode?.ToString().ToLowerInvariant()"
+          outline="@Outline">
+    @ChildContent
+</ion-chip>

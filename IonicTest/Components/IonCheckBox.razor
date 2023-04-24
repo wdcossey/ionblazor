@@ -1,0 +1,18 @@
+﻿@inherits IonSlotControl
+
+<ion-checkbox @ref="_self"
+              @attributes="@Attributes"
+              checked="@Checked"
+              class="@Class"
+              color="@Color"
+              disabled="@Disabled"
+              indeterminate="@Indeterminate"
+              justify="@Justify"
+              label-placement="@LabelPlacement"
+              legacy="@Legacy"
+              mode="@Mode?.ToString().ToLowerInvariant()"
+              name="@Name"
+              value="@Value">
+    @ChildContent
+</ion-checkbox>
+

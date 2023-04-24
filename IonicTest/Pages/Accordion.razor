@@ -1,0 +1,311 @@
+﻿@page "/accordion"
+
+<div class="ion-page" id="main-content">
+  <IonContent Class="container">
+    <h2>Basic Usage</h2>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <IonAccordionGroup>
+            <ion-accordion value="first">
+              <ion-item slot="header" color="light">
+                <ion-label>First Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                First Content
+              </div>
+            </ion-accordion>
+            <ion-accordion value="second">
+              <ion-item slot="header" color="light">
+                <ion-label>Second Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                Second Content
+              </div>
+            </ion-accordion>
+            <ion-accordion value="third">
+              <ion-item slot="header" color="light">
+                <ion-label>Third Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                Third Content
+              </div>
+            </ion-accordion>
+          </IonAccordionGroup>
+        </div>
+      </div>
+    </div>
+        
+    <h2>Toggle Accordions</h2>
+    <p>Which accordion is open is controlled by setting the <code>value</code> property on <code>ion-accordion-group</code>. Setting this property allows developers to programmatically expand or collapse certain accordions.</p>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <IonAccordionGroup @ref="_toggleAccordionGroup">
+            <ion-accordion value="first">
+              <ion-item slot="header" color="light">
+                <ion-label>First Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">First Content</div>
+            </ion-accordion>
+            <ion-accordion value="second">
+              <ion-item slot="header" color="light">
+                <ion-label>Second Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Second Content</div>
+            </ion-accordion>
+            <ion-accordion value="third">
+              <ion-item slot="header" color="light">
+                <ion-label>Third Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Third Content</div>
+            </ion-accordion>
+          </IonAccordionGroup>
+                    
+          <IonButton OnClick="@ToggleAccordionAsync">Toggle Second Accordion</IonButton>
+                    
+        </div>
+      </div>
+    </div>
+        
+    <h2>Listen for Accordion State Changes</h2>
+    <p>Developers can listen for the <code>ionChange</code> event to be notified when accordions expand or collapse.</p>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <IonAccordionGroup OnChange="AccordionOnChangeCallback">
+            <ion-accordion value="first">
+              <ion-item slot="header" color="light">
+                <ion-label>First Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">First Content</div>
+            </ion-accordion>
+            <ion-accordion value="second">
+              <ion-item slot="header" color="light">
+                <ion-label>Second Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Second Content</div>
+            </ion-accordion>
+            <ion-accordion value="third">
+              <ion-item slot="header" color="light">
+                <ion-label>Third Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Third Content</div>
+            </ion-accordion>
+          </IonAccordionGroup>
+          
+          <p class="listener-out" style="white-space: pre-line">@((MarkupString)_listenerOutContent)</p>
+        </div>
+      </div>
+    </div>
+        
+    <h2>Multiple Accordions</h2>
+    <p>Developers can allow multiple accordions to be open at once with the <code>multiple</code> property.</p>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <IonAccordionGroup Multiple="true" Value="@(new []{"first", "third"})">
+            <ion-accordion value="first">
+              <ion-item slot="header" color="light">
+                <ion-label>First Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">First Content</div>
+            </ion-accordion>
+            <ion-accordion value="second">
+              <ion-item slot="header" color="light">
+                <ion-label>Second Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Second Content</div>
+            </ion-accordion>
+            <ion-accordion value="third">
+              <ion-item slot="header" color="light">
+                <ion-label>Third Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Third Content</div>
+            </ion-accordion>
+          </IonAccordionGroup>
+        </div>
+      </div>
+    </div>
+        
+    <h2>Disabling Accordions</h2>
+    <h3>Individual Accordion</h3>
+    <p>Individual accordions can be disabled with the <code>disabled</code> property on <code>ion-accordion</code>.</p>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <IonAccordionGroup>
+            <ion-accordion value="first">
+              <ion-item slot="header" color="light">
+                <ion-label>First Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">First Content</div>
+            </ion-accordion>
+            <ion-accordion value="second" disabled="true">
+              <ion-item slot="header" color="light">
+                <ion-label>Second Accordion (Disabled)</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Second Content</div>
+            </ion-accordion>
+            <ion-accordion value="third">
+              <ion-item slot="header" color="light">
+                <ion-label>Third Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Third Content</div>
+            </ion-accordion>
+          </IonAccordionGroup>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Accordion Group</h3>
+    <p>The accordion group can be disabled with the <code>disabled</code> property on <code>ion-accordion-group</code>.</p>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <IonAccordionGroup Disabled="true">
+            <ion-accordion value="first">
+              <ion-item slot="header" color="light">
+                <ion-label>First Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">First Content</div>
+            </ion-accordion>
+            <ion-accordion value="second">
+              <ion-item slot="header" color="light">
+                <ion-label>Second Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Second Content</div>
+            </ion-accordion>
+            <ion-accordion value="third">
+              <ion-item slot="header" color="light">
+                <ion-label>Third Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Third Content</div>
+            </ion-accordion>
+          </IonAccordionGroup>
+        </div>
+      </div>
+    </div>
+    
+    <h2>Readonly Accordions</h2>
+    <h3>Individual Accordion</h3>
+    <p>Individual accordions can be disabled with the <code>readonly</code> property on <code>ion-accordion</code>.</p>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <IonAccordionGroup>
+            <ion-accordion value="first">
+              <ion-item slot="header" color="light">
+                <ion-label>First Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                First Content
+              </div>
+            </ion-accordion>
+            <ion-accordion value="second" readonly="true">
+              <ion-item slot="header" color="light">
+                <ion-label>Second Accordion (Readonly)</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                Second Content
+              </div>
+            </ion-accordion>
+            <ion-accordion value="third">
+              <ion-item slot="header" color="light">
+                <ion-label>Third Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                Third Content
+              </div>
+            </ion-accordion>
+          </IonAccordionGroup>
+        </div>
+      </div>
+    </div>
+        
+    <h3>Accordion Group</h3>
+    <p>The accordion group can be disabled with the <code>readonly</code> property on <code>ion-accordion-group</code>.</p>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <IonAccordionGroup Readonly="true">
+            <ion-accordion value="first">
+              <ion-item slot="header" color="light">
+                <ion-label>First Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                First Content
+              </div>
+            </ion-accordion>
+            <ion-accordion value="second">
+              <ion-item slot="header" color="light">
+                <ion-label>Second Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                Second Content
+              </div>
+            </ion-accordion>
+            <ion-accordion value="third">
+              <ion-item slot="header" color="light">
+                <ion-label>Third Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                Third Content
+              </div>
+            </ion-accordion>
+          </IonAccordionGroup>
+        </div>
+      </div>
+    </div>
+        
+    <h2>Customization</h2>
+    <h3>Expansion Styles</h3>
+    <p>There are two built in expansion styles: <code>compact</code> and <code>inset</code>. This expansion style is set via the <code>expand</code> property on <code>ion-accordion-group</code>.</p>
+    <p>When <code>expand="inset"</code>, the accordion group is given a border radius. On <code>md</code> mode, the entire accordion will shift down when it is opened.</p>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <IonAccordionGroup Expand="AccordionExpand.Inset">
+            <ion-accordion value="first">
+              <ion-item slot="header" color="light">
+                <ion-label>First Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                First Content
+              </div>
+            </ion-accordion>
+            <ion-accordion value="second">
+              <ion-item slot="header" color="light">
+                <ion-label>Second Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                Second Content
+              </div>
+            </ion-accordion>
+            <ion-accordion value="third">
+              <ion-item slot="header" color="light">
+                <ion-label>Third Accordion</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                Third Content
+              </div>
+            </ion-accordion>
+          </IonAccordionGroup>
+        </div>
+      </div>
+    </div>
+        
+
+    <h3>Advanced Expansion Styles</h3>
+    <p>You can customize the expansion behavior by styling based on the accordion's state. There are four state classes applied to <code>ion-accordion</code>. Styling using these classes can allow you to create advanced state transitions:</p>
+    <div class="playground__container">
+      <div class="playground__preview">
+        <div class="playground__frame">
+          <AdvancedAccordionExpansionStyles/>
+        </div>
+      </div>
+    </div>
+        
+
+  </IonContent>
+</div>

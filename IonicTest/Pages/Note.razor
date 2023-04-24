@@ -1,0 +1,61 @@
+﻿@page "/note"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonNote>Default Note</IonNote>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Item Notes</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <ion-item>
+                      <ion-label>Label</ion-label>
+                      <IonNote Slot="end">Note (End)</IonNote>
+                    </ion-item>
+                    
+                    <ion-item>
+                      <IonNote Slot="start">Note (Start)</IonNote>
+                      <ion-label>Label</ion-label>
+                    </ion-item>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Theming</h2>
+        <h3>Colors</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonNote>Default Note</IonNote>
+                    <IonNote Color="@IonicColor.Primary">Primary Note</IonNote>
+                    <IonNote Color="@IonicColor.Secondary">Secondary Note</IonNote>
+                    <IonNote Color="@IonicColor.Tertiary">Tertiary Note</IonNote>
+                    <IonNote Color="@IonicColor.Success">Success Note</IonNote>
+                    <IonNote Color="@IonicColor.Warning">Warning Note</IonNote>
+                    <IonNote Color="@IonicColor.Danger">Danger Note</IonNote>
+                    <IonNote Color="@IonicColor.Light">Light Note</IonNote>
+                    <IonNote Color="@IonicColor.Medium">Medium Note</IonNote>
+                    <IonNote Color="@IonicColor.Dark">Dark Note</IonNote>
+                </div>
+            </div>
+        </div>
+        
+        <h3>CSS Custom Properties</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <CustomNote/>
+                </div>
+            </div>
+        </div>
+        
+
+    </IonContent>
+</div>

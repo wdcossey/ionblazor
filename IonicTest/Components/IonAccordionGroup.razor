@@ -1,0 +1,13 @@
+﻿@inherits IonControl
+
+<ion-accordion-group @ref="@_self"
+                     @attributes="@Attributes"
+                     animated="@Animated"
+                     class="@Class"
+                     disabled="@Disabled"
+                     expand="@Expand?.ToString().ToLowerInvariant()"
+                     mode="@Mode?.ToString().ToLowerInvariant()"
+                     multiple="@Multiple"
+                     readonly="@Readonly">
+    @ChildContent
+</ion-accordion-group>

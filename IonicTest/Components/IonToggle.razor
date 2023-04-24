@@ -1,0 +1,18 @@
+﻿@inherits IonControl
+
+<ion-toggle @ref="_self"
+            @attributes="@Attributes"
+            checked="@Checked"
+            class="@Class"
+            color="@Color"
+            disabled="@Disabled"
+            enable-on-off-labels="@EnableOnOffLabels"
+            justify="@Justify"
+            label-placement="@LabelPlacement"
+            legacy="@Legacy"
+            mode="@Mode?.ToString().ToLowerInvariant()"
+            name="@Name"
+            value="@Value">
+    @ChildContent
+</ion-toggle>
+

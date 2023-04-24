@@ -1,0 +1,13 @@
+﻿@inherits IonControl
+
+<ion-content @ref="@_self"
+             @attributes="@Attributes" 
+             class="@Class"
+             color="@Color?.ToLowerInvariant()"
+             forceOverscroll="@ForceOverscroll"
+             fullscreen="@Fullscreen"
+             scrollEvents="@ScrollEvents"
+             scrollX="@ScrollX"
+             scrollY="@ScrollY">
+    @ChildContent
+</ion-content>

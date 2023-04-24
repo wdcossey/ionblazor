@@ -1,0 +1,74 @@
+﻿@page "/samples/ripple-effect"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <div class="basic-usage wrapper">
+                        <b>Click on a shape to see the ripple</b>
+                    
+                        <div class="ion-activatable ripple-parent rectangle">
+                            <IonRippleEffect></IonRippleEffect>
+                        </div>
+                    
+                        <div class="ion-activatable ripple-parent rounded-rectangle">
+                            <IonRippleEffect></IonRippleEffect>
+                        </div>
+                    
+                        <div class="ion-activatable ripple-parent circle">
+                            <IonRippleEffect></IonRippleEffect>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+
+        <h2>Type</h2>
+        <p>There are two types of ripple effects: <code>"bounded"</code> and <code>"unbounded"</code>. The default type, <code>"bounded"</code>, will expand the ripple effect from the click position outwards. To add a ripple effect that always starts in the center of the element and expands in a circle, set the type to <code>"unbounded"</code>.</p>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <div class="type-sample wrapper">
+                      <b>Click on a shape to see the ripple</b>
+                    
+                      <div class="ion-activatable ripple-parent rounded-rectangle">
+                        Bounded
+                        <IonRippleEffect></IonRippleEffect>
+                      </div>
+                    
+                      <div class="ion-activatable ripple-parent circle">
+                        Unbounded
+                        <IonRippleEffect Type="IonRippleEffectType.Unbounded"></IonRippleEffect>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Customizing</h2>
+        <p>The ripple can be customized to a different color through CSS. By default the ripple color is set to inherit the text color, which is generally the body color. This can be changed by setting the CSS <code>color</code> on the parent or the ripple effect itself.</p>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <div class="customizing-sample wrapper">
+                      <b>Click on a shape to see the ripple</b>
+                    
+                      <div class="ion-activatable ripple-parent custom-parent">
+                        Custom Parent Color
+                        <IonRippleEffect></IonRippleEffect>
+                      </div>
+                    
+                      <div class="ion-activatable ripple-parent">
+                        Custom Ripple Color
+                        <IonRippleEffect Class="custom-ripple"></IonRippleEffect>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </IonContent>
+</div>

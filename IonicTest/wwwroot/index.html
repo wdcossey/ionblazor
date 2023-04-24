@@ -15,13 +15,15 @@
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
 
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="IonicTest.styles.css" rel="stylesheet" />
+    
     <script type="text/javascript">
         window.showIonAlert = () => {
             const alert = document.createElement('ion-alert');
             alert.header = 'Alert';
             alert.message = 'Title already in the list.';
             alert.buttons = ['OK'];
-
             document.body.appendChild(alert);
             return alert.present();
         }
@@ -60,38 +62,104 @@
         function addIonEventListener(type, element, ref) {
 
             element.addEventListener(type, (ev) => {
-                console.log(ev);
+                //console.log(ev);
                 ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
             });
             //element.addEventListener('ionInput', e => ref.invokeMethodAsync('OnCustomEvent', e));
             //document.addEventListener('hello', (event) => {
-            // Calls a method by name with the [JSInokable] attribute (above)
+            // Calls a method by name with the [JSInvokable] attribute (above)
 
             //});
         }
 
-    async function presentToast(position) {
+        function attachIonEventListener(type, element, ref) {
+            element.addEventListener(type, (ev) => {
+                ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
+            });
+        }
 
-            const alert = document.createElement('ion-toast');
-            alert.duration = 1500;
-            alert.message = 'Hello World!';
-            alert.buttons = ['OK'];
-            alert.position = position;
-            alert.icon = 'globe'
+        function attachIonEventListeners(configs, element) {
 
-            document.body.appendChild(alert);
-            await alert.present();
-            //const toast = await this.toastController.create({
-            //    message: 'Hello World!',
-            //    duration: 1500,
-            //    position: position
+            configs.forEach(function (config) {
+                attachIonEventListener(config.event, element, config.ref)
+                //element.addEventListener(config.Event, (ev) => {
+                //    config.Reference.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
+                //});
+            });
+            
+            //element.addEventListener(type, (ev) => {
+            //    ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
             //});
-            //
-            //await toast.present();
+        }
+
+        async function presentToast(position, message) {
+    
+                const alert = document.createElement('ion-toast');
+                alert.duration = 1500;
+                alert.message = message;
+                alert.buttons = ['OK'];
+                alert.position = position;
+                alert.icon = 'globe'
+    
+                document.body.appendChild(alert);
+                await alert.present();
+                //const toast = await this.toastController.create({
+                //    message: 'Hello World!',
+                //    duration: 1500,
+                //    position: position
+                //});
+                //
+                //await toast.present();
+            }
+
+        Object.defineProperty(Object.prototype, "getProperty", {
+            value: function getProperty(key) {
+                return this[key];
+            },
+            writable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Object.prototype, "setProperty", {
+            value: function setProperty(key, value) {
+                this[key] = JSON.parse(value);
+            },
+            writable: true,
+            configurable: true
+        });
+    </script>
+
+    <script>
+        function addActionSheetButtons(element, buttons, callback) {
+            buttons.forEach(function (button, index) {
+                button.handler = () => { callback.invokeMethodAsync('OnCallbackEvent', { index }); }
+            });
+            element.buttons = buttons;
+        }
+        
+    </script>
+
+    <script>
+        function setAccordionGroupValue(element, value) {
+            element.value = value;
         }
     </script>
 
+    <script>
+        async function getSearchbarInputElement(element) {
+            return await element.getInputElement();
+        }
+        
+        function setSearchbarFocus(element) {
+            element.setFocus();
+        }
+    </script>
 
+    <script>
+        function addRippleToRippleEffect(element, x, y) {
+            element.addRipple(x, y);
+        }
+    </script>
 
 <script src="_framework/blazor.webview.js" autostart="false"></script>
 
