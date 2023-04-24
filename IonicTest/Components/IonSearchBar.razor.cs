@@ -99,7 +99,7 @@ public partial class IonSearchBar : IonControl
     /// <summary>
     /// The mode determines which platform styles to use.
     /// </summary>
-    [Parameter] public IonicStyleMode? Mode { get; set; }
+    [Parameter] public string? Mode { get; set; } = IonMode.Default;
     
     /// <summary>
     /// Set the input's placeholder. placeholder can accept either plaintext or HTML as a string.

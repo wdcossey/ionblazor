@@ -29,7 +29,7 @@ public partial class IonAccordionGroup : IonControl
     /// <summary>
     /// The mode determines which platform styles to use.
     /// </summary>
-    [Parameter] public IonicStyleMode? Mode { get; set; }
+    [Parameter] public string? Mode { get; set; } = IonMode.Default;
 
     /// <summary>
     /// If true, the accordion group can have multiple accordion components expanded at the same time.

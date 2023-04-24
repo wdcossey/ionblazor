@@ -76,7 +76,7 @@ public partial class IonCheckBox : IonSlotControl
     /// <summary>
     /// The mode determines which platform styles to use.
     /// </summary>
-    [Parameter] public IonicStyleMode? Mode { get; set; }
+    [Parameter] public string? Mode { get; set; } = IonMode.Default;
 
     /// <summary>
     /// The name of the control, which is submitted with the form data.

@@ -59,7 +59,7 @@ public partial class IonFabButton : IonControl
     /// The mode determines which platform styles to use.<br/>
     /// Default: <b>null</b>
     /// </summary>
-    [Parameter] public IonicStyleMode? Mode { get; set; }
+    [Parameter] public string? Mode { get; set; } = IonMode.Default;
 
     /// <summary>
     /// Specifies the relationship of the target object to the link object.

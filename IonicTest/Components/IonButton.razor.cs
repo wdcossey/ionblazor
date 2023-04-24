@@ -66,11 +66,12 @@ public partial class IonButton : IonControl
     /// Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     /// </summary>
     [Parameter] public string? Href { get; set; }
-    
+
     /// <summary>
     /// The mode determines which platform styles to use.
     /// </summary>
-    [Parameter] public IonicStyleMode? Mode { get; set; }
+    [Parameter]
+    public string? Mode { get; set; } = IonMode.Default;
     
     /// <summary>
     /// Specifies the relationship of the target object to the link object. The value is a space-separated list of link types.
@@ -156,20 +157,25 @@ public partial class IonButton : IonControl
      }
 }
 
-public enum IonicStyleMode 
+public static class IonMode 
 {
     // ReSharper disable InconsistentNaming
+
+    /// <summary>
+    /// Automatic
+    /// </summary>
+    public const string? Default = null;
     
     /// <summary>
     /// Apple iOS
     /// </summary>
-    iOS,
-    
+    public const string iOS = "ios";
+
     /// <summary>
     /// Google Material Design
     /// </summary>
-    MD
-    
+    public const string MaterialDesign = "md";
+
     // ReSharper enable InconsistentNaming
 }
 

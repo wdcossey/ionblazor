@@ -36,7 +36,7 @@ public partial class IonActionSheet<TButtonData> : IonControl
     [Parameter] public bool? KeyboardClose { get; set; }
     
     //[Parameter] public string? LeaveAnimation { get; set; }
-    [Parameter] public IonicStyleMode? Mode { get; set; }
+    [Parameter] public string? Mode { get; set; } = IonMode.Default;
     [Parameter] public string? SubHeader { get; set; }
     [Parameter] public bool? Translucent { get; set; }
     [Parameter] public string? Trigger { get; set; }

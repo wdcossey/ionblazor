@@ -19,7 +19,7 @@ public partial class IonLabel : IonControl
     /// <summary>
     /// The mode determines which platform styles to use.
     /// </summary>
-    [Parameter] public IonicStyleMode? Mode { get; set; }
+    [Parameter] public string? Mode { get; set; } = IonMode.Default;
     
     /// <summary>
     /// The position determines where and how the label behaves inside an item.
