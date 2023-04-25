@@ -72,6 +72,14 @@
                 <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/samples/ripple-effect"))">ion-ripple-effect</IonButton>
                 @*<IonLabel>Mega Man X</IonLabel>*@
             </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/samples/fab"))">ion-fab</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
+            <ion-item>
+                <IonButton Expand="ButtonExpand.Full" OnClick="@(() => NavigationManager.NavigateTo("/sample/spinner"))">ion-spinner</IonButton>
+                @*<IonLabel>Mega Man X</IonLabel>*@
+            </ion-item>
           <ion-item>
             <IonLabel>The Legend of Zelda</IonLabel>
           </ion-item>
@@ -101,7 +109,7 @@
             <IonFabButton>
               <IonIcon Name="chevron-forward-circle"></IonIcon>
             </IonFabButton>
-            <ion-fab-list side="end">
+            <IonFabList Side="end">
               <IonFabButton>
                 <IonIcon Name="document"></IonIcon>
               </IonFabButton>
@@ -111,14 +119,14 @@
               <IonFabButton>
                 <IonIcon Name="globe"></IonIcon>
               </IonFabButton>
-            </ion-fab-list>
+            </IonFabList>
           </IonFab>
         
           <IonFab Slot="fixed" Vertical="@IonVerticalAlignment.Top" Horizontal="@IonHorizontalAlignment.End" Edge="true">
             <IonFabButton>
               <IonIcon Name="chevron-down-circle"></IonIcon>
             </IonFabButton>
-            <ion-fab-list side="bottom">
+            <IonFabList Side="bottom">
               <IonFabButton>
                 <IonIcon Name="document"></IonIcon>
               </IonFabButton>
@@ -128,14 +136,14 @@
               <IonFabButton>
                 <IonIcon Name="globe"></IonIcon>
               </IonFabButton>
-            </ion-fab-list>
+            </IonFabList>
           </IonFab>
               
           <IonFab Slot="fixed" Vertical="@IonVerticalAlignment.Bottom" Horizontal="@IonHorizontalAlignment.End">
             <IonFabButton>
               <IonIcon Name="chevron-up-circle"></IonIcon>
             </IonFabButton>
-            <ion-fab-list side="top">
+            <IonFabList Side="top">
               <IonFabButton>
                 <IonIcon Name="document"></IonIcon>
               </IonFabButton>
@@ -145,7 +153,7 @@
               <IonFabButton>
                 <IonIcon Name="globe"></IonIcon>
               </IonFabButton>
-            </ion-fab-list>
+            </IonFabList>
           </IonFab>
         
         <ion-list inset="true">
@@ -153,7 +161,7 @@
                 <IonLabel>Favorite Fruits</IonLabel>
                 <div slot="end" id="#selected-fruits">@($"{workingSelectedFruits.Count} Items")</div>
             </ion-item>
-            <IonButton Expand="ButtonExpand.Block" Color="@IonicColor.Danger" OnClick="@(() => presentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
+            <IonButton Expand="ButtonExpand.Block" Color="@IonColor.Danger" OnClick="@(() => presentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
 
         </ion-list>
 
@@ -236,7 +244,7 @@
                 <IonSearchBar Debounce="1000" Value="@searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchBar>
             </ion-toolbar>
         </ion-header>
-        <IonContent Color="@IonicColor.Light" Class="ion-padding">
+        <IonContent Color="@IonColor.Light" Class="ion-padding">
             <ion-list id="modal-list" inset="true">
                 @foreach (var item in renderList)
                 {

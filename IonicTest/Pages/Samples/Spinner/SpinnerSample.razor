@@ -1,0 +1,92 @@
+﻿@page "/sample/spinner"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame" style="min-height: 500px">
+                    <ion-item>
+                        <IonLabel>Default</IonLabel>
+                        <IonSpinner></IonSpinner>
+                    </ion-item>
+                                
+                    <ion-item>
+                        <IonLabel>Dots</IonLabel>
+                        <IonSpinner Name="@IonSpinnerName.Dots"></IonSpinner>
+                    </ion-item>
+                                
+                    <ion-item>
+                        <IonLabel>Lines</IonLabel>
+                        <IonSpinner Name="@IonSpinnerName.Lines"></IonSpinner>
+                    </ion-item>
+                                
+                    <ion-item>
+                        <IonLabel>Lines Small</IonLabel>
+                        <IonSpinner Name="@IonSpinnerName.LinesSmall"></IonSpinner>
+                    </ion-item>
+                                
+                    <ion-item>
+                        <IonLabel>Lines Sharp</IonLabel>
+                        <IonSpinner Name="@IonSpinnerName.LinesSharp"></IonSpinner>
+                    </ion-item>
+                                
+                    <ion-item>
+                        <IonLabel>Lines Sharp Small</IonLabel>
+                        <IonSpinner Name="@IonSpinnerName.LinesSharpSmall"></IonSpinner>
+                    </ion-item>
+                                
+                    <ion-item>
+                        <IonLabel>Bubbles</IonLabel>
+                        <IonSpinner Name="@IonSpinnerName.Bubbles"></IonSpinner>
+                    </ion-item>
+                                
+                    <ion-item>
+                        <IonLabel>Circles</IonLabel>
+                        <IonSpinner Name="@IonSpinnerName.Circles"></IonSpinner>
+                    </ion-item>
+                                
+                    <ion-item>
+                        <IonLabel>Circular</IonLabel>
+                        <IonSpinner Name="@IonSpinnerName.Circular"></IonSpinner>
+                    </ion-item>
+                                
+                    <ion-item>
+                        <IonLabel>Crescent</IonLabel>
+                        <IonSpinner Name="@IonSpinnerName.Crescent"></IonSpinner>
+                    </ion-item>
+                </div>
+            </div>
+        </div>
+          
+        <h2>Theming</h2>
+        <h3>Colors</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame" style="min-height: 100px">
+                    <IonSpinner></IonSpinner>
+                    <IonSpinner Color="@IonColor.Primary"></IonSpinner>
+                    <IonSpinner Color="@IonColor.Secondary"></IonSpinner>
+                    <IonSpinner Color="@IonColor.Tertiary"></IonSpinner>
+                    <IonSpinner Color="@IonColor.Success"></IonSpinner>
+                    <IonSpinner Color="@IonColor.Warning"></IonSpinner>
+                    <IonSpinner Color="@IonColor.Danger"></IonSpinner>
+                    <IonSpinner Color="@IonColor.Light"></IonSpinner>
+                    <IonSpinner Color="@IonColor.Medium"></IonSpinner>
+                    <IonSpinner Color="@IonColor.Dark"></IonSpinner>
+                </div>
+            </div>
+        </div>
+        
+        <h3>CSS Custom Properties</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame" style="min-height: 100px">
+                    <div class="custom-css">
+                        <IonSpinner></IonSpinner>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </IonContent>
+</div>

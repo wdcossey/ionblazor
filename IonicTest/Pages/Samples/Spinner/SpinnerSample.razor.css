@@ -1,0 +1,11 @@
+﻿.container {
+    display: block;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+::deep .custom-css ion-spinner {
+    --color: #54dc98;
+}
