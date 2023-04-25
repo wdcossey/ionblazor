@@ -9,11 +9,11 @@ public partial class IonChip : IonControl
     /// <summary>
     /// The color to use from your application's color palette.
     /// Default options are:
-    /// <see cref="IonicColor.Primary"/>, <see cref="IonicColor.Secondary"/>,
-    /// <see cref="IonicColor.Tertiary"/>, <see cref="IonicColor.Success"/>,
-    /// <see cref="IonicColor.Warning"/>, <see cref="IonicColor.Danger"/>,
-    /// <see cref="IonicColor.Light"/>, <see cref="IonicColor.Medium"/>,
-    /// and <see cref="IonicColor.Dark"/>. <br/>
+    /// <see cref="IonColor.Primary"/>, <see cref="IonColor.Secondary"/>,
+    /// <see cref="IonColor.Tertiary"/>, <see cref="IonColor.Success"/>,
+    /// <see cref="IonColor.Warning"/>, <see cref="IonColor.Danger"/>,
+    /// <see cref="IonColor.Light"/>, <see cref="IonColor.Medium"/>,
+    /// and <see cref="IonColor.Dark"/>. <br/>
     /// For more information on colors, see theming.
     /// </summary>
     [Parameter] public string? Color { get; set; }
@@ -34,7 +34,7 @@ public partial class IonChip : IonControl
     [Parameter] public bool? Outline { get; set; }
 }
 
-public static class IonicColor 
+public static class IonColor 
 {
     public const string Danger = "danger";
     public const string Dark = "dark";

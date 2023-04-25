@@ -5,8 +5,9 @@ public partial class IonFab : IonSlotControl
     [Parameter] public RenderFragment? ChildContent { get; set; }
     
     /// <summary>
-    /// If <b>true</b>, both the ion-fab-button and all ion-fab-list inside <see cref="IonFab"/> will become active.
-    /// That means ion-fab-button will become a close icon and ion-fab-list will become visible.
+    /// If <b>true</b>, both the <see cref="IonFabButton"/> and all <see cref="IonFabList"/> inside
+    /// <see cref="IonFab"/> will become active.
+    /// That means <see cref="IonFabButton"/> will become a close icon and <see cref="IonFabList"/> will become visible.
     /// </summary>
     [Parameter] public bool Activated { get; set; }
     

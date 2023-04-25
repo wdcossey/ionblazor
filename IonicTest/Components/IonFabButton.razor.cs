@@ -23,11 +23,11 @@ public partial class IonFabButton : IonControl
     /// <summary>
     /// The color to use from your application's color palette.
     /// Default options are:
-    /// <see cref="IonicColor.Primary"/>, <see cref="IonicColor.Secondary"/>,
-    /// <see cref="IonicColor.Tertiary"/>, <see cref="IonicColor.Success"/>,
-    /// <see cref="IonicColor.Warning"/>, <see cref="IonicColor.Danger"/>,
-    /// <see cref="IonicColor.Light"/>, <see cref="IonicColor.Medium"/>,
-    /// and <see cref="IonicColor.Dark"/>. <br/>
+    /// <see cref="IonColor.Primary"/>, <see cref="IonColor.Secondary"/>,
+    /// <see cref="IonColor.Tertiary"/>, <see cref="IonColor.Success"/>,
+    /// <see cref="IonColor.Warning"/>, <see cref="IonColor.Danger"/>,
+    /// <see cref="IonColor.Light"/>, <see cref="IonColor.Medium"/>,
+    /// and <see cref="IonColor.Dark"/>. <br/>
     /// For more information on colors, see theming.<br/>
     /// Default: <b>null</b>
     /// </summary>
