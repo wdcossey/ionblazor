@@ -1,0 +1,147 @@
+﻿@page "/samples/radio"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonRadioGroup Value="strawberries">
+                        <IonRadio Value="grapes">Grapes</IonRadio><br/>
+                        <IonRadio Value="strawberries">Strawberries</IonRadio><br />
+                        <IonRadio Value="pineapple">Pineapple</IonRadio><br />
+                        <IonRadio Value="cherries">Cherries</IonRadio>
+                    </IonRadioGroup>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Label Placement</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+
+                    <IonRadioGroup Value="start">
+                        <IonRadio Value="start" LabelPlacement="@IonLabelPlacement.Start">Label at the Start</IonRadio>
+                    </IonRadioGroup>
+                    
+                    <br/>
+                    
+                    <IonRadioGroup Value="end">
+                        <IonRadio Value="end" LabelPlacement="@IonLabelPlacement.End">Label at the End</IonRadio>
+                    </IonRadioGroup>
+                    
+                    <br/>
+                    
+                    <IonRadioGroup Value="fixed">
+                        <IonRadio Value="fixed" LabelPlacement="@IonLabelPlacement.Fixed">Fixed Width Label</IonRadio>
+                    </IonRadioGroup>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Justification</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <ion-list>
+                        <IonRadioGroup Value="start">
+                            <ion-item>
+                                <IonRadio Value="start" Justify="@IonJustify.Start">Packed at the Start of Line</IonRadio>
+                            </ion-item>
+                        </IonRadioGroup>
+                        
+                        <IonRadioGroup Value="end">
+                            <ion-item>
+                                <IonRadio Value="end" Justify="@IonJustify.End">Packed at the End of Line</IonRadio>
+                            </ion-item>
+                        </IonRadioGroup>
+                        
+                        <IonRadioGroup Value="space-between">
+                            <ion-item>
+                                <IonRadio Value="space-between" Justify="@IonJustify.SpaceBetween">Space Between Label and Control</IonRadio>
+                            </ion-item>
+                        </IonRadioGroup>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Deselecting Radios</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonRadioGroup AllowEmptySelection="true" Value="turtles">
+                        <IonRadio Value="dogs">Dogs</IonRadio><br />
+                        <IonRadio Value="cats">Cats</IonRadio><br />
+                        <IonRadio Value="turtles">Turtles</IonRadio><br />
+                        <IonRadio Value="fish">Fish</IonRadio><br />
+                    </IonRadioGroup>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Theming</h2>
+        <h3>Colors</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonRadioGroup Value="@IonColor.Primary">
+                        <IonRadio aria-label="Primary" Color="@IonColor.Primary" Value="primary"></IonRadio>
+                    </IonRadioGroup>
+                    <IonRadioGroup Value="@IonColor.Secondary">
+                        <IonRadio aria-label="Secondary" Color="@IonColor.Secondary" Value="secondary"></IonRadio>
+                    </IonRadioGroup>
+                    <IonRadioGroup Value="@IonColor.Tertiary">
+                        <IonRadio aria-label="Tertiary" Color="@IonColor.Tertiary" Value="tertiary"></IonRadio>
+                    </IonRadioGroup>
+                    <IonRadioGroup Value="@IonColor.Success">
+                        <IonRadio aria-label="Success" Color="@IonColor.Success" Value="success"></IonRadio>
+                    </IonRadioGroup>
+                    <IonRadioGroup Value="@IonColor.Warning">
+                        <IonRadio aria-label="Warning" Color="@IonColor.Warning" Value="warning"></IonRadio>
+                    </IonRadioGroup>
+                    <IonRadioGroup Value="@IonColor.Danger">
+                        <IonRadio aria-label="Danger" Color="@IonColor.Danger" Value="danger"></IonRadio>
+                    </IonRadioGroup>
+                    <IonRadioGroup Value="@IonColor.Light">
+                        <IonRadio aria-label="Light" Color="@IonColor.Light" Value="light"></IonRadio>
+                    </IonRadioGroup>
+                    <IonRadioGroup Value="@IonColor.Medium">
+                        <IonRadio aria-label="Medium" Color="@IonColor.Medium" Value="medium"></IonRadio>
+                    </IonRadioGroup>
+                    <IonRadioGroup Value="@IonColor.Dark">
+                        <IonRadio aria-label="Dark" Color="@IonColor.Dark" Value="dark"></IonRadio>
+                    </IonRadioGroup>
+                </div>
+            </div>
+        </div>
+        
+        <h3>CSS Custom Properties</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonRadioGroup Class="css-custom-properties" Value="custom-checked">
+                        <IonRadio Value="custom" aria-label="Custom checkbox"></IonRadio>
+                        <IonRadio Value="custom-checked" aria-label="Custom checkbox that is checked"></IonRadio>
+                    </IonRadioGroup>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <h3>CSS Shadow Parts</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonRadioGroup Class="css-shadow-parts" Value="custom-checked">
+                        <IonRadio Value="custom" aria-label="Custom checkbox"></IonRadio>
+                        <IonRadio Value="custom-checked" aria-label="Custom checkbox that is checked"></IonRadio>
+                    </IonRadioGroup>
+                    
+                </div>
+            </div>
+        </div>
+
+    </IonContent>
+</div>

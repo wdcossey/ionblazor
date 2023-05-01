@@ -1,0 +1,132 @@
+﻿@page "/samples/refresher"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container" style="width: 344px; height: 704px">
+                    <div class="ion-page">
+                        <IonHeader>
+                            <IonToolbar>
+                                <IonTitle>Pull to Refresh</IonTitle>
+                            </IonToolbar>
+                        </IonHeader>
+                    
+                        <IonContent Class="ion-padding">
+                            <IonRefresher Slot="fixed" IonRefresh="BasicIonRefreshCallback">
+                                <IonRefresherContent></IonRefresherContent>
+                            </IonRefresher>
+                        
+                            <p>Pull this content down to trigger the refresh.</p>
+                        </IonContent>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Pull Properties</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container" style="width: 344px; height: 704px">
+                    <div class="ion-page">
+                        <IonHeader>
+                            <IonToolbar>
+                                <IonTitle>Pull to Refresh</IonTitle>
+                            </IonToolbar>
+                        </IonHeader>
+                    
+                        <IonContent Class="ion-padding">
+                            <IonRefresher Slot="fixed" PullFactor="0.5" PullMin="100" PullMax="200" IonRefresh="PullPropertiesIonRefreshCallback">
+                                <IonRefresherContent></IonRefresherContent>
+                            </IonRefresher>
+                    
+                            <p>Pull this content down to trigger the refresh.</p>
+                        </IonContent>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Custom Refresher Content</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container" style="width: 344px; height: 704px">
+                    <div class="ion-page">
+                        <IonHeader>
+                            <IonToolbar>
+                                <IonTitle>Pull to Refresh</IonTitle>
+                            </IonToolbar>
+                        </IonHeader>
+
+                        <IonContent Class="ion-padding">
+                            <IonRefresher Slot="fixed" IonRefresh="CustomContentIonRefreshCallback">
+                                <IonRefresherContent
+                                    PullingIcon="chevron-down-circle-outline"
+                                    PullingText="Pull to refresh"
+                                    RefreshingSpinner="@IonSpinnerName.Circles"
+                                    RefreshingText="Refreshing...">
+                                </IonRefresherContent>
+                            </IonRefresher>
+
+                            <p>Pull this content down to trigger the refresh.</p>
+                        </IonContent>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Usage with Virtual Scroll</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container" style="width: 344px; height: 704px">
+                    <div class="ion-page">
+                        <IonHeader>
+                            <IonToolbar>
+                                <IonTitle>Pull to Refresh</IonTitle>
+                            </IonToolbar>
+                        </IonHeader>
+
+                        <IonContent ScrollY="false">
+                          <IonRefresher Slot="fixed" IonRefresh="VirtualScrollIonRefreshCallback">
+                            <IonRefresherContent></IonRefresherContent>
+                          </IonRefresher>
+                        
+                          <div class="ion-content-scroll-host ion-padding">
+                            <p>Pull this content down to trigger the refresh.</p>
+                          </div>
+                        </IonContent>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Advanced Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container" style="width: 344px; height: 704px">
+                    <div class="ion-page">
+                        <IonHeader>
+                            <IonToolbar>
+                                <IonTitle>Pull to Refresh</IonTitle>
+                            </IonToolbar>
+                        </IonHeader>
+
+                        <IonContent ScrollY="false">
+                            <IonRefresher Slot="fixed" IonRefresh="AdvancedIonRefreshCallback">
+                                <IonRefresherContent></IonRefresherContent>
+                            </IonRefresher>
+                        
+                            <div class="ion-content-scroll-host ion-padding">
+                                <p>Pull this content down to trigger the refresh.</p>
+                            </div>
+                        </IonContent>
+                        
+                        <ion-list id="list"></ion-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </IonContent>
+</div>

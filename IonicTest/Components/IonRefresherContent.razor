@@ -1,0 +1,9 @@
+﻿@inherits IonControl
+
+<ion-refresher-content @attributes="@Attributes"
+                       class="@Class"
+                       pulling-icon="@PullingIcon"
+                       pulling-text="@((MarkupString)(PullingText ?? string.Empty))"
+                       refreshing-spinner="@RefreshingSpinner"
+                       refreshing-text="@((MarkupString)(RefreshingText ?? string.Empty))">
+</ion-refresher-content>

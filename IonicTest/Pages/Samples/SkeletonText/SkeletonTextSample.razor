@@ -1,0 +1,88 @@
+﻿@page "/SkeletonTextSample"
+@page "/samples/skeleton-text"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <ion-list>
+                        @if (_loaded)
+                        {
+                            <ion-list-header>
+                                <IonSkeletonText Animated="true" style="width: 80px"></IonSkeletonText>
+                            </ion-list-header>
+                            <ion-item>
+                                <IonThumbnail Slot="start">
+                                    <IonSkeletonText Animated="true"></IonSkeletonText>
+                                </IonThumbnail>
+                                <IonLabel>
+                                    <h3>
+                                        <IonSkeletonText Animated="true" style="width: 80%;"></IonSkeletonText>
+                                    </h3>
+                                    <p>
+                                        <IonSkeletonText Animated="true" style="width: 60%;"></IonSkeletonText>
+                                    </p>
+                                    <p>
+                                        <IonSkeletonText Animated="true" style="width: 30%;"></IonSkeletonText>
+                                    </p>
+                                </IonLabel>
+                            </ion-item>
+                        }
+                        else
+                        {
+                            <ion-list-header>Albums</ion-list-header>
+                            <ion-item>
+                                <IonThumbnail Slot="start">
+                                    <IonIcon style="width: 100%; height: 100%" Name="musical-notes"></IonIcon>
+                                </IonThumbnail>
+                                <IonLabel>
+                                    <h3>Abbey Road</h3>
+                                    <p>The Beatles</p>
+                                    <p>1969</p>
+                                </IonLabel>
+                            </ion-item>
+                        }
+                    </ion-list><br />
+                    <IonButton OnClick="@(BasicUsageToggle)">Toggle</IonButton>
+                </div>
+            </div>
+        </div>
+        
+        
+        <h2>Theming</h2>
+        <h3>CSS Custom Properties</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <div class="css-custom-properties">
+                        <ion-list>
+                            <ion-list-header>
+                                <IonSkeletonText Animated="true" style="width: 80px"></IonSkeletonText>
+                            </ion-list-header>
+                            <ion-item>
+                                <IonThumbnail slot="start">
+                                    <IonSkeletonText Animated="true"></IonSkeletonText>
+                                </IonThumbnail>
+                                <IonLabel>
+                                    <h3>
+                                        <IonSkeletonText Animated="true" style="width: 80%;"></IonSkeletonText>
+                                    </h3>
+                                    <p>
+                                        <IonSkeletonText Animated="true" style="width: 60%;"></IonSkeletonText>
+                                    </p>
+                                    <p>
+                                        <IonSkeletonText Animated="true" style="width: 30%;"></IonSkeletonText>
+                                    </p>
+                                </IonLabel>
+                            </ion-item>
+                        </ion-list>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </IonContent>
+</div>

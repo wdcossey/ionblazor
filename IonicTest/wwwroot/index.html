@@ -161,6 +161,27 @@
         }
     </script>
 
+    <script>
+        function completeIonReorderGroup(element, listOrReorder) {
+            element.complete(listOrReorder);
+        }
+    </script>
+
+    <script>
+
+        function cancelIonRefresher(element) {
+            element.cancel();
+        }
+
+        function completeIonRefresher(element) {
+            element.complete();
+        }
+        
+        function getProgressIonRefresher(element) {
+            return element.getProgress();
+        }
+    </script>
+
 <script src="_framework/blazor.webview.js" autostart="false"></script>
 
 </body>

@@ -1,0 +1,8 @@
+﻿@inherits IonControl
+
+<ion-reorder-group @ref="@_self"
+                   @attributes="@Attributes"
+                   disabled="@Disabled.ToString().ToLowerInvariant()"
+                   class="@Class">
+    @ChildContent
+</ion-reorder-group>

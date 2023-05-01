@@ -4,7 +4,7 @@ namespace IonicTest.Components;
 
 public partial class IonIcon : IonSlotControl
 {
-    [Parameter, EditorRequired] public string Name { get; set; } = null!;
+    [Parameter] public string Name { get; set; } = null!;
     [Parameter] public string? Color { get; set; }
     [Parameter] public IconSize? Size { get; set; }
 }

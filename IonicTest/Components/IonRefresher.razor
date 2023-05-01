@@ -1,0 +1,14 @@
+﻿@inherits IonSlotControl
+
+<ion-refresher @ref="@_self"
+               @attributes="@Attributes"
+               class="@Class"
+               close-duration="@CloseDuration"
+               disabled="@Disabled"
+               pull-factor="@PullFactor?.ToString("#.#")"
+               pull-max="@PullMax"
+               pull-min="@PullMin"
+               slot="@Slot"
+               snapback-duration="@SnapbackDuration">
+    @ChildContent
+</ion-refresher>

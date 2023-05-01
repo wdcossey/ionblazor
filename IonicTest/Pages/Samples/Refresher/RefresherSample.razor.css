@@ -1,0 +1,19 @@
+﻿.ion-content-scroll-host {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+/*
+ion-item {
+    --padding-start: 8px;
+}
+
+ion-icon {
+    font-size: 12px;
+    align-self: start;
+    margin: 15px 8px;
+}*/

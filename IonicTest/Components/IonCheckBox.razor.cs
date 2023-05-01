@@ -57,7 +57,9 @@ public partial class IonCheckBox : IonSlotControl
     /// <see cref="IonLabelPlacement.End"/>: The label will appear to the right of the <see cref="IonCheckBox"/> in LTR
     /// and to the left in RTL.<br/><br/>
     /// <see cref="IonLabelPlacement.Fixed"/>: The label has the same behavior as "start" except it also
-    /// has a fixed width. Long text will be truncated with ellipses ("...").
+    /// has a fixed width.
+    /// <br/><br/>
+    /// Long text will be truncated with ellipses ("...").
     /// </summary>
     [Parameter] public string LabelPlacement { get; set; } = IonLabelPlacement.Fixed;
 

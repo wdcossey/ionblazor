@@ -1,0 +1,61 @@
+﻿.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* CSS Custom Properties */
+
+::deep ion-radio-group.css-custom-properties ion-radio {
+    --border-radius: 4px;
+    --inner-border-radius: 4px;
+
+    --color: #ddd;
+    --color-checked: #6815ec;
+}
+
+::deep ion-radio-group.css-custom-properties ion-radio.ios::part(container) {
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid #ddd;
+    border-radius: 4px;
+}
+
+::deep ion-radio-group.css-custom-properties .radio-checked.ios::part(container) {
+    border-color: #6815ec;
+}
+
+/* CSS Shadow Parts */
+
+::deep ion-radio-group.css-shadow-parts ion-radio::part(container) {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+::deep ion-radio-group.css-shadow-parts ion-radio::part(mark) {
+    background: none;
+    transition: none;
+    transform: none;
+    border-radius: 0;
+}
+
+::deep ion-radio-group.css-shadow-parts ion-radio.radio-checked::part(container) {
+    background: #6815ec;
+    border-color: transparent;
+}
+
+::deep ion-radio-group.css-shadow-parts ion-radio.radio-checked::part(mark) {
+    width: 6px;
+    height: 10px;
+
+    border-width: 0px 2px 2px 0px;
+    border-style: solid;
+    border-color: #fff;
+
+    transform: rotate(45deg);
+}

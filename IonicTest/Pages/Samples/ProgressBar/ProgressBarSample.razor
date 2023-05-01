@@ -1,0 +1,86 @@
+﻿@page "/samples/progress-bar"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Determinate</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <IonProgressBar @ref="@_determinateProgressBar"></IonProgressBar>
+                </div>
+            </div>
+        </div>
+          
+        <h2>Buffer</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <IonProgressBar @ref="@_bufferProgressBar"></IonProgressBar>
+                </div>
+            </div>
+        </div>
+          
+        <h2>Indeterminate</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate"></IonProgressBar>
+                </div>
+            </div>
+        </div>
+
+        <h2>Progress Bars in Toolbars</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <IonHeader>
+                      <IonToolbar>
+                        <IonTitle>Toolbar</IonTitle>
+                        <IonProgressBar Type="@IonProgressBarType.Indeterminate"></IonProgressBar>
+                      </IonToolbar>
+                    </IonHeader>
+                </div>
+            </div>
+        </div>
+
+        <h2>Theming</h2>
+        <h3>Colors</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container" style="height: 200px; flex-flow: column; justify-content: space-evenly;">
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate" Color="@IonColor.Primary"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate" Color="@IonColor.Secondary"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate" Color="@IonColor.Tertiary"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate" Color="@IonColor.Success"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate" Color="@IonColor.Warning"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate" Color="@IonColor.Danger"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate" Color="@IonColor.Light"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate" Color="@IonColor.Medium"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate" Color="@IonColor.Dark"></IonProgressBar>
+                </div>
+            </div>
+        </div>
+        
+        <h3>CSS Custom Properties</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container css-custom-properties" style="height: 200px; flex-flow: column; justify-content: space-evenly;">
+                    <IonProgressBar Value=".25" Buffer=".5"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate"></IonProgressBar>
+                </div>
+            </div>
+        </div>
+        
+        <h3>CSS Shadow Parts</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container css-shadow-parts" style="height: 200px; flex-flow: column; justify-content: space-evenly;">
+                    <IonProgressBar Value=".25" Buffer=".5"></IonProgressBar>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate"></IonProgressBar>
+                </div>
+            </div>
+        </div>
+        
+        
+    </IonContent>
+</div>

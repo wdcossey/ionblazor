@@ -55,7 +55,7 @@ public partial class IonButton : IonControl
     /// The default fill is <see cref="ButtonFill.Solid"/> except inside of a toolbar,
     /// where the default is <see cref="ButtonFill.Clear"/>.
     /// </summary>
-    [Parameter] public ButtonFill? Fill { get; set; }
+    [Parameter] public string? Fill { get; set; }
     
     /// <summary>
     /// The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
@@ -184,13 +184,12 @@ public enum ButtonExpand {
     Full
 }
 
-public enum ButtonFill 
+public static class ButtonFill 
 {
-
-    Clear, 
-    Default,
-    Outline,
-    Solid
+    public const string Clear = "dlear";
+    public const string Default = "default";
+    public const string Outline = "outline";
+    public const string Solid = "solid";
 }
 
 public enum ButtonShape 

@@ -5,12 +5,12 @@
     height: 100%;
 }
 
-::deep .custom-css ion-checkbox {
+::deep ion-checkbox.css-custom-properties {
     --size: 32px;
     --checkbox-background-checked: #6815ec;
 }
 
-::deep .custom-css ion-checkbox::part(container) {
+::deep ion-checkbox.css-custom-properties::part(container) {
     border-radius: 6px;
     border: 2px solid #6815ec;
 }
