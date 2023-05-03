@@ -1,0 +1,116 @@
+﻿@page "/samples/list"
+@using System.Dynamic
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <IonList>
+                        <ion-item>
+                            <IonLabel>Pokémon Yellow</IonLabel>
+                        </ion-item>
+                        <ion-item>
+                            <IonLabel>Mega Man X</IonLabel>
+                        </ion-item>
+                        <ion-item>
+                            <IonLabel>The Legend of Zelda</IonLabel>
+                        </ion-item>
+                        <ion-item>
+                            <IonLabel>Pac-Man</IonLabel>
+                        </ion-item>
+                        <ion-item>
+                            <IonLabel>Super Mario World</IonLabel>
+                        </ion-item>
+                    </IonList>
+                </div>
+            </div>
+        </div>
+        
+        <h3>IonListOf&lt;T&gt;</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <IonListOf TItem="ListOfItem" ItemsSource="@_itemsSource">
+                        <ItemTemplate>
+                            <ion-item>
+                                <IonLabel>@context.Title</IonLabel>
+                            </ion-item>
+                        </ItemTemplate>
+                    </IonListOf>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Inset List</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <IonList Inset="true">
+                      <ion-item>
+                        <IonLabel>Pokémon Yellow</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>Mega Man X</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>The Legend of Zelda</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>Pac-Man</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>Super Mario World</IonLabel>
+                      </ion-item>
+                    </IonList>
+                </div>
+            </div>
+        </div>
+        
+        <h2>List Lines</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <IonList lines="@IonListLines.Full">
+                      <ion-item>
+                        <IonLabel>Full Lines</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>Full Lines</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>Full Lines</IonLabel>
+                      </ion-item>
+                    </IonList>
+                    
+                    <IonList lines="@IonListLines.Inset">
+                      <ion-item>
+                        <IonLabel>Inset Lines</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>Inset Lines</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>Inset Lines</IonLabel>
+                      </ion-item>
+                    </IonList>
+                    
+                    <IonList lines="@IonListLines.None">
+                      <ion-item>
+                        <IonLabel>No Lines</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>No Lines</IonLabel>
+                      </ion-item>
+                      <ion-item>
+                        <IonLabel>No Lines</IonLabel>
+                      </ion-item>
+                    </IonList>
+                </div>
+            </div>
+        </div>
+        
+        
+    </IonContent>
+</div>
