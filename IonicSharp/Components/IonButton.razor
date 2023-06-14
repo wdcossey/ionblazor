@@ -1,0 +1,23 @@
+﻿@inherits IonControl
+
+<ion-button @ref="@_self"
+            @attributes="@Attributes"
+            button-type="@ButtonType"
+            class="@Class"
+            color="@Color"
+            disabled="@Disabled"
+            download="@Download"
+            expand="@Expand?.ToString().ToLowerInvariant()"
+            fill="@Fill"
+            form="@Form"
+            href="@Href"
+            mode="@Mode"
+            rel="@Rel"
+            shape="@Shape?.ToString().ToLowerInvariant()"
+            size="@Size"
+            slot="@Slot"
+            strong="@Strong"
+            target="@Target"
+            type="@Type?.ToLowerInvariant()">
+    @ChildContent
+</ion-button>

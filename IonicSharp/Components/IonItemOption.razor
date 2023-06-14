@@ -1,0 +1,15 @@
+﻿@inherits IonControl
+
+<ion-item-option @attributes="@Attributes"
+                 class="@Class"
+                 color="@Color"
+                 disabled="@Disabled?.ToString().ToLowerInvariant()"
+                 download="@Download"
+                 expandable="@Expandable?.ToString().ToLowerInvariant()"
+                 href="@Href"
+                 mode="@Mode"
+                 rel="@Rel"
+                 target="@Target"
+                 type="@Type">
+    @ChildContent
+</ion-item-option>

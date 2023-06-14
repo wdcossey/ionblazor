@@ -58,6 +58,10 @@
         </PackageReference>
         <PackageReference Include="Stubble.Core" Version="1.10.8" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\IonicSharp\IonicSharp.csproj" />
+    </ItemGroup>
     
 
 </Project>

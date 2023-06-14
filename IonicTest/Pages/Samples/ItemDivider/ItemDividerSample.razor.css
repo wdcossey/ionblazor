@@ -1,0 +1,20 @@
+﻿.playground__preview {
+    justify-content: stretch;
+}
+
+.playground__preview .container {
+    width: 100%;
+    width: -webkit-fill-available;
+}
+
+/* CSS Custom Properties */
+
+::deep .css-custom-properties ion-item-divider {
+    --background: #19422d;
+    --color: #fff;
+
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+}

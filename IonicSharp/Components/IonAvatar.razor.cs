@@ -1,0 +1,6 @@
+﻿namespace IonicSharp.Components;
+
+public partial class IonAvatar : IonSlotControl
+{
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

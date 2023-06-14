@@ -1,0 +1,51 @@
+﻿@page "/samples/item-sliding"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Basic Usage</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <IonList>
+                        <IonItemSliding>
+                            <IonItem>
+                                <IonLabel>Sliding Item with End Options</IonLabel>
+                            </IonItem>
+                        
+                            <IonItemOptions>
+                                <IonItemOption>Favorite</IonItemOption>
+                                <IonItemOption Color="@IonColor.Danger">Delete</IonItemOption>
+                            </IonItemOptions>
+                        </IonItemSliding>
+                      
+                        <IonItemSliding>
+                            <IonItemOptions Side="@IonItemOptionsSide.Start">
+                                <IonItemOption Color="@IonColor.Success">Archive</IonItemOption>
+                            </IonItemOptions>
+                        
+                            <IonItem>
+                                <IonLabel>Sliding Item with Start Options</IonLabel>
+                            </IonItem>
+                        </IonItemSliding>
+                      
+                        <IonItemSliding>
+                            <IonItemOptions Side="@IonItemOptionsSide.Start">
+                                <IonItemOption Color="@IonColor.Success">Archive</IonItemOption>
+                            </IonItemOptions>
+                        
+                            <IonItem>
+                                <IonLabel>Sliding Item with Options on Both Sides</IonLabel>
+                            </IonItem>
+                        
+                            <IonItemOptions Side="@IonItemOptionsSide.End">
+                                <IonItemOption>Favorite</IonItemOption>
+                                <IonItemOption Color="@IonColor.Danger">Delete</IonItemOption>
+                            </IonItemOptions>
+                        </IonItemSliding>
+                    </IonList>
+                </div>
+            </div>
+        </div>
+
+    </IonContent>
+</div>

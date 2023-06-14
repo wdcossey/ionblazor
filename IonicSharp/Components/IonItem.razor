@@ -1,0 +1,21 @@
+﻿@inherits IonControl
+
+<ion-item @attributes="@Attributes"
+          class="@Class"
+          button="@Button.ToString().ToLowerInvariant()"
+          color="@Color"
+          detail="@Detail?.ToString().ToLowerInvariant()"
+          detail-icon="@DetailIcon"
+          disabled="@Disabled.ToString().ToLowerInvariant()"
+          download="@Download"
+          fill="@Fill"
+          href="@Href"
+          lines="@Lines"
+          mode="@Mode"
+          rel="@Rel"
+          shape="@Shape"
+          target="@Target"
+          type="@Type">
+    @ChildContent
+</ion-item>
+

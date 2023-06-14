@@ -1,0 +1,9 @@
+﻿@inherits IonControl
+
+<ion-item-divider @attributes="@Attributes"
+                  class="@Class"
+                  color="@Color"
+                  mode="@Mode"
+                  sticky="@Sticky.ToString().ToLowerInvariant()">
+    @ChildContent
+</ion-item-divider>
