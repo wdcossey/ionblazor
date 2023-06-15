@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonToggle : IonControl
+public partial class IonToggle : IonComponent
 {
     private ElementReference _self;
     

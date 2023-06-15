@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonImg : IonControl
+public partial class IonImg : IonComponent
 {
     /// <summary>
     /// This attribute defines the alternative text describing the image.

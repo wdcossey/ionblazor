@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonSpinner: IonControl
+public partial class IonSpinner: IonComponent
 {
     /// <summary>
     /// The color to use from your application's color palette.

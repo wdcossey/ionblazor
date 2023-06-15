@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonBackButton : IonControl
+public partial class IonBackButton : IonComponent
 {
     /// <summary>
     /// The color to use from your application's color palette.

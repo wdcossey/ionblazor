@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public abstract class IonControl : ComponentBase
+public abstract class IonComponent : ComponentBase
 {
     [Inject]
     protected IJSRuntime JsRuntime { get; set; } = null!;
@@ -10,10 +10,4 @@ public abstract class IonControl : ComponentBase
 
     [Parameter]
     public virtual string? Class { get; set; }
-}
-
-public abstract class IonSlotControl : IonControl
-{
-    [Parameter]
-    public string? Slot { get; set; }
 }

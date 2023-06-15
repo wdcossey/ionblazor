@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonFabButton : IonControl
+public partial class IonFabButton : IonComponent
 {
     private ElementReference _self;
     

@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonInput : IonControl
+public partial class IonInput : IonComponent
 {
     
 }

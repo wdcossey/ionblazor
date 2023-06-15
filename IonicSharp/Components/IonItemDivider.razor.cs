@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonItemDivider : IonControl
+public partial class IonItemDivider : IonComponent
 {
     [Parameter] public RenderFragment? ChildContent { get; set; }
     

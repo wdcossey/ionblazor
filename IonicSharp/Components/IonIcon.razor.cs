@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonIcon : IonSlotControl
+public partial class IonIcon : IonComponent
 {
     [Parameter] public string Name { get; set; } = null!;
     [Parameter] public string? Color { get; set; }

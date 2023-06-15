@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonRefresherContent: IonControl
+public partial class IonRefresherContent: IonComponent
 {
     /// <summary>
     /// A static icon or a spinner to display when you begin to pull down.

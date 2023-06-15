@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonRefresher: IonSlotControl
+public partial class IonRefresher: IonComponent
 {
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionPullReference;
@@ -76,19 +76,16 @@ public partial class IonRefresher: IonSlotControl
 
         _ionPullReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
-            
             await IonPull.InvokeAsync(new IonRefresherIonPullEventArgs() { Sender  = this });
         }));
 
         _ionRefreshReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
-            
             await IonRefresh.InvokeAsync(new IonRefresherIonRefreshEventArgs() { Sender  = this });
         }));
 
         _ionStartReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
-            
             await IonStart.InvokeAsync(new IonRefresherIonStartEventArgs() { Sender  = this });
         }));
     }

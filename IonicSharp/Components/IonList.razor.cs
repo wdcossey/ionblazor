@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonList : IonControl
+public partial class IonList : IonComponent
 {
     protected ElementReference _self;
     

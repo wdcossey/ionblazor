@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonRippleEffect : IonControl
+public partial class IonRippleEffect : IonComponent
 {
     private ElementReference _self;
     

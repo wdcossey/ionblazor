@@ -140,6 +140,15 @@
     </script>
 
     <script>
+        function addAlertButtons(element, buttons, callback) {
+            buttons.forEach(function (button, index) {
+                button.handler = () => { callback.invokeMethodAsync('OnCallbackEvent', { index }); }
+            });
+            element.buttons = buttons;
+        }
+    </script>
+
+    <script>
         function setAccordionGroupValue(element, value) {
             element.value = value;
         }

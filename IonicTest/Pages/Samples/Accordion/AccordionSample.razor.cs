@@ -1,6 +1,6 @@
-﻿namespace IonicTest.Pages;
+﻿namespace IonicTest.Pages.Samples.Accordion;
 
-public partial class Accordion
+public partial class AccordionSample
 {
     private IonAccordionGroup _toggleAccordionGroup = null!;
     

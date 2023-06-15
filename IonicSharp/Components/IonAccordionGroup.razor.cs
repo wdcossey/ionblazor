@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonAccordionGroup : IonControl
+public partial class IonAccordionGroup : IonComponent
 {
     private ElementReference _self;
     private DotNetObjectReference<AccordionGroupEventHelper<JsonObject?>> _ionChangeObjectReference = null!;
@@ -47,7 +47,20 @@ public partial class IonAccordionGroup : IonControl
 
     public async Task<IonAccordionGroup> SetValue(string[]? value)
     {
-        await JsRuntime.InvokeVoidAsync("setAccordionGroupValue", _self, value ?? Array.Empty<string>());
+        object actualValue;
+        if (value is null || value.Length <= 0)
+        {
+            actualValue = string.Empty;
+        }
+        else if (value.Length == 1)
+        {
+            actualValue = value.First();
+        }
+        else
+        {
+            actualValue = value;
+        }
+        await JsRuntime.InvokeVoidAsync("setAccordionGroupValue", _self, actualValue /*value ?? Array.Empty<string>()*/);
         Value = value;
         return this;
     }
@@ -56,7 +69,7 @@ public partial class IonAccordionGroup : IonControl
     /// Emitted when the value property has changed as a result of a user action such as a click.
     /// This event will not emit when programmatically setting the value property.
     /// </summary>
-    [Parameter] public EventCallback<AccordionGroupIonChangeEventArgs> OnChange { get; set; }
+    [Parameter] public EventCallback<AccordionGroupIonChangeEventArgs> IonChange { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -70,9 +83,14 @@ public partial class IonAccordionGroup : IonControl
             {
                 //if (args?["detail"]?["value"]?.AsObject().)
                 var value = args?["detail"]?["value"];
-                Value = value is null ? Array.Empty<string>() : value is JsonArray ? value.Deserialize<string[]>() : new [] { value.GetValue<string>() };
+                Value = value switch
+                {
+                    null => Array.Empty<string>(),
+                    JsonArray => value.Deserialize<string[]>(),
+                    _ => new [] { value.GetValue<string>() }
+                };
 
-                await OnChange.InvokeAsync(new AccordionGroupIonChangeEventArgs() { Value = Value });
+                await IonChange.InvokeAsync(new AccordionGroupIonChangeEventArgs() { Value = Value });
             }));
 
         //Multiple is not true ? result?.FirstOrDefault() : result;

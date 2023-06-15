@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonProgressBar : IonControl
+public partial class IonProgressBar : IonComponent
 {
     [Parameter] public RenderFragment? ChildContent { get; set; }
     

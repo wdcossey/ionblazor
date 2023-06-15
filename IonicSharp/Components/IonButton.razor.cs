@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonButton : IonControl
+public partial class IonButton : IonComponent
 {
     private ElementReference _self;
     private DotNetObjectReference<ButtonEventHelper<JsonObject?>>? _ionBlurObjectReference = null;
@@ -90,11 +90,6 @@ public partial class IonButton : IonControl
     /// Set the size to <see cref="IonButtonSize.Default"/> inside of an item to make it a standard size button.
     /// </summary>
     [Parameter] public string? Size { get; set; }
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    [Parameter] public string? Slot { get; set; }
     
     /// <summary>
     /// If true, activates a button with a heavier font weight.

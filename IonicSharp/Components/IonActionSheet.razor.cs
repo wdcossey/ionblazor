@@ -2,7 +2,7 @@
 
 namespace IonicSharp.Components;
 
-public partial class IonActionSheet<TButtonData> : IonControl
+public partial class IonActionSheet<TButtonData> : IonComponent
     where TButtonData: class, IActionSheetButtonData
 {
     private ElementReference _self;

@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonText : IonControl
+public partial class IonText : IonComponent
 {
     private ElementReference _self;
     

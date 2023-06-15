@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonTextarea : IonControl
+public partial class IonTextarea : IonComponent
 {
     
 }

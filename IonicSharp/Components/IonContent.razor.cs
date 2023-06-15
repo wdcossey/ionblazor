@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonContent : IonControl
+public partial class IonContent : IonComponent
 {
     private ElementReference _self;
     //private DotNetObjectReference<AccordionGroupEventHelper<JsonObject?>> _ionChangeObjectReference = null!;

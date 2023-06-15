@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonCol : IonControl
+public partial class IonCol : IonComponent
 {
     
 }

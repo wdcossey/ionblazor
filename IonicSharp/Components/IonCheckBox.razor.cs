@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonCheckBox : IonSlotControl
+public partial class IonCheckBox : IonComponent
 {
     private ElementReference _self;
     

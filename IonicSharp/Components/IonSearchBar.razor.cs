@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonSearchBar : IonControl
+public partial class IonSearchBar : IonComponent
 {
     private ElementReference _self;
     

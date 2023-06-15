@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonToolbar: IonControl
+public partial class IonToolbar: IonComponent
 {
     [Parameter] public RenderFragment? ChildContent { get; set; }
     

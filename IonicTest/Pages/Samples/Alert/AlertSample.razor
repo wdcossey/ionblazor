@@ -1,0 +1,25 @@
+﻿@page "/samples/alert"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Inline Alerts (Recommended)</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                     <IonButton id="present-alert">Click Me</IonButton>
+                    <IonAlert
+                        Trigger="present-alert"
+                       Header="Alert"
+                       SubHeader="Important message"
+                       Message="This is an alert!"
+                       Buttons="@(() => new [] {
+                                    new AlertButton() { Text = "OK", Role = "ok" },
+                                    new AlertButton() { Text = "Cancel", Role = "cancel" },
+                                
+                                })"
+                     ></IonAlert>
+                </div>
+            </div>
+        </div>
+    </IonContent>
+</div>

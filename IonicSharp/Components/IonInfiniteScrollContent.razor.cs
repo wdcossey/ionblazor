@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonInfiniteScrollContent : IonControl
+public partial class IonInfiniteScrollContent : IonComponent
 {
     
 }

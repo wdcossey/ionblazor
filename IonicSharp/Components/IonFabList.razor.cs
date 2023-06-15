@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonFabList : IonControl
+public partial class IonFabList : IonComponent
 {
     [Parameter] public RenderFragment? ChildContent { get; set; }
     

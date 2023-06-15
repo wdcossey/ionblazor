@@ -13,6 +13,42 @@
     </IonHeader>
     <IonContent Class="ion-padding">
         <IonList>
+            <IonItemGroup>
+                        
+                <IonItemDivider Sticky="@true" Color="@IonColor.Primary">
+                    <IonLabel> Action Sheet </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" Disabled="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/action-sheet"))">
+                    <IonLabel>ion-action-sheet</IonLabel>
+                </IonItem>
+                
+            </IonItemGroup>
+            
+            <IonItemGroup>
+                        
+                <IonItemDivider Sticky="@true" Color="@IonColor.Primary">
+                    <IonLabel> Accordion </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/accordion"))">
+                    <IonLabel>ion-accordion</IonLabel>
+                </IonItem>
+                
+            </IonItemGroup>
+            
+            <IonItemGroup>
+                        
+                <IonItemDivider Sticky="@true" Color="@IonColor.Primary">
+                    <IonLabel> Alert </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/alert"))">
+                    <IonLabel>ion-alert</IonLabel>
+                </IonItem>
+                
+            </IonItemGroup>
+        
             <IonItem Button="true" @onclick="@(() => NavigationManager.NavigateTo("/button"))">
                 <IonLabel>ion-button</IonLabel>
             </IonItem>
@@ -34,9 +70,7 @@
             <IonItem Button="true" @onclick="@(() => NavigationManager.NavigateTo("/note"))">
                 <IonLabel>ion-note</IonLabel>
             </IonItem>
-            <IonItem Button="true" @onclick="@(() => NavigationManager.NavigateTo("/accordion"))">
-                <IonLabel>ion-accordion</IonLabel>
-            </IonItem>
+ 
             <IonItem Button="true" @onclick="@(() => NavigationManager.NavigateTo("/badge"))">
                 <IonLabel>ion-badge</IonLabel>
             </IonItem>
@@ -135,7 +169,7 @@
 <div class="ion-page" id="main-content">
     <IonHeader>
         <IonToolbar>
-            <IonButtons Slot="@IonButtonsSlot.Start">
+            <IonButtons slot="start">
                 <ion-menu-button></ion-menu-button>
             </IonButtons>
             <IonTitle>Menu</IonTitle>
@@ -144,7 +178,7 @@
     
     <IonContent Class="container">
         
-        <IonFab Slot="fixed" Vertical="@IonVerticalAlignment.Top" Horizontal="@IonHorizontalAlignment.Start">
+        <IonFab slot="fixed" Vertical="@IonVerticalAlignment.Top" Horizontal="@IonHorizontalAlignment.Start">
             <IonFabButton>
               <IonIcon Name="chevron-forward-circle"></IonIcon>
             </IonFabButton>
@@ -161,7 +195,7 @@
             </IonFabList>
           </IonFab>
         
-          <IonFab Slot="fixed" Vertical="@IonVerticalAlignment.Top" Horizontal="@IonHorizontalAlignment.End" Edge="true">
+          <IonFab slot="fixed" Vertical="@IonVerticalAlignment.Top" Horizontal="@IonHorizontalAlignment.End" Edge="true">
             <IonFabButton>
               <IonIcon Name="chevron-down-circle"></IonIcon>
             </IonFabButton>
@@ -178,7 +212,7 @@
             </IonFabList>
           </IonFab>
               
-          <IonFab Slot="fixed" Vertical="@IonVerticalAlignment.Bottom" Horizontal="@IonHorizontalAlignment.End">
+          <IonFab slot="fixed" Vertical="@IonVerticalAlignment.Bottom" Horizontal="@IonHorizontalAlignment.End">
             <IonFabButton>
               <IonIcon Name="chevron-up-circle"></IonIcon>
             </IonFabButton>
@@ -271,11 +305,11 @@
     <ion-modal trigger="select-fruits" id="selected-fruits" @ref="modal">
         <IonHeader>
             <IonToolbar>
-                <IonButtons Slot="@IonButtonsSlot.Start">
+                <IonButtons slot="start">
                     <IonButton @onclick="@cancelChanges">Cancel</IonButton>
                 </IonButtons>
                 <IonTitle>Favorite Fruits</IonTitle>
-                <IonButtons Slot="@IonButtonsSlot.End">
+                <IonButtons slot="end">
                     <IonButton @onclick="@confirmChanges">Done</IonButton>
                 </IonButtons>
             </IonToolbar>
@@ -290,7 +324,7 @@
                     var @checked = workingSelectedFruits.Contains(item.value);
                     <IonItem>
                         <IonLabel>@item.text</IonLabel>
-                        <IonCheckBox Slot="end" Value="@item.value" Checked="@(@checked)"></IonCheckBox>
+                        <IonCheckBox aria-label="@item.text" slot="end" Value="@item.value" Checked="@(@checked)"></IonCheckBox>
                     </IonItem>
                 }
             </IonList>
@@ -300,11 +334,11 @@
     <ion-modal trigger="open-modal" id="modal-test">
         <IonHeader>
             <IonToolbar>
-                <IonButtons Slot="@IonButtonsSlot.Start">
+                <IonButtons slot="start">
                     <IonButton onclick="cancel()">Cancel</IonButton>
                 </IonButtons>
                 <IonTitle>Welcome</IonTitle>
-                <IonButtons Slot="@IonButtonsSlot.End">
+                <IonButtons slot="end">
                     <IonButton onclick="@confirm" Strong="@true">Confirm</IonButton>
                 </IonButtons>
             </IonToolbar>

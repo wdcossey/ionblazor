@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonTabButton: IonControl
+public partial class IonTabButton: IonComponent
 {
     
     [Parameter] public RenderFragment? ChildContent { get; set; }

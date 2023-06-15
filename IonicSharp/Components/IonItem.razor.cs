@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonItem : IonControl
+public partial class IonItem : IonComponent
 {
     [Parameter] public RenderFragment? ChildContent { get; set; }
     
@@ -78,7 +78,7 @@ public partial class IonItem : IonControl
     /// The shape of the item. If <see cref="IonItemShape.Round"/> it will have increased border radius.
     /// </summary>
     [Parameter] public string? Shape { get; set; } = IonItemShape.Default;
-    
+
     /// <summary>
     /// Specifies where to display the linked URL. Only applies when an href is provided.
     /// Special keywords: <b>"_blank"</b>, <b>"_self"</b>, <b>"_parent"</b>, <b>"_top"</b>.
