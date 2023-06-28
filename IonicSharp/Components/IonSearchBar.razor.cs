@@ -1,71 +1,71 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonSearchBar : IonComponent
+public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorComponent
 {
     private ElementReference _self;
-    
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionBlurReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionCancelReference = null;
+
+    private readonly DotNetObjectReference<IonicEventCallback>? _ionBlurReference = null;
+    private readonly DotNetObjectReference<IonicEventCallback>? _ionCancelReference = null;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionChangeReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionClearReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionFocusReference = null;
+    private readonly DotNetObjectReference<IonicEventCallback>? _ionClearReference = null;
+    private readonly DotNetObjectReference<IonicEventCallback>? _ionFocusReference = null;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionInputReference = null;
-    
+
     /// <summary>
     /// If true, enable searchbar animation.
     /// </summary>
-    [Parameter] public bool? Animated { get; set; }
+    [Parameter]
+    public bool? Animated { get; set; }
 
     /// <summary>
     /// Set the input's autocomplete property.
     /// </summary>
-    [Parameter] public string? AutoComplete { get; set; } = SearchBarAutoComplete.Off;
-    
+    [Parameter]
+    public string? AutoComplete { get; set; } = SearchBarAutoComplete.Off;
+
     /// <summary>
     /// Set the input's autocorrect property. <p/>
     /// Defaults to <b>off</b>.
     /// </summary>
-    [Parameter] public bool? AutoCorrect { get; set; } = false;
-    
+    [Parameter]
+    public bool? AutoCorrect { get; set; } = false;
+
     /// <summary>
     /// Set the cancel button icon. Only applies to md mode. <p/>
     /// Defaults to <b>arrow-back-sharp</b>.
     /// </summary>
-    [Parameter] public string? CancelButtonIcon { get; set; } = "arrow-back-sharp";
-    
+    [Parameter]
+    public string? CancelButtonIcon { get; set; } = "arrow-back-sharp";
+
     /// <summary>
     /// Set the the cancel button text. Only applies to ios mode.
     /// </summary>
-    [Parameter] public string? CancelButtonText { get; set; } = "Cancel";
+    [Parameter]
+    public string? CancelButtonText { get; set; } = "Cancel";
 
     /// <summary>
     /// Set the clear icon. <p/>
     /// Defaults to <b>close-circle</b> for ios and <b>close-sharp</b> for md.
     /// </summary>
-    [Parameter] public string? ClearIcon { get; set; }
-    
-    /// <summary>
-    /// The color to use from your application's color palette.
-    /// Default options are:
-    /// <see cref="IonColor.Primary"/>, <see cref="IonColor.Secondary"/>,
-    /// <see cref="IonColor.Tertiary"/>, <see cref="IonColor.Success"/>,
-    /// <see cref="IonColor.Warning"/>, <see cref="IonColor.Danger"/>,
-    /// <see cref="IonColor.Light"/>, <see cref="IonColor.Medium"/>,
-    /// and <see cref="IonColor.Dark"/>. <p/>
-    /// For more information on colors, see theming.
-    /// </summary>
-    [Parameter] public string? Color { get; set; }
-    
+    [Parameter]
+    public string? ClearIcon { get; set; }
+
+    /// <inheritdoc/>
+    [Parameter]
+    public string? Color { get; set; }
+
     /// <summary>
     /// Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
     /// </summary>
-    [Parameter] public int? Debounce { get; set; }
-    
+    [Parameter]
+    public int? Debounce { get; set; }
+
     /// <summary>
     /// If true, the user cannot interact with the input.
     /// </summary>
-    [Parameter] public bool? Disabled { get; set; }
-    
+    [Parameter]
+    public bool? Disabled { get; set; }
+
     /// <summary>
     /// A hint to the browser for which enter key to display.
     /// Possible values:
@@ -77,8 +77,9 @@ public partial class IonSearchBar : IonComponent
     /// <see cref="EnterKeyHints.Search"/>,
     /// and <see cref="EnterKeyHints.Send"/>.
     /// </summary>
-    [Parameter] public EnterKeyHints? EnterKeyHint { get; set; }
-    
+    [Parameter]
+    public EnterKeyHints? EnterKeyHint { get; set; }
+
     /// <summary>
     /// A hint to the browser for which keyboard to display.
     /// Possible values:
@@ -91,26 +92,28 @@ public partial class IonSearchBar : IonComponent
     /// <see cref="InputModes.Decimal"/>,
     /// and <see cref="InputModes.Search"/>.
     /// </summary>
-    [Parameter] public InputModes? InputMode { get; set; }
-    
-    /// <summary>
-    /// The mode determines which platform styles to use.
-    /// </summary>
-    [Parameter] public string? Mode { get; set; } = IonMode.Default;
-    
+    [Parameter]
+    public InputModes? InputMode { get; set; }
+
+    /// <inheritdoc/>
+    [Parameter]
+    public string? Mode { get; set; } = IonMode.Default;
+
     /// <summary>
     /// Set the input's placeholder. placeholder can accept either plaintext or HTML as a string.
     /// To display characters normally reserved for HTML, they must be escaped.
     /// For example &lt;Ionic&gt; would become &amp;lt;Ionic&amp;gt; <p/>
     /// Defaults to <b>Search</b>
     /// </summary>
-    [Parameter] public string? Placeholder { get; set; }
-    
+    [Parameter]
+    public string? Placeholder { get; set; }
+
     /// <summary>
     /// The icon to use as the search icon.
     /// Defaults to <b>search-outline</b> in ios mode and <b>search-sharp</b> in md mode.
     /// </summary>
-    [Parameter] public string? SearchIcon { get; set; }
+    [Parameter]
+    public string? SearchIcon { get; set; }
 
     /// <summary>
     /// Sets the behavior for the cancel button. Defaults to <see cref="ButtonBehavior.Never"/>.<br/>
@@ -118,7 +121,8 @@ public partial class IonSearchBar : IonComponent
     /// Setting to <see cref="ButtonBehavior.Never"/> hides the cancel button.<br/>
     /// Setting to <see cref="ButtonBehavior.Always"/> shows the cancel button regardless of focus state.
     /// </summary>
-    [Parameter] public ButtonBehavior? ShowCancelButton { get; set; }
+    [Parameter]
+    public ButtonBehavior? ShowCancelButton { get; set; }
 
     /// <summary>
     /// Sets the behavior for the clear button. Defaults to <see cref="ButtonBehavior.Focus"/>.<br/>
@@ -127,34 +131,40 @@ public partial class IonSearchBar : IonComponent
     /// Setting to <see cref="ButtonBehavior.Always"/> shows the clear button regardless of focus state,
     /// but only if the input is not empty.
     /// </summary>
-    [Parameter] public ButtonBehavior? ShowClearButton { get; set; }
-    
+    [Parameter]
+    public ButtonBehavior? ShowClearButton { get; set; }
+
     /// <summary>
     /// If <b>true</b>, enable spellcheck on the input.
     /// </summary>
-    [Parameter] public bool? SpellCheck { get; set; }
-    
+    [Parameter]
+    public bool? SpellCheck { get; set; }
+
     /// <summary>
     /// Set the type of the input.
     /// </summary>
     /// <returns></returns>
-    [Parameter] public InputTypes? Type { get; set; }
-    
+    [Parameter]
+    public InputTypes? Type { get; set; }
+
     /// <summary>
     /// the value of the searchbar.<p/>
     /// </summary>
-    [Parameter] public string? Value { get; set; }
+    [Parameter]
+    public string? Value { get; set; }
 
     /// <summary>
     /// Emitted when the input loses focus.
     /// </summary>
-    [Parameter] public EventCallback IonBlur { get; set; }
-    
+    [Parameter]
+    public EventCallback IonBlur { get; set; }
+
     /// <summary>
     /// Emitted when the cancel button is clicked.
     /// </summary>
-    [Parameter] public EventCallback IonCancel { get; set; }
-    
+    [Parameter]
+    public EventCallback IonCancel { get; set; }
+
     /// <summary>
     /// The <see cref="IonChange"/> event is fired for <see cref="IonSearchBar"/> elements when the user modifies the
     /// element's value.
@@ -164,55 +174,59 @@ public partial class IonSearchBar : IonComponent
     /// This can happen when the element loses focus or when the "Enter" key is pressed.
     /// <see cref="IonChange"/> can also fire when clicking the clear or cancel buttons.
     /// </summary>
-    [Parameter] public EventCallback<IonSearchBarChangeEventArgs> IonChange { get; set; }
-    
+    [Parameter]
+    public EventCallback<IonSearchBarChangeEventArgs> IonChange { get; set; }
+
     /// <summary>
     /// Emitted when the clear input button is clicked.
     /// </summary>
-    [Parameter] public EventCallback IonClear { get; set; }
-    
+    [Parameter]
+    public EventCallback IonClear { get; set; }
+
     /// <summary>
     /// Emitted when the input has focus.
     /// </summary>
-    [Parameter] public EventCallback IonFocus { get; set; }
-    
+    [Parameter]
+    public EventCallback IonFocus { get; set; }
+
     /// <summary>
     /// Emitted when the value of the <see cref="IonSearchBar"/> element has changed.
     /// </summary>
-    [Parameter] public EventCallback<IonSearchBarInputEventArgs> IonInput { get; set; }
+    [Parameter]
+    public EventCallback<IonSearchBarInputEventArgs> IonInput { get; set; }
 
     public IonSearchBar()
     {
-        _ionBlurReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _ionBlurReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await IonBlur.InvokeAsync();
         }));
-        
-        _ionCancelReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new (async _ =>
+
+        _ionCancelReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await IonCancel.InvokeAsync();
         }));
-        
-        _ionChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new (async args =>
+
+        _ionChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
             var value = args?["detail"]?["value"]?.GetValue<string>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
             Value = value;
-            
+
             await IonChange.InvokeAsync(new IonSearchBarChangeEventArgs { Value = value, IsTrusted = isTrusted });
         }));
-        
-        _ionClearReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new (async _ =>
+
+        _ionClearReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await IonClear.InvokeAsync();
         }));
-        
-        _ionFocusReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new (async _ =>
+
+        _ionFocusReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await IonFocus.InvokeAsync();
         }));
-        
-        _ionInputReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new (async args =>
+
+        _ionInputReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
             var value = args?["detail"]?["value"]?.GetValue<string>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
@@ -221,14 +235,15 @@ public partial class IonSearchBar : IonComponent
             await IonInput.InvokeAsync(new IonSearchBarInputEventArgs { Value = value, IsTrusted = isTrusted });
         }));
     }
-    
+
     public async Task<IonSearchBar> SetValue(string? value)
     {
+        throw new NotImplementedException();
         //await JsRuntime.InvokeVoidAsync("setAccordionGroupValue", _self, value);
         Value = value;
         return this;
     }
-    
+
     /// <summary>
     /// Returns the native &lt;input&gt; element used under the hood.
     /// </summary>
@@ -236,7 +251,7 @@ public partial class IonSearchBar : IonComponent
     {
         return await JsRuntime.InvokeAsync<JsonElement?>("getSearchbarInputElement", _self);
     }
-    
+
     /// <summary>
     /// Sets focus on the native input in ion-searchbar. Use this method instead of the global input.focus().<p/>
     /// Developers who wish to focus an input when a page enters should call setFocus()
@@ -255,22 +270,15 @@ public partial class IonSearchBar : IonComponent
 
         if (!firstRender)
             return;
-        
-        //await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionBlur", _self, _ionBlurReference);
-        //await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionCancel", _self, _ionCancelReference);
-        //await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", _self, _ionChangeReference);
-        //await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionClear", _self, _ionClearReference);
-        //await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionFocus", _self, _ionFocusReference);
-        //await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionInput", _self, _ionInputReference);
-        
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+
+        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new object[]
         {
-            new { Event = "ionBlur", Ref = _ionBlurReference},
-            new { Event = "ionCancel", Ref = _ionCancelReference},
-            new { Event = "ionChange", Ref = _ionChangeReference},
-            new { Event = "ionClear", Ref = _ionClearReference},
-            new { Event = "ionFocus", Ref = _ionFocusReference},
-            new { Event = "ionInput", Ref = _ionInputReference},
+            new { Event = "ionBlur", Ref = _ionBlurReference },
+            new { Event = "ionCancel", Ref = _ionCancelReference },
+            new { Event = "ionChange", Ref = _ionChangeReference },
+            new { Event = "ionClear", Ref = _ionClearReference },
+            new { Event = "ionFocus", Ref = _ionFocusReference },
+            new { Event = "ionInput", Ref = _ionInputReference },
         }, _self);
     }
 }

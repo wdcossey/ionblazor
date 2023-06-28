@@ -1,17 +1,8 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonBackButton : IonComponent
+public partial class IonBackButton : IonComponent, IIonModeComponent, IIonColorComponent
 {
-    /// <summary>
-    /// The color to use from your application's color palette.
-    /// Default options are:
-    /// <see cref="IonColor.Primary"/>, <see cref="IonColor.Secondary"/>,
-    /// <see cref="IonColor.Tertiary"/>, <see cref="IonColor.Success"/>,
-    /// <see cref="IonColor.Warning"/>, <see cref="IonColor.Danger"/>,
-    /// <see cref="IonColor.Light"/>, <see cref="IonColor.Medium"/>,
-    /// and <see cref="IonColor.Dark"/>. <p/>
-    /// For more information on colors, see theming.
-    /// </summary>
+    /// <inheritdoc/>
     [Parameter] public string? Color { get; set; }
     
     /// <summary>
@@ -29,9 +20,7 @@ public partial class IonBackButton : IonComponent
     /// </summary>
     [Parameter] public string? Icon { get; set; }
     
-    /// <summary>
-    /// The mode determines which platform styles to use.
-    /// </summary>
+    /// <inheritdoc/>
     [Parameter] public string? Mode { get; set; } = IonMode.Default;
     
     //routerAnimation

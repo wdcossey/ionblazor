@@ -1,8 +1,12 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonSkeletonText
+public partial class IonSkeletonText : IonComponent
 {
-    [Parameter] public bool Animated { get; set; } = false;
+    /// <summary>
+    /// 
+    /// </summary>
+    [Parameter]
+    public bool Animated { get; set; } = false;
 
     public IonSkeletonText SetAnimated(bool value)
     {

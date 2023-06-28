@@ -1,17 +1,23 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonIcon : IonComponent
+public partial class IonIcon : IonComponent, IIonColorComponent
 {
-    [Parameter] public string Name { get; set; } = null!;
-    [Parameter] public string? Color { get; set; }
-    [Parameter] public IconSize? Size { get; set; }
+    [Parameter] 
+    public string Name { get; set; } = null!;
+    
+    /// <inheritdoc/>
+    [Parameter] 
+    public string? Color { get; set; }
+    
+    [Parameter] 
+    public string? Size { get; set; }
 }
 
-public enum IconSize 
+public static class IconSize
 {
-    Default,
-    Large,
-    Small
+    public const string Default = "default";
+    public const string Large = "large";
+    public const string Small = "small";
 }
 
 public static class IconColor 

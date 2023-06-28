@@ -1,9 +1,11 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonButtons: IonComponent
+public partial class IonButtons : IonComponent, IIonContentComponent
 {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    
+    /// <inheritdoc/>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
     /// <summary>
     /// If <b>true</b>, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the
     /// first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once
@@ -13,6 +15,7 @@ public partial class IonButtons: IonComponent
     /// <br/><br/>
     /// Typically used for Collapsible Large Titles
     /// </summary>
-    [Parameter] public bool Collapse { get; set; }
-    
+    [Parameter]
+    public bool Collapse { get; set; }
+
 }

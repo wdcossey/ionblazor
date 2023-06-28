@@ -1,6 +1,8 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonReorder: IonComponent
+public partial class IonReorder: IonComponent, IIonContentComponent
 {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    /// <inheritdoc/>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 }

@@ -1,21 +1,25 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonItemSliding: IonComponent
+public partial class IonItemSliding : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionDragReference;
-    
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    
+
+    /// <inheritdoc/>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the sliding item.
     /// </summary>
-    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter]
+    public bool? Disabled { get; set; }
 
     /// <summary>
     /// Emitted when the sliding position changes.
     /// </summary>
-    [Parameter] public EventCallback<IonDragEventArgs> IonDrag { get; set; }
+    [Parameter]
+    public EventCallback<IonDragEventArgs> IonDrag { get; set; }
 
     public IonItemSliding()
     {
@@ -82,15 +86,15 @@ public partial class IonItemSliding: IonComponent
     {
         throw new NotImplementedException();
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
 
         if (!firstRender)
             return;
-        
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+
+        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
         {
             new { Event = "ionDrag", Ref = _ionDragReference }
         }, _self);

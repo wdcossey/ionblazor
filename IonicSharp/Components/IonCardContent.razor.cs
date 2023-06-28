@@ -1,12 +1,12 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonCardContent : IonComponent
+public partial class IonCardContent : IonComponent, IIonModeComponent, IIonContentComponent
 {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    /// <inheritdoc/>
+    [Parameter] 
+    public RenderFragment? ChildContent { get; set; }
     
-    /// <summary>
-    /// The mode determines which platform styles to use.
-    /// </summary>
+    /// <inheritdoc/>
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
 }

@@ -1,6 +1,8 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonThumbnail : IonComponent
+public partial class IonThumbnail : IonComponent, IIonContentComponent
 {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    /// <inheritdoc/>
+    [Parameter] 
+    public RenderFragment? ChildContent { get; set; }
 }

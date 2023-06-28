@@ -2,7 +2,7 @@
 
 namespace IonicSharp.Components;
 
-public partial class IonAlert : IonComponent
+public partial class IonAlert : IonComponent, IIonModeComponent
 {
     private ElementReference _self;
 
@@ -69,9 +69,7 @@ public partial class IonAlert : IonComponent
     /// </summary>
     [Parameter] public string? Message { get; set; }
     
-    /// <summary>
-    /// The mode determines which platform styles to use.
-    /// </summary>
+    /// <inheritdoc/>
     [Parameter] public string? Mode { get; set; } = IonMode.Default;
     
     /// <summary>

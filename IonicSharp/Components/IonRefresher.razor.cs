@@ -1,12 +1,13 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonRefresher: IonComponent
+public partial class IonRefresher: IonComponent, IIonContentComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionPullReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionRefreshReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionStartReference;
+    private readonly DotNetObjectReference<IonicEventCallback>? _ionPullReference;
+    private readonly DotNetObjectReference<IonicEventCallback>? _ionRefreshReference;
+    private readonly DotNetObjectReference<IonicEventCallback>? _ionStartReference;
     
+    /// <inheritdoc/>
     [Parameter] public RenderFragment? ChildContent { get; set; }
     
     /// <summary>
@@ -73,18 +74,17 @@ public partial class IonRefresher: IonComponent
 
     public IonRefresher()
     {
-
-        _ionPullReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionPullReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await IonPull.InvokeAsync(new IonRefresherIonPullEventArgs() { Sender  = this });
         }));
 
-        _ionRefreshReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionRefreshReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await IonRefresh.InvokeAsync(new IonRefresherIonRefreshEventArgs() { Sender  = this });
         }));
 
-        _ionStartReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionStartReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await IonStart.InvokeAsync(new IonRefresherIonStartEventArgs() { Sender  = this });
         }));

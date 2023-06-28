@@ -1,31 +1,37 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonRadioGroup: IonComponent
+public partial class IonRadioGroup : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionChangeReference;
-    
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <inheritdoc/>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the radios can be deselected.
     /// </summary>
-    [Parameter] public bool AllowEmptySelection { get; set; }
-    
+    [Parameter]
+    public bool AllowEmptySelection { get; set; }
+
     /// <summary>
     /// The name of the control, which is submitted with the form data.
     /// </summary>
-    [Parameter] public string? Name { get; set; }
+    [Parameter]
+    public string? Name { get; set; }
 
     /// <summary>
     /// the value of the radio group.
     /// </summary>
-    [Parameter] public string? Value { get; set; }
-    
+    [Parameter]
+    public string? Value { get; set; }
+
     /// <summary>
     /// Emitted when the value has changed.
     /// </summary>
-    [Parameter] public EventCallback<IonRadioGroupIonChangeEventArgs> IonChange { get; set; }
+    [Parameter]
+    public EventCallback<IonRadioGroupIonChangeEventArgs> IonChange { get; set; }
 
     public IonRadioGroup()
     {
@@ -35,22 +41,23 @@ public partial class IonRadioGroup: IonComponent
             var value = args?["detail"]?["value"]?.GetValue<string>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
             Value = value;
-            
-            await IonChange.InvokeAsync(new IonRadioGroupIonChangeEventArgs { Sender = this, Value = value, IsTrusted = isTrusted });
+
+            await IonChange.InvokeAsync(new IonRadioGroupIonChangeEventArgs
+                { Sender = this, Value = value, IsTrusted = isTrusted });
         }));
-        
+
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
 
         if (!firstRender)
             return;
-        
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+
+        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
         {
-            new { Event = "ionChange", Ref = _ionChangeReference}
+            new { Event = "ionChange", Ref = _ionChangeReference }
         }, _self);
     }
 }

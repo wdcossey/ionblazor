@@ -1,12 +1,18 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonRippleEffect : IonComponent
+public partial class IonRippleEffect : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
-    
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    
-    [Parameter] public IonRippleEffectType Type { get; set; } = IonRippleEffectType.Bounded;
+
+    /// <inheritdoc/>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Parameter]
+    public string? Type { get; set; } = IonRippleEffectType.Default;
 
     public async Task AddRippleAsync(int x, int y)
     {
@@ -14,8 +20,9 @@ public partial class IonRippleEffect : IonComponent
     }
 }
 
-public enum IonRippleEffectType
+public static class IonRippleEffectType
 {
-    Bounded,
-    Unbounded
+    public const string? Default = null;
+    public const string Bounded = "bounded";
+    public const string Unbounded = "unbounded";
 }

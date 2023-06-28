@@ -1,22 +1,15 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonSegment : IonComponent
+public partial class IonSegment : IonComponent, IIonModeComponent, IIonContentComponent, IIonColorComponent
 {
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionChangeReference;
 
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    /// <inheritdoc/>
+    [Parameter] 
+    public RenderFragment? ChildContent { get; set; }
 
-    /// <summary>
-    /// The color to use from your application's color palette.
-    /// Default options are:
-    /// <see cref="IonColor.Primary"/>, <see cref="IonColor.Secondary"/>,
-    /// <see cref="IonColor.Tertiary"/>, <see cref="IonColor.Success"/>,
-    /// <see cref="IonColor.Warning"/>, <see cref="IonColor.Danger"/>,
-    /// <see cref="IonColor.Light"/>, <see cref="IonColor.Medium"/>,
-    /// and <see cref="IonColor.Dark"/>. <p/>
-    /// For more information on colors, see theming.
-    /// </summary>
+    /// <inheritdoc/>
     [Parameter]
     public string? Color { get; set; }
 
@@ -26,10 +19,7 @@ public partial class IonSegment : IonComponent
     [Parameter]
     public bool Disabled { get; set; }
 
-    /// <summary>
-    /// The mode determines which platform styles to use.<br/>
-    /// Default: <b>null</b>
-    /// </summary>
+    /// <inheritdoc/>
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
 

@@ -1,25 +1,28 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonList : IonComponent
+public partial class IonList : IonComponent, IIonModeComponent, IIonContentComponent
 {
-    protected ElementReference _self;
-    
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    
+    protected ElementReference Self;
+
+    /// <inheritdoc/>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
     /// <summary>
     /// If <b>true</b>, the list will have margin around it and rounded corners.
     /// </summary>
-    [Parameter] public bool Inset { get; set; }
-    
+    [Parameter]
+    public bool Inset { get; set; }
+
     /// <summary>
     /// How the bottom border should be displayed on all items.
     /// </summary> 
-    [Parameter] public string? Lines { get; set; } = IonListLines.Default;
-        
-    /// <summary>
-    /// The mode determines which platform styles to use.
-    /// </summary>
-    [Parameter] public string? Mode { get; set; } = IonMode.Default;
+    [Parameter]
+    public string? Lines { get; set; } = IonListLines.Default;
+
+    /// <inheritdoc/>
+    [Parameter]
+    public string? Mode { get; set; } = IonMode.Default;
 
     /// <summary>
     /// If ion-item-sliding are used inside the list, this method closes any open sliding item.
@@ -28,7 +31,7 @@ public partial class IonList : IonComponent
     /// <returns></returns>
     public async Task<bool> CloseSlidingItemsAsync()
     {
-        return await JsRuntime.InvokeAsync<bool>("ionListCloseSlidingItems", _self);
+        return await JsRuntime.InvokeAsync<bool>("ionListCloseSlidingItems", Self);
     }
 }
 

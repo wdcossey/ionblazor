@@ -1,49 +1,47 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonButton : IonComponent
+public partial class IonButton : IonComponent, IIonModeComponent, IIonContentComponent, IIonColorComponent
 {
     private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback>? _ionBlurReference = null;
     private DotNetObjectReference<IonicEventCallback>? _ionFocusReference = null;
-    
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    
+
+    /// <inheritdoc/>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
     /// <summary>
     /// The type of button.
     /// </summary>
-    [Parameter] public string? ButtonType { get; set; } = "button";
-    
-    /// <summary>
-    /// The color to use from your application's color palette.
-    /// Default options are:
-    /// <see cref="IonColor.Primary"/>, <see cref="IonColor.Secondary"/>,
-    /// <see cref="IonColor.Tertiary"/>, <see cref="IonColor.Success"/>,
-    /// <see cref="IonColor.Warning"/>, <see cref="IonColor.Danger"/>,
-    /// <see cref="IonColor.Light"/>, <see cref="IonColor.Medium"/>,
-    /// and <see cref="IonColor.Dark"/>. <br/>
-    /// For more information on colors, see theming.
-    /// </summary>
-    [Parameter] public string? Color { get; set; }
-    
+    [Parameter]
+    public string? ButtonType { get; set; } = "button";
+
+    /// <inheritdoc/>
+    [Parameter]
+    public string? Color { get; set; }
+
     /// <summary>
     /// If true, the user cannot interact with the <see cref="IonButton"/>.
     /// </summary>
-    [Parameter] public bool? Disabled { get; set; }
-    
+    [Parameter]
+    public bool? Disabled { get; set; }
+
     /// <summary>
     /// This attribute instructs browsers to download a URL instead of navigating to it,
     /// so the user will be prompted to save it as a local file. <br/>
     /// If the attribute has a value, it is used as the pre-filled file name in the Save prompt
     /// (the user can still change the file name if they want).
     /// </summary>
-    [Parameter] public string? Download { get; set; }
-    
+    [Parameter]
+    public string? Download { get; set; }
+
     /// <summary>
     /// Set to <see cref="IonButtonExpand.Block"/> for a full-width button
     /// or to <see cref="IonButtonExpand.Full"/> for a full-width button with square corners and no left or right borders.
     /// </summary>
-    [Parameter] public string? Expand { get; set; }
-    
+    [Parameter]
+    public string? Expand { get; set; }
+
     /// <summary>
     /// Set to <see cref="IonButtonFill.Clear"/> for a transparent button that resembles a flat button,
     /// to <see cref="IonButtonFill.Outline"/> for a transparent button with a border,
@@ -51,30 +49,32 @@ public partial class IonButton : IonComponent
     /// The default fill is <see cref="IonButtonFill.Solid"/> except inside of a toolbar,
     /// where the default is <see cref="IonButtonFill.Clear"/>.
     /// </summary>
-    [Parameter] public string? Fill { get; set; }
-    
+    [Parameter]
+    public string? Fill { get; set; }
+
     /// <summary>
     /// The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
     /// </summary>
-    [Parameter] public string? Form { get; set; }
-    
+    [Parameter]
+    public string? Form { get; set; }
+
     /// <summary>
     /// Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     /// </summary>
-    [Parameter] public string? Href { get; set; }
+    [Parameter]
+    public string? Href { get; set; }
 
-    /// <summary>
-    /// The mode determines which platform styles to use.
-    /// </summary>
+    /// <inheritdoc/>
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
-    
+
     /// <summary>
     /// Specifies the relationship of the target object to the link object. The value is a space-separated list of
     /// <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types">link types</a>.
     /// </summary>
-    [Parameter] public string? Rel { get; set; }
-    
+    [Parameter]
+    public string? Rel { get; set; }
+
     //[Parameter] public string? RouterAnimation { get; set; }
     //[Parameter] public string? RouterDirection { get; set; }
 
@@ -83,7 +83,7 @@ public partial class IonButton : IonComponent
     /// </summary>
     [Parameter]
     public string? Shape { get; set; } = IonButtonShape.Default;
-    
+
     /// <summary>
     /// Set to <see cref="IonButtonSize.Small"/> for a button with less height and padding,
     /// to <see cref="IonButtonSize.Default"/> for a button with the default height and padding,
@@ -92,34 +92,40 @@ public partial class IonButton : IonComponent
     /// where the size is <see cref="IonButtonSize.Small"/> by default. <br/>
     /// Set the size to <see cref="IonButtonSize.Default"/> inside of an item to make it a standard size button.
     /// </summary>
-    [Parameter] public string? Size { get; set; }
-    
+    [Parameter]
+    public string? Size { get; set; }
+
     /// <summary>
     /// If true, activates a button with a heavier font weight.
     /// </summary>
-    [Parameter] public bool? Strong { get; set; }
-    
+    [Parameter]
+    public bool? Strong { get; set; }
+
     /// <summary>
     /// Specifies where to display the linked URL. <br/>
     /// Only applies when an href is provided. <br/>
     /// Special keywords: "_blank", "_self", "_parent", "_top".
     /// </summary>
-    [Parameter] public string? Target { get; set; }
-    
+    [Parameter]
+    public string? Target { get; set; }
+
     /// <summary>
     /// The type of the button.
     /// </summary>
-    [Parameter] public string Type { get; set; } = IonButtonType.Button;
+    [Parameter]
+    public string Type { get; set; } = IonButtonType.Button;
 
     /// <summary>
     /// Emitted when the button loses focus.
     /// </summary>
-    [Parameter] public EventCallback OnBlur { get; set; }
-    
+    [Parameter]
+    public EventCallback OnBlur { get; set; }
+
     /// <summary>
     /// Emitted when the button has focus.
     /// </summary>
-    [Parameter] public EventCallback OnFocus { get; set; }
+    [Parameter]
+    public EventCallback OnFocus { get; set; }
 
     public IonButton()
     {
@@ -127,13 +133,13 @@ public partial class IonButton : IonComponent
         {
             await OnBlur.InvokeAsync();
         }));
-        
+
         _ionFocusReference = DotNetObjectReference.Create(new IonicEventCallback(async () =>
         {
             await OnFocus.InvokeAsync();
         }));
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -141,12 +147,12 @@ public partial class IonButton : IonComponent
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
         {
-            new { Event = "ionBlur", Ref = _ionBlurReference},
-            new { Event = "ionFocus", Ref = _ionFocusReference}
+            new { Event = "ionBlur", Ref = _ionBlurReference },
+            new { Event = "ionFocus", Ref = _ionFocusReference }
         }, _self);
-        
+
     }
 }
 

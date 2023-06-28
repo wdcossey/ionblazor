@@ -2,7 +2,7 @@
 
 namespace IonicSharp.Components;
 
-public partial class IonContent : IonComponent
+public partial class IonContent : IonComponent, IIonContentComponent, IIonColorComponent
 {
     private ElementReference _self;
 
@@ -10,108 +10,76 @@ public partial class IonContent : IonComponent
     private DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionScrollEndReference = null;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionScrollStartReference = null;
 
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    
-    /// <summary>
-    /// The color to use from your application's color palette.
-    /// Default options are:
-    /// <see cref="IonColor.Primary"/>, <see cref="IonColor.Secondary"/>,
-    /// <see cref="IonColor.Tertiary"/>, <see cref="IonColor.Success"/>,
-    /// <see cref="IonColor.Warning"/>, <see cref="IonColor.Danger"/>,
-    /// <see cref="IonColor.Light"/>, <see cref="IonColor.Medium"/>,
-    /// and <see cref="IonColor.Dark"/>. <br/>
-    /// For more information on colors, see theming.
-    /// </summary>
-    [Parameter] public string? Color { get; set; }
-    
+    /// <inheritdoc/>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <inheritdoc/>
+    [Parameter]
+    public string? Color { get; set; }
+
     /// <summary>
     /// If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
     /// If the content exceeds the bounds of ionContent, nothing will change.
     /// Note, this does not disable the system bounce on iOS. That is an OS level setting.
     /// </summary>
-    [Parameter] public bool? ForceOverscroll { get; set; }
-    
+    [Parameter]
+    public bool? ForceOverscroll { get; set; }
+
     /// <summary>
     /// If true, the content will scroll behind the headers and footers.
     /// This effect can easily be seen by setting the toolbar to transparent.
     /// </summary>
-    [Parameter] public bool? Fullscreen { get; set; }
-    
+    [Parameter]
+    public bool? Fullscreen { get; set; }
+
     /// <summary>
     /// Because of performance reasons, ionScroll events are disabled by default,
     /// in order to enable them and start listening from (ionScroll), set this property to true.
     /// </summary>
-    [Parameter] public bool? ScrollEvents { get; set; }
-    
+    [Parameter]
+    public bool? ScrollEvents { get; set; }
+
     /// <summary>
     /// If you want to enable the content scrolling in the X axis, set this property to true.
     /// </summary>
-    [Parameter] public bool? ScrollX { get; set; }
-    
+    [Parameter]
+    public bool? ScrollX { get; set; }
+
     /// <summary>
     /// If you want to disable the content scrolling in the Y axis, set this property to false.
     /// </summary>
-    [Parameter] public bool? ScrollY { get; set; }
+    [Parameter]
+    public bool? ScrollY { get; set; }
 
     /// <summary>
     /// Emitted while scrolling. This event is disabled by default.
     /// Set <b>scrollEvents</b> to <b>true</b> to enable.
     /// </summary>
-    [Parameter] public EventCallback<IonScrollEventArgs?> IonScroll { get; set; }
+    [Parameter]
+    public EventCallback<IonScrollEventArgs?> IonScroll { get; set; }
 
     /// <summary>
     /// Emitted when the scroll has ended. This event is disabled by default.
     /// Set <b>scrollEvents</b> to <b>true</b> to enable.
     /// </summary>
-    [Parameter] public EventCallback IonScrollEnd { get; set; }
+    [Parameter]
+    public EventCallback IonScrollEnd { get; set; }
 
     /// <summary>
     /// Emitted when the scroll has started. This event is disabled by default.
     /// Set <b>scrollEvents</b> to <b>true</b> to enable.
     /// </summary>
-    [Parameter] public EventCallback IonScrollStart { get; set; }
+    [Parameter]
+    public EventCallback IonScrollStart { get; set; }
 
     public IonContent()
     {
         _ionScrollReference = DotNetObjectReference.Create(new IonicEventCallback<__ionScrollEventArgs?>(async args =>
         {
-/*
-{
-  "tagName": "ION-CONTENT",
-  "detail": {
-    "scrollTop": 0.3051266670227051,
-    "scrollLeft": 0,
-    "type": "scroll",
-    "event": {
-      "isTrusted": true
-    },
-    "startX": 0,
-    "startY": 0.3051266670227051,
-    "startTime": 4812.199999988079,
-    "currentX": 0,
-    "currentY": 0.3051266670227051,
-    "velocityX": 0,
-    "velocityY": 0,
-    "deltaX": 0,
-    "deltaY": 0,
-    "currentTime": 4812.199999988079,
-    "isScrolling": true
-  }
-}
-*/
-            //var isScrolling = args?["detail"]?["isScrolling"]?.GetValue<bool>();
-            //var scrollTop = args?["detail"]?["scrollTop"]?.GetValue<double>();
-            //var scrollLeft = args?["detail"]?["scrollLeft"]?.GetValue<double>();
-            //var type = args?["detail"]?["type"]?.GetValue<string>();
-            ////var event = args?["detail"]?["event"]?.GetValue<>();
-            //var startX = args?["detail"]?["startX"]?.GetValue<double>();
-            //var startY = args?["detail"]?["startY"]?.GetValue<double>();
-            ////var arg = args?["detail"]?.GetValue<IonContentScrollEventArgs>();
-            //var arg = (args?["detail"]).Deserialize<IonContentScrollEventArgs>();
-            
             await IonScroll.InvokeAsync(args?.Detail);
         }));
-        
+
         _ionScrollEndReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(async args =>
         {
 /*
@@ -125,7 +93,7 @@ public partial class IonContent : IonComponent
             var isScrolling = args?["detail"]?["isScrolling"]?.GetValue<bool>();
             await IonScrollEnd.InvokeAsync();
         }));
-        
+
         _ionScrollStartReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(async args =>
         {
 /*
@@ -140,7 +108,7 @@ public partial class IonContent : IonComponent
             await IonScrollStart.InvokeAsync();
         }));
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -150,13 +118,13 @@ public partial class IonContent : IonComponent
 
         await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new object[]
         {
-            new { Event = "ionScroll"     , Ref = _ionScrollReference      },
-            new { Event = "ionScrollEnd"  , Ref = _ionScrollEndReference   },
+            new { Event = "ionScroll", Ref = _ionScrollReference },
+            new { Event = "ionScrollEnd", Ref = _ionScrollEndReference },
             new { Event = "ionScrollStart", Ref = _ionScrollStartReference }
         }, _self);
-        
+
     }
-    
+
     /// <summary>
     /// Get the element where the actual scrolling takes place.
     /// This element can be used to subscribe to scroll events or manually modify scrollTop.
@@ -192,7 +160,7 @@ public partial class IonContent : IonComponent
         //scrollToBottom
         throw new NotImplementedException();
     }
-    
+
     /// <summary>
     /// Scroll to a specified X/Y location in the component.
     /// </summary>
@@ -215,88 +183,62 @@ public partial class IonContent : IonComponent
         throw new NotImplementedException();
     }
     
-    /*
-{
-  "tagName": "ION-CONTENT",
-  "detail": {
-    "scrollTop": 0.3051266670227051,
-    "scrollLeft": 0,
-    "type": "scroll",
-    "event": {
-      "isTrusted": true
-    },
-    "startX": 0,
-    "startY": 0.3051266670227051,
-    "startTime": 4812.199999988079,
-    "currentX": 0,
-    "currentY": 0.3051266670227051,
-    "velocityX": 0,
-    "velocityY": 0,
-    "deltaX": 0,
-    "deltaY": 0,
-    "currentTime": 4812.199999988079,
-    "isScrolling": true
-  }
-}
-*/
     internal sealed class __ionScrollEventArgs
     {
-        [JsonPropertyName("detail")] 
-        public IonScrollEventArgs Detail { get; set; } = null!;
+        [JsonPropertyName("detail")] public IonScrollEventArgs Detail { get; set; } = null!;
     }
-    
+
 
     public sealed class IonScrollEventArgs : EventArgs
     {
         [JsonPropertyName("scrollTop")]
         public double ScrollTop { get; init; }
-        
-        [JsonPropertyName("scrollLeft")]
+
+        [JsonPropertyName("scrollLeft")] 
         public double ScrollLeft { get; init; }
-        
-        [JsonPropertyName("type")]
+
+        [JsonPropertyName("type")] 
         public string? Type { get; init; }
-        
-        [JsonPropertyName("event")]
+
+        [JsonPropertyName("event")] 
         public IonContentScrollEvent? Event { get; init; }
-        
-        [JsonPropertyName("startX")]
+
+        [JsonPropertyName("startX")] 
         public double StartX { get; init; }
-        
-        [JsonPropertyName("startY")]
+
+        [JsonPropertyName("startY")] 
         public double StartY { get; init; }
-        
-        [JsonPropertyName("startTime")]
+
+        [JsonPropertyName("startTime")] 
         public double StartTime { get; init; }
-        
-        [JsonPropertyName("currentX")]
+
+        [JsonPropertyName("currentX")] 
         public double CurrentX { get; init; }
-        
-        [JsonPropertyName("currentY")]
+
+        [JsonPropertyName("currentY")] 
         public double CurrentY { get; init; }
-        
-        [JsonPropertyName("velocityX")]
+
+        [JsonPropertyName("velocityX")] 
         public double VelocityX { get; init; }
-        
-        [JsonPropertyName("velocityY")]
+
+        [JsonPropertyName("velocityY")] 
         public double VelocityY { get; init; }
-        
-        [JsonPropertyName("deltaX")]
+
+        [JsonPropertyName("deltaX")] 
         public double DeltaX { get; init; }
-        
-        [JsonPropertyName("deltaY")]
+
+        [JsonPropertyName("deltaY")] 
         public double DeltaY { get; init; }
-        
-        [JsonPropertyName("currentTime")]
+
+        [JsonPropertyName("currentTime")] 
         public double CurrentTime { get; init; }
-        
-        [JsonPropertyName("isScrolling")]
+
+        [JsonPropertyName("isScrolling")] 
         public bool IsScrolling { get; init; }
-        
+
         public sealed class IonContentScrollEvent
         {
-            [JsonPropertyName("isTrusted")]
-            public bool IsTrusted { get; init; }
+            [JsonPropertyName("isTrusted")] public bool IsTrusted { get; init; }
         }
     }
 }

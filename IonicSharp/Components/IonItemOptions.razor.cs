@@ -1,10 +1,11 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonItemOptions : IonComponent
+public partial class IonItemOptions : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionSwipeReference;
     
+    /// <inheritdoc/>
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
