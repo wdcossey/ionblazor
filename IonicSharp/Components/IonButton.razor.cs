@@ -3,8 +3,8 @@
 public partial class IonButton : IonComponent
 {
     private ElementReference _self;
-    private DotNetObjectReference<ButtonEventHelper<JsonObject?>>? _ionBlurObjectReference = null;
-    private DotNetObjectReference<ButtonEventHelper<JsonObject?>>? _ionFocusObjectReference = null;
+    private DotNetObjectReference<IonicEventCallback>? _ionBlurReference = null;
+    private DotNetObjectReference<IonicEventCallback>? _ionFocusReference = null;
     
     [Parameter] public RenderFragment? ChildContent { get; set; }
     
@@ -39,17 +39,17 @@ public partial class IonButton : IonComponent
     [Parameter] public string? Download { get; set; }
     
     /// <summary>
-    /// Set to <see cref="ButtonExpand.Block"/> for a full-width button
-    /// or to <see cref="ButtonExpand.Full"/> for a full-width button with square corners and no left or right borders.
+    /// Set to <see cref="IonButtonExpand.Block"/> for a full-width button
+    /// or to <see cref="IonButtonExpand.Full"/> for a full-width button with square corners and no left or right borders.
     /// </summary>
-    [Parameter] public ButtonExpand? Expand { get; set; }
+    [Parameter] public string? Expand { get; set; }
     
     /// <summary>
-    /// Set to <see cref="ButtonFill.Clear"/> for a transparent button that resembles a flat button,
-    /// to <see cref="ButtonFill.Outline"/> for a transparent button with a border,
-    /// or to <see cref="ButtonFill.Solid"/> for a button with a filled background.
-    /// The default fill is <see cref="ButtonFill.Solid"/> except inside of a toolbar,
-    /// where the default is <see cref="ButtonFill.Clear"/>.
+    /// Set to <see cref="IonButtonFill.Clear"/> for a transparent button that resembles a flat button,
+    /// to <see cref="IonButtonFill.Outline"/> for a transparent button with a border,
+    /// or to <see cref="IonButtonFill.Solid"/> for a button with a filled background.
+    /// The default fill is <see cref="IonButtonFill.Solid"/> except inside of a toolbar,
+    /// where the default is <see cref="IonButtonFill.Clear"/>.
     /// </summary>
     [Parameter] public string? Fill { get; set; }
     
@@ -70,16 +70,19 @@ public partial class IonButton : IonComponent
     public string? Mode { get; set; } = IonMode.Default;
     
     /// <summary>
-    /// Specifies the relationship of the target object to the link object. The value is a space-separated list of link types.
+    /// Specifies the relationship of the target object to the link object. The value is a space-separated list of
+    /// <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types">link types</a>.
     /// </summary>
     [Parameter] public string? Rel { get; set; }
-    //[Parameter] public string? routerAnimation { get; set; }
-    //[Parameter] public string? routerDirection { get; set; }
     
+    //[Parameter] public string? RouterAnimation { get; set; }
+    //[Parameter] public string? RouterDirection { get; set; }
+
     /// <summary>
-    /// Set to <see cref="ButtonShape.Round"/> for a button with more rounded corners.
+    /// Set to <see cref="IonButtonShape.Round"/> for a button with more rounded corners.
     /// </summary>
-    [Parameter] public ButtonShape? Shape { get; set; }
+    [Parameter]
+    public string? Shape { get; set; } = IonButtonShape.Default;
     
     /// <summary>
     /// Set to <see cref="IonButtonSize.Small"/> for a button with less height and padding,
@@ -117,6 +120,19 @@ public partial class IonButton : IonComponent
     /// Emitted when the button has focus.
     /// </summary>
     [Parameter] public EventCallback OnFocus { get; set; }
+
+    public IonButton()
+    {
+        _ionBlurReference = DotNetObjectReference.Create(new IonicEventCallback(async () =>
+        {
+            await OnBlur.InvokeAsync();
+        }));
+        
+        _ionFocusReference = DotNetObjectReference.Create(new IonicEventCallback(async () =>
+        {
+            await OnFocus.InvokeAsync();
+        }));
+    }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -124,71 +140,34 @@ public partial class IonButton : IonComponent
 
         if (!firstRender)
             return;
-        
-        _ionBlurObjectReference = DotNetObjectReference.Create(new ButtonEventHelper<JsonObject?>(async args =>
-        {
-            await OnBlur.InvokeAsync();
-        }));
-        
-        _ionFocusObjectReference = DotNetObjectReference.Create(new ButtonEventHelper<JsonObject?>(async args =>
-        {
-            await OnFocus.InvokeAsync();
-        }));
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionBlur", _self, _ionBlurObjectReference);
-        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionFocus", _self, _ionFocusObjectReference);
-
+        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+        {
+            new { Event = "ionBlur", Ref = _ionBlurReference},
+            new { Event = "ionFocus", Ref = _ionFocusReference}
+        }, _self);
+        
     }
-     
-     public class ButtonEventHelper<TArgs>
-     {
-         private readonly Func<TArgs, Task> _callback;
-
-         public ButtonEventHelper(Func<TArgs, Task> callback) => _callback = callback;
-
-         [JSInvokable]
-         public Task OnCallbackEvent(TArgs args) => _callback(args);
-     }
 }
 
-public static class IonMode 
-{
-    // ReSharper disable InconsistentNaming
-
-    /// <summary>
-    /// Automatic
-    /// </summary>
+public static class IonButtonExpand {
     public const string? Default = null;
-    
-    /// <summary>
-    /// Apple iOS
-    /// </summary>
-    public const string iOS = "ios";
-
-    /// <summary>
-    /// Google Material Design
-    /// </summary>
-    public const string MaterialDesign = "md";
-
-    // ReSharper enable InconsistentNaming
+    public const string Block = "block";
+    public const string Full = "full";
 }
 
-public enum ButtonExpand {
-    Block,
-    Full
-}
-
-public static class ButtonFill 
+public static class IonButtonFill 
 {
-    public const string Clear = "dlear";
+    public const string Clear = "clear";
     public const string Default = "default";
     public const string Outline = "outline";
     public const string Solid = "solid";
 }
 
-public enum ButtonShape 
+public static class IonButtonShape 
 {
-    Round
+    public const string? Default = null;
+    public const string Round = "round";
 }
 
 public static class IonButtonSize 

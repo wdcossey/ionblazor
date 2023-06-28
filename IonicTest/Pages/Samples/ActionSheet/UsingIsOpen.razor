@@ -1,0 +1,28 @@
+﻿<IonButton @onclick="@(() => _actionSheet.IsOpen = true)">Open</IonButton>
+<IonActionSheet TButtonData="ActionSheetButtonData" 
+                @ref="_actionSheet" 
+                Header="Actions" 
+                Buttons="@(() => 
+                         { 
+                             return new List<ActionSheetButton<ActionSheetButtonData>>() { 
+                                 new () { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } }, 
+                                 new () { Text = "Share" }, 
+                                 new () { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } 
+                             }; 
+                         })"
+                IonActionSheetDidDismiss="@IonActionSheetDidDismiss"></IonActionSheet>
+
+@code {
+    private IonActionSheet<ActionSheetButtonData> _actionSheet = null!;
+
+    private void Callback(IonActionSheetDidDismissEventArgs<ActionSheetButtonData> obj)
+    {
+        throw new NotImplementedException();
+    }
+    
+    private void IonActionSheetDidDismiss(IonActionSheetDidDismissEventArgs<ActionSheetButtonData> args)
+    {
+        _actionSheet.IsOpen = false;
+    }
+
+}

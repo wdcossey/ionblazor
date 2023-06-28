@@ -1,0 +1,17 @@
+﻿<IonButton  @onclick="@(() => _alert.IsOpen = true)">Click Me</IonButton>
+<IonAlert @ref="_alert" 
+          Header="Alert" 
+          SubHeader="Important message" 
+          Message="This is an alert!" 
+          Buttons="@(() => { return new[] { new AlertButton() { Text = "OK" } }; })"
+          IonAlertDidDismiss="IonAlertDidDismiss"></IonAlert>
+
+@code{
+    private IonAlert _alert = null!;
+
+    private void IonAlertDidDismiss()
+    {
+        _alert.IsOpen = false;
+    }
+
+}

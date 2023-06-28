@@ -29,7 +29,67 @@
         }
     </script>
 
-    
+    <!-- ion-date-time -->
+    <script>
+
+        function ionDateTimeIsDateEnabled(element, callback) {
+
+            //element.isDateEnabled = async (dateString) => {
+            //    let isEnabled = await callback.invokeMethodAsync('OnCallbackEvent', {dateString});
+            //    console.log(`${dateString}: ${isEnabled}`);
+            //    return false;
+            //}
+
+            element.isDateEnabled = (dateString) => {
+                const date = new Date(dateString);
+                const utcDay = date.getUTCDay();
+
+                /**
+                 * Date will be enabled if it is not
+                 * Sunday or Saturday
+                 */
+                return utcDay !== 0 && utcDay !== 6;
+            }
+        }
+
+        function ionDateTimeSetValue(element, value) {
+            element.value = value;
+        }
+
+        function ionDateTimeCancel(element, closeOverlay) {
+            element.cancel(closeOverlay);
+        }
+
+        function ionDateTimeConfirm(element, closeOverlay) {
+            element.confirm(closeOverlay);
+        }
+
+        function ionDateTimeReset(element, startDate) {
+            element.reset(startDate);
+        }
+
+    </script>
+
+
+    <script>
+
+        function ionModalSetIsOpen(element, value) {
+            return element.isOpen = value;
+        }
+
+        function ionModalDismiss(element, data, role) {
+            return element.dismiss(data, role);
+        }
+
+        function ionModalCanDismiss(element, value) {
+            element.canDismiss = value;
+        }
+    </script>
+
+
+    <script>
+
+    </script>
 </head>
 
 <body>
@@ -91,6 +151,13 @@
             //    ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
             //});
         }
+        
+        function attachIonBreadcrumbsIonCollapsedClickListener(type, element, ref) {
+            element.addEventListener(type, (ev) => {
+                
+                ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail.collapsedBreadcrumbs.map(a => { return { href: a.href, textContent: a.textContent }} ) });
+            });
+        }
 
         async function presentToast(position, message) {
     
@@ -146,6 +213,14 @@
             });
             element.buttons = buttons;
         }
+
+        function addAlertInputs(element, inputs) {
+            /*buttons.forEach(function (button, index) {
+                button.handler = () => { callback.invokeMethodAsync('OnCallbackEvent', { index }); }
+            });*/
+            console.log(inputs)
+            element.inputs = inputs;
+        }
     </script>
 
     <script>
@@ -196,8 +271,8 @@
             return element.getProgress();
         }
     </script>
-
-<script src="_framework/blazor.webview.js" autostart="false"></script>
+    
+    <script src="_framework/blazor.webview.js" autostart="false"></script>
 
 </body>
 

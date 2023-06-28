@@ -1,0 +1,15 @@
+﻿@inherits IonComponent
+
+<ion-card @attributes="@Attributes"
+          class="@Class"
+          button="@Button"
+          color="@Color"
+          disabled="@Disabled"
+          download="@Download"
+          href="@Href"
+          mode="@Mode"
+          rel="@Rel"
+          target="@Target"
+          type="@Type?.ToLowerInvariant()">
+    @ChildContent
+</ion-card>

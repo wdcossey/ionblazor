@@ -1,0 +1,7 @@
+﻿::deep .playground__frame{
+    width: unset;
+}
+
+::deep ion-list {
+    width: 250px;
+}

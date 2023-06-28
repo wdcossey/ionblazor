@@ -7,12 +7,13 @@ public partial class IonToggle : IonComponent
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionBlurReference = null;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionChangeReference = null;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionFocusReference = null;
+    
     [Parameter] public RenderFragment? ChildContent { get; set; }
     
     /// <summary>
     /// If true, the toggle is selected.
     /// </summary>
-    [Parameter] public bool Checked { get; set; }
+    [Parameter] public bool? Checked { get; set; }
 
     /// <summary>
     /// The color to use from your application's color palette.
@@ -29,7 +30,7 @@ public partial class IonToggle : IonComponent
     /// <summary>
     /// If true, the user cannot interact with the toggle.
     /// </summary>
-    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool? Disabled { get; set; }
     
     /// <summary>
     /// Enables the on/off accessibility switch labels within the toggle.
@@ -45,7 +46,7 @@ public partial class IonToggle : IonComponent
     /// <see cref="IonJustify.SpaceBetween"/>: The label and <see cref="IonToggle"/> will appear on opposite
     /// ends of the line with space between the two element.
     /// </summary>
-    [Parameter] public string Justify { get; set; } = IonJustify.SpaceBetween;
+    [Parameter] public string? Justify { get; set; } = IonJustify.Default;
 
     /// <summary>
     /// Where to place the label relative to the input.<br/>
@@ -56,7 +57,7 @@ public partial class IonToggle : IonComponent
     /// <see cref="IonLabelPlacement.Fixed"/>: The label has the same behavior as <see cref="IonLabelPlacement.Start"/>
     /// except it also has a fixed width. Long text will be truncated with ellipses ("...").
     /// </summary>
-    [Parameter] public string LabelPlacement { get; set; } = IonLabelPlacement.Fixed;
+    [Parameter] public string? LabelPlacement { get; set; } = IonLabelPlacement.Default;
 
     /// <summary>
     /// Set the legacy property to true to forcibly use the legacy form control markup.
@@ -78,7 +79,7 @@ public partial class IonToggle : IonComponent
     /// <summary>
     /// The name of the control, which is submitted with the form data.
     /// </summary>
-    [Parameter] public string Name { get; set; } = null!;
+    [Parameter] public string? Name { get; set; }
 
     /// <summary>
     /// The value of the toggle does not mean if it's checked or not, use the checked property for that. <br/><br/>
@@ -151,6 +152,7 @@ public partial class IonToggle : IonComponent
 
 public static class IonJustify
 {
+    public const string? Default = null;
     public const string End = "end";
     public const string SpaceBetween = "space-between";
     public const string Start = "start";
@@ -158,6 +160,7 @@ public static class IonJustify
 
 public static class IonLabelPlacement
 {
+    public const string? Default = null;
     public const string End = "end";
     public const string Fixed = "fixed";
     public const string Start = "start";

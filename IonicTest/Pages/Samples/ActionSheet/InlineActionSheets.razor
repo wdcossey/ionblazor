@@ -1,0 +1,9 @@
+﻿<IonButton id="open-action-sheet">Open</IonButton>
+<IonActionSheet 
+    TButtonData="ActionSheetButtonData"
+    Trigger="open-action-sheet" 
+    Header="Actions" 
+    Buttons="@(() => { return new List<ActionSheetButton<ActionSheetButtonData>>() { 
+                                     new () { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } }, 
+                                     new () { Text = "Share" }, 
+                                     new () { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })"></IonActionSheet>

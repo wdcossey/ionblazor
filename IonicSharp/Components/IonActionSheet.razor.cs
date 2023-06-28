@@ -9,6 +9,11 @@ public partial class IonActionSheet<TButtonData> : IonComponent
     private DotNetObjectReference<ActionSheetEventHelper<JsonObject?>>? _didDismissObjectReference = null!;
     private DotNetObjectReference<ActionSheetEventHelper<JsonObject?>>? _didPresentObjectReference = null!;
     
+    private DotNetObjectReference<ActionSheetEventHelper<JsonObject?>>? _ionActionSheetDidDismissRef = null!;
+    private DotNetObjectReference<ActionSheetEventHelper<JsonObject?>>? _ionActionSheetDidPresentRef = null!;
+    private DotNetObjectReference<ActionSheetEventHelper<JsonObject?>>? _ionActionSheetWillDismissRef = null!;
+    private DotNetObjectReference<ActionSheetEventHelper<JsonObject?>>? _ionActionSheetWillPresentRef = null!;
+    
     private DotNetObjectReference<ActionSheetEventHelper<JsonObject?>>? _willDismissObjectReference = null!;
     private DotNetObjectReference<ActionSheetEventHelper<JsonObject?>>? _willPresentObjectReference = null!;
     private DotNetObjectReference<ActionSheetButtonEventHelper<JsonObject?>> _buttonHandlerObjectReference = null!;
@@ -19,7 +24,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent
     
     [Parameter] public bool? BackdropDismiss { get; set; }
     
-    [Parameter, EditorRequired] public Func<IEnumerable<ActionSheetButton<TButtonData>>>? Buttons { get; set; }
+    [Parameter] public Func<IEnumerable<ActionSheetButton<TButtonData>>>? Buttons { get; set; }
     
     [Parameter, Obsolete("Ignored, use `CssClass`", true)] public override string? Class { get; set; }
     
@@ -38,6 +43,10 @@ public partial class IonActionSheet<TButtonData> : IonComponent
     
     [Parameter] public EventCallback<ActionSheetDidDismissEventArgs<TButtonData>> OnDidDismiss { get; set; }
     [Parameter] public EventCallback OnDidPresent { get; set; }
+    [Parameter] public EventCallback<IonActionSheetDidDismissEventArgs<TButtonData>> IonActionSheetDidDismiss { get; set; }
+    [Parameter] public EventCallback IonActionSheetDidPresent { get; set; }
+    [Parameter] public EventCallback<IonActionSheetDidDismissEventArgs<TButtonData>> IonActionSheetWillDismiss { get; set; }
+    [Parameter] public EventCallback IonActionSheetWillPresent { get; set; }
     [Parameter] public EventCallback<ActionSheetWillDismissEventArgs<TButtonData>> OnWillDismiss { get; set; }
     [Parameter] public EventCallback OnWillPresent { get; set; }
     [Parameter] public EventCallback<ActionSheetButtonHandlerEventArgs<TButtonData>> OnButtonHandler { get; set; }
@@ -65,6 +74,34 @@ public partial class IonActionSheet<TButtonData> : IonComponent
             await OnDidPresent.InvokeAsync();
         }));
         
+        _ionActionSheetDidDismissRef = DotNetObjectReference.Create(new ActionSheetEventHelper<JsonObject?>(async args =>
+        {
+            await IonActionSheetDidDismiss.InvokeAsync(new IonActionSheetDidDismissEventArgs<TButtonData>()
+            {
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+                Data = args?["detail"]?["data"]?.Deserialize<TButtonData>(),
+            });
+        }));
+
+        _ionActionSheetDidPresentRef = DotNetObjectReference.Create(new ActionSheetEventHelper<JsonObject?>(async args =>
+        {
+            await IonActionSheetDidPresent.InvokeAsync();
+        }));
+        
+        _ionActionSheetWillDismissRef = DotNetObjectReference.Create(new ActionSheetEventHelper<JsonObject?>(async args =>
+        {
+            await IonActionSheetWillDismiss.InvokeAsync(new IonActionSheetDidDismissEventArgs<TButtonData>()
+            {
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+                Data = args?["detail"]?["data"]?.Deserialize<TButtonData>(),
+            });
+        }));
+        
+        _ionActionSheetWillPresentRef = DotNetObjectReference.Create(new ActionSheetEventHelper<JsonObject?>(async args =>
+        {
+            await IonActionSheetWillPresent.InvokeAsync();
+        }));
+        
         _willDismissObjectReference = DotNetObjectReference.Create(new ActionSheetEventHelper<JsonObject?>(async args =>
         {
             await OnWillDismiss.InvokeAsync(new ActionSheetWillDismissEventArgs<TButtonData>()
@@ -86,13 +123,22 @@ public partial class IonActionSheet<TButtonData> : IonComponent
                 { Index = index, Button = buttons?.ElementAtOrDefault(index ?? -1) });
         }));
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "didDismiss", _self, _didDismissObjectReference);
-        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "didPresent", _self, _didPresentObjectReference);
-
-        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "willDismiss", _self, _willDismissObjectReference);
-        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "willPresent", _self, _willPresentObjectReference);
+        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+        {
+            new { Event = "didDismiss", Ref = _didDismissObjectReference},
+            new { Event = "didPresent", Ref = _didPresentObjectReference},
+            
+            new { Event = "ionActionSheetDidDismiss", Ref = _ionActionSheetDidDismissRef},
+            new { Event = "ionActionSheetDidPresent", Ref = _ionActionSheetDidPresentRef},
+            new { Event = "ionActionSheetWillDismiss", Ref = _ionActionSheetWillDismissRef},
+            new { Event = "ionActionSheetWillPresent", Ref = _ionActionSheetWillPresentRef},
+            
+            new { Event = "willDismiss", Ref = _willDismissObjectReference},
+            new { Event = "willPresent", Ref = _willPresentObjectReference},
+        }, _self);
         
         await JsRuntime.InvokeVoidAsync("addActionSheetButtons", _self, buttons, _buttonHandlerObjectReference);
+
         //var self = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", $"ion-action-sheet[data-ionic-id=\"{_id}\"]");
         //await self.InvokeVoidAsync("setProperty", "buttons", JsonSerializer.Serialize(Buttons?.Invoke()));
     }
@@ -158,7 +204,14 @@ public class ActionSheetDidDismissEventArgs<TData> : EventArgs
     public string? Role { get; internal set; }
     public TData? Data { get; set; }
 }
-    
+
+public class IonActionSheetDidDismissEventArgs<TData> : EventArgs
+    where TData: class, IActionSheetButtonData
+{
+    public string? Role { get; internal set; }
+    public TData? Data { get; set; }
+}
+
 public class ActionSheetWillDismissEventArgs<TData> : EventArgs
     where TData: class, IActionSheetButtonData
 {

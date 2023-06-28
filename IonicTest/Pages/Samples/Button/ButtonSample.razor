@@ -1,4 +1,4 @@
-﻿@page "/button"
+﻿@page "/samples/button"
 
 <div class="ion-page" id="main-content">
     <IonContent Class="container">
@@ -7,7 +7,7 @@
             <div class="playground__preview">
                 <div class="playground__frame">
                     <IonButton>Default</IonButton>
-                    <IonButton Disabled="true">Disabled</IonButton>
+                    <IonButton Disabled="@true">Disabled</IonButton>
                 </div>
             </div>
         </div>
@@ -16,8 +16,8 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonButton Expand="ButtonExpand.Block">Block</IonButton>
-                    <IonButton Expand="ButtonExpand.Full">Full</IonButton>
+                    <IonButton Expand="@IonButtonExpand.Block">Block</IonButton>
+                    <IonButton Expand="@IonButtonExpand.Full">Full</IonButton>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="playground__preview">
                 <div class="playground__frame">
                     <IonButton >Default</IonButton>
-                    <IonButton Shape="ButtonShape.Round">Round</IonButton>
+                    <IonButton Shape="@IonButtonShape.Round">Round</IonButton>
                 </div>
             </div>
         </div>
@@ -36,10 +36,10 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonButton Fill="@ButtonFill.Default">Default</IonButton>
-                    <IonButton Fill="@ButtonFill.Clear">Clear</IonButton>
-                    <IonButton Fill="@ButtonFill.Outline">Outline</IonButton>
-                    <IonButton Fill="@ButtonFill.Solid">Solid</IonButton>
+                    <IonButton Fill="@IonButtonFill.Default">Default</IonButton>
+                    <IonButton Fill="@IonButtonFill.Clear">Clear</IonButton>
+                    <IonButton Fill="@IonButtonFill.Outline">Outline</IonButton>
+                    <IonButton Fill="@IonButtonFill.Solid">Solid</IonButton>
                 </div>
             </div>
         </div>
@@ -49,9 +49,9 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonButton Size="ButtonSize.Small">Small</IonButton>
-                    <IonButton Size="ButtonSize.Default">Default</IonButton>
-                    <IonButton Size="ButtonSize.Large">Default</IonButton>
+                    <IonButton Size="@IonButtonSize.Small">Small</IonButton>
+                    <IonButton Size="@IonButtonSize.Default">Default</IonButton>
+                    <IonButton Size="@IonButtonSize.Large">Default</IonButton>
                 </div>
             </div>
         </div>

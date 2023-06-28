@@ -1,0 +1,20 @@
+﻿@inherits IonComponent
+
+<ion-modal @ref="_self"
+           @attributes="@Attributes"
+           class="@Class"
+           animated="@($"{Animated}".ToLowerInvariant())"
+           backdrop-breakpoint="@BackdropBreakpoint"
+           backdrop-dismiss="@($"{BackdropDismiss}".ToLowerInvariant())"
+           can-dismiss="@($"{CanDismiss}".ToLowerInvariant())"
+           handle="@($"{Handle}".ToLowerInvariant())"
+           handle-behavior="@HandleBehavior"
+           initial-breakpoint="@InitialBreakpoint"
+           is-open="@($"{IsOpen}".ToLowerInvariant())"
+           keep-contents-mounted="@($"{KeepContentsMounted}".ToLowerInvariant())"
+           keyboard-close="@($"{KeyboardClose}".ToLowerInvariant())"
+           mode="@Mode"
+           show-backdrop="@($"{ShowBackdrop}".ToLowerInvariant())"
+           trigger="@Trigger">
+    @ChildContent
+</ion-modal>

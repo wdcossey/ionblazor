@@ -1,9 +1,14 @@
-﻿namespace IonicSharp.Components;
+﻿using System.Text.Json.Serialization;
+
+namespace IonicSharp.Components;
 
 public partial class IonContent : IonComponent
 {
     private ElementReference _self;
-    //private DotNetObjectReference<AccordionGroupEventHelper<JsonObject?>> _ionChangeObjectReference = null!;
+
+    private DotNetObjectReference<IonicEventCallback<__ionScrollEventArgs?>>? _ionScrollReference = null;
+    private DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionScrollEndReference = null;
+    private DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionScrollStartReference = null;
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
     
@@ -49,14 +54,119 @@ public partial class IonContent : IonComponent
     [Parameter] public bool? ScrollY { get; set; }
 
     /// <summary>
+    /// Emitted while scrolling. This event is disabled by default.
+    /// Set <b>scrollEvents</b> to <b>true</b> to enable.
+    /// </summary>
+    [Parameter] public EventCallback<IonScrollEventArgs?> IonScroll { get; set; }
+
+    /// <summary>
+    /// Emitted when the scroll has ended. This event is disabled by default.
+    /// Set <b>scrollEvents</b> to <b>true</b> to enable.
+    /// </summary>
+    [Parameter] public EventCallback IonScrollEnd { get; set; }
+
+    /// <summary>
+    /// Emitted when the scroll has started. This event is disabled by default.
+    /// Set <b>scrollEvents</b> to <b>true</b> to enable.
+    /// </summary>
+    [Parameter] public EventCallback IonScrollStart { get; set; }
+
+    public IonContent()
+    {
+        _ionScrollReference = DotNetObjectReference.Create(new IonicEventCallback<__ionScrollEventArgs?>(async args =>
+        {
+/*
+{
+  "tagName": "ION-CONTENT",
+  "detail": {
+    "scrollTop": 0.3051266670227051,
+    "scrollLeft": 0,
+    "type": "scroll",
+    "event": {
+      "isTrusted": true
+    },
+    "startX": 0,
+    "startY": 0.3051266670227051,
+    "startTime": 4812.199999988079,
+    "currentX": 0,
+    "currentY": 0.3051266670227051,
+    "velocityX": 0,
+    "velocityY": 0,
+    "deltaX": 0,
+    "deltaY": 0,
+    "currentTime": 4812.199999988079,
+    "isScrolling": true
+  }
+}
+*/
+            //var isScrolling = args?["detail"]?["isScrolling"]?.GetValue<bool>();
+            //var scrollTop = args?["detail"]?["scrollTop"]?.GetValue<double>();
+            //var scrollLeft = args?["detail"]?["scrollLeft"]?.GetValue<double>();
+            //var type = args?["detail"]?["type"]?.GetValue<string>();
+            ////var event = args?["detail"]?["event"]?.GetValue<>();
+            //var startX = args?["detail"]?["startX"]?.GetValue<double>();
+            //var startY = args?["detail"]?["startY"]?.GetValue<double>();
+            ////var arg = args?["detail"]?.GetValue<IonContentScrollEventArgs>();
+            //var arg = (args?["detail"]).Deserialize<IonContentScrollEventArgs>();
+            
+            await IonScroll.InvokeAsync(args?.Detail);
+        }));
+        
+        _ionScrollEndReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(async args =>
+        {
+/*
+{
+  "tagName": "ION-CONTENT",
+  "detail": {
+    "isScrolling": false
+  }
+}
+*/
+            var isScrolling = args?["detail"]?["isScrolling"]?.GetValue<bool>();
+            await IonScrollEnd.InvokeAsync();
+        }));
+        
+        _ionScrollStartReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(async args =>
+        {
+/*
+{
+  "tagName": "ION-CONTENT",
+  "detail": {
+    "isScrolling": true
+  }
+}
+ */
+            var isScrolling = args?["detail"]?["isScrolling"]?.GetValue<bool>();
+            await IonScrollStart.InvokeAsync();
+        }));
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+
+        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new object[]
+        {
+            new { Event = "ionScroll"     , Ref = _ionScrollReference      },
+            new { Event = "ionScrollEnd"  , Ref = _ionScrollEndReference   },
+            new { Event = "ionScrollStart", Ref = _ionScrollStartReference }
+        }, _self);
+        
+    }
+    
+    /// <summary>
     /// Get the element where the actual scrolling takes place.
     /// This element can be used to subscribe to scroll events or manually modify scrollTop.
     /// However, it's recommended to use the API provided by ion-content: <br/>
     /// i.e. Using ionScroll, ionScrollStart, ionScrollEnd for scrolling events and scrollToPoint()
     /// to scroll the content into a certain point.
     /// </summary>
-    public object? GetScrollElement()
+    public Task<object?> GetScrollElementAsync()
     {
+        //getScrollElement
         throw new NotImplementedException();
         //JsRuntime.InvokeAsync<IJSObjectReference>()
     }
@@ -67,8 +177,9 @@ public partial class IonContent : IonComponent
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <param name="duration"></param>
-    public void ScrollByPoint(int x, int y, int duration)
+    public Task ScrollByPointAsync(int x, int y, int duration)
     {
+        //scrollByPoint
         throw new NotImplementedException();
     }
 
@@ -76,8 +187,9 @@ public partial class IonContent : IonComponent
     /// Scroll to the bottom of the component.
     /// </summary>
     /// <param name="duration"></param>
-    public void ScrollToBottom(int duration)
+    public Task ScrollToBottomAsync(int duration)
     {
+        //scrollToBottom
         throw new NotImplementedException();
     }
     
@@ -87,8 +199,9 @@ public partial class IonContent : IonComponent
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <param name="duration"></param>
-    public void ScrollToPoint(int? x = null, int? y = null, int? duration = null)
+    public Task ScrollToPointAsync(int? x = null, int? y = null, int? duration = null)
     {
+        //scrollToPoint
         throw new NotImplementedException();
     }
 
@@ -96,8 +209,94 @@ public partial class IonContent : IonComponent
     /// Scroll to the top of the component.
     /// </summary>
     /// <param name="duration"></param>
-    public void ScrollToTop(int duration)
+    public Task ScrollToTopAsync(int duration)
     {
+        //scrollToTop
         throw new NotImplementedException();
+    }
+    
+    /*
+{
+  "tagName": "ION-CONTENT",
+  "detail": {
+    "scrollTop": 0.3051266670227051,
+    "scrollLeft": 0,
+    "type": "scroll",
+    "event": {
+      "isTrusted": true
+    },
+    "startX": 0,
+    "startY": 0.3051266670227051,
+    "startTime": 4812.199999988079,
+    "currentX": 0,
+    "currentY": 0.3051266670227051,
+    "velocityX": 0,
+    "velocityY": 0,
+    "deltaX": 0,
+    "deltaY": 0,
+    "currentTime": 4812.199999988079,
+    "isScrolling": true
+  }
+}
+*/
+    internal sealed class __ionScrollEventArgs
+    {
+        [JsonPropertyName("detail")] 
+        public IonScrollEventArgs Detail { get; set; } = null!;
+    }
+    
+
+    public sealed class IonScrollEventArgs : EventArgs
+    {
+        [JsonPropertyName("scrollTop")]
+        public double ScrollTop { get; init; }
+        
+        [JsonPropertyName("scrollLeft")]
+        public double ScrollLeft { get; init; }
+        
+        [JsonPropertyName("type")]
+        public string? Type { get; init; }
+        
+        [JsonPropertyName("event")]
+        public IonContentScrollEvent? Event { get; init; }
+        
+        [JsonPropertyName("startX")]
+        public double StartX { get; init; }
+        
+        [JsonPropertyName("startY")]
+        public double StartY { get; init; }
+        
+        [JsonPropertyName("startTime")]
+        public double StartTime { get; init; }
+        
+        [JsonPropertyName("currentX")]
+        public double CurrentX { get; init; }
+        
+        [JsonPropertyName("currentY")]
+        public double CurrentY { get; init; }
+        
+        [JsonPropertyName("velocityX")]
+        public double VelocityX { get; init; }
+        
+        [JsonPropertyName("velocityY")]
+        public double VelocityY { get; init; }
+        
+        [JsonPropertyName("deltaX")]
+        public double DeltaX { get; init; }
+        
+        [JsonPropertyName("deltaY")]
+        public double DeltaY { get; init; }
+        
+        [JsonPropertyName("currentTime")]
+        public double CurrentTime { get; init; }
+        
+        [JsonPropertyName("isScrolling")]
+        public bool IsScrolling { get; init; }
+        
+        public sealed class IonContentScrollEvent
+        {
+            [JsonPropertyName("isTrusted")]
+            public bool IsTrusted { get; init; }
+        }
     }
 }

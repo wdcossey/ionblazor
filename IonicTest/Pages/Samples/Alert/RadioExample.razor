@@ -1,0 +1,46 @@
+﻿<IonButton id="present-alert-radio-example">Click Me</IonButton>
+<IonAlert Trigger="present-alert-radio-example" 
+          Header="Select your favorite color"
+          IonAlertDidDismiss="IonAlertDidDismiss"
+          Buttons="@(() => 
+                   { 
+                       return new[] 
+                       {
+                           new AlertButton { Text = "OK", Role = "ok" },
+                       };
+                   })"
+          Inputs="@(() => 
+                  {
+                      return new AlertInput[] 
+                      {
+                          new AlertInputRadio
+                          {
+                              Label = "Red",
+                              Checked = true,
+                              Value = "red"
+                          },
+                          new AlertInputRadio
+                          {
+                              Label = "Blue",
+                              Value = "blue"
+                          },
+                          new AlertInputRadio
+                          {
+                              Label = "Green",
+                              Value = "green"
+                          },
+                      };
+                  })"
+/>
+
+<p>@((MarkupString)_output)</p>
+
+@code{
+    private string _output = null!;
+
+    private void IonAlertDidDismiss(IonAlertIonAlertDidDismissEventArgs args)
+    {
+        _output = $$"""Dismissed with role: <b>{{args.Role}}</b><p>{{(args.Values as AlertValues)?.Values}}</p>""";
+    }
+
+}

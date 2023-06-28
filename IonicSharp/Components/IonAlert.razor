@@ -2,15 +2,15 @@
 
 <ion-alert @ref="@_self"
            @attributes="@Attributes"
-           animated="@(Animated?.ToString().ToLowerInvariant()))"
-           backdrop-dismiss="@(BackdropDismiss?.ToString().ToLowerInvariant())"
+           animated="@Animated?.ToString().ToLowerInvariant()"
+           backdrop-dismiss="@BackdropDismiss?.ToString().ToLowerInvariant()"
            css-class="@CssClass"
            header="@Header" 
-           is-open="@(IsOpen?.ToString().ToLowerInvariant())"
+           is-open="@IsOpen?.ToString().ToLowerInvariant()"
            keyboard-close="@(KeyboardClose?.ToString().ToLowerInvariant())"
            message="@Message"
            mode="@Mode"
            sub-header="@SubHeader" 
-           translucent="@(Translucent?.ToString().ToLowerInvariant()))"
+           translucent="@Translucent?.ToString().ToLowerInvariant()"
            trigger="@Trigger">
 </ion-alert>

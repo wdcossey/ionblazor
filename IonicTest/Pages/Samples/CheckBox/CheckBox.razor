@@ -7,14 +7,14 @@
             <div class="playground__preview">
                 <div class="playground__frame">
                     <IonCheckBox>I agree to the terms and conditions</IonCheckBox>
-                    <br /><br />
+                    <br/><br/>
                     <IonCheckBox>Default CheckBox</IonCheckBox>
-                    <br /><br />
-                    <IonCheckBox Checked="true">Checked CheckBox</IonCheckBox>
-                    <br /><br />
-                    <IonCheckBox Disabled="true">Disabled CheckBox</IonCheckBox>
-                    <br /><br />
-                    <IonCheckBox Checked="true" Disabled="true">Disabled Checked CheckBox</IonCheckBox>
+                    <br/><br/>
+                    <IonCheckBox Checked="@true">Checked CheckBox</IonCheckBox>
+                    <br/><br/>
+                    <IonCheckBox Disabled="@true">Disabled CheckBox</IonCheckBox>
+                    <br/><br/>
+                    <IonCheckBox Checked="@true" Disabled="@true">Disabled Checked CheckBox</IonCheckBox>
                 </div>
             </div>
         </div>
@@ -36,17 +36,17 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <ion-list>
-                      <ion-item>
-                        <IonCheckBox Justify="start">Packed at the Start of Line</IonCheckBox>
-                      </ion-item>
-                        <ion-item>
-                        <IonCheckBox Justify="end">Packed at the End of Line</IonCheckBox>
-                      </ion-item>
-                        <ion-item>
-                        <IonCheckBox Justify="space-between">Space Between Label and Control</IonCheckBox>
-                      </ion-item>
-                    </ion-list>
+                    <IonList>
+                      <IonItem>
+                        <IonCheckBox Justify="@IonJustify.Start">Packed at the Start of Line</IonCheckBox>
+                      </IonItem>
+                        <IonItem>
+                        <IonCheckBox Justify="@IonJustify.End">Packed at the End of Line</IonCheckBox>
+                      </IonItem>
+                        <IonItem>
+                        <IonCheckBox Justify="@IonJustify.SpaceBetween">Space Between Label and Control</IonCheckBox>
+                      </IonItem>
+                    </IonList>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonCheckBox Indeterminate="true">Indeterminate checkbox</IonCheckBox>
+                    <IonCheckBox Indeterminate="@true">Indeterminate checkbox</IonCheckBox>
                 </div>
             </div>
         </div>
@@ -65,15 +65,15 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonCheckBox aria-label="Primary toggle" Color="@IonColor.Primary" Checked="true"></IonCheckBox>
-                    <IonCheckBox aria-label="Secondary toggle" Color="@IonColor.Secondary" Checked="true"></IonCheckBox>
-                    <IonCheckBox aria-label="Tertiary toggle" Color="@IonColor.Tertiary" Checked="true"></IonCheckBox>
-                    <IonCheckBox aria-label="Success toggle" Color="@IonColor.Success" Checked="true"></IonCheckBox>
-                    <IonCheckBox aria-label="Warning toggle" Color="@IonColor.Warning" Checked="true"></IonCheckBox>
-                    <IonCheckBox aria-label="Danger toggle" Color="@IonColor.Danger" Checked="true"></IonCheckBox>
-                    <IonCheckBox aria-label="Light toggle" Color="@IonColor.Light" Checked="true"></IonCheckBox>
-                    <IonCheckBox aria-label="Medium toggle" Color="@IonColor.Medium" Checked="true"></IonCheckBox>
-                    <IonCheckBox aria-label="Dark toggle" Color="@IonColor.Dark" Checked="true"></IonCheckBox>
+                    <IonCheckBox aria-label="Primary toggle" Color="@IonColor.Primary" Checked="@true"></IonCheckBox>
+                    <IonCheckBox aria-label="Secondary toggle" Color="@IonColor.Secondary" Checked="@true"></IonCheckBox>
+                    <IonCheckBox aria-label="Tertiary toggle" Color="@IonColor.Tertiary" Checked="@true"></IonCheckBox>
+                    <IonCheckBox aria-label="Success toggle" Color="@IonColor.Success" Checked="@true"></IonCheckBox>
+                    <IonCheckBox aria-label="Warning toggle" Color="@IonColor.Warning" Checked="@true"></IonCheckBox>
+                    <IonCheckBox aria-label="Danger toggle" Color="@IonColor.Danger" Checked="@true"></IonCheckBox>
+                    <IonCheckBox aria-label="Light toggle" Color="@IonColor.Light" Checked="@true"></IonCheckBox>
+                    <IonCheckBox aria-label="Medium toggle" Color="@IonColor.Medium" Checked="@true"></IonCheckBox>
+                    <IonCheckBox aria-label="Dark toggle" Color="@IonColor.Dark" Checked="@true"></IonCheckBox>
                 </div>
             </div>
         </div>

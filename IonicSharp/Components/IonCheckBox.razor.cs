@@ -13,7 +13,7 @@ public partial class IonCheckBox : IonComponent
     /// <summary>
     /// If <b>true</b>, the <see cref="IonCheckBox"/> is selected.
     /// </summary>
-    [Parameter] public bool Checked { get; set; } = false;
+    [Parameter] public bool? Checked { get; set; }
     
     /// <summary>
     /// The color to use from your application's color palette.
@@ -30,12 +30,12 @@ public partial class IonCheckBox : IonComponent
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the <see cref="IonCheckBox"/>.
     /// </summary>
-    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool? Disabled { get; set; }
     
     /// <summary>
     /// If <b>true</b>, the <see cref="IonCheckBox"/> will visually appear as indeterminate.
     /// </summary>
-    [Parameter] public bool Indeterminate { get; set; } = false;
+    [Parameter] public bool? Indeterminate { get; set; }
 
     /// <summary>
     /// How to pack the label and <see cref="IonCheckBox"/> within a line.<br/><br/>
@@ -46,7 +46,7 @@ public partial class IonCheckBox : IonComponent
     /// <see cref="IonJustify.SpaceBetween"/>: The label and <see cref="IonCheckBox"/> will appear on opposite
     /// ends of the line with space between the two elements.
     /// </summary>
-    [Parameter] public string Justify { get; set; } = IonJustify.SpaceBetween;
+    [Parameter] public string? Justify { get; set; } = IonJustify.Default;
 
     /// <summary>
     /// Where to place the label relative to the checkbox.<br/><br/>
@@ -59,7 +59,7 @@ public partial class IonCheckBox : IonComponent
     /// <br/><br/>
     /// Long text will be truncated with ellipses ("...").
     /// </summary>
-    [Parameter] public string LabelPlacement { get; set; } = IonLabelPlacement.Fixed;
+    [Parameter] public string? LabelPlacement { get; set; } = IonLabelPlacement.Default;
 
     /// <summary>
     /// Set the legacy property to true to forcibly use the legacy form control markup.

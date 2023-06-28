@@ -1,5 +1,9 @@
 ﻿# TODO
 
+### Incomplete IonPopover
+
+> * `Reference`=`IonPopoverReference.Event` does not work
+
 ### Complete IonItem
 
 > * `Input Highlight` (sample) does not work

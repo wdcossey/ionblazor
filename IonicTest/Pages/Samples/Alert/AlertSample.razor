@@ -6,18 +6,80 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                     <IonButton id="present-alert">Click Me</IonButton>
+                    <IonButton id="present-alert">Click Me</IonButton>
                     <IonAlert
                         Trigger="present-alert"
-                       Header="Alert"
-                       SubHeader="Important message"
-                       Message="This is an alert!"
-                       Buttons="@(() => new [] {
-                                    new AlertButton() { Text = "OK", Role = "ok" },
-                                    new AlertButton() { Text = "Cancel", Role = "cancel" },
-                                
-                                })"
-                     ></IonAlert>
+                        Header="Alert"
+                        SubHeader="Important message"
+                        Message="This is an alert!"
+                        Buttons="@(() => new [] {
+                                     new AlertButton() { Text = "OK" },
+                                 })"
+                    ></IonAlert>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Using isOpen</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <UsingIsOpen/>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Controller Alerts</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    
+                </div>
+            </div>
+        </div>
+        
+        <h2>Buttons</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <Buttons/>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Inputs</h2>
+        <h3>Text Inputs Example</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <TextInputsExample/>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Radio Example</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <RadioExample/>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Checkbox Example</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <CheckboxExample/>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Customization</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <CustomizationExample/>
                 </div>
             </div>
         </div>

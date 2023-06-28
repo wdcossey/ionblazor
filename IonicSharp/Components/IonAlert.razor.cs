@@ -18,6 +18,7 @@ public partial class IonAlert : IonComponent
     private readonly DotNetObjectReference<ActionSheetButtonEventHelper<JsonObject?>> _buttonHandlerReference;
     
     private AlertButton[]? _buttons;
+    private AlertInput[]? _inputs;
 
     /// <summary>
     /// If <b>true</b>, the alert will animate.
@@ -29,10 +30,10 @@ public partial class IonAlert : IonComponent
     /// </summary>
     [Parameter] public bool? BackdropDismiss { get; set; }
     
-    [Parameter, EditorRequired] public Func<AlertButton[]>? Buttons { get; set; }
+    [Parameter] public Func<AlertButton[]>? Buttons { get; set; }
     
-    [Parameter, Obsolete("Ignored, use `CssClass`", true)] public override string? Class { get; set; }
-
+    [Parameter] public Func<AlertInput[]>? Inputs { get; set; }
+    
     /// <summary>
     /// Additional classes to apply for custom CSS.
     /// If multiple classes are provided they should be separated by spaces.
@@ -148,9 +149,24 @@ public partial class IonAlert : IonComponent
         
         _ionAlertDidDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
+            IAlertValues? values = null;
+            if (args?["detail"]?["data"]?["values"] is JsonArray jsonArray)
+            {
+                values = new AlertValuesArray() { Values = jsonArray.Deserialize<string[]>() };
+            }
+            else if (args?["detail"]?["data"]?["values"] is JsonObject jsonObject)
+            {
+                values = new AlertValuesDictionary() { Values = jsonObject.Deserialize<Dictionary<string, string>>() };
+            }
+            else
+            {
+                values = new AlertValues { Values = args?["detail"]?["data"]?["values"]?.GetValue<string>() };
+            }
+            
             await IonAlertDidDismiss.InvokeAsync(new IonAlertIonAlertDidDismissEventArgs()
             {
-                Role = args?["detail"]?["role"]?.GetValue<string>()
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+                Values = values,
             });
         }));
         
@@ -161,9 +177,24 @@ public partial class IonAlert : IonComponent
         
         _ionAlertWillDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
+            IAlertValues? values = null;
+            if (args?["detail"]?["data"]?["values"] is JsonArray jsonArray)
+            {
+                values = new AlertValuesArray() { Values = jsonArray.Deserialize<string[]>() };
+            }
+            else if (args?["detail"]?["data"]?["values"] is JsonObject jsonObject)
+            {
+                values = new AlertValuesDictionary() { Values = jsonObject.Deserialize<Dictionary<string, string>>() };
+            }
+            else
+            {
+                values = new AlertValues { Values = args?["detail"]?["data"]?["values"]?.GetValue<string>() };
+            }
+            
             await IonAlertWillDismiss.InvokeAsync(new IonAlertIonAlertWillDismissEventArgs()
             {
-                Role = args?["detail"]?["role"]?.GetValue<string>()
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+                Values = values,
             });
         }));
         
@@ -238,6 +269,7 @@ public partial class IonAlert : IonComponent
             return;
         
         _buttons = Buttons?.Invoke();
+        _inputs = Inputs?.Invoke();
 
         await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
         {
@@ -251,11 +283,15 @@ public partial class IonAlert : IonComponent
             new { Event = "willPresent", Ref = _willPresentReference}
         }, _self);
         
-        await JsRuntime.InvokeVoidAsync("addAlertButtons", _self, _buttons, _buttonHandlerReference);
+        if (_buttons?.Length > 0)
+            await JsRuntime.InvokeVoidAsync("addAlertButtons", _self, _buttons, _buttonHandlerReference);
+        
+        if (_inputs?.Length > 0)
+            await JsRuntime.InvokeVoidAsync("addAlertInputs", _self, _inputs);
     }
 }
 
-public class AlertButton
+public record AlertButton
 {
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Text { get; set; }
@@ -265,6 +301,89 @@ public class AlertButton
 
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CssClass { get; set; }
+}
+
+public record AlertInput
+{
+    [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public virtual string? Type { get; set; }
+    
+    [JsonPropertyName("name"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Name { get; set; }
+    
+    [JsonPropertyName("placeholder"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Placeholder { get; set; }
+
+    [JsonPropertyName("value"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public object? Value { get; set; }
+
+    [JsonPropertyName("label"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Label { get; set; }
+
+    [JsonPropertyName("checked"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? Checked { get; set; }
+
+    [JsonPropertyName("disabled"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? Disabled { get; set; }
+
+    [JsonPropertyName("id"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? Id { get; set; }
+
+    [JsonPropertyName("min"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public object? Min { get; set; }
+
+    [JsonPropertyName("max"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public object? Max { get; set; }
+
+    [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? CssClass { get; set; }
+
+    [JsonPropertyName("attributes"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Dictionary<string, object>? Attributes { get; set; }
+
+    [JsonPropertyName("tabindex"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public int? TabIndex { get; set; }
+    
+    /*
+type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
+  name?: string;
+  placeholder?: string;
+  value?: any;
+    label?: string;
+    checked?: boolean;
+    disabled?: boolean;
+    id?: string;
+    handler?: (input: AlertInput) => void;
+    min?: string | number;
+    max?: string | number;
+    cssClass?: string | string[];
+    attributes?: { [key: string]: any };
+tabindex?: number;
+     */
+}
+
+public record AlertInputNumber : AlertInput
+{
+    [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public override string? Type => "number";
+}
+
+public record AlertInputTextArea : AlertInput
+{
+    [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public override string? Type => "textarea";
+}
+
+public record AlertInputRadio : AlertInput
+{
+    [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public override string? Type => "radio";
+}
+
+public record AlertInputCheckbox : AlertInput
+{
+    [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public override string? Type => "checkbox";
 }
 
 public class AlertButtonHandlerEventArgs : EventArgs
@@ -283,13 +402,42 @@ public class IonAlertDidPresentEventArgs : EventArgs { }
 public class IonAlertIonAlertDidDismissEventArgs : EventArgs
 {
     public string? Role { get; internal set; }
+    
+    public IAlertValues? Values { get; internal set; }
 }
     
 public class IonAlertIonAlertDidPresentEventArgs : EventArgs { }
-    
+
+public interface IAlertValues
+{
+
+}
+
+
+public interface IAlertValues<out TData> : IAlertValues
+{
+    TData? Values { get; }
+}
+
+public class AlertValues : IAlertValues<object>
+{
+    public object? Values { get; internal set; }
+}
+
+public class AlertValuesArray : IAlertValues<string[]>
+{
+    public string[]? Values { get; internal set; }
+}
+
+public class AlertValuesDictionary : IAlertValues<IDictionary<string, string>>
+{
+    public IDictionary<string, string>? Values { get; internal set; }
+}
+
 public class IonAlertIonAlertWillDismissEventArgs : EventArgs
 {
     public string? Role { get; internal set; }
+    public IAlertValues? Values { get; internal set; }
 }
     
 public class IonAlertIonAlertWillPresentEventArgs : EventArgs { }
