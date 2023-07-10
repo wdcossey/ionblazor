@@ -741,7 +741,7 @@
         //await (args.Sender?.DismissAsync(null, "manual") ?? ValueTask.FromResult<bool>(false));
     }
     
-    private void DidDismiss(ActionSheetDidDismissEventArgs<ActionSheetButtonData> args) {
+    private void DidDismiss(ActionSheetDismissEventArgs<ActionSheetButtonData> args) {
         //presentToast("bottom", $"Role: {args.Role}; Data: {args.Data}");
     }
     

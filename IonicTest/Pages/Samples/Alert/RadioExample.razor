@@ -38,7 +38,7 @@
 @code{
     private string _output = null!;
 
-    private void IonAlertDidDismiss(IonAlertIonAlertDidDismissEventArgs args)
+    private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
     {
         _output = $$"""Dismissed with role: <b>{{args.Role}}</b><p>{{(args.Values as AlertValues)?.Values}}</p>""";
     }

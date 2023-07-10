@@ -67,7 +67,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     /// Emitted after the action sheet has dismissed. Shorthand for <see cref="IonActionSheetDidDismiss"/>.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetDidDismissEventArgs<TButtonData>> DidDismiss { get; set; }
+    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> DidDismiss { get; set; }
 
     /// <summary>
     /// Emitted after the action sheet has presented. Shorthand for <see cref="IonActionSheetWillDismiss"/>.
@@ -79,7 +79,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     /// Emitted after the action sheet has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<IonActionSheetDidDismissEventArgs<TButtonData>> IonActionSheetDidDismiss { get; set; }
+    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> IonActionSheetDidDismiss { get; set; }
 
     /// <summary>
     /// Emitted after the action sheet has presented.
@@ -91,7 +91,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     /// Emitted before the action sheet has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<IonActionSheetDidDismissEventArgs<TButtonData>> IonActionSheetWillDismiss { get; set; }
+    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> IonActionSheetWillDismiss { get; set; }
 
     /// <summary>
     /// Emitted before the action sheet has presented.
@@ -103,7 +103,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     /// Emitted before the action sheet has dismissed. Shorthand for <see cref="IonActionSheetWillDismiss"/>.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetWillDismissEventArgs<TButtonData>> WillDismiss { get; set; }
+    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> WillDismiss { get; set; }
 
     /// <summary>
     /// Emitted before the action sheet has presented. Shorthand for <see cref="IonActionSheetWillPresent"/>.
@@ -125,7 +125,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
 
         _didDismissReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(async args =>
         {
-            await DidDismiss.InvokeAsync(new ActionSheetDidDismissEventArgs<TButtonData>()
+            await DidDismiss.InvokeAsync(new ActionSheetDismissEventArgs<TButtonData>()
             {
                 Sender = this,
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
@@ -141,7 +141,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
         _ionActionSheetDidDismissReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(
             async args =>
             {
-                await IonActionSheetDidDismiss.InvokeAsync(new IonActionSheetDidDismissEventArgs<TButtonData>()
+                await IonActionSheetDidDismiss.InvokeAsync(new ActionSheetDismissEventArgs<TButtonData>()
                 {
                     Sender = this,
                     Role = args?["detail"]?["role"]?.GetValue<string>(),
@@ -157,7 +157,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
         _ionActionSheetWillDismissReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(
             async args =>
             {
-                await IonActionSheetWillDismiss.InvokeAsync(new IonActionSheetDidDismissEventArgs<TButtonData>()
+                await IonActionSheetWillDismiss.InvokeAsync(new ActionSheetDismissEventArgs<TButtonData>()
                 {
                     Sender = this,
                     Role = args?["detail"]?["role"]?.GetValue<string>(),
@@ -172,7 +172,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
 
         _willDismissReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(async args =>
         {
-            await WillDismiss.InvokeAsync(new ActionSheetWillDismissEventArgs<TButtonData>()
+            await WillDismiss.InvokeAsync(new ActionSheetDismissEventArgs<TButtonData>()
             {
                 Sender = this,
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
@@ -190,7 +190,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
             {
                 var index = args?["index"]?.GetValue<int?>();
                 var button = buttons?.ElementAtOrDefault(index ?? -1);
-                await (button?.Handler?.Invoke(button.Text, button.Role, index, button.Data) ?? ValueTask.CompletedTask);
+                await (button?.Handler?.Invoke(button, index) ?? ValueTask.CompletedTask);
                 
                 await ButtonHandler.InvokeAsync(new ActionSheetButtonHandlerEventArgs<TButtonData>()
                 {
@@ -266,7 +266,8 @@ public class ActionSheetButtonData : IActionSheetButtonData
 public class ActionSheetButton<TData>
     where TData: class, IActionSheetButtonData
 {
-    public delegate ValueTask HandlerDelegate (string? text, string? role, int? index, TData? data);
+    public delegate ValueTask HandlerDelegate<TButtonData>(ActionSheetButton<TButtonData>? button, int? index)
+        where TButtonData : class, IActionSheetButtonData;
     
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Text { get; set; }
@@ -281,7 +282,7 @@ public class ActionSheetButton<TData>
     public string? CssClass { get; set; }
         
     [JsonIgnore]
-    public HandlerDelegate? Handler { get; set; }
+    public HandlerDelegate<TData>? Handler { get; set; }
         
     [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public TData? Data { get; set; }
@@ -303,27 +304,13 @@ public class ActionSheetEventArgs<TData> : EventArgs
     public IonActionSheet<TData>? Sender { get; internal set; }
 }
 
-public class ActionSheetDidDismissEventArgs<TData> : ActionSheetEventArgs<TData>
+public class ActionSheetDismissEventArgs<TData> : ActionSheetEventArgs<TData>
     where TData: class, IActionSheetButtonData
 {
     public string? Role { get; internal set; }
     public TData? Data { get; set; }
 }
 
-public class IonActionSheetDidDismissEventArgs<TData> : ActionSheetEventArgs<TData>
-    where TData: class, IActionSheetButtonData
-{
-    public string? Role { get; internal set; }
-    public TData? Data { get; set; }
-}
-
-public class ActionSheetWillDismissEventArgs<TData> : ActionSheetEventArgs<TData>
-    where TData: class, IActionSheetButtonData
-{
-    public string? Role { get; internal set; }
-    public TData? Data { get; set; }
-}
-    
 public class ActionSheetButtonHandlerEventArgs<TData> : ActionSheetEventArgs<TData>
     where TData: class, IActionSheetButtonData
 {

@@ -4,38 +4,33 @@
           Header="Alert!"
           Buttons="@(() => { return new[] 
                    {
-                       new AlertButton() { Text = "Cancel", Role = "cancel" },
-                       new AlertButton() { Text = "OK", Role = "confirm" },
+                       new AlertButton { Text = "Cancel", Role = "cancel", Handler = CancelHandler },
+                       new AlertButton { Text = "OK", Role = "confirm", Handler = ConfirmHandler }
                    }; })"
-          IonAlertDidDismiss="IonAlertDidDismiss"
-          ButtonHandler="ButtonHandler"/>
+          IonAlertDidDismiss="IonAlertDidDismiss"/>
 <p>@((MarkupString)_handlerOutput)</p>
 <p>@((MarkupString)_roleOutput)</p>
 
-@code{
+@code {
     private IonAlert _alert = null!;
     private string _roleOutput = null!;
     private string _handlerOutput = null!;
 
-    private void IonAlertDidDismiss(IonAlertIonAlertDidDismissEventArgs args)
+    private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
     {
         _roleOutput = $"Dismissed with role: <b>{args.Role}</b>";
     }
 
-    private void ButtonHandler(AlertButtonHandlerEventArgs args)
+    private ValueTask CancelHandler(AlertButtonEventArgs args)
     {
-        switch (args.Button?.Role)
-        {
-            case null:
-                break;
-            case "cancel":
-                _handlerOutput = "Alert <b>canceled</b>";
-                break;
-            case "confirm":
-                _handlerOutput = "Alert <b>confirmed</b>";
-                break;
-                
-        }
+        _handlerOutput = "Alert <b>canceled</b>";
+        return ValueTask.CompletedTask;
+    }
+
+    private ValueTask ConfirmHandler(AlertButtonEventArgs args)
+    {
+        _handlerOutput = "Alert <b>confirmed</b>";
+        return ValueTask.CompletedTask;
     }
 
 }

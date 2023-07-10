@@ -46,7 +46,7 @@
 @code{
     private string _output = null!;
 
-    private void IonAlertDidDismiss(IonAlertIonAlertDidDismissEventArgs args)
+    private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
     {
         var values = string.Join("<br/>", (args.Values as AlertValuesDictionary)?.Values?.Select(s => $"<b>{s.Key}</b>&nbsp;:&nbsp;{s.Value}") ?? Enumerable.Empty<string>());
         _output = $$"""Dismissed with role: <b>{{args.Role}}</b><p>{{values}}</p>""";

@@ -104,7 +104,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     /// Emitted after the alert has dismissed. Shorthand for ionAlertDidDismiss.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertDidDismissEventArgs> DidDismiss { get; set; }
+    public EventCallback<IonAlertDismissEventArgs> DidDismiss { get; set; }
 
     /// <summary>
     /// Emitted after the alert has presented. Shorthand for ionAlertWillDismiss.
@@ -116,7 +116,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     /// Emitted after the alert has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertIonAlertDidDismissEventArgs> IonAlertDidDismiss { get; set; }
+    public EventCallback<IonAlertDismissEventArgs> IonAlertDidDismiss { get; set; }
 
     /// <summary>
     /// Emitted after the alert has presented.
@@ -128,7 +128,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     /// Emitted before the alert has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertIonAlertWillDismissEventArgs> IonAlertWillDismiss { get; set; }
+    public EventCallback<IonAlertDismissEventArgs> IonAlertWillDismiss { get; set; }
 
     /// <summary>
     /// Emitted before the alert has presented.
@@ -140,7 +140,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     /// Emitted before the alert has dismissed. Shorthand for ionAlertWillDismiss.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertWillDismissEventArgs> WillDismiss { get; set; }
+    public EventCallback<IonAlertDismissEventArgs> WillDismiss { get; set; }
 
     /// <summary>
     /// Emitted before the alert has presented. Shorthand for ionAlertWillPresent.
@@ -155,9 +155,12 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     {
         _didDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
-            await DidDismiss.InvokeAsync(new IonAlertDidDismissEventArgs()
+            var values = GetValues(args);
+            
+            await DidDismiss.InvokeAsync(new IonAlertDismissEventArgs()
             {
-                Role = args?["detail"]?["role"]?.GetValue<string>()
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+                Values = values
             });
         }));
 
@@ -168,21 +171,9 @@ public partial class IonAlert : IonComponent, IIonModeComponent
 
         _ionAlertDidDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
-            IAlertValues? values = null;
-            if (args?["detail"]?["data"]?["values"] is JsonArray jsonArray)
-            {
-                values = new AlertValuesArray() { Values = jsonArray.Deserialize<string[]>() };
-            }
-            else if (args?["detail"]?["data"]?["values"] is JsonObject jsonObject)
-            {
-                values = new AlertValuesDictionary() { Values = jsonObject.Deserialize<Dictionary<string, string>>() };
-            }
-            else
-            {
-                values = new AlertValues { Values = args?["detail"]?["data"]?["values"]?.GetValue<string>() };
-            }
+            var values = GetValues(args);
 
-            await IonAlertDidDismiss.InvokeAsync(new IonAlertIonAlertDidDismissEventArgs()
+            await IonAlertDidDismiss.InvokeAsync(new IonAlertDismissEventArgs()
             {
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
                 Values = values,
@@ -196,21 +187,9 @@ public partial class IonAlert : IonComponent, IIonModeComponent
 
         _ionAlertWillDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
-            IAlertValues? values;
-            if (args?["detail"]?["data"]?["values"] is JsonArray jsonArray)
-            {
-                values = new AlertValuesArray() { Values = jsonArray.Deserialize<string[]>() };
-            }
-            else if (args?["detail"]?["data"]?["values"] is JsonObject jsonObject)
-            {
-                values = new AlertValuesDictionary() { Values = jsonObject.Deserialize<Dictionary<string, string>>() };
-            }
-            else
-            {
-                values = new AlertValues { Values = args?["detail"]?["data"]?["values"]?.GetValue<string>() };
-            }
+            var values = GetValues(args);
 
-            await IonAlertWillDismiss.InvokeAsync(new IonAlertIonAlertWillDismissEventArgs()
+            await IonAlertWillDismiss.InvokeAsync(new IonAlertDismissEventArgs()
             {
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
                 Values = values,
@@ -224,9 +203,12 @@ public partial class IonAlert : IonComponent, IIonModeComponent
 
         _willDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
-            await WillDismiss.InvokeAsync(new IonAlertWillDismissEventArgs()
+            var values = GetValues(args);
+            
+            await WillDismiss.InvokeAsync(new IonAlertDismissEventArgs()
             {
-                Role = args?["detail"]?["role"]?.GetValue<string>()
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+                Values = values,
             });
         }));
 
@@ -239,8 +221,11 @@ public partial class IonAlert : IonComponent, IIonModeComponent
             async args =>
             {
                 var index = args?["index"]?.GetValue<int?>();
-                await ButtonHandler.InvokeAsync(new AlertButtonHandlerEventArgs()
-                    { Index = index, Button = _buttons?.ElementAtOrDefault(index ?? -1) });
+                var button = _buttons?.ElementAtOrDefault(index ?? -1);
+
+                await (button?.Handler?.Invoke(new AlertButtonEventArgs { Button = button, Sender = this, Index = index }) ?? ValueTask.CompletedTask);
+                
+                await ButtonHandler.InvokeAsync(new AlertButtonHandlerEventArgs { Sender = this, Index = index, Button = button });
             }));
 
     }
@@ -303,9 +288,37 @@ public partial class IonAlert : IonComponent, IIonModeComponent
         if (_inputs?.Length > 0)
             await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.addInputs", _self, _inputs);
     }
+
+    private static IAlertValues GetValues(JsonObject? jObject)
+    {
+        return jObject?["detail"]?["data"]?["values"] switch
+        {
+            JsonArray jsonArray => new AlertValuesArray { Values = jsonArray.Deserialize<string[]>() },
+            JsonObject jsonObject => new AlertValuesDictionary
+            {
+                Values = jsonObject.Deserialize<Dictionary<string, string>>()
+            },
+            _ => new AlertValues { Values = jObject?["detail"]?["data"]?["values"]?.GetValue<string>() }
+        };
+    }
 }
 
-public record AlertButton
+public interface IAlertButton
+{
+    [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    string? Text { get; }
+        
+    [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    string? Role { get; }
+
+    [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    string? CssClass { get; }
+    
+    [JsonIgnore] 
+    Func<AlertButtonEventArgs, ValueTask>? Handler { get; }
+}
+
+public record AlertButton : IAlertButton
 {
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Text { get; set; }
@@ -315,6 +328,27 @@ public record AlertButton
 
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CssClass { get; set; }
+    
+    [JsonIgnore] 
+    public Func<AlertButtonEventArgs, ValueTask>? Handler { get; set; } = null!;
+}
+
+public class AlertButtonEventArgs : EventArgs
+{
+    /// <summary>
+    /// The <see cref="IonAlert"/> that this event occurred on.
+    /// </summary>
+    public IonAlert? Sender { get; internal set; }
+    
+    /// <summary>
+    /// The index of the button that was clicked.
+    /// </summary>
+    public int? Index { get; internal set; }
+    
+    /// <summary>
+    /// The <see cref="IAlertButton" /> that was clicked.
+    /// </summary>
+    public IAlertButton? Button { get; internal set; }
 }
 
 public record AlertInput
@@ -402,18 +436,26 @@ public record AlertInputCheckbox : AlertInput
 
 public class AlertButtonHandlerEventArgs : EventArgs
 {
+    
+    /// <summary>
+    /// The <see cref="IonAlert" /> that this event occurred on.
+    /// </summary>
+    public IonAlert? Sender { get; internal set; }
+    
+    /// <summary>
+    /// The index of the button that was clicked.
+    /// </summary>
     public int? Index { get; internal set; }
-    public AlertButton? Button { get; internal set; }
-}
-
-public class IonAlertDidDismissEventArgs : EventArgs
-{
-    public string? Role { get; internal set; }
+    
+    /// <summary>
+    /// The <see cref="IAlertButton" /> that was clicked.
+    /// </summary>
+    public IAlertButton? Button { get; internal set; }
 }
 
 public class IonAlertDidPresentEventArgs : EventArgs { }
     
-public class IonAlertIonAlertDidDismissEventArgs : EventArgs
+public class IonAlertDismissEventArgs : EventArgs
 {
     public string? Role { get; internal set; }
     
@@ -448,18 +490,7 @@ public class AlertValuesDictionary : IAlertValues<IDictionary<string, string>>
     public IDictionary<string, string>? Values { get; internal set; }
 }
 
-public class IonAlertIonAlertWillDismissEventArgs : EventArgs
-{
-    public string? Role { get; internal set; }
-    public IAlertValues? Values { get; internal set; }
-}
-    
 public class IonAlertIonAlertWillPresentEventArgs : EventArgs { }
-    
-public class IonAlertWillDismissEventArgs : EventArgs
-{
-    public string? Role { get; internal set; }
-}
-    
+
 public class IonAlertWillPresentEventArgs : EventArgs { }
     

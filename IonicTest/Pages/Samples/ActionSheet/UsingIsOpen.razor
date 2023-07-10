@@ -23,14 +23,14 @@
 @code {
     private IonActionSheet<ActionSheetButtonData> _actionSheet = null!;
 
-    private void IonActionSheetDidDismiss(IonActionSheetDidDismissEventArgs<ActionSheetButtonData> args)
+    private void IonActionSheetDidDismiss(ActionSheetDismissEventArgs<ActionSheetButtonData> args)
     {
         _actionSheet.IsOpen = false;
     }
 
-    private async ValueTask ButtonHandler(string? text, string? role, int? index, ActionSheetButtonData? data)
+    private async ValueTask ButtonHandler(ActionSheetButton<ActionSheetButtonData>? button, int? index)
     {
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonToastController.present", $"Button Index: {index}; Role: {role}; Text: {text}; Action: {data?.Action};", "bottom", 3000, "logo-ionic");
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonToastController.present", $"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};", "bottom", 3000, "logo-ionic");
     }
 
 }
