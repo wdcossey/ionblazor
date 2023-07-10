@@ -106,7 +106,7 @@ public partial class IonRadio : IonComponent, IIonModeComponent, IIonContentComp
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
         {
             new { Event = "ionBlur", Ref = _ionBlurReference },
             new { Event = "ionFocus", Ref = _ionFocusReference },

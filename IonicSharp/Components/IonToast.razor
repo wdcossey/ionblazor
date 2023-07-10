@@ -1,0 +1,20 @@
+﻿@inherits IonComponent
+
+<ion-toast @ref="_self"
+           @attributes="@Attributes"
+           class="@Class"
+           animated="@Animated"
+           color="@Color"
+           css-class="@CssClass"
+           duration="@Duration"
+           header="@Header"
+           icon="@Icon"
+           is-open="@IsOpen"
+           keyboard-close="@KeyboardClose"
+           layout = "@Layout"
+           message="@(string.IsNullOrWhiteSpace(Message) ? Message : (MarkupString)Message)"
+           mode="@Mode"
+           position="@Position"
+           translucent="@Translucent"
+           trigger="@Trigger">
+</ion-toast>

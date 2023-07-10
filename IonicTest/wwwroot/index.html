@@ -90,6 +90,8 @@
     <script>
 
     </script>
+
+    <script src="_content/IonicSharp/wrapper.js"></script>
 </head>
 
 <body>
@@ -152,13 +154,6 @@
             //});
         }
         
-        function attachIonBreadcrumbsIonCollapsedClickListener(type, element, ref) {
-            element.addEventListener(type, (ev) => {
-                
-                ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail.collapsedBreadcrumbs.map(a => { return { href: a.href, textContent: a.textContent }} ) });
-            });
-        }
-
         async function presentToast(position, message) {
     
                 const alert = document.createElement('ion-toast');
@@ -197,51 +192,12 @@
     </script>
 
     <script>
-        function addActionSheetButtons(element, buttons, callback) {
-            buttons.forEach(function (button, index) {
-                button.handler = () => { callback.invokeMethodAsync('OnCallbackEvent', { index }); }
-            });
-            element.buttons = buttons;
-        }
-        
-    </script>
-
-    <script>
-        function addAlertButtons(element, buttons, callback) {
-            buttons.forEach(function (button, index) {
-                button.handler = () => { callback.invokeMethodAsync('OnCallbackEvent', { index }); }
-            });
-            element.buttons = buttons;
-        }
-
-        function addAlertInputs(element, inputs) {
-            /*buttons.forEach(function (button, index) {
-                button.handler = () => { callback.invokeMethodAsync('OnCallbackEvent', { index }); }
-            });*/
-            console.log(inputs)
-            element.inputs = inputs;
-        }
-    </script>
-
-    <script>
-        function setAccordionGroupValue(element, value) {
-            element.value = value;
-        }
-    </script>
-
-    <script>
         async function getSearchbarInputElement(element) {
             return await element.getInputElement();
         }
         
         function setSearchbarFocus(element) {
             element.setFocus();
-        }
-    </script>
-
-    <script>
-        function addRippleToRippleEffect(element, x, y) {
-            element.addRipple(x, y);
         }
     </script>
 
@@ -271,7 +227,16 @@
             return element.getProgress();
         }
     </script>
-    
+
+    <script>
+        this['ionInfiniteScrollHelper'] = new Object();
+
+        ionInfiniteScrollHelper.complete = (elm) => {
+            elm.complete();
+        };
+    </script>
+
+ 
     <script src="_framework/blazor.webview.js" autostart="false"></script>
 
 </body>

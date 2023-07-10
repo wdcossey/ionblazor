@@ -99,7 +99,7 @@
                                   <p class="ion-padding-horizontal">You must accept the terms and conditions to close this modal.</p>
                                     <IonItem>
                                       <IonLabel Class="ion-text-wrap" for="terms">Do you accept the terms and conditions?</IonLabel>
-                                      <IonCheckBox @ref="_checkboxDismissRef" id="terms" IonChange="@(args => _modalWithBooleanDismissRef.SetCanDismissAsync(args.Checked is true))"></IonCheckBox>
+                                      <IonCheckbox @ref="_checkboxDismissRef" id="terms" IonChange="@(args => _modalWithBooleanDismissRef.SetCanDismissAsync(args.Checked is true))"></IonCheckbox>
                                     </IonItem>
                                 </IonContent>
                             </IonModal>

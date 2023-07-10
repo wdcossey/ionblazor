@@ -136,7 +136,20 @@ public partial class IonFabButton : IonComponent, IIonModeComponent, IIonContent
         {
             await IonFocus.InvokeAsync();
         }));
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
 
+        if (!firstRender)
+            return;
+        
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
+        {
+            new { Event = "ionBlur" , Ref = _ionBlurReference  },
+            new { Event = "ionFocus", Ref = _ionFocusReference }
+        }, _self);
     }
 }
 

@@ -18,7 +18,7 @@ public partial class IonLabel : IonComponent, IIonModeComponent, IIonContentComp
     /// The position determines where and how the label behaves inside an item.
     /// </summary>
     [Parameter]
-    public string? Position { get; set; }
+    public string? Position { get; set; } = IonLabelPosition.Default;
 }
 
 public static class IonLabelPosition

@@ -25,6 +25,26 @@
                 </div>
             </div>
         </div>
+        
+        <h2>Adding Ripple via </h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <div class="basic-usage wrapper">
+                        <b>Programmatically add a ripple effect to the parent element.</b>
+
+                        <IonButton @onclick="@(async () => await _manualRippleEffect.AddRippleAsync(0, 0))">Click Me</IonButton>
+                        
+                        <div class="ion-activatable ripple-parent rectangle" style="width: 100px; height: 100px">
+                            <IonRippleEffect @ref="_manualRippleEffect"></IonRippleEffect>
+                        </div>
+                        
+                        
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
 
         <h2>Type</h2>
         <p>There are two types of ripple effects: <code>"bounded"</code> and <code>"unbounded"</code>. The default type, <code>"bounded"</code>, will expand the ripple effect from the click position outwards. To add a ripple effect that always starts in the center of the element and expands in a circle, set the type to <code>"unbounded"</code>.</p>

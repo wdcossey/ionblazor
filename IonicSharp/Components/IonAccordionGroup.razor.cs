@@ -67,7 +67,7 @@ public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonCo
             actualValue = value;
         }
 
-        await JsRuntime.InvokeVoidAsync("setAccordionGroupValue", _self,
+        await JsRuntime.InvokeVoidAsync("IonicSharp.AccordionGroup.setValue", _self,
             actualValue /*value ?? Array.Empty<string>()*/);
         Value = value;
         return this;
@@ -104,7 +104,11 @@ public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonCo
 
         //Multiple is not true ? result?.FirstOrDefault() : result;
         await SetValue(Value);
-        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", _self, _ionChangeObjectReference);
+
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new []
+        {
+            new { Event = "ionChange", Ref = _ionChangeObjectReference },
+        }, _self);
     }
 }
 

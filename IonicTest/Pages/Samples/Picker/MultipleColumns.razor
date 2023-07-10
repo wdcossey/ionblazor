@@ -1,0 +1,80 @@
+﻿<IonButton id="open-multi-picker">Open</IonButton>
+<IonPicker TColumn="PickerColumn"
+           TColumnOption="PickerColumnOption"
+           TButton="PickerButton"
+           Columns="@WithColumns"
+           Buttons="@WithButtons"
+           Trigger="open-multi-picker"></IonPicker>
+
+<p>@((MarkupString)_message)</p>
+
+@code{
+    
+    string _message = string.Empty;
+    
+    private IReadOnlyList<PickerColumn> WithColumns()
+    {
+        return new PickerColumn[]
+        {
+            new()
+            {
+                Name = "meat",
+                Options = new PickerColumnOption[]
+                {
+                    new() { Text = "Pepperoni", Value = "pepperoni" },
+                    new() { Text = "Smoked Ham", Value = "smoked-ham" },
+                    new() { Text = "Crispy Bacon", Value = "bacon" }
+                }
+            },
+            new()
+            {
+                Name = "veggies",
+                Options = new PickerColumnOption[]
+                {
+                    new() { Text = "Red onion", Value = "red-onion" },
+                    new() { Text = "Peppers", Value = "peppers" },
+                    new() { Text = "Black olives", Value = "black-olives" }
+                }
+            },
+            new()
+            {
+                Name = "crust",
+                Options = new PickerColumnOption[]
+                {
+                    new() { Text = "Pan style", Value = "pan" },
+                    new() { Text = "Hand tossed", Value = "hand-tossed" },
+                    new() { Text = "Stuffed crust", Value = "stuffed-crust" }
+                }
+            }
+        };
+    }
+
+    private IReadOnlyList<PickerButton> WithButtons()
+    {
+        return new PickerButton[]
+        {
+            new()
+            {
+                Text = "Cancel",
+                Role = "cancel"
+            },
+            new()
+            {
+                Text = "Confirm",
+                Handler = ConfirmHandler
+            }
+        };
+    }
+
+    private ValueTask ConfirmHandler(Dictionary<string, PickedColumnOption>? value)
+    {
+        if (value is null) 
+            return ValueTask.CompletedTask;
+            
+        _message = $"You selected a <b>{value["crust"].Text}</b> pizza with <b>{value["meat"].Text}</b> and <b>{value["veggies"].Text}</b>";
+        StateHasChanged();
+        
+        return ValueTask.CompletedTask;
+    }
+
+}

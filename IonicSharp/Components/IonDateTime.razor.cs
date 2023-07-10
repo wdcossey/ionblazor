@@ -239,7 +239,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
 
     public async Task<IonDateTime> SetValue(params string[]? value)
     {
-        await JsRuntime.InvokeVoidAsync("ionDateTimeSetValue", _self, value ?? Array.Empty<string>());
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.setValue", _self, value ?? Array.Empty<string>());
         Value = value?.Any() is true ? string.Join(',', value) : null;
         return this;
     }
@@ -307,40 +307,32 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
 
         _isDateEnabledReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(args =>
         {
-            /*{
-                "dateString": "2023-04-01"
-            }*/
-            var dateString = args?["dateString"]?.GetValue<string?>();
-            return Task.FromResult(IsDateEnabled?.Invoke(dateString));
+            var dateString = args?["dateIsoString"]?.GetValue<string?>();
+            var result = IsDateEnabled?.Invoke(dateString);
+            return Task.FromResult(result);
         }));
     }
 
     /// <summary>
     /// Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
     /// </summary>
-    public async Task CancelAsync(bool? closeOverlay = null)
-    {
-        await JsRuntime.InvokeVoidAsync("ionDateTimeCancel", _self, closeOverlay);
-    }
+    public async Task CancelAsync(bool? closeOverlay = null) => 
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.cancel", _self, closeOverlay);
 
     /// <summary>
     /// Confirms the selected datetime value, updates the value property, and optionally closes the popover or modal
     /// that the datetime was presented in.
     /// </summary>
-    public async Task ConfirmAsync(bool? closeOverlay = null)
-    {
-        await JsRuntime.InvokeVoidAsync("ionDateTimeConfirm", _self, closeOverlay);
-    }
+    public async Task ConfirmAsync(bool? closeOverlay = null) => 
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.confirm", _self, closeOverlay);
 
     /// <summary>
     /// Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string
     /// will reset the state of the component to the provided date. If no value is provided, the internal state
     /// will be reset to the clamped value of the min, max and today.
     /// </summary>
-    public async Task ResetAsync(string? startDate = null)
-    {
-        await JsRuntime.InvokeVoidAsync("ionDateTimeReset", _self, startDate);
-    }
+    public async Task ResetAsync(string? startDate = null) => 
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.reset", _self, startDate);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -349,17 +341,17 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new object[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
         {
-            new { Event = "ionBlur", Ref = _ionBlurReference },
+            new { Event = "ionBlur"  , Ref = _ionBlurReference   },
             new { Event = "ionCancel", Ref = _ionCancelReference },
             new { Event = "ionChange", Ref = _ionChangeReference },
-            new { Event = "ionFocus", Ref = _ionFocusReference },
+            new { Event = "ionFocus" , Ref = _ionFocusReference  },
             //new { Event = "isDateEnabled", Ref = _isDateEnabledFocusReference}
         }, _self);
 
         if (IsDateEnabled is not null)
-            await JsRuntime.InvokeVoidAsync("ionDateTimeIsDateEnabled", _self, _isDateEnabledReference);
+            await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.isDateEnabled", _self, _isDateEnabledReference);
     }
 }
 
@@ -367,13 +359,6 @@ public class IonDateTimeChangeEventArgs : EventArgs
 {
     public IonDateTime Sender { get; internal set; }
     
-    /// <summary>
-    /// The value of the <see cref="IonCheckBox"/> does not mean if it's checked or not,
-    /// use the <see cref="Checked"/> property for that.
-    /// <br/><br/>
-    /// The value of a <see cref="IonCheckBox"/> is analogous to the value of an &lt;input type="checkbox"&gt;,
-    /// it's only used when the checkbox participates in a native &lt;form&gt;.
-    /// </summary>
     public string? Value { get; internal set; }
 }
 

@@ -198,16 +198,16 @@ public partial class IonPopover : IonComponent, IIonModeComponent, IIonContentCo
         if (!firstRender)
             return;
         
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new []
         {
-            new { Event = "didDismiss"           , Ref = _didDismissReference           },
-            new { Event = "didPresent"           , Ref = _didPresentReference           },
-            new { Event = "ionPopoverDidDismiss" , Ref = _ionPopoverDidDismissReference },
-            new { Event = "ionPopoverDidPresent" , Ref = _ionPopoverDidPresentReference },
-            new { Event = "ionPopoverWillDismiss", Ref = _ionPopoverWillDismissReference},
-            new { Event = "ionPopoverWillPresent", Ref = _ionPopoverWillPresentReference},
-            new { Event = "willDismiss"          , Ref = _willDismissReference          },
-            new { Event = "willPresent"          , Ref = _willPresentReference          }
+            new { Event = "didDismiss"           , Ref = _didDismissReference            },
+            new { Event = "didPresent"           , Ref = _didPresentReference            },
+            new { Event = "ionPopoverDidDismiss" , Ref = _ionPopoverDidDismissReference  },
+            new { Event = "ionPopoverDidPresent" , Ref = _ionPopoverDidPresentReference  },
+            new { Event = "ionPopoverWillDismiss", Ref = _ionPopoverWillDismissReference },
+            new { Event = "ionPopoverWillPresent", Ref = _ionPopoverWillPresentReference },
+            new { Event = "willDismiss"          , Ref = _willDismissReference           },
+            new { Event = "willPresent"          , Ref = _willPresentReference           }
         }, _self);
     }
     

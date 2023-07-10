@@ -1,0 +1,8 @@
+﻿.playground__preview {
+    justify-content: stretch;
+}
+
+.playground__preview .container {
+    width: 100%;
+    width: -webkit-fill-available;
+}

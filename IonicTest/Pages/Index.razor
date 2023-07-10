@@ -15,7 +15,7 @@
         <IonList>
             <IonItemGroup>
                         
-                <IonItemDivider Color="@IonColor.Primary">
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
                     <IonLabel> Action Sheet </IonLabel>
                 </IonItemDivider>
                 
@@ -26,56 +26,47 @@
             </IonItemGroup>
             
             <IonItemGroup>
-                        
-                <IonItemDivider Color="@IonColor.Primary">
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
                     <IonLabel> Accordion </IonLabel>
                 </IonItemDivider>
                 
                 <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/accordion"))">
                     <IonLabel>ion-accordion</IonLabel>
                 </IonItem>
-                
             </IonItemGroup>
             
             <IonItemGroup>
-                        
-                <IonItemDivider Color="@IonColor.Primary">
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
                     <IonLabel> Alert </IonLabel>
                 </IonItemDivider>
                 
                 <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/alert"))">
                     <IonLabel>ion-alert</IonLabel>
                 </IonItem>
-                
             </IonItemGroup>
             
             <IonItemGroup>
-                        
-                <IonItemDivider Color="@IonColor.Primary">
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
                     <IonLabel> Badge </IonLabel>
                 </IonItemDivider>
                 
                 <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/badge"))">
                     <IonLabel>ion-badge</IonLabel>
                 </IonItem>
-                
             </IonItemGroup>
             
             <IonItemGroup>
-                        
-                <IonItemDivider Color="@IonColor.Primary">
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
                     <IonLabel> Breadcrumbs </IonLabel>
                 </IonItemDivider>
                 
                 <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/breadcrumbs"))">
                     <IonLabel>ion-breadcrumbs</IonLabel>
                 </IonItem>
-                
             </IonItemGroup>
         
             <IonItemGroup>
-                        
-                <IonItemDivider Color="@IonColor.Primary">
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
                     <IonLabel> Button </IonLabel>
                 </IonItemDivider>
                 
@@ -86,59 +77,189 @@
                 <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/ripple-effect"))">
                     <IonLabel>ion-ripple-effect</IonLabel>
                 </IonItem>
-                
             </IonItemGroup>
         
             <IonItemGroup>
-                        
-                <IonItemDivider Color="@IonColor.Primary">
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
                     <IonLabel> Card </IonLabel>
                 </IonItemDivider>
                 
                 <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/card"))">
                     <IonLabel>ion-card</IonLabel>
                 </IonItem>
-                
-                @*<IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/card-content"))">
-                    <IonLabel>ion-card-content</IonLabel>
-                </IonItem>
-                
-                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/card-header"))">
-                    <IonLabel>ion-card-header</IonLabel>
-                </IonItem>
-                
-                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/card-subtitle"))">
-                    <IonLabel>ion-card-subtitle</IonLabel>
-                </IonItem>
-                
-                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/card-title"))">
-                    <IonLabel>ion-card-title</IonLabel>
-                </IonItem>*@
-                
             </IonItemGroup>
 
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/icon"))">
-                <IonLabel>ion-icon</IonLabel>
-            </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/chip"))">
-                <IonLabel>ion-chip</IonLabel>
-            </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/avatar"))">
-                <IonLabel>ion-avatar</IonLabel>
-            </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/image"))">
-                <IonLabel>ion-image</IonLabel>
-            </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/thumbnail"))">
-                <IonLabel>ion-thumbnail</IonLabel>
-            </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/note"))">
-                <IonLabel>ion-note</IonLabel>
-            </IonItem>
-            
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/content"))">
-                <IonLabel>ion-content</IonLabel>
-            </IonItem>
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Checkbox </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/checkbox"))">
+                    <IonLabel>ion-checkbox</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Chip </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/chip"))">
+                    <IonLabel>ion-chip</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Content </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/content"))">
+                    <IonLabel>ion-content</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Content </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/content"))">
+                    <IonLabel>ion-content</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+        
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Date & Time Pickers </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/date-time"))">
+                    <IonLabel>ion-date-time</IonLabel>
+                </IonItem>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/date-time-button"))">
+                    <IonLabel>ion-date-time-button</IonLabel>
+                </IonItem>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/picker"))">
+                    <IonLabel>ion-picker</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+        
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Floating Action Button </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/fab"))">
+                    <IonLabel>ion-fab</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Grid </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/grid"))">
+                    <IonLabel>ion-grid</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Infinite Scroll </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/infinite-scroll"))">
+                    <IonLabel>ion-infinite-scroll</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Item </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/item"))">
+                    <IonLabel>ion-item</IonLabel>
+                </IonItem>
+
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/item-divider"))">
+                    <IonLabel>ion-item-divider</IonLabel>
+                </IonItem>
+
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/item-group"))">
+                    <IonLabel>ion-item-group</IonLabel>
+                </IonItem>
+
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/item-sliding"))">
+                    <IonLabel>ion-item-sliding</IonLabel>
+                </IonItem>
+                
+                <IonItem Button="@true" Disabled="true" @onclick="@(() => { })">
+                    <IonLabel>ion-item-options</IonLabel>
+                </IonItem>
+                
+                <IonItem Button="@true" Disabled="true" @onclick="@(() => { })">
+                    <IonLabel>ion-item-option</IonLabel>
+                </IonItem>
+
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/label"))">
+                    <IonLabel>ion-label</IonLabel>
+                </IonItem>
+
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/note"))">
+                    <IonLabel>ion-note</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> List </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/list"))">
+                    <IonLabel>ion-list</IonLabel>
+                </IonItem>
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/list-header"))">
+                    <IonLabel>ion-list-header</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Media </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/avatar"))">
+                    <IonLabel>ion-avatar</IonLabel>
+                </IonItem>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/icon"))">
+                    <IonLabel>ion-icon</IonLabel>
+                </IonItem>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/image"))">
+                    <IonLabel>ion-img</IonLabel>
+                </IonItem>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/thumbnail"))">
+                    <IonLabel>ion-thumbnail</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Toast </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/toast"))">
+                    <IonLabel>ion-toast</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
             <IonItem Button="true" @onclick="@(() => NavigationManager.NavigateTo("/samples/searchbar"))">
                 <IonLabel>ion-searchbar</IonLabel>
             </IonItem>
@@ -148,13 +269,9 @@
             <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/toggle"))">
                 <IonLabel>ion-toggle</IonLabel>
             </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/checkbox"))">
-                <IonLabel>ion-checkbox</IonLabel>
-            </IonItem>
+
             
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/fab"))">
-                <IonLabel>ion-fab</IonLabel>
-            </IonItem>
+            
             <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/spinner"))">
                 <IonLabel>ion-spinner</IonLabel>
             </IonItem>
@@ -182,56 +299,13 @@
             <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/progress-bar"))">
                 <IonLabel>ion-progress-bar</IonLabel>
             </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/list"))">
-                <IonLabel>ion-list</IonLabel>
-            </IonItem>
-            
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/date-time"))">
-                <IonLabel>ion-date-time</IonLabel>
-            </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/date-time-button"))">
-                <IonLabel>ion-date-time-button</IonLabel>
-            </IonItem>
+
             <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/modal"))">
                 <IonLabel>ion-modal</IonLabel>
             </IonItem>
-
-            
-            <IonItemGroup>
-            
-                <IonItemDivider Color="@IonColor.Primary">
-                    <IonLabel> Item </IonLabel>
-                </IonItemDivider>
-                
-                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/item"))">
-                    <IonLabel>ion-item</IonLabel>
-                </IonItem>
-
-                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/item-divider"))">
-                    <IonLabel>ion-item-divider</IonLabel>
-                </IonItem>
-
-                <IonItem Button="@true" Disabled="true" @onclick="@(() => { })">
-                    <IonLabel>ion-item-group</IonLabel>
-                </IonItem>
-
-                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/item-sliding"))">
-                    <IonLabel>ion-item-sliding</IonLabel>
-                </IonItem>
-                
-                <IonItem Button="@true" Disabled="true" @onclick="@(() => { })">
-                    <IonLabel>ion-item-options</IonLabel>
-                </IonItem>
-                
-                <IonItem Button="@true" Disabled="true" @onclick="@(() => { })">
-                    <IonLabel>ion-item-option</IonLabel>
-                </IonItem>
-            </IonItemGroup>
             
                             
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/list-header"))">
-                <IonLabel>ion-list-header</IonLabel>
-            </IonItem>
+
 
         </IonList>
     </IonContent>
@@ -314,7 +388,7 @@
         <IonList>
             <IonItemSliding IonDrag="@(args => { Debug.WriteLine("IonDrag -- Amount: {0}; Ratio: {1}", args.Amount, args.Ratio); })">
                 <IonItem>
-                    <IonLabel>Sliding Item with End Options</IonLabel>
+                    <IonLabel aria-label="Sliding Item with End Options">Sliding Item with End Options</IonLabel>
                 </IonItem>
 
                 <IonItemOptions IonSwipe="@(args => { Debug.WriteLine("IonSwipe -- Side: {0}", new object[] { args.Side }); })">
@@ -395,7 +469,7 @@
                     var @checked = workingSelectedFruits.Contains(item.value);
                     <IonItem>
                         <IonLabel>@item.text</IonLabel>
-                        <IonCheckBox aria-label="@item.text" slot="end" Value="@item.value" Checked="@(@checked)"></IonCheckBox>
+                        <IonCheckbox aria-label="@item.text" slot="end" Value="@item.value" Checked="@(@checked)"></IonCheckbox>
                     </IonItem>
                 }
             </IonList>
@@ -422,14 +496,17 @@
         </IonContent>
     </ion-modal>
     
-    <IonButton id="open-action-sheet">Open</IonButton>
+    <IonButton id="open-action-sheet">Open ActionSheet by Trigger</IonButton>
+    <IonButton @onclick="@(async () => { await _actionSheet.PresentAsync(); })" >Open ActionSheet by Method</IonButton>
 
-    <IonActionSheet
+<IonActionSheet
+        @ref="_actionSheet"
         TButtonData="ActionSheetButtonData"
         Trigger="open-action-sheet" 
-        Header="Actions" 
-        OnDidDismiss="@DidDismiss"
-        OnButtonHandler="@OnButtonHandler"
+        Header="Actions"
+        DidPresent="@DidPresent"
+        DidDismiss="@DidDismiss"
+        ButtonHandler="@OnButtonHandler"
         Buttons="@(() => { return new List<ActionSheetButton<ActionSheetButtonData>>() { 
                                  new () { Text = "Delete", Role = "destructive", Icon = "trash-outline", Data = new ActionSheetButtonData { Action = "delete" } }, 
                                  new () { Text = "Share", Icon = "share" }, 
@@ -465,6 +542,8 @@
     ElementReference list;      //document.querySelector('ion-list#modal-list');
     ElementReference modal;     //document.querySelector('ion-modal');
     ElementReference inputNameRef; //ion-input#input-name
+
+    IonActionSheet<ActionSheetButtonData> _actionSheet;
     
     //IJSObjectReference selectedFruitsText;// = document.querySelector('#selected-fruits');
     private DotNetObjectReference<CustomEventHelper<JsonObject?>> ModalReference;
@@ -655,6 +734,11 @@
 @code {
     private async void presentToast(string position, string message) {
         await JsRuntime.InvokeVoidAsync("presentToast", position, message);
+    }
+    
+    private async Task DidPresent(ActionSheetEventArgs<ActionSheetButtonData> args)
+    {
+        //await (args.Sender?.DismissAsync(null, "manual") ?? ValueTask.FromResult<bool>(false));
     }
     
     private void DidDismiss(ActionSheetDidDismissEventArgs<ActionSheetButtonData> args) {

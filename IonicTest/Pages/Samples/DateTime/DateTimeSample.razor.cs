@@ -14,7 +14,8 @@ public partial class DateTimeSample
          Date will be enabled if it is not
          Sunday or Saturday
         */
-        return utcDay is not (DayOfWeek.Sunday or DayOfWeek.Saturday);
+        var result = utcDay is not (DayOfWeek.Sunday or DayOfWeek.Saturday);
+        return result;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

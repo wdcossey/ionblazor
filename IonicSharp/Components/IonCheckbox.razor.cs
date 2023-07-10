@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonCheckBox : IonComponent, IIonModeComponent, IIonContentComponent, IIonColorComponent
+public partial class IonCheckbox : IonComponent, IIonModeComponent, IIonContentComponent, IIonColorComponent
 {
     private ElementReference _self;
 
@@ -12,7 +12,7 @@ public partial class IonCheckBox : IonComponent, IIonModeComponent, IIonContentC
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
-    /// If <b>true</b>, the <see cref="IonCheckBox"/> is selected.
+    /// If <b>true</b>, the <see cref="IonCheckbox"/> is selected.
     /// </summary>
     [Parameter]
     public bool? Checked { get; set; }
@@ -22,24 +22,24 @@ public partial class IonCheckBox : IonComponent, IIonModeComponent, IIonContentC
     public string? Color { get; set; }
 
     /// <summary>
-    /// If <b>true</b>, the user cannot interact with the <see cref="IonCheckBox"/>.
+    /// If <b>true</b>, the user cannot interact with the <see cref="IonCheckbox"/>.
     /// </summary>
     [Parameter]
     public bool? Disabled { get; set; }
 
     /// <summary>
-    /// If <b>true</b>, the <see cref="IonCheckBox"/> will visually appear as indeterminate.
+    /// If <b>true</b>, the <see cref="IonCheckbox"/> will visually appear as indeterminate.
     /// </summary>
     [Parameter]
     public bool? Indeterminate { get; set; }
 
     /// <summary>
-    /// How to pack the label and <see cref="IonCheckBox"/> within a line.<br/><br/>
-    /// <see cref="IonJustify.Start"/>: The label and <see cref="IonCheckBox"/> will appear on the left in LTR
+    /// How to pack the label and <see cref="IonCheckbox"/> within a line.<br/><br/>
+    /// <see cref="IonJustify.Start"/>: The label and <see cref="IonCheckbox"/> will appear on the left in LTR
     /// and on the right in RTL.<br/><br/>
-    /// <see cref="IonJustify.End"/>: The label and <see cref="IonCheckBox"/> will appear on the right in LTR
+    /// <see cref="IonJustify.End"/>: The label and <see cref="IonCheckbox"/> will appear on the right in LTR
     /// and on the left in RTL.<br/><br/>
-    /// <see cref="IonJustify.SpaceBetween"/>: The label and <see cref="IonCheckBox"/> will appear on opposite
+    /// <see cref="IonJustify.SpaceBetween"/>: The label and <see cref="IonCheckbox"/> will appear on opposite
     /// ends of the line with space between the two elements.
     /// </summary>
     [Parameter]
@@ -47,9 +47,9 @@ public partial class IonCheckBox : IonComponent, IIonModeComponent, IIonContentC
 
     /// <summary>
     /// Where to place the label relative to the checkbox.<br/><br/>
-    /// <see cref="IonLabelPlacement.Start"/>: The label will appear to the left of the <see cref="IonCheckBox"/> in LTR
+    /// <see cref="IonLabelPlacement.Start"/>: The label will appear to the left of the <see cref="IonCheckbox"/> in LTR
     /// and to the right in RTL.<br/><br/>
-    /// <see cref="IonLabelPlacement.End"/>: The label will appear to the right of the <see cref="IonCheckBox"/> in LTR
+    /// <see cref="IonLabelPlacement.End"/>: The label will appear to the right of the <see cref="IonCheckbox"/> in LTR
     /// and to the left in RTL.<br/><br/>
     /// <see cref="IonLabelPlacement.Fixed"/>: The label has the same behavior as "start" except it also
     /// has a fixed width.
@@ -82,10 +82,10 @@ public partial class IonCheckBox : IonComponent, IIonModeComponent, IIonContentC
     public string Name { get; set; } = null!;
 
     /// <summary>
-    /// The value of the <see cref="IonCheckBox"/> does not mean if it's checked or not,
+    /// The value of the <see cref="IonCheckbox"/> does not mean if it's checked or not,
     /// use the <see cref="Checked"/> property for that.
     /// <br/><br/>
-    /// The value of a <see cref="IonCheckBox"/> is analogous to the value of an &lt;input type="checkbox"&gt;,
+    /// The value of a <see cref="IonCheckbox"/> is analogous to the value of an &lt;input type="checkbox"&gt;,
     /// it's only used when the checkbox participates in a native &lt;form&gt;.
     /// </summary>
     [Parameter]
@@ -102,7 +102,7 @@ public partial class IonCheckBox : IonComponent, IIonModeComponent, IIonContentC
     /// Does not emit when programmatically changing the value of the checked property.
     /// </summary>
     [Parameter]
-    public EventCallback<IonCheckBoxChangeEventArgs> IonChange { get; set; }
+    public EventCallback<IonCheckboxChangeEventArgs> IonChange { get; set; }
 
     /// <summary>
     /// Emitted when the <see cref="IonToggle"/> has focus.
@@ -110,7 +110,7 @@ public partial class IonCheckBox : IonComponent, IIonModeComponent, IIonContentC
     [Parameter]
     public EventCallback IonFocus { get; set; }
 
-    public IonCheckBox()
+    public IonCheckbox()
     {
         _ionBlurReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
@@ -125,7 +125,7 @@ public partial class IonCheckBox : IonComponent, IIonModeComponent, IIonContentC
             Checked = isChecked is true;
             Value = value;
 
-            await IonChange.InvokeAsync(new IonCheckBoxChangeEventArgs { Checked = isChecked, Value = value });
+            await IonChange.InvokeAsync(new IonCheckboxChangeEventArgs { Checked = isChecked, Value = value });
         }));
 
         _ionFocusReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
@@ -140,30 +140,26 @@ public partial class IonCheckBox : IonComponent, IIonModeComponent, IIonContentC
 
         if (!firstRender)
             return;
-
-        //await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionBlur", _self, _ionBlurReference);
-        //await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", _self, _ionChangeReference);
-        //await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionFocus", _self, _ionFocusReference);
-
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new object[]
+        
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
         {
-            new { Event = "ionBlur", Ref = _ionBlurReference },
+            new { Event = "ionBlur"  , Ref = _ionBlurReference   },
             new { Event = "ionChange", Ref = _ionChangeReference },
-            new { Event = "ionFocus", Ref = _ionFocusReference }
+            new { Event = "ionFocus" , Ref = _ionFocusReference  }
         }, _self);
     }
 
 }
 
-public class IonCheckBoxChangeEventArgs : EventArgs
+public class IonCheckboxChangeEventArgs : EventArgs
 {
     public bool? Checked { get; internal set; }
     
     /// <summary>
-    /// The value of the <see cref="IonCheckBox"/> does not mean if it's checked or not,
+    /// The value of the <see cref="IonCheckbox"/> does not mean if it's checked or not,
     /// use the <see cref="Checked"/> property for that.
     /// <br/><br/>
-    /// The value of a <see cref="IonCheckBox"/> is analogous to the value of an &lt;input type="checkbox"&gt;,
+    /// The value of a <see cref="IonCheckbox"/> is analogous to the value of an &lt;input type="checkbox"&gt;,
     /// it's only used when the checkbox participates in a native &lt;form&gt;.
     /// </summary>
     public string? Value { get; internal set; }

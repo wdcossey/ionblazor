@@ -12,7 +12,7 @@ public partial class IonList : IonComponent, IIonModeComponent, IIonContentCompo
     /// If <b>true</b>, the list will have margin around it and rounded corners.
     /// </summary>
     [Parameter]
-    public bool Inset { get; set; }
+    public bool? Inset { get; set; }
 
     /// <summary>
     /// How the bottom border should be displayed on all items.
@@ -29,9 +29,9 @@ public partial class IonList : IonComponent, IIonModeComponent, IIonContentCompo
     /// Returns true if an actual ion-item-sliding is closed.
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> CloseSlidingItemsAsync()
+    public async ValueTask<bool> CloseSlidingItemsAsync()
     {
-        return await JsRuntime.InvokeAsync<bool>("ionListCloseSlidingItems", Self);
+        return await JsRuntime.InvokeAsync<bool>("IonicSharp.IonList.closeSlidingItems", Self);
     }
 }
 

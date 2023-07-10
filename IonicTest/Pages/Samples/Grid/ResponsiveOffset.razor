@@ -1,0 +1,30 @@
+﻿<div>
+    <b>No offset for xs breakpoint, offset 1st column for sm and up</b>
+    <IonGrid>
+        <IonRow>
+            <IonCol OffsetSm="2">1</IonCol>
+            <IonCol>2</IonCol>
+            <IonCol>3</IonCol>
+            <IonCol>4</IonCol>
+            <IonCol>5</IonCol>
+        </IonRow>
+    </IonGrid>
+
+    <b>No offset for xs breakpoint, offset last 3 columns for md and up</b>
+    <IonGrid>
+        <IonRow>
+            <IonCol>1</IonCol>
+            <IonCol OffsetMd="2">2</IonCol>
+            <IonCol OffsetMd="2">3</IonCol>
+            <IonCol OffsetMd="2">4</IonCol>
+        </IonRow>
+    </IonGrid>
+
+    <b>Offset all columns by 6 for xs breakpoint, offset by 4 for md, offset by 2 for lg and up</b>
+    <IonGrid>
+        <IonRow>
+            <IonCol offset="6" OffsetMd="4" OffsetLg="2">1</IonCol>
+            <IonCol offset="6" OffsetMd="4" OffsetLg="2">2</IonCol>
+        </IonRow>
+    </IonGrid>
+</div>

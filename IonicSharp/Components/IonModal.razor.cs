@@ -56,9 +56,9 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     [Parameter]
     public bool CanDismiss { get; set; } = true;
 
-    public async Task SetCanDismissAsync(bool value)
+    public async ValueTask SetCanDismissAsync(bool value)
     {
-        await JsRuntime.InvokeVoidAsync("ionModalCanDismiss", _self, value);
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.canDismiss", _self, value);
     }
 
     ///// <summary>
@@ -101,9 +101,9 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     [Parameter]
     public bool IsOpen { get; set; } = false;
 
-    public async Task<bool> SetIsOpenAsync(bool value)
+    public async ValueTask<bool> SetIsOpenAsync(bool value)
     {
-        var result = await JsRuntime.InvokeAsync<bool>("ionModalSetIsOpen", _self, value);
+        var result = await JsRuntime.InvokeAsync<bool>("IonicSharp.IonModal.isOpen", _self, value);
         //IsOpen = result;
         return result;
     }
@@ -300,17 +300,19 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// <summary>
     /// Dismiss the modal overlay after it has been presented.
     /// </summary>
-    public async Task<bool> DismissAsync(object? data = null, string? role = null)
+    public async ValueTask<bool> DismissAsync(object? data = null, string? role = null)
     {
-        return await JsRuntime.InvokeAsync<bool>("ionModalDismiss", _self, data, role);
+        return await JsRuntime.InvokeAsync<bool>("IonicSharp.IonModal.dismiss", _self, data, role);
     }
 
     /// <summary>
     /// Returns the current breakpoint of a sheet style modal
     /// </summary>
-    public async Task<int> GetCurrentBreakpointAsync(object? data = null, string? role = null)
+    public async ValueTask<int> GetCurrentBreakpointAsync(object? data = null, string? role = null)
     {
-        return await JsRuntime.InvokeAsync<int>("ionModalGetCurrentBreakpoint", _self);
+        //TODO: JS not implemented!
+        throw new NotImplementedException();
+        return await JsRuntime.InvokeAsync<int>("IonicSharp.IonModal.getCurrentBreakpoint", _self);
     }
 
     /*
@@ -342,7 +344,7 @@ Signature	setCurrentBreakpoint(breakpoint: number) => Promise<void>
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
         {
             new { Event = "didDismiss"            , Ref = _didDismissReference             },
             new { Event = "didPresent"            , Ref = _didPresentReference             },

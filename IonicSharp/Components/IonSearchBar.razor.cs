@@ -239,7 +239,6 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
     public async Task<IonSearchBar> SetValue(string? value)
     {
         throw new NotImplementedException();
-        //await JsRuntime.InvokeVoidAsync("setAccordionGroupValue", _self, value);
         Value = value;
         return this;
     }
@@ -271,7 +270,7 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new object[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
         {
             new { Event = "ionBlur", Ref = _ionBlurReference },
             new { Event = "ionCancel", Ref = _ionCancelReference },

@@ -1,1 +1,10 @@
-﻿
+﻿@inherits IonComponent
+
+<ion-infinite-scroll @ref="_self"
+                     @attributes="@Attributes"
+                     class="@Class"
+                     disabled="@Disabled"
+                     position="@Position"
+                     threshold="@Threshold">
+    @ChildContent
+</ion-infinite-scroll>

@@ -116,10 +116,10 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new object[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
         {
-            new { Event = "ionScroll", Ref = _ionScrollReference },
-            new { Event = "ionScrollEnd", Ref = _ionScrollEndReference },
+            new { Event = "ionScroll"     , Ref = _ionScrollReference      },
+            new { Event = "ionScrollEnd"  , Ref = _ionScrollEndReference   },
             new { Event = "ionScrollStart", Ref = _ionScrollStartReference }
         }, _self);
 
@@ -132,11 +132,11 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
     /// i.e. Using ionScroll, ionScrollStart, ionScrollEnd for scrolling events and scrollToPoint()
     /// to scroll the content into a certain point.
     /// </summary>
-    public Task<object?> GetScrollElementAsync()
+    [Obsolete("Not available in Blazor (Razor) projects", true)]
+    public async ValueTask<object?> GetScrollElementAsync()
     {
-        //getScrollElement
-        throw new NotImplementedException();
-        //JsRuntime.InvokeAsync<IJSObjectReference>()
+        throw new NotSupportedException();
+        await JsRuntime.InvokeAsync<JsonObject>("IonicSharp.IonContent.getScrollElement", _self);
     }
 
     /// <summary>
@@ -145,21 +145,15 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <param name="duration"></param>
-    public Task ScrollByPointAsync(int x, int y, int duration)
-    {
-        //scrollByPoint
-        throw new NotImplementedException();
-    }
+    public async ValueTask ScrollByPointAsync(int x, int y, int duration) =>
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonContent.scrollByPoint", _self, x, y, duration);
 
     /// <summary>
     /// Scroll to the bottom of the component.
     /// </summary>
     /// <param name="duration"></param>
-    public Task ScrollToBottomAsync(int duration)
-    {
-        //scrollToBottom
-        throw new NotImplementedException();
-    }
+    public async ValueTask ScrollToBottomAsync(int duration) =>
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonContent.scrollToBottom", _self, duration);
 
     /// <summary>
     /// Scroll to a specified X/Y location in the component.
@@ -167,22 +161,16 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <param name="duration"></param>
-    public Task ScrollToPointAsync(int? x = null, int? y = null, int? duration = null)
-    {
-        //scrollToPoint
-        throw new NotImplementedException();
-    }
-
+    public async ValueTask ScrollToPointAsync(int? x = null, int? y = null, int? duration = null) =>
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonContent.scrollToPoint", _self, x, y, duration);
+    
     /// <summary>
     /// Scroll to the top of the component.
     /// </summary>
     /// <param name="duration"></param>
-    public Task ScrollToTopAsync(int duration)
-    {
-        //scrollToTop
-        throw new NotImplementedException();
-    }
-    
+    public async ValueTask ScrollToTopAsync(int? duration) =>
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonContent.scrollToTop", _self, duration);
+
     internal sealed class __ionScrollEventArgs
     {
         [JsonPropertyName("detail")] public IonScrollEventArgs Detail { get; set; } = null!;

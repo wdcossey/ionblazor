@@ -94,7 +94,7 @@ public partial class IonItemSliding : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
         {
             new { Event = "ionDrag", Ref = _ionDragReference }
         }, _self);

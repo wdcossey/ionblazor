@@ -1,0 +1,30 @@
+﻿<div>
+    <b>Column 1 has <code>push</code> set to <code>"4"</code> and column 2 has <code>pull</code> set to <code>"4"</code></b>
+    <IonGrid>
+      <IonRow>
+        <IonCol Push="4">1</IonCol>
+        <IonCol Pull="4">2</IonCol>
+        <IonCol>3</IonCol>
+      </IonRow>
+    </IonGrid>
+
+    <b>Column 2 has <code>push</code> set to <code>"4"</code> and column 3 & 4 have <code>pull</code> set to <code>"2"</code></b>
+    <IonGrid>
+        <IonRow>
+              <IonCol>1</IonCol>
+              <IonCol Push="4">2</IonCol>
+              <IonCol Pull="2">3</IonCol>
+              <IonCol Pull="2">4</IonCol>
+              <IonCol>5</IonCol>
+              <IonCol>6</IonCol>
+        </IonRow>
+    </IonGrid>
+
+    <b>Column 1 has <code>push</code> set to <code>"3"</code> and column 2 has <code>pull</code> set to <code>"9"</code></b>
+    <IonGrid>
+        <IonRow>
+            <IonCol Size="9" Push="3">1</IonCol>
+            <IonCol Size="3" Pull="9">2</IonCol>
+        </IonRow>
+    </IonGrid>
+</div>

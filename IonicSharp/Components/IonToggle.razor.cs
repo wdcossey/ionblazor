@@ -138,7 +138,7 @@ public partial class IonToggle : IonComponent, IIonModeComponent, IIonContentCom
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new object[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
         {
             new { Event = "ionBlur", Ref = _ionBlurReference },
             new { Event = "ionChange", Ref = _ionChangeReference },

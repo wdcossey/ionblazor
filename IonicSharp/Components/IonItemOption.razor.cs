@@ -60,11 +60,12 @@ public partial class IonItemOption : IonComponent, IIonModeComponent, IIonConten
     /// The type of the button.
     /// </summary>
     [Parameter]
-    public string? Type { get; set; } = IonItemOptionType.Button;
+    public string? Type { get; set; } = IonItemOptionType.Default;
 }
 
 public static class IonItemOptionType
 {
+    public const string? Default = null;
     public const string Button = "button";
     public const string Reset = "reset";
     public const string Submit = "submit";

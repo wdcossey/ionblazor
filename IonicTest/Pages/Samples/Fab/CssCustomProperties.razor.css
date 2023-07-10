@@ -1,11 +1,4 @@
-﻿.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-::deep .custom-css ion-fab-button {
+﻿::deep.css-custom-properties ion-fab-button {
     --background: #b7f399;
     --background-activated: #87d361;
     --background-hover: #a3e681;

@@ -1,0 +1,89 @@
+﻿@using System.Collections
+<IonContent>
+    <IonList @ref="_list">
+        @for (var i = 1; i < ItemCount; i++)
+        {
+            var index = i;
+            <IonItem>
+                <IonAvatar slot="start">
+                    <img src="https://picsum.photos/80/80?random={@index}" alt="Avatar"/>
+                </IonAvatar>
+                <IonLabel>Item @index</IonLabel>
+            </IonItem>
+        }
+    </IonList>
+    <IonInfiniteScroll IonInfinite="IonInfiniteCallback">
+        <div class="infinite-scroll-content">
+            <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                viewBox="0 0 100 100"
+                enable-background="new 0 0 100 100"
+                xml:space="preserve">
+                <circle fill="none" stroke="#1b6dff" stroke-width="4" stroke-miterlimit="10" cx="50" cy="50" r="48" />
+                <line
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke="#1b6dff"
+                    stroke-width="4"
+                    stroke-miterlimit="10"
+                    x1="50"
+                    y1="50"
+                    x2="85"
+                    y2="50.5">
+                    <animateTransform
+                        attributeName="transform"
+                        dur="2s"
+                        type="rotate"
+                        from="0 50 50"
+                        to="360 50 50"
+                        repeatCount="indefinite"/>
+                </line>
+                <line
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke="#1b6dff"
+                    stroke-width="4"
+                    stroke-miterlimit="10"
+                    x1="50"
+                    y1="50"
+                    x2="49.5"
+                    y2="74">
+                    <animateTransform
+                        attributeName="transform"
+                        dur="15s"
+                        type="rotate"
+                        from="0 50 50"
+                        to="360 50 50"
+                        repeatCount="indefinite"/>
+                </line>
+            </svg>
+        </div>
+    </IonInfiniteScroll>
+</IonContent>
+
+@code {
+    IonList _list = null!;
+    
+    int ItemCount { get; set; } = 0;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        GenerateItems();
+    }
+
+    private async Task IonInfiniteCallback(IonInfiniteScroll.IonInfiniteEventArgs args)
+    {
+        await Task.Delay(1500);
+        GenerateItems();
+        await args.Sender.CompleteAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void GenerateItems() => ItemCount += 50;
+
+}

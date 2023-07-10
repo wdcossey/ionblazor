@@ -147,10 +147,10 @@ public partial class IonButton : IonComponent, IIonModeComponent, IIonContentCom
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
         {
-            new { Event = "ionBlur", Ref = _ionBlurReference },
-            new { Event = "ionFocus", Ref = _ionFocusReference }
+            new { Event = "ionBlur" , Ref = _ionBlurReference },
+            new { Event = "ionFocus", Ref = _ionFocusReference}
         }, _self);
 
     }

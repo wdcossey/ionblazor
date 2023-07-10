@@ -2,5 +2,5 @@
 
 public partial class AlertSample
 {
-    
+    private IonAlert _alertByMethodRef = null!;
 }

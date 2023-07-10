@@ -5,7 +5,7 @@ public partial class ModalSamples
     private IonModal _inlineModalsRef;
     private IonModal _usingIsOpenRef;
     private IonModal _modalWithBooleanDismissRef;
-    private IonCheckBox _checkboxDismissRef;
+    private IonCheckbox _checkboxDismissRef;
 
     private string _inlineModalsInputValue;
     private string _message = "This modal example uses triggers to automatically open a modal when the button is clicked.";

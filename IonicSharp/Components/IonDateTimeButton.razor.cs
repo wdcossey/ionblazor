@@ -2,8 +2,6 @@
 
 public partial class IonDateTimeButton : IonComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
-
     /// <inheritdoc/>
     [Parameter]
     public string? Color { get; set; }

@@ -55,7 +55,7 @@ public partial class IonRadioGroup : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
         {
             new { Event = "ionChange", Ref = _ionChangeReference }
         }, _self);

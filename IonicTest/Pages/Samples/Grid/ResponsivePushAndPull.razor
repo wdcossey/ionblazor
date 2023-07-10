@@ -1,0 +1,31 @@
+﻿<div>
+    <b>No change for xs breakpoint, push 1st column & pull 2nd column for sm and up</b>
+    <IonGrid>
+        <IonRow>
+            <IonCol PushSm="6">1</IonCol>
+            <IonCol PullSm="6">2</IonCol>
+        </IonRow>
+    </IonGrid>
+
+    <b>No change for xs breakpoint, push middle columns & pull last column for md and up</b>
+    <IonGrid>
+        <IonRow>
+            <IonCol>1</IonCol>
+            <IonCol PushMd="3">2</IonCol>
+            <IonCol PushMd="3">3</IonCol>
+            <IonCol PullMd="6">4</IonCol>
+        </IonRow>
+    </IonGrid>
+
+    <b>Switch first and last 3 columns for xs breakpoints, reverse columns for lg and up</b>
+    <IonGrid>
+        <IonRow>
+            <IonCol Push="6" PushLg="10">1</IonCol>
+            <IonCol Push="6" PushLg="6">2</IonCol>
+            <IonCol Push="6" PushLg="2">3</IonCol>
+            <IonCol Pull="6" PullLg="2">4</IonCol>
+            <IonCol Pull="6" PullLg="6">5</IonCol>
+            <IonCol Pull="6" PullLg="10">6</IonCol>
+        </IonRow>
+    </IonGrid>
+</div>

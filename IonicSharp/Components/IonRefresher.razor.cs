@@ -131,7 +131,7 @@ public partial class IonRefresher: IonComponent, IIonContentComponent
         if (!firstRender)
             return;
         
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new []
         {
             new { Event = "ionPull", Ref = _ionPullReference},
             new { Event = "ionRefresh", Ref = _ionRefreshReference},

@@ -74,7 +74,7 @@ public partial class IonBreadcrumbs : IonComponent, IIonModeComponent, IIonConte
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonBreadcrumbsIonCollapsedClickListener", "ionCollapsedClick", _self,
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonBreadCrumbs.attachIonCollapsedClickListener", "ionCollapsedClick", _self,
             _ionCollapsedClickReference);
     }
 

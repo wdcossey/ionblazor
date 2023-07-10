@@ -1,0 +1,19 @@
+﻿<IonHeader>
+    <IonToolbar>
+        <IonTitle>Inline Toast</IonTitle>
+    </IonToolbar>
+</IonHeader>
+<IonContent class="ion-padding">
+    <IonButton Expand="@IonButtonExpand.Block" @onclick="@(() => _toast.IsOpen = true)">Open</IonButton>
+    <IonToast @ref="_toast" Duration="5000" Message="This toast will close in 5 seconds" DidDismiss="DidDismiss"></IonToast>
+</IonContent>
+
+@code{
+    private IonToast _toast = null!;
+
+    private void DidDismiss()
+    {
+        _toast.IsOpen = false;
+    }
+
+}

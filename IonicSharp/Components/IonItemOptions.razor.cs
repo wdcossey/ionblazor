@@ -13,7 +13,8 @@ public partial class IonItemOptions : IonComponent, IIonContentComponent
     /// <see cref="IonItemOptionsSide.End"/>.
     /// If you have multiple <see cref="IonItemOptions"/>, a side must be provided for each.
     /// </summary>
-    [Parameter] public string Side { get; set; } = IonItemOptionsSide.End;
+    [Parameter]
+    public string Side { get; set; } = IonItemOptionsSide.End;
     
     /// <summary>
     /// Emitted when the item has been fully swiped.
@@ -39,7 +40,7 @@ public partial class IonItemOptions : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
         
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new []
         {
             new { Event = "ionSwipe", Ref = _ionSwipeReference }
         }, _self);

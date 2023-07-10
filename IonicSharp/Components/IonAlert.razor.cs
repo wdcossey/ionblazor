@@ -7,129 +7,150 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     private ElementReference _self;
 
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionAlertDidDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionAlertDidPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionAlertDidPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionAlertWillDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionAlertWillPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionAlertWillPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
 
     private readonly DotNetObjectReference<ActionSheetButtonEventHelper<JsonObject?>> _buttonHandlerReference;
-    
+
     private AlertButton[]? _buttons;
     private AlertInput[]? _inputs;
 
     /// <summary>
     /// If <b>true</b>, the alert will animate.
     /// </summary>
-    [Parameter] public bool? Animated { get; set; }
-    
+    [Parameter]
+    public bool? Animated { get; set; }
+
     /// <summary>
     /// If <b>true</b>, the alert will be dismissed when the backdrop is clicked.
     /// </summary>
-    [Parameter] public bool? BackdropDismiss { get; set; }
-    
+    [Parameter]
+    public bool? BackdropDismiss { get; set; }
+
     [Parameter] public Func<AlertButton[]>? Buttons { get; set; }
-    
     [Parameter] public Func<AlertInput[]>? Inputs { get; set; }
-    
+
     /// <summary>
     /// Additional classes to apply for custom CSS.
     /// If multiple classes are provided they should be separated by spaces.
     /// </summary>
-    [Parameter] public string? CssClass { get; set; }
-    
+    [Parameter]
+    public string? CssClass { get; set; }
+
     /// <summary>
     /// The main title in the heading of the alert.
     /// </summary>
-    [Parameter] public string? Header { get; set; }
-    
+    [Parameter]
+    public string? Header { get; set; }
+
     /// <summary>
     /// If <b>true</b>, the alert will open. If <b>false</b>, the alert will close. Use this if you need finer
     /// grained control over presentation, otherwise just use the alertController or the <see cref="Trigger"/> property.
     /// Note: <see cref="IsOpen"/> will not automatically be set back to <b>false</b> when the alert dismisses.
     /// You will need to do that in your code.
     /// </summary>
-    [Parameter] public bool? IsOpen { get; set; }
-    
+    [Parameter]
+    public bool? IsOpen { get; set; }
+
     /// <summary>
     /// If <b>true</b>, the keyboard will be automatically dismissed when the overlay is presented.<p/>
     /// Default: <b>true</b>
     /// </summary>
-    [Parameter] public bool? KeyboardClose { get; set; }
-    
+    [Parameter]
+    public bool? KeyboardClose { get; set; }
+
     /// <summary>
-    /// <p>The main message to be displayed in the alert. <b>message</b> can accept either plaintext or HTML as a string.
-    /// To display characters normally reserved for HTML, they must be escaped. For example <b>&lt;Ionic&gt;</b>
+    /// <p>The main message to be displayed in the alert. <b>message</b> can accept either plaintext or HTML as a
+    /// string. To display characters normally reserved for HTML, they must be escaped. For example <b>&lt;Ionic&gt;</b>
     /// would become <b>&amp;lt;Ionic&amp;gt;</b></p><br/>
-    /// <p>For more information: <a href="https://ionicframework.com/docs/faq/security">Security Documentation</a></p><br/>
+    /// <p>For more information:
+    /// <a href="https://ionicframework.com/docs/faq/security">Security Documentation</a></p><br/>
     /// <p>This property accepts custom HTML as a string. Content is parsed as plaintext by default.
     /// innerHTMLTemplatesEnabled must be set to true in the Ionic config before custom HTML can be used.</p>
     /// </summary>
-    [Parameter] public string? Message { get; set; }
-    
+    [Parameter]
+    public string? Message { get; set; }
+
     /// <inheritdoc/>
-    [Parameter] public string? Mode { get; set; } = IonMode.Default;
-    
+    [Parameter]
+    public string? Mode { get; set; } = IonMode.Default;
+
     /// <summary>
     /// The subtitle in the heading of the alert. Displayed under the title.
     /// </summary>
-    [Parameter] public string? SubHeader { get; set; }
-    
+    [Parameter]
+    public string? SubHeader { get; set; }
+
     /// <summary>
     /// If <b>true</b>, the alert will be translucent. Only applies when the mode is <see cref="IonMode.iOS"/> and the
-    /// device supports <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#browser_compatibility">backdrop-filter</a>.
+    /// device supports
+    /// <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#browser_compatibility">backdrop-filter</a>.
     /// </summary>
-    [Parameter] public bool? Translucent { get; set; }
-    
+    [Parameter]
+    public bool? Translucent { get; set; }
+
     /// <summary>
     /// An ID corresponding to the trigger element that causes the alert to open when clicked.
     /// </summary>
-    [Parameter] public string? Trigger { get; set; }
-    
+    [Parameter]
+    public string? Trigger { get; set; }
+
     /// <summary>
     /// Emitted after the alert has dismissed. Shorthand for ionAlertDidDismiss.
     /// </summary>
-    [Parameter] public EventCallback<IonAlertDidDismissEventArgs> DidDismiss { get; set; }
- 
+    [Parameter]
+    public EventCallback<IonAlertDidDismissEventArgs> DidDismiss { get; set; }
+
     /// <summary>
     /// Emitted after the alert has presented. Shorthand for ionAlertWillDismiss.
     /// </summary>
-    [Parameter] public EventCallback<IonAlertDidPresentEventArgs> DidPresent { get; set;} 
-    
+    [Parameter]
+    public EventCallback<IonAlertDidPresentEventArgs> DidPresent { get; set; }
+
     /// <summary>
     /// Emitted after the alert has dismissed.
     /// </summary>
-    [Parameter] public EventCallback<IonAlertIonAlertDidDismissEventArgs> IonAlertDidDismiss { get; set;}
-    
+    [Parameter]
+    public EventCallback<IonAlertIonAlertDidDismissEventArgs> IonAlertDidDismiss { get; set; }
+
     /// <summary>
     /// Emitted after the alert has presented.
     /// </summary>
-    [Parameter] public EventCallback<IonAlertIonAlertDidPresentEventArgs> IonAlertDidPresent { get; set;}
-    
+    [Parameter]
+    public EventCallback<IonAlertIonAlertDidPresentEventArgs> IonAlertDidPresent { get; set; }
+
     /// <summary>
     /// Emitted before the alert has dismissed.
     /// </summary>
-    [Parameter] public EventCallback<IonAlertIonAlertWillDismissEventArgs> IonAlertWillDismiss { get; set;}
-    
+    [Parameter]
+    public EventCallback<IonAlertIonAlertWillDismissEventArgs> IonAlertWillDismiss { get; set; }
+
     /// <summary>
     /// Emitted before the alert has presented.
     /// </summary>
-    [Parameter] public EventCallback<IonAlertIonAlertWillPresentEventArgs> IonAlertWillPresent { get; set;}
-    
+    [Parameter]
+    public EventCallback<IonAlertIonAlertWillPresentEventArgs> IonAlertWillPresent { get; set; }
+
     /// <summary>
     /// Emitted before the alert has dismissed. Shorthand for ionAlertWillDismiss.
     /// </summary>
-    [Parameter] public EventCallback<IonAlertWillDismissEventArgs> WillDismiss { get; set;}
+    [Parameter]
+    public EventCallback<IonAlertWillDismissEventArgs> WillDismiss { get; set; }
 
     /// <summary>
     /// Emitted before the alert has presented. Shorthand for ionAlertWillPresent.
     /// </summary>
-    [Parameter] public EventCallback<IonAlertWillPresentEventArgs> WillPresent { get; set;}
+    [Parameter]
+    public EventCallback<IonAlertWillPresentEventArgs> WillPresent { get; set; }
 
-    [Parameter] public EventCallback<AlertButtonHandlerEventArgs> ButtonHandler { get; set; }
-    
+    [Parameter] 
+    public EventCallback<AlertButtonHandlerEventArgs> ButtonHandler { get; set; }
+
     public IonAlert()
     {
         _didDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
@@ -139,12 +160,12 @@ public partial class IonAlert : IonComponent, IIonModeComponent
                 Role = args?["detail"]?["role"]?.GetValue<string>()
             });
         }));
-        
-        _didPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+
+        _didPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await DidPresent.InvokeAsync(new IonAlertDidPresentEventArgs());
         }));
-        
+
         _ionAlertDidDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
             IAlertValues? values = null;
@@ -160,22 +181,22 @@ public partial class IonAlert : IonComponent, IIonModeComponent
             {
                 values = new AlertValues { Values = args?["detail"]?["data"]?["values"]?.GetValue<string>() };
             }
-            
+
             await IonAlertDidDismiss.InvokeAsync(new IonAlertIonAlertDidDismissEventArgs()
             {
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
                 Values = values,
             });
         }));
-        
-        _ionAlertDidPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+
+        _ionAlertDidPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await IonAlertDidPresent.InvokeAsync(new IonAlertIonAlertDidPresentEventArgs());
         }));
-        
+
         _ionAlertWillDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
-            IAlertValues? values = null;
+            IAlertValues? values;
             if (args?["detail"]?["data"]?["values"] is JsonArray jsonArray)
             {
                 values = new AlertValuesArray() { Values = jsonArray.Deserialize<string[]>() };
@@ -188,19 +209,19 @@ public partial class IonAlert : IonComponent, IIonModeComponent
             {
                 values = new AlertValues { Values = args?["detail"]?["data"]?["values"]?.GetValue<string>() };
             }
-            
+
             await IonAlertWillDismiss.InvokeAsync(new IonAlertIonAlertWillDismissEventArgs()
             {
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
                 Values = values,
             });
         }));
-        
-        _ionAlertWillPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+
+        _ionAlertWillPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await IonAlertWillPresent.InvokeAsync(new IonAlertIonAlertWillPresentEventArgs());
         }));
-        
+
         _willDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
         {
             await WillDismiss.InvokeAsync(new IonAlertWillDismissEventArgs()
@@ -208,56 +229,51 @@ public partial class IonAlert : IonComponent, IIonModeComponent
                 Role = args?["detail"]?["role"]?.GetValue<string>()
             });
         }));
-        
-        _willPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+
+        _willPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
         {
             await WillPresent.InvokeAsync(new IonAlertWillPresentEventArgs());
         }));
-        
-        _buttonHandlerReference =  DotNetObjectReference.Create(new ActionSheetButtonEventHelper<JsonObject?>(async args =>
-        {
-            var index = args?["index"]?.GetValue<int?>();
-            await ButtonHandler.InvokeAsync(new AlertButtonHandlerEventArgs()
-                { Index = index, Button = _buttons?.ElementAtOrDefault(index ?? -1) });
-        }));
-        
+
+        _buttonHandlerReference = DotNetObjectReference.Create(new ActionSheetButtonEventHelper<JsonObject?>(
+            async args =>
+            {
+                var index = args?["index"]?.GetValue<int?>();
+                await ButtonHandler.InvokeAsync(new AlertButtonHandlerEventArgs()
+                    { Index = index, Button = _buttons?.ElementAtOrDefault(index ?? -1) });
+            }));
+
     }
 
     /// <summary>
     /// Dismiss the alert overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
-    public Task<bool> DismissAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async ValueTask<bool> DismissAsync() => 
+        await JsRuntime.InvokeAsync<bool>("IonicSharp.IonAlert.dismiss", _self);
 
     /// <summary>
     /// Returns a promise that resolves when the alert did dismiss.
     /// </summary>
     /// <returns></returns>
-    public Task<bool> OnDidDismissAsync()
-    {
-        throw new NotImplementedException();
-    }
+    [Obsolete("Not available in Blazor (Razor) projects", true)]
+    public async ValueTask OnDidDismissAsync() => 
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.onWillDismiss", _self);
 
     /// <summary>
     /// Returns a promise that resolves when the alert will dismiss.
     /// </summary>
     /// <returns></returns>
-    public Task<bool> OnWillDismissAsync()
-    {
-        throw new NotImplementedException();
-    }
+    [Obsolete("Not available in Blazor (Razor) projects", true)]
+    public async ValueTask OnWillDismissAsync() => 
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.onWillDismiss", _self);
 
     /// <summary>
     /// Present the alert overlay after it has been created.
     /// </summary>
     /// <returns></returns>
-    public Task<bool> PresentAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async ValueTask PresentAsync() => 
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.present", _self);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -265,27 +281,27 @@ public partial class IonAlert : IonComponent, IIonModeComponent
 
         if (!firstRender)
             return;
-        
+
         _buttons = Buttons?.Invoke();
         _inputs = Inputs?.Invoke();
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new []
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
         {
-            new { Event = "didDismiss", Ref = _didDismissReference},
-            new { Event = "didPresent", Ref = _didPresentReference},
-            new { Event = "ionAlertDidDismiss", Ref = _ionAlertDidDismissReference},
-            new { Event = "ionAlertDidPresent", Ref = _ionAlertDidPresentReference},
-            new { Event = "ionAlertWillDismiss", Ref = _ionAlertWillDismissReference},
-            new { Event = "ionAlertWillPresent", Ref = _ionAlertWillPresentReference},
-            new { Event = "willDismiss", Ref = _willDismissReference},
-            new { Event = "willPresent", Ref = _willPresentReference}
+            new { Event = "didDismiss", Ref = _didDismissReference },
+            new { Event = "didPresent", Ref = _didPresentReference },
+            new { Event = "ionAlertDidDismiss", Ref = _ionAlertDidDismissReference },
+            new { Event = "ionAlertDidPresent", Ref = _ionAlertDidPresentReference },
+            new { Event = "ionAlertWillDismiss", Ref = _ionAlertWillDismissReference },
+            new { Event = "ionAlertWillPresent", Ref = _ionAlertWillPresentReference },
+            new { Event = "willDismiss", Ref = _willDismissReference },
+            new { Event = "willPresent", Ref = _willPresentReference }
         }, _self);
-        
+
         if (_buttons?.Length > 0)
-            await JsRuntime.InvokeVoidAsync("addAlertButtons", _self, _buttons, _buttonHandlerReference);
-        
+            await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.addButtons", _self, _buttons, _buttonHandlerReference);
+
         if (_inputs?.Length > 0)
-            await JsRuntime.InvokeVoidAsync("addAlertInputs", _self, _inputs);
+            await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.addInputs", _self, _inputs);
     }
 }
 

@@ -1,0 +1,41 @@
+﻿@using System.Collections
+<IonContent>
+    <IonList @ref="_list">
+        @for (var i = 1; i < ItemCount; i++)
+        {
+            var index = i;
+            <IonItem>
+                <IonAvatar slot="start">
+                    <img src="https://picsum.photos/80/80?random={@index}" alt="Avatar"/>
+                </IonAvatar>
+                <IonLabel>Item @index</IonLabel>
+            </IonItem>
+        }
+    </IonList>
+    <IonInfiniteScroll IonInfinite="IonInfiniteCallback">
+        <IonInfiniteScrollContent/>
+    </IonInfiniteScroll>
+</IonContent>
+
+@code {
+    IonList _list = null!;
+    
+    int ItemCount { get; set; } = 0;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        GenerateItems();
+    }
+
+    private async Task IonInfiniteCallback(IonInfiniteScroll.IonInfiniteEventArgs args)
+    {
+        await Task.Delay(1500);
+        GenerateItems();
+        await args.Sender.CompleteAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void GenerateItems() => ItemCount += 50;
+
+}

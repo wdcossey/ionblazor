@@ -3,6 +3,7 @@
 <div class="ion-page" id="main-content">
     <IonContent Class="container">
         <h2>Inline Alerts (Recommended)</h2>
+        <h3>Using Trigger</h3>
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
@@ -15,6 +16,23 @@
                         Buttons="@(() => new [] {
                                      new AlertButton() { Text = "OK" },
                                  })"
+                    ></IonAlert>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Using Method</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="playground__frame">
+                    <IonButton @onclick="@(async () => { await _alertByMethodRef.PresentAsync(); })" >Click Me</IonButton>
+                    <IonAlert @ref="_alertByMethodRef"
+                              Header="Alert"
+                              SubHeader="Important message"
+                              Message="This is an alert!"
+                              Buttons="@(() => new [] {
+                                           new AlertButton() { Text = "OK" },
+                                       })"
                     ></IonAlert>
                 </div>
             </div>

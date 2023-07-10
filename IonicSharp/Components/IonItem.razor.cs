@@ -10,7 +10,7 @@ public partial class IonItem : IonComponent, IIonModeComponent, IIonContentCompo
     /// If <b>true</b>, a button tag will be rendered and the item will be tappable.
     /// </summary>
     [Parameter]
-    public bool Button { get; set; } = false;
+    public bool? Button { get; set; }
 
     /// <inheritdoc/>
     [Parameter]
@@ -21,19 +21,19 @@ public partial class IonItem : IonComponent, IIonModeComponent, IIonContentCompo
     /// Defaults to <b>false</b> unless the mode is <b>ios</b> and an <b>href</b> or <b>button</b> property is present.
     /// </summary>
     [Parameter]
-    public bool? Detail { get; set; } = false;
+    public bool? Detail { get; set; }
 
     /// <summary>
     /// The icon to use when <b>detail</b> is set to <b>true</b>.
     /// </summary>
     [Parameter]
-    public string DetailIcon { get; set; } = "chevron-forward";
+    public string? DetailIcon { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the item.
     /// </summary>
     [Parameter]
-    public bool Disabled { get; set; } = false;
+    public bool? Disabled { get; set; }
 
     /// <summary>
     /// This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted

@@ -33,8 +33,7 @@ public partial class IonReorderGroup : IonComponent, IIonContentComponent
                 { From = from, To = to, Sender = this });
         }));
     }
-
-    //ionItemReorder
+    
     /// <summary>
     /// Completes the reorder operation. Must be called by the ionItemReorder event.
     /// <br/><br/>
@@ -43,7 +42,7 @@ public partial class IonReorderGroup : IonComponent, IIonContentComponent
     /// </summary>
     public async Task CompleteAsync(bool reorder)
     {
-        await JsRuntime.InvokeVoidAsync("completeIonReorderGroup", _self, reorder);
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonReorderGroup.complete", _self, reorder);
     }
 
     /// <summary>
@@ -53,7 +52,7 @@ public partial class IonReorderGroup : IonComponent, IIonContentComponent
     /// </summary>
     public async Task CompleteAsync(object[]? list)
     {
-        await JsRuntime.InvokeVoidAsync("completeIonReorderGroup", _self, list);
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonReorderGroup.complete", _self, list);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -63,7 +62,7 @@ public partial class IonReorderGroup : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
         {
             new { Event = "ionItemReorder", Ref = _ionItemReorderReference }
         }, _self);

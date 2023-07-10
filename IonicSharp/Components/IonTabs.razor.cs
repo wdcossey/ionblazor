@@ -74,7 +74,7 @@ public partial class IonTabs : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("attachIonEventListeners", new[]
+        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
         {
             new { Event = "ionTabsDidChange", Ref = _ionTabsDidChangeReference },
             new { Event = "ionTabsWillChange", Ref = _ionTabsWillChangeReference }
