@@ -22,7 +22,7 @@ public partial class IonHeader : IonComponent, IIonModeComponent, IIonContentCom
     /// Note: In order to scroll content behind the header, the fullscreen attribute needs to be set on the content.
     /// </summary>
     [Parameter]
-    public bool Translucent { get; set; }
+    public bool? Translucent { get; set; }
 }
 
 public static class IonHeaderCollapse

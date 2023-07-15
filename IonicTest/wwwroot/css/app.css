@@ -229,6 +229,12 @@ body.dark {
     --ion-card-background: #1e1e1e;
 }
 
+:root {
+    --ion-safe-area-top: 20px;
+    --ion-safe-area-bottom: 22px;
+}
+
+
 /*.ion-page {
     contain: none !important;
     overflow: scroll !important;
@@ -249,6 +255,12 @@ body.dark {
     padding: 16px 0;
     position: relative;
     min-height: 200px;
+}
+
+@media only screen and (max-width: 600px) {
+    .playground__preview .container {
+        width: 100%;
+    }
 }
 
 .playground__frame {

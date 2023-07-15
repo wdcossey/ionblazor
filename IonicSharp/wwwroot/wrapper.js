@@ -236,6 +236,26 @@
         }
     },
 
+    IonTab : {
+        setActive : function (element) {
+            element.setActive();
+        }
+    },
+
+    IonTabs : {
+        getSelected : function (element) {
+            return element.getSelected();
+        },
+        
+        getTab : function (element, tab) {
+            return element.getTab(tab);
+        },
+
+        select : function (element, tab) {
+            return element.select(tab);
+        }
+    },
+
     IonToast : {
         withButtons : function (element, buttons, callback) {
             

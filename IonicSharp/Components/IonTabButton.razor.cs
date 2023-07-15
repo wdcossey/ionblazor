@@ -7,10 +7,10 @@ public partial class IonTabButton : IonComponent, IIonModeComponent, IIonContent
     public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
-    /// If true, the user cannot interact with the tab button.
+    /// If <b>true</b>, the user cannot interact with the tab button.
     /// </summary>
     [Parameter]
-    public bool Disabled { get; set; }
+    public bool? Disabled { get; set; }
 
     /// <summary>
     /// This attribute instructs browsers to download a URL instead of navigating to it,
@@ -50,10 +50,10 @@ public partial class IonTabButton : IonComponent, IIonModeComponent, IIonContent
     /// The selected tab component
     /// </summary>
     [Parameter]
-    public bool Selected { get; set; }
+    public bool? Selected { get; set; }
 
     /// <summary>
-    /// A tab id must be provided for each ion-tab.
+    /// A tab id must be provided for each <see cref="IonTab"/>.
     /// It's used internally to reference the selected tab or by the router to switch between them.
     /// </summary>
     [Parameter]
@@ -61,7 +61,7 @@ public partial class IonTabButton : IonComponent, IIonModeComponent, IIonContent
 
     /// <summary>
     /// Specifies where to display the linked URL. Only applies when an href is provided.
-    /// Special keywords: "_blank", "_self", "_parent", "_top".
+    /// Special keywords: <b>_blank</b>, <b>_self</b>, <b>_parent</b>, <b>_top</b>.
     /// </summary>
     [Parameter]
     public string? Target { get; set; }

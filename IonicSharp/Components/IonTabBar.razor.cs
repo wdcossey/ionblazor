@@ -22,8 +22,9 @@ public partial class IonTabBar : IonComponent, IIonModeComponent, IIonContentCom
 
     /// <summary>
     /// If <b>true</b>, the tab bar will be translucent.
-    /// Only applies when the mode is <see cref="IonMode.iOS"/> and the device supports <i>backdrop-filter</i>.
+    /// Only applies when the mode is <see cref="IonMode.iOS"/> and the device supports
+    /// <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility">backdrop-filter</a>.
     /// </summary>
     [Parameter]
-    public bool Translucent { get; set; }
+    public bool? Translucent { get; set; }
 }

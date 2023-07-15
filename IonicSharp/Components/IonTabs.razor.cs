@@ -41,30 +41,27 @@ public partial class IonTabs : IonComponent, IIonContentComponent
     /// Get the currently selected tab.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public Task GetSelectedAsync()
+    public async Task<string> GetSelectedAsync()
     {
-        throw new NotImplementedException();
+        return await JsRuntime.InvokeAsync<string>("IonicSharp.IonTabs.getSelected", _self);
     }
 
     /// <summary>
     /// Get a specific tab by the value of its tab property or an element reference.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public Task GetTabAsync(string tab)
+    public async Task GetTabAsync(string tab)
     {
-        throw new NotImplementedException();
+        await JsRuntime.InvokeAsync<JsonObject>("IonicSharp.IonTabs.getTab", _self, tab);
     }
 
     /// <summary>
     /// Select a tab by the value of its tab property or an element reference.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public Task SelectAsync(string tab)
+    public async ValueTask<bool> SelectAsync(string tab)
     {
-        throw new NotImplementedException();
+        return await JsRuntime.InvokeAsync<bool>("IonicSharp.IonTabs.select", _self, tab);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

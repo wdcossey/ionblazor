@@ -22,7 +22,7 @@ public partial class IonFooter : IonComponent, IIonModeComponent, IIonContentCom
     /// Note: In order to scroll content behind the footer, the fullscreen attribute needs to be set on the content.
     /// </summary>
     [Parameter]
-    public bool Translucent { get; set; }
+    public bool? Translucent { get; set; }
 
 }
 
