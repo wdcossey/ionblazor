@@ -7,33 +7,33 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <ion-list>
+                    <IonList>
                         @if (_loaded)
                         {
-                            <ion-list-header>
-                                <IonSkeletonText Animated="true" style="width: 80px"></IonSkeletonText>
-                            </ion-list-header>
-                            <ion-item>
+                            <IonListHeader>
+                                <IonSkeletonText Animated="@true" style="width: 80px"></IonSkeletonText>
+                            </IonListHeader>
+                            <IonItem>
                                 <IonThumbnail slot="start">
-                                    <IonSkeletonText Animated="true"></IonSkeletonText>
+                                    <IonSkeletonText Animated="@true"></IonSkeletonText>
                                 </IonThumbnail>
                                 <IonLabel>
                                     <h3>
-                                        <IonSkeletonText Animated="true" style="width: 80%;"></IonSkeletonText>
+                                        <IonSkeletonText Animated="@true" style="width: 80%;"></IonSkeletonText>
                                     </h3>
                                     <p>
-                                        <IonSkeletonText Animated="true" style="width: 60%;"></IonSkeletonText>
+                                        <IonSkeletonText Animated="@true" style="width: 60%;"></IonSkeletonText>
                                     </p>
                                     <p>
-                                        <IonSkeletonText Animated="true" style="width: 30%;"></IonSkeletonText>
+                                        <IonSkeletonText Animated="@true" style="width: 30%;"></IonSkeletonText>
                                     </p>
                                 </IonLabel>
-                            </ion-item>
+                            </IonItem>
                         }
                         else
                         {
-                            <ion-list-header>Albums</ion-list-header>
-                            <ion-item>
+                            <IonListHeader>Albums</IonListHeader>
+                            <IonItem>
                                 <IonThumbnail slot="start">
                                     <IonIcon style="width: 100%; height: 100%" Name="musical-notes"></IonIcon>
                                 </IonThumbnail>
@@ -42,9 +42,9 @@
                                     <p>The Beatles</p>
                                     <p>1969</p>
                                 </IonLabel>
-                            </ion-item>
+                            </IonItem>
                         }
-                    </ion-list><br />
+                    </IonList><br />
                     <IonButton @onclick="@(BasicUsageToggle)">Toggle</IonButton>
                 </div>
             </div>
@@ -57,27 +57,27 @@
             <div class="playground__preview">
                 <div class="playground__frame">
                     <div class="css-custom-properties">
-                        <ion-list>
-                            <ion-list-header>
-                                <IonSkeletonText Animated="true" style="width: 80px"></IonSkeletonText>
-                            </ion-list-header>
-                            <ion-item>
+                        <IonList>
+                            <IonListHeader>
+                                <IonSkeletonText Animated="@true" style="width: 80px"></IonSkeletonText>
+                            </IonListHeader>
+                            <IonItem>
                                 <IonThumbnail slot="start">
-                                    <IonSkeletonText Animated="true"></IonSkeletonText>
+                                    <IonSkeletonText Animated="@true"></IonSkeletonText>
                                 </IonThumbnail>
                                 <IonLabel>
                                     <h3>
-                                        <IonSkeletonText Animated="true" style="width: 80%;"></IonSkeletonText>
+                                        <IonSkeletonText Animated="@true" style="width: 80%;"></IonSkeletonText>
                                     </h3>
                                     <p>
-                                        <IonSkeletonText Animated="true" style="width: 60%;"></IonSkeletonText>
+                                        <IonSkeletonText Animated="@true" style="width: 60%;"></IonSkeletonText>
                                     </p>
                                     <p>
-                                        <IonSkeletonText Animated="true" style="width: 30%;"></IonSkeletonText>
+                                        <IonSkeletonText Animated="@true" style="width: 30%;"></IonSkeletonText>
                                     </p>
                                 </IonLabel>
-                            </ion-item>
-                        </ion-list>
+                            </IonItem>
+                        </IonList>
                     </div>
                     
                 </div>

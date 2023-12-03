@@ -4,8 +4,8 @@ public partial class IonFabButton : IonComponent, IIonModeComponent, IIonContent
 {
     private ElementReference _self;
 
-    private DotNetObjectReference<IonicEventCallback>? _ionBlurReference = null;
-    private DotNetObjectReference<IonicEventCallback>? _ionFocusReference = null;
+    private DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+    private DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     
     /// <inheritdoc/>
     [Parameter]
@@ -127,15 +127,9 @@ public partial class IonFabButton : IonComponent, IIonModeComponent, IIonContent
 
     public IonFabButton()
     {
-        _ionBlurReference = DotNetObjectReference.Create(new IonicEventCallback(async () =>
-        {
-            await IonBlur.InvokeAsync();
-        }));
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
         
-        _ionFocusReference = DotNetObjectReference.Create(new IonicEventCallback(async () =>
-        {
-            await IonFocus.InvokeAsync();
-        }));
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync());
     }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -145,11 +139,11 @@ public partial class IonFabButton : IonComponent, IIonModeComponent, IIonContent
         if (!firstRender)
             return;
         
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
+        await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
-            new { Event = "ionBlur" , Ref = _ionBlurReference  },
-            new { Event = "ionFocus", Ref = _ionFocusReference }
-        }, _self);
+            IonEvent.Set("ionBlur" , _ionBlurReference ),
+            IonEvent.Set("ionFocus", _ionFocusReference)
+        });
     }
 }
 

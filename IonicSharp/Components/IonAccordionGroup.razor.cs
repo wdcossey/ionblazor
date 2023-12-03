@@ -1,10 +1,13 @@
-﻿namespace IonicSharp.Components;
+﻿using IonicSharp.Extensions;
+
+namespace IonicSharp.Components;
 
 public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonContentComponent
 {
     private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeObjectReference = null!;
-
+    private Func<object, ValueTask> _setValueWrapper;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -55,20 +58,14 @@ public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonCo
     {
         object actualValue;
         if (value is null || value.Length <= 0)
-        {
             actualValue = string.Empty;
-        }
         else if (value.Length == 1)
-        {
             actualValue = value.First();
-        }
         else
-        {
             actualValue = value;
-        }
-
-        await JsRuntime.InvokeVoidAsync("IonicSharp.AccordionGroup.setValue", _self,
-            actualValue /*value ?? Array.Empty<string>()*/);
+        
+        await _setValueWrapper(actualValue);
+        
         Value = value;
         return this;
     }
@@ -87,7 +84,7 @@ public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonCo
         if (!firstRender)
             return;
 
-        _ionChangeObjectReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(
+        _ionChangeObjectReference = IonicEventCallback<JsonObject?>.Create(
             async args =>
             {
                 //if (args?["detail"]?["value"]?.AsObject().)
@@ -99,22 +96,23 @@ public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonCo
                     _ => new[] { value.GetValue<string>() }
                 };
 
-                await IonChange.InvokeAsync(new AccordionGroupIonChangeEventArgs() { Value = Value });
-            }));
+                await IonChange.InvokeAsync(new AccordionGroupIonChangeEventArgs { Sender = this, Value = Value });
+            });
 
+        var ionComponent = await JsRuntime.ImportAsync("ionAccordionGroup");
+        _setValueWrapper = value => ionComponent.InvokeVoidAsync("setValue", _self, value /*value ?? Array.Empty<string>()*/);
+        
         //Multiple is not true ? result?.FirstOrDefault() : result;
         await SetValue(Value);
-
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new []
-        {
-            new { Event = "ionChange", Ref = _ionChangeObjectReference },
-        }, _self);
+        
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionChange", _ionChangeObjectReference));
     }
 }
 
 public class AccordionGroupIonChangeEventArgs : EventArgs
 {
-    public string[]? Value { get; internal set; }
+    public IonAccordionGroup Sender { get; internal init; } = null!;
+    public string[]? Value { get; internal init; }
 }
 
 public enum AccordionExpand

@@ -4,7 +4,7 @@ public partial class IonInfiniteScroll : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
 
-    private DotNetObjectReference<IonicEventCallback>? _ionInfiniteReference = null;
+    private DotNetObjectReference<IonicEventCallback> _ionInfiniteReference;
     
     /// <inheritdoc/>
     [Parameter]
@@ -45,10 +45,7 @@ public partial class IonInfiniteScroll : IonComponent, IIonContentComponent
 
     public IonInfiniteScroll()
     {
-        _ionInfiniteReference = DotNetObjectReference.Create(new IonicEventCallback(async () =>
-        {
-            await IonInfinite.InvokeAsync(new IonInfiniteEventArgs() { Sender = this });
-        }));
+        _ionInfiniteReference = IonicEventCallback.Create(async () => await IonInfinite.InvokeAsync(new IonInfiniteEventArgs() { Sender = this }));
     }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -58,10 +55,7 @@ public partial class IonInfiniteScroll : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
         
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
-        {
-            new { Event = "ionInfinite" , Ref = _ionInfiniteReference },
-        }, _self);
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionInfinite", _ionInfiniteReference));
     }
 
     /// <summary>
@@ -72,7 +66,6 @@ public partial class IonInfiniteScroll : IonComponent, IIonContentComponent
     /// infinite scroll's state from loading to enabled.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async ValueTask CompleteAsync()
     {
         await JsRuntime.InvokeVoidAsync("IonicSharp.IonInfiniteScroll.complete", _self);

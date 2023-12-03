@@ -1,0 +1,51 @@
+﻿@using System.Collections.Concurrent
+<IonList>
+    <IonItem>
+        <IonSelect TValue="@string"
+                   aria-label="Fruit" 
+                   Placeholder="Select fruit" 
+                   IonChange="OnIonChange"
+                   IonCancel="OnIonCancel"
+                   IonDismiss="OnIonDismiss">
+            <IonSelectOption Value="apples">Apples</IonSelectOption>
+            <IonSelectOption Value="oranges">Oranges</IonSelectOption>
+            <IonSelectOption Value="bananas">Bananas</IonSelectOption>
+        </IonSelect>
+    </IonItem>
+</IonList>
+
+<div>
+    @foreach(var message in _log)
+    {
+        <div>
+            <code>@message</code>
+        </div>
+    }
+</div>
+
+@code {
+
+    private List<string> _log = new();
+    
+    private void OnIonChange(IonSelectChangeEventArgs<string> args)
+    {
+        var message = $"ionChange fired with value: {args.Value}";
+        _log.Add(message);
+        Console.WriteLine(message);
+    }
+
+    private void OnIonCancel()
+    {
+        var message = "ionCancel fired";
+        _log.Add(message);
+        Console.WriteLine(message);
+    }
+
+    private void OnIonDismiss()
+    {
+        var message = "ionDismiss fired";
+        _log.Add(message);
+        Console.WriteLine(message);
+    }
+
+}

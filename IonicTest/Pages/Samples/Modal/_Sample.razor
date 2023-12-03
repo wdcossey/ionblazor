@@ -1,0 +1,65 @@
+﻿@page "/samples/modal"
+
+<div class="ion-page" id="main-content">
+    <IonContent Class="container">
+        <h2>Inline Modals (Recommended)</h2>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <DevicePreview Mode="@IonMode.MaterialDesign">
+                        <InlineModals/>
+                    </DevicePreview>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Using <code>isOpen</code></h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <DevicePreview Mode="@IonMode.MaterialDesign">
+                        <UsingIsOpen/>
+                    </DevicePreview>
+                </div>
+            </div>
+        </div>
+        
+        
+        <h2>Preventing a Modal from Dismissing</h2>
+        
+        <h3>Setting a boolean value</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <DevicePreview Mode="@IonMode.MaterialDesign">
+                        <SettingABooleanValue/>
+                    </DevicePreview>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Setting a callback function</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <DevicePreview Mode="@IonMode.MaterialDesign">
+                        <SettingACallbackFunction/>
+                    </DevicePreview>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Sheet Modal</h3>
+        <div class="playground__container">
+            <div class="playground__preview">
+                <div class="container">
+                    <DevicePreview Mode="@IonMode.MaterialDesign">
+                        <SheetModal/>
+                    </DevicePreview>
+                </div>
+            </div>
+        </div>
+        
+        
+    </IonContent>
+</div>

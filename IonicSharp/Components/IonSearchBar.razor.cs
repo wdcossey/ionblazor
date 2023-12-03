@@ -3,13 +3,12 @@
 public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorComponent
 {
     private ElementReference _self;
-
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionBlurReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionCancelReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionChangeReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionClearReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionFocusReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionInputReference = null;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionCancelReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionClearReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
     /// <summary>
     /// If true, enable searchbar animation.
@@ -197,43 +196,31 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
 
     public IonSearchBar()
     {
-        _ionBlurReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonBlur.InvokeAsync();
-        }));
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
 
-        _ionCancelReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonCancel.InvokeAsync();
-        }));
+        _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync());
 
-        _ionChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var value = args?["detail"]?["value"]?.GetValue<string>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
             Value = value;
 
             await IonChange.InvokeAsync(new IonSearchBarChangeEventArgs { Value = value, IsTrusted = isTrusted });
-        }));
+        });
 
-        _ionClearReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonClear.InvokeAsync();
-        }));
+        _ionClearReference = IonicEventCallback.Create(async () => await IonClear.InvokeAsync());
 
-        _ionFocusReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonFocus.InvokeAsync();
-        }));
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync());
 
-        _ionInputReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionInputReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var value = args?["detail"]?["value"]?.GetValue<string>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
             //Value = value;
 
             await IonInput.InvokeAsync(new IonSearchBarInputEventArgs { Value = value, IsTrusted = isTrusted });
-        }));
+        });
     }
 
     public async Task<IonSearchBar> SetValue(string? value)
@@ -248,6 +235,7 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
     /// </summary>
     public async Task<JsonElement?> GetInputElementAsync()
     {
+        //TODO: implement
         return await JsRuntime.InvokeAsync<JsonElement?>("getSearchbarInputElement", _self);
     }
 
@@ -260,6 +248,7 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
     /// </summary>
     public async Task SetFocusAsync()
     {
+        //TODO: implement
         await JsRuntime.InvokeVoidAsync("setSearchbarFocus", _self);
     }
 
@@ -270,15 +259,15 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
+        await this.AttachIonListenersAsync(_self, new []
         {
-            new { Event = "ionBlur", Ref = _ionBlurReference },
-            new { Event = "ionCancel", Ref = _ionCancelReference },
-            new { Event = "ionChange", Ref = _ionChangeReference },
-            new { Event = "ionClear", Ref = _ionClearReference },
-            new { Event = "ionFocus", Ref = _ionFocusReference },
-            new { Event = "ionInput", Ref = _ionInputReference },
-        }, _self);
+            IonEvent.Set("ionBlur"  , _ionBlurReference  ),
+            IonEvent.Set("ionCancel", _ionCancelReference),
+            IonEvent.Set("ionChange", _ionChangeReference),
+            IonEvent.Set("ionClear" , _ionClearReference ),
+            IonEvent.Set("ionFocus" , _ionFocusReference ),
+            IonEvent.Set("ionInput" , _ionInputReference ),
+        });
     }
 }
 

@@ -3,9 +3,9 @@
 public partial class IonRefresher: IonComponent, IIonContentComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionPullReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionRefreshReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionStartReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionPullReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionRefreshReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionStartReference;
     
     /// <inheritdoc/>
     [Parameter] public RenderFragment? ChildContent { get; set; }
@@ -74,20 +74,11 @@ public partial class IonRefresher: IonComponent, IIonContentComponent
 
     public IonRefresher()
     {
-        _ionPullReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonPull.InvokeAsync(new IonRefresherIonPullEventArgs() { Sender  = this });
-        }));
+        _ionPullReference = IonicEventCallback.Create(async () => await IonPull.InvokeAsync(new IonRefresherIonPullEventArgs { Sender  = this }));
 
-        _ionRefreshReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonRefresh.InvokeAsync(new IonRefresherIonRefreshEventArgs() { Sender  = this });
-        }));
+        _ionRefreshReference = IonicEventCallback.Create(async () => await IonRefresh.InvokeAsync(new IonRefresherIonRefreshEventArgs { Sender  = this }));
 
-        _ionStartReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonStart.InvokeAsync(new IonRefresherIonStartEventArgs() { Sender  = this });
-        }));
+        _ionStartReference = IonicEventCallback.Create(async () => await IonStart.InvokeAsync(new IonRefresherIonStartEventArgs { Sender  = this }));
     }
     
     /// <summary>
@@ -131,12 +122,12 @@ public partial class IonRefresher: IonComponent, IIonContentComponent
         if (!firstRender)
             return;
         
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new []
+        await this.AttachIonListenersAsync(_self, new []
         {
-            new { Event = "ionPull", Ref = _ionPullReference},
-            new { Event = "ionRefresh", Ref = _ionRefreshReference},
-            new { Event = "ionStart", Ref = _ionStartReference}
-        }, _self);
+            IonEvent.Set("ionPull"   , _ionPullReference   ),
+            IonEvent.Set("ionRefresh", _ionRefreshReference),
+            IonEvent.Set("ionStart"  , _ionStartReference  )
+        });
     }
 }
 

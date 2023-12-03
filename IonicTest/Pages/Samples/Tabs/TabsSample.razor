@@ -67,8 +67,11 @@
                                     </IonHeader>
                                     <IonContent>
                                         <div class="example-content">
-                                            Search content<br/>
+                                            Search content
+                                            <br/>
                                             <IonButton @onclick="@(() => _tabs.SelectAsync("library"))">Library</IonButton>
+                                            <br/>
+                                            <IonButton @onclick="@(async () => Console.WriteLine(await _tabs.GetSelectedAsync()))">Selected Tab</IonButton>
                                         </div>
                                     </IonContent>
                                 </div>

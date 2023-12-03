@@ -3,7 +3,7 @@
 public partial class IonRadioGroup : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionChangeReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
 
     /// <inheritdoc/>
     [Parameter]
@@ -36,7 +36,7 @@ public partial class IonRadioGroup : IonComponent, IIonContentComponent
     public IonRadioGroup()
     {
 
-        _ionChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var value = args?["detail"]?["value"]?.GetValue<string>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
@@ -44,7 +44,7 @@ public partial class IonRadioGroup : IonComponent, IIonContentComponent
 
             await IonChange.InvokeAsync(new IonRadioGroupIonChangeEventArgs
                 { Sender = this, Value = value, IsTrusted = isTrusted });
-        }));
+        });
 
     }
 
@@ -55,10 +55,7 @@ public partial class IonRadioGroup : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
-        {
-            new { Event = "ionChange", Ref = _ionChangeReference }
-        }, _self);
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionChange", _ionChangeReference));
     }
 }
 

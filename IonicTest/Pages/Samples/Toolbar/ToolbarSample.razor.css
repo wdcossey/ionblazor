@@ -1,4 +1,4 @@
-﻿.container {
+﻿/*.container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6,7 +6,7 @@
     
     flex-flow: column;
     justify-content: space-evenly;
-}
+}*/
 
 ::deep .custom-css ion-toolbar {
     --background: #19422d;

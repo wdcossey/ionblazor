@@ -1,0 +1,15 @@
+﻿<IonRange @ref="_range" aria-label="Range with pin" Pin="@true"></IonRange>
+
+@code {
+    IonRange _range = null!;
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+        
+        _range.PinFormatter = (value) =>  $"{value}%";
+    }
+}

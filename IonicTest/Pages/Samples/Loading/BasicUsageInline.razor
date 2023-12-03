@@ -1,0 +1,32 @@
+﻿@using System.Runtime.Serialization
+@using System.Text.Json
+@using System.Text.Json.Nodes
+@using System.Text.Json.Serialization
+<IonButton id="open-loading">Show Loading (Trigger)</IonButton>
+<IonButton @onclick="@(async () => { await _loading.PresentAsync(); })">Show Loading (Manual)</IonButton>
+
+<IonLoading Trigger="open-loading" Message="Dismissing after 3 seconds..." Duration="3000"></IonLoading>
+<IonLoading @ref="_loading" Message="Dismissing after 30 seconds... We'll manually cancel it after 3 seconds..." Duration="30000" DidPresent="OnDidPresent" DidDismiss="OnDidDismiss"></IonLoading>
+
+@code {
+    private IonLoading _loading = null!;
+
+    private async void OnDidPresent()
+    {
+        await Task.Delay(TimeSpan.FromSeconds(3));
+        await _loading.DismissAsync(data: new TestData(){ Hello = "world"} , role: "winner");
+    }
+
+    private void OnDidDismiss(IonLoadingDismissEventArgs args)
+    {
+        var data = (args.Data as JsonObject)?.Deserialize<TestData>();
+        Console.WriteLine($"Dismissed with data: {data}");
+    }
+    
+    private record TestData
+    {
+        [JsonPropertyName("hello")]
+        public string Hello { get; set; } = string.Empty;
+    }
+
+}

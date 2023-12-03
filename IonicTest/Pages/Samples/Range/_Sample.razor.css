@@ -1,0 +1,25 @@
+﻿.playground__preview {
+    justify-content: center;
+}
+
+.playground__preview .container {
+    width: 100%;
+    width: -webkit-fill-available;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.wrapper {
+    width: calc(100% - 100px);
+}
+
+::deep .container ion-range {
+    max-width: 320px;
+}
+
+::deep .container .wrapper ion-range {
+    max-width: unset;
+}

@@ -1,0 +1,14 @@
+﻿<IonRange aria-label="Range with ionChange" IonChange="IonChangeCallback"></IonRange>
+<IonLabel>ionChange emitted value: <span>@_lastEmittedValue</span></IonLabel>
+
+
+
+@code {
+    private string _lastEmittedValue = null!;
+
+    private void IonChangeCallback(IRangeChangeEventArgs args)
+    {
+        _lastEmittedValue = $"{(args.Value as RangeValue)?.Value}";
+    }
+
+}

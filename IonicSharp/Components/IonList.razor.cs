@@ -1,8 +1,11 @@
-﻿namespace IonicSharp.Components;
+﻿using IonicSharp.Extensions;
+
+namespace IonicSharp.Components;
 
 public partial class IonList : IonComponent, IIonModeComponent, IIonContentComponent
 {
     protected ElementReference Self;
+    private Func<ValueTask<bool>> _closeSlidingItemsWrapper = null!;
 
     /// <inheritdoc/>
     [Parameter]
@@ -29,9 +32,17 @@ public partial class IonList : IonComponent, IIonModeComponent, IIonContentCompo
     /// Returns true if an actual ion-item-sliding is closed.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask<bool> CloseSlidingItemsAsync()
+    public ValueTask<bool> CloseSlidingItemsAsync() => _closeSlidingItemsWrapper();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        return await JsRuntime.InvokeAsync<bool>("IonicSharp.IonList.closeSlidingItems", Self);
+        await base.OnAfterRenderAsync(firstRender);
+        
+        if (!firstRender)
+            return;
+        
+        var ionComponent = await JsRuntime.ImportAsync("ionList");
+        _closeSlidingItemsWrapper = () => ionComponent.InvokeAsync<bool>("closeSlidingItems", Self);
     }
 }
 

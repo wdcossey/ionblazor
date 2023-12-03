@@ -3,7 +3,7 @@
 public partial class IonReorderGroup : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionItemReorderReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionItemReorderReference;
 
     /// <inheritdoc/>
     [Parameter]
@@ -25,13 +25,13 @@ public partial class IonReorderGroup : IonComponent, IIonContentComponent
 
     public IonReorderGroup()
     {
-        _ionItemReorderReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionItemReorderReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var from = args?["detail"]?["from"]?.GetValue<int>();
             var to = args?["detail"]?["to"]?.GetValue<int>();
             await IonItemReorder.InvokeAsync(new IonReorderGroupIonItemReorderEventArgs()
                 { From = from, To = to, Sender = this });
-        }));
+        });
     }
     
     /// <summary>
@@ -62,10 +62,7 @@ public partial class IonReorderGroup : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
-        {
-            new { Event = "ionItemReorder", Ref = _ionItemReorderReference }
-        }, _self);
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionItemReorder", _ionItemReorderReference ));
     }
 }
 

@@ -1,0 +1,19 @@
+﻿@inherits IonComponent
+
+<ion-loading @ref="_self"
+          @attributes="@Attributes"
+          class="@Class"
+          animated="@Animated"
+          backdrop-dismiss="@BackdropDismiss"
+          css-class="@CssClass"
+          duration="@Duration"
+          is-open="@IsOpen"
+          keyboard-close="@KeyboardClose"
+          message="@Message"
+          mode="@Mode"
+          show-backdrop="@ShowBackdrop"
+          spinner="@Spinner"
+          translucent="@Translucent"
+          trigger="@Trigger">
+    @ChildContent
+</ion-loading>

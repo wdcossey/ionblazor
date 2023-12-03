@@ -10,13 +10,13 @@
                     <IonButton id="present-alert">Click Me</IonButton>
                     <IonAlert
                         Trigger="present-alert"
-                        Header="Alert"
-                        SubHeader="Important message"
-                        Message="This is an alert!"
+                        Header="A Short Title Is Best"
+                        SubHeader="A Sub Header Is Optional"
+                        Message="A message should be a short, complete sentence."
                         Buttons="@(() => new [] {
-                                     new AlertButton() { Text = "OK" },
+                                     new AlertButton() { Text = "Action" },
                                  })"
-                    ></IonAlert>
+                    />
                 </div>
             </div>
         </div>
@@ -27,11 +27,11 @@
                 <div class="playground__frame">
                     <IonButton @onclick="@(async () => { await _alertByMethodRef.PresentAsync(); })" >Click Me</IonButton>
                     <IonAlert @ref="_alertByMethodRef"
-                              Header="Alert"
-                              SubHeader="Important message"
-                              Message="This is an alert!"
+                              Header="A Short Title Is Best"
+                              SubHeader="A Sub Header Is Optional"
+                              Message="A message should be a short, complete sentence."
                               Buttons="@(() => new [] {
-                                           new AlertButton() { Text = "OK" },
+                                           new AlertButton() { Text = "Action" },
                                        })"
                     ></IonAlert>
                 </div>
@@ -51,7 +51,13 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    
+                    <IonButton @onclick="@(async () => 
+                                         { 
+                                             await IonAlertController.PresentAsync(
+                                                 header: "A Short Title Is Best", 
+                                                 subHeader: "A Sub Header Is Optional",
+                                                 message: "A message should be a short, complete sentence."); 
+                                         })">Click Me</IonButton>
                 </div>
             </div>
         </div>

@@ -1,0 +1,30 @@
+﻿@using System.Text.RegularExpressions
+
+<IonList>
+    <IonItem>
+        <IonInput @ref="_input" Label="Alphanumeric Characters" IonInputEvent="OnIonInput"></IonInput>
+    </IonItem>
+</IonList>
+
+@code {
+    private IonInput _input = null!;
+    
+    private static readonly Regex AlphanumericRegex = new("[^a-zA-Z0-9]");
+
+    private void OnIonInput(IonInputInputEventArgs args)
+    {
+        if (string.IsNullOrWhiteSpace(args.Value))
+            return;
+        
+        // Removes non alphanumeric characters
+        args.Value = AlphanumericRegex.Replace(args.Value, string.Empty);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        await _input.SetFocusAsync();
+    }
+}
+

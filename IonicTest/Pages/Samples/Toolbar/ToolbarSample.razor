@@ -5,18 +5,37 @@
         <h2>Basic Usage</h2>
         <div class="playground__container">
             <div class="playground__preview">
-                <div class="container">
-                    <IonHeader>
-                      <IonToolbar>
-                        <IonTitle>Header Toolbar</IonTitle>
-                      </IonToolbar>
-                    </IonHeader>
+                <div class="container" style="width: 344px; height: 704px">
+                    <div class="ion-page">
+                        <DevicePreview Mode="@IonMode.MaterialDesign">
+                            <style>
+                                .content {
+                                    left: 0;
+                                    right: 0;
+                                    top: 0;
+                                    bottom: 0;
+                                    display: flex;
+                                    position: absolute;
+                                    flex-direction: column;
+                                    justify-content: space-between;
+                                    contain: layout size style;
+                                    overflow: hidden;
+                                    z-index: 0;
+                                }
+                            </style>
+                            <IonHeader>
+                                <IonToolbar>
+                                    <IonTitle>Header Toolbar</IonTitle>
+                                </IonToolbar>
+                            </IonHeader>
 
-                    <IonFooter>
-                      <IonToolbar>
-                        <IonTitle>Footer Toolbar</IonTitle>
-                      </IonToolbar>
-                    </IonFooter>
+                            <IonFooter>
+                                <IonToolbar>
+                                    <IonTitle>Footer Toolbar</IonTitle>
+                                </IonToolbar>
+                            </IonFooter>
+                        </DevicePreview>
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,7 +130,7 @@
                     
                     <IonToolbar>
                         <IonButtons slot="start">
-                            <ion-menu-button auto-hide="false"></ion-menu-button>
+                            <IonMenuButton AutoHide="@false"></IonMenuButton>
                         </IonButtons>
                         <IonTitle>Menu Button</IonTitle>
                     </IonToolbar>
@@ -141,14 +160,14 @@
                 <div class="container">
                     <IonHeader>
                         <IonToolbar>
-                            <ion-segment value="all">
-                                <ion-segment-button value="all">
+                            <IonSegment Value="all">
+                                <IonSegmentButton Value="all">
                                     <IonLabel>All</IonLabel>
-                                </ion-segment-button>
-                                <ion-segment-button value="favorites">
+                                </IonSegmentButton>
+                                <IonSegmentButton Value="favorites">
                                     <IonLabel>Favorites</IonLabel>
-                                </ion-segment-button>
-                            </ion-segment>
+                                </IonSegmentButton>
+                            </IonSegment>
                         </IonToolbar>
                     </IonHeader>
                 </div>
@@ -162,7 +181,7 @@
                     <IonHeader>
                         <IonToolbar>
                             <IonTitle>Toolbar</IonTitle>
-                            <ion-progress-bar type="indeterminate"></ion-progress-bar>
+                            <IonProgressBar Type="@IonProgressBarType.Indeterminate"></IonProgressBar>
                         </IonToolbar>
                     </IonHeader>
                 </div>

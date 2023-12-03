@@ -3,14 +3,14 @@
 public partial class IonPopover : IonComponent, IIonModeComponent, IIonContentComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback>? _didDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _didPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionPopoverDidDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionPopoverDidPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionPopoverWillDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionPopoverWillPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _willDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _willPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _didDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionPopoverDidDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionPopoverDidPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionPopoverWillDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionPopoverWillPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _willDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
     
     /// <inheritdoc/>
     [Parameter] public RenderFragment? ChildContent { get; set; }
@@ -150,45 +150,21 @@ public partial class IonPopover : IonComponent, IIonModeComponent, IIonContentCo
 
     public IonPopover()
     {
-        _didDismissReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await DidDismiss.InvokeAsync(this);
-        }));
+        _didDismissReference = IonicEventCallback.Create(async () => await DidDismiss.InvokeAsync(this));
         
-        _didPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await DidPresent.InvokeAsync(this);
-        }));
+        _didPresentReference = IonicEventCallback.Create(async () => await DidPresent.InvokeAsync(this));
 
-        _ionPopoverDidDismissReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonPopoverDidDismiss.InvokeAsync(this);
-        }));
+        _ionPopoverDidDismissReference = IonicEventCallback.Create(async () => await IonPopoverDidDismiss.InvokeAsync(this));
 
-        _ionPopoverDidPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonPopoverDidPresent.InvokeAsync(this);
-        }));
+        _ionPopoverDidPresentReference = IonicEventCallback.Create(async () => await IonPopoverDidPresent.InvokeAsync(this));
         
-        _ionPopoverWillDismissReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonPopoverWillDismiss.InvokeAsync(this);
-        }));
+        _ionPopoverWillDismissReference = IonicEventCallback.Create(async () => await IonPopoverWillDismiss.InvokeAsync(this));
         
-        _ionPopoverWillPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonPopoverWillPresent.InvokeAsync(this);
-        }));
+        _ionPopoverWillPresentReference = IonicEventCallback.Create(async () => await IonPopoverWillPresent.InvokeAsync(this));
         
-        _willDismissReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await WillDismiss.InvokeAsync(this);
-        }));
+        _willDismissReference = IonicEventCallback.Create(async () => await WillDismiss.InvokeAsync(this));
         
-        _willPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await WillPresent.InvokeAsync(this);
-        }));
+        _willPresentReference = IonicEventCallback.Create(async () => await WillPresent.InvokeAsync(this));
     }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -198,17 +174,17 @@ public partial class IonPopover : IonComponent, IIonModeComponent, IIonContentCo
         if (!firstRender)
             return;
         
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new []
+        await this.AttachIonListenersAsync(_self, new []
         {
-            new { Event = "didDismiss"           , Ref = _didDismissReference            },
-            new { Event = "didPresent"           , Ref = _didPresentReference            },
-            new { Event = "ionPopoverDidDismiss" , Ref = _ionPopoverDidDismissReference  },
-            new { Event = "ionPopoverDidPresent" , Ref = _ionPopoverDidPresentReference  },
-            new { Event = "ionPopoverWillDismiss", Ref = _ionPopoverWillDismissReference },
-            new { Event = "ionPopoverWillPresent", Ref = _ionPopoverWillPresentReference },
-            new { Event = "willDismiss"          , Ref = _willDismissReference           },
-            new { Event = "willPresent"          , Ref = _willPresentReference           }
-        }, _self);
+            IonEvent.Set("didDismiss"           , _didDismissReference            ),
+            IonEvent.Set("didPresent"           , _didPresentReference            ),
+            IonEvent.Set("ionPopoverDidDismiss" , _ionPopoverDidDismissReference  ),
+            IonEvent.Set("ionPopoverDidPresent" , _ionPopoverDidPresentReference  ),
+            IonEvent.Set("ionPopoverWillDismiss", _ionPopoverWillDismissReference ),
+            IonEvent.Set("ionPopoverWillPresent", _ionPopoverWillPresentReference ),
+            IonEvent.Set("willDismiss"          , _willDismissReference           ),
+            IonEvent.Set("willPresent"          , _willPresentReference           )
+        });
     }
     
     /*

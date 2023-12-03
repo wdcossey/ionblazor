@@ -8,14 +8,14 @@ public partial class IonPicker<TColumn, TColumnOption, TButton> : IonComponent, 
     where TButton: class, IPickerButton
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionPickerDidDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionPickerDidPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionPickerWillDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionPickerWillPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _willDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _willPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionPickerDidDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionPickerDidPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionPickerWillDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionPickerWillPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
     
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
     
@@ -157,54 +157,48 @@ public partial class IonPicker<TColumn, TColumnOption, TButton> : IonComponent, 
     
     public IonPicker()
     {
-        _didDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             var data = args?["detail"]?["data"]?.Deserialize<Dictionary<string, PickedColumnOption>>();
             await DidDismiss.InvokeAsync(new IonPickerDismissEventArgs<TColumn, TColumnOption, TButton>() { Sender = this, Data = data, Role = role });
-        }));
+        });
 
-        _didPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _didPresentReference = IonicEventCallback<JsonObject?>.Create(async _ =>
         {
             //IsOpen = true;
             await DidPresent.InvokeAsync(this);
-        }));
+        });
 
-        _ionPickerDidDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionPickerDidDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             var data = args?["detail"]?["data"]?.Deserialize<Dictionary<string, PickedColumnOption>>();
             await IonPickerDidDismiss.InvokeAsync(new IonPickerDismissEventArgs<TColumn, TColumnOption, TButton> { Sender = this, Data = data, Role = role });
-        }));
+        });
 
-        _ionPickerDidPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _ionPickerDidPresentReference = IonicEventCallback<JsonObject?>.Create(async _ =>
         {
             await IonPickerDidPresent.InvokeAsync(this);
-        }));
+        });
 
-        _ionPickerWillDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionPickerWillDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             var data = args?["detail"]?["data"]?.Deserialize<Dictionary<string, PickedColumnOption>>();
             await IonPickerWillDismiss.InvokeAsync(new IonPickerDismissEventArgs<TColumn, TColumnOption, TButton> { Sender = this, Data = data, Role = role });
-        }));
+        });
 
-        _ionPickerWillPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
-        {
-            await IonPickerWillPresent.InvokeAsync(this);
-        }));
+        _ionPickerWillPresentReference = IonicEventCallback<JsonObject?>.Create(async _ => await IonPickerWillPresent.InvokeAsync(this));
 
-        _willDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _willDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             var data = args?["detail"]?["data"]?.Deserialize<Dictionary<string, PickedColumnOption>>();
             await WillDismiss.InvokeAsync(new IonPickerDismissEventArgs<TColumn, TColumnOption, TButton>() { Sender = this, Data = data, Role = role });
-        }));
+        });
 
-        _willPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
-        {
-            await WillPresent.InvokeAsync(this);
-        }));
+        _willPresentReference = IonicEventCallback<JsonObject?>.Create(async _ => await WillPresent.InvokeAsync(this));
     }
     
     /// <summary>
@@ -232,22 +226,22 @@ public partial class IonPicker<TColumn, TColumnOption, TButton> : IonComponent, 
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
+        await this.AttachIonListenersAsync(_self, new[]
         {
-            new { Event = "didDismiss"             , Ref = _didDismissReference           },
-            new { Event = "didPresent"             , Ref = _didPresentReference           },
-            new { Event = "ionPickerDidDismiss"    , Ref = _ionPickerDidDismissReference  },
-            new { Event = "ionPickerDidPresent"    , Ref = _ionPickerDidPresentReference  },
-            new { Event = "ionPickerWillDismiss"   , Ref = _ionPickerWillDismissReference },
-            new { Event = "ionPickerWillPresent"   , Ref = _ionPickerWillPresentReference },
-            new { Event = "willDismiss"            , Ref = _willDismissReference          },
-            new { Event = "willPresent"            , Ref = _willPresentReference          }
-        }, _self);
+            IonEvent.Set("didDismiss"             , _didDismissReference          ),
+            IonEvent.Set("didPresent"             , _didPresentReference          ),
+            IonEvent.Set("ionPickerDidDismiss"    , _ionPickerDidDismissReference ),
+            IonEvent.Set("ionPickerDidPresent"    , _ionPickerDidPresentReference ),
+            IonEvent.Set("ionPickerWillDismiss"   , _ionPickerWillDismissReference),
+            IonEvent.Set("ionPickerWillPresent"   , _ionPickerWillPresentReference),
+            IonEvent.Set("willDismiss"            , _willDismissReference         ),
+            IonEvent.Set("willPresent"            , _willPresentReference         )
+        });
         
         var columns = Columns?.Invoke();
         var buttons = Buttons?.Invoke();
         
-        _buttonHandlerReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(
+        _buttonHandlerReference = IonicEventCallback<JsonObject?>.Create(
             async args =>
             {
                 var index = args?["index"]?.GetValue<int?>();
@@ -262,7 +256,7 @@ public partial class IonPicker<TColumn, TColumnOption, TButton> : IonComponent, 
                     Button = button,
                     Value = value
                 });
-            }));
+            });
         
         await JsRuntime.InvokeVoidAsync("IonicSharp.IonPicker.withColumns", _self, columns);
         await JsRuntime.InvokeVoidAsync("IonicSharp.IonPicker.withButtons", _self, buttons, _buttonHandlerReference);
@@ -310,7 +304,6 @@ public interface IPickerButton
     
     [JsonIgnore]
     Func<Dictionary<string, PickedColumnOption>?, ValueTask>? Handler { get; }
-
 }
 
 public class PickerButton : IPickerButton

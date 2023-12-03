@@ -1,0 +1,51 @@
+﻿<IonSearchBar Debounce="1000" IonInput="OnIonInput"></IonSearchBar>
+<IonList>
+    @foreach (var item in _results)
+    {
+        <IonItem>
+            <IonLabel>@item</IonLabel>
+        </IonItem>
+    }
+</IonList>
+
+@code {
+    
+    private readonly string[] _data = {
+        "Amsterdam",
+        "Buenos Aires",
+        "Cairo",
+        "Geneva",
+        "Hong Kong",
+        "Istanbul",
+        "London",
+        "Madrid",
+        "New York",
+        "Panama City",
+    };
+    
+    private string[] _results = null!;
+
+    protected override void OnInitialized()
+    {
+        FilterItems();
+        base.OnInitialized();
+    }
+
+    private void OnIonInput(IonSearchBarInputEventArgs args)
+    {
+        FilterItems(args.Value?.ToLowerInvariant());
+    }
+    
+    private void FilterItems(string? query = null) 
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            _results = _data;
+            return;
+        }
+        
+        _results = _data.Where( w => w.ToLowerInvariant().Contains(query)).ToArray();
+    }
+
+
+}

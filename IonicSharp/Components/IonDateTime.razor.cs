@@ -1,13 +1,22 @@
-﻿namespace IonicSharp.Components;
+﻿using IonicSharp.Extensions;
+
+namespace IonicSharp.Components;
 
 public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentComponent, IIonColorComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionBlurReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionCancelReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionChangeReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionFocusReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _isDateEnabledReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionCancelReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _isDateEnabledReference;
+    private readonly Func<ValueTask> _isDateEnabledJsWrapper;
+    private readonly Func<string?,ValueTask> _resetJsWrapper;
+    private readonly Func<bool?,ValueTask> _confirmJsWrapper;
+    private readonly Func<bool?,ValueTask> _cancelJsWrapper;
+    private readonly Func<string[],ValueTask> _setValueJsWrapper;
+    
+    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
 
     /// <inheritdoc/>
     [Parameter]
@@ -56,7 +65,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// The first day of the week to use for <see cref="IonDateTime"/>. The default value is 0 and represents Sunday.
     /// </summary>
     [Parameter]
-    public int FirstDayOfWeek { get; set; } = 0;
+    public int FirstDayOfWeek { get; set; }
 
     ///// <summary>
     ///// Used to apply custom text and background colors to specific dates.
@@ -239,7 +248,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
 
     public async Task<IonDateTime> SetValue(params string[]? value)
     {
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.setValue", _self, value ?? Array.Empty<string>());
+        await _setValueJsWrapper(value ?? Array.Empty<string>());
         Value = value?.Any() is true ? string.Join(',', value) : null;
         return this;
     }
@@ -279,60 +288,66 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
 
     public IonDateTime()
     {
-        _ionBlurReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonBlur.InvokeAsync(this);
-        }));
+        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionDateTime"));
 
-        _ionCancelReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonCancel.InvokeAsync(this);
-        }));
+        _isDateEnabledJsWrapper = async () => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("isDateEnabled", _self, _isDateEnabledReference);
+        _resetJsWrapper = async startDate => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("reset", _self, startDate);
+        _confirmJsWrapper = async closeOverlay => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("confirm", _self, closeOverlay);
+        _cancelJsWrapper = async closeOverlay => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("cancel", _self, closeOverlay);
+        _setValueJsWrapper = async value => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("setValue", _self, value);
+        
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
 
-        _ionChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
-        {
-            var isChecked = args?["detail"]?["checked"]?.GetValue<bool?>();
-            var value = args?["detail"]?["value"]?.GetValue<string?>();
+        _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync(this));
 
-            //Checked = isChecked is true;
+        _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
+        {
+            string? value = null;
+            switch (args?["detail"]?["value"])
+            {
+                case JsonValue jsonValue:
+                    value = jsonValue.GetValue<string?>();
+                    break;
+                case JsonArray jsonArray:
+                {
+                    var values = jsonArray.Select(s => s!.GetValue<string>());
+                    value = string.Join(",", values);
+                    break;
+                }
+            }
+            
             Value = value;
 
             await IonChange.InvokeAsync(new IonDateTimeChangeEventArgs { Sender = this, Value = value });
-        }));
+        });
 
-        _ionFocusReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonFocus.InvokeAsync(this);
-        }));
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync(this));
 
-        _isDateEnabledReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(args =>
+        _isDateEnabledReference = IonicEventCallback<JsonObject?>.Create(args =>
         {
             var dateString = args?["dateIsoString"]?.GetValue<string?>();
             var result = IsDateEnabled?.Invoke(dateString);
             return Task.FromResult(result);
-        }));
+        });
     }
 
     /// <summary>
     /// Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
     /// </summary>
-    public async Task CancelAsync(bool? closeOverlay = null) => 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.cancel", _self, closeOverlay);
+    public ValueTask CancelAsync(bool? closeOverlay = null) => _cancelJsWrapper(closeOverlay);
 
     /// <summary>
     /// Confirms the selected datetime value, updates the value property, and optionally closes the popover or modal
     /// that the datetime was presented in.
     /// </summary>
-    public async Task ConfirmAsync(bool? closeOverlay = null) => 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.confirm", _self, closeOverlay);
+    public ValueTask ConfirmAsync(bool? closeOverlay = null) => _confirmJsWrapper(closeOverlay);
 
     /// <summary>
     /// Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string
     /// will reset the state of the component to the provided date. If no value is provided, the internal state
     /// will be reset to the clamped value of the min, max and today.
     /// </summary>
-    public async Task ResetAsync(string? startDate = null) => 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.reset", _self, startDate);
+    public ValueTask ResetAsync(string? startDate = null) => _resetJsWrapper(startDate);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -340,18 +355,18 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
 
         if (!firstRender)
             return;
-
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
+        
+        await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
-            new { Event = "ionBlur"  , Ref = _ionBlurReference   },
-            new { Event = "ionCancel", Ref = _ionCancelReference },
-            new { Event = "ionChange", Ref = _ionChangeReference },
-            new { Event = "ionFocus" , Ref = _ionFocusReference  },
-            //new { Event = "isDateEnabled", Ref = _isDateEnabledFocusReference}
-        }, _self);
-
+            IonEvent.Set("ionBlur"  , _ionBlurReference   ),
+            IonEvent.Set("ionCancel", _ionCancelReference ),
+            IonEvent.Set("ionChange", _ionChangeReference ),
+            IonEvent.Set("ionFocus" , _ionFocusReference  ),
+            //IonEvent.Set("isDateEnabled", _isDateEnabledFocusReference ),
+        });
+        
         if (IsDateEnabled is not null)
-            await JsRuntime.InvokeVoidAsync("IonicSharp.IonDateTime.isDateEnabled", _self, _isDateEnabledReference);
+            await _isDateEnabledJsWrapper();
     }
 }
 

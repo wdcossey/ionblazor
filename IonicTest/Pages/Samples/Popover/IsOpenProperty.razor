@@ -1,0 +1,13 @@
+﻿<IonButton id="target" @onclick="@ShowPopover">Click Me</IonButton>
+<IonPopover @ref="_popover" DidDismiss="@PopoverDidDismiss" Trigger="target" Reference="@IonPopoverReference.Default" TriggerAction="@IonPopoverTriggerAction.Default" >
+    <IonContent Class="ion-padding">Hello World!</IonContent>
+</IonPopover>
+
+@code
+{
+    private IonPopover _popover = null!;
+
+    private void ShowPopover() => _popover.SetIsOpen(true);
+    
+    private void PopoverDidDismiss() => _popover.SetIsOpen(false);
+}

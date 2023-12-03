@@ -11,11 +11,11 @@ public partial class IonButtons : IonComponent, IIonContentComponent
     /// first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once
     /// all toolbars have fully collapsed.
     /// <br/><br/>
-    /// Only applies in ios mode with collapse set to true on ion-header.
+    /// Only applies in ios mode with collapse set to true on <see cref="IonHeader"/>.
     /// <br/><br/>
-    /// Typically used for Collapsible Large Titles
+    /// Typically used for <a href="https://ionicframework.com/docs/api/title#collapsible-large-titles">Collapsible Large Titles</a>
     /// </summary>
     [Parameter]
-    public bool Collapse { get; set; }
+    public bool? Collapse { get; set; }
 
 }

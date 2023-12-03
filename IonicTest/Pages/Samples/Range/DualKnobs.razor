@@ -1,0 +1,17 @@
+﻿<IonRange @ref="_range" aria-label="Dual Knobs Range" DualKnobs="@true"></IonRange>
+
+@code {
+
+    IonRange _range = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+        
+        await _range.SetValueAsync(20, 80);
+    }
+    
+}

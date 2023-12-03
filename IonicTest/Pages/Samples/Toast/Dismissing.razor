@@ -33,6 +33,18 @@
                     StateHasChanged();
                     return ValueTask.CompletedTask;
                 }
+            },
+            new IonToastButton()
+            {
+                Text = "Custom",
+                Role = "custom",
+                Icon = "star",
+                Handler = async args =>
+                {
+                    _handlerOutput = "Custom clicked";
+                    StateHasChanged();
+                    await args.Sender.DismissAsync();
+                }
             }
         };
     }

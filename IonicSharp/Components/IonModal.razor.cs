@@ -3,25 +3,29 @@
 public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionBreakpointDidChangeReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionModalDidDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionModalDidPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionModalWillDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionModalWillPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _willDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _willPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionBreakpointDidChangeReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionModalDidDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionModalDidPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionModalWillDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionModalWillPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallbackResult<bool>> _canDismissReference;
+    
+    //private readonly DotNetObjectReference<IonicEventCallbackResult<JsonObject?, bool>>? _canDismissCallbackReference;
+    //private Func<Task<bool>>? _canDismissCallback;
 
     /// <inheritdoc/>
-    [Parameter]
+    [Parameter, EditorRequired]
     public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the modal will animate.
     /// </summary>
     [Parameter]
-    public bool Animated { get; set; } = true;
+    public bool? Animated { get; set; }
 
     /// <summary>
     /// A decimal value between 0 and 1 that indicates the point after which the backdrop will begin to fade
@@ -30,23 +34,23 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// This value is exclusive meaning the backdrop will become active after the value specified.
     /// </summary>
     [Parameter]
-    public double BackdropBreakpoint { get; set; } = 0.0d;
+    public double? BackdropBreakpoint { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the modal will be dismissed when the backdrop is clicked.
     /// </summary>
     [Parameter]
-    public bool BackdropDismiss { get; set; } = true;
-
-    ///// <summary>
-    ///// The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal
-    ///// between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open.
-    ///// Values are relative to the height of the modal, not the height of the screen. One of the values in this array
-    ///// must be the value of the initialBreakpoint property. For example: [0, .25, .5, 1]
-    ///// </summary>
-    //[Parameter] public double[]? Breakpoints { get; set; } = null;
+    public bool? BackdropDismiss { get; set; }
 
     /// <summary>
+    /// The breakpoints to use when creating a sheet modal. Each value in the array must be a decimal
+    /// between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open.
+    /// Values are relative to the height of the modal, not the height of the screen. One of the values in this array
+    /// must be the value of the initialBreakpoint property. For example: [0, .25, .5, 1]
+    /// </summary>
+    [Parameter] public double[]? Breakpoints { get; set; } = null;
+
+    /*/// <summary>
     /// Determines whether or not a modal can dismiss when calling the dismiss method.
     /// <br/><br/>
     /// If the value is <b>true</b> or the value's function returns true, the modal will close when trying to dismiss.
@@ -54,12 +58,19 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// the modal will not close when trying to dismiss.
     /// </summary>
     [Parameter]
-    public bool CanDismiss { get; set; } = true;
+    public IIonModalCanDismiss? CanDismiss { get; set; }
 
     public async ValueTask SetCanDismissAsync(bool value)
     {
+        _canDismissCallback = null!;
         await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.canDismiss", _self, value);
     }
+
+    public ValueTask SetCanDismissAsync(Func<Task<bool>> callback)
+    {
+        _canDismissCallback = callback;
+        return ValueTask.CompletedTask;
+    }*/
 
     ///// <summary>
     ///// Animation to use when the modal is presented.
@@ -78,7 +89,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// is not set (using a fullscreen or card modal).
     /// </summary>
     [Parameter]
-    public string? HandleBehavior { get; set; } = IonModalHandleBehavior.None;
+    public string? HandleBehavior { get; set; } = IonModalHandleBehavior.Default;
 
     ///// <summary>
     ///// Additional attributes to pass to the modal.
@@ -89,9 +100,13 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a
     /// sheet modal. This value must also be listed in the breakpoints array.
     /// </summary>
-    [Parameter]
-    public double? InitialBreakpoint { get; set; }
-
+    [Parameter] public double? InitialBreakpoint { get; set; }
+    
+    public async ValueTask InitialBreakpointAsync(double? value)
+    {
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.initialBreakpoint", _self, value);
+    }
+    
     /// <summary>
     /// If <b>true</b>, the modal will open. If false, the modal will close. Use this if you need finer grained control
     /// over presentation, otherwise just use the modalController or the trigger property.
@@ -99,7 +114,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// You will need to do that in your code.
     /// </summary>
     [Parameter]
-    public bool IsOpen { get; set; } = false;
+    public bool? IsOpen { get; set; }
 
     public async ValueTask<bool> SetIsOpenAsync(bool value)
     {
@@ -117,13 +132,13 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// Note: This feature only applies to inline modals in JavaScript frameworks such as Angular, React, and Vue.
     /// </summary>
     [Parameter]
-    public bool? KeepContentsMounted { get; set; } = false;
+    public bool? KeepContentsMounted { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the keyboard will be automatically dismissed when the overlay is presented.
     /// </summary>
     [Parameter]
-    public bool KeyboardClose { get; set; } = true;
+    public bool? KeyboardClose { get; set; }
 
     ///// <summary>
     ///// Animation to use when the modal is dismissed.
@@ -146,7 +161,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// active or present in the DOM.
     /// </summary>
     [Parameter]
-    public bool ShowBackdrop { get; set; } = true;
+    public bool? ShowBackdrop { get; set; }
 
     /// <summary>
     /// An ID corresponding to the trigger element that causes the modal to open when clicked.
@@ -158,7 +173,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// Emitted after the modal has dismissed. Shorthand for ionModalDidDismiss.
     /// </summary>
     [Parameter]
-    public EventCallback DidDismiss { get; set; }
+    public EventCallback<IonModalDismissEventArgs> DidDismiss { get; set; }
 
     /// <summary>
     /// Emitted after the modal has presented. Shorthand for ionModalDidPresent.
@@ -176,7 +191,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// Emitted after the modal has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback IonModalDidDismiss { get; set; }
+    public EventCallback<IonModalDismissEventArgs> IonModalDidDismiss { get; set; }
 
     /// <summary>
     /// Emitted after the modal has presented.
@@ -188,7 +203,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// Emitted before the modal has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback IonModalWillDismiss { get; set; }
+    public EventCallback<IonModalDismissEventArgs> IonModalWillDismiss { get; set; }
 
     /// <summary>
     /// Emitted before the modal has presented.
@@ -200,7 +215,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss.
     /// </summary>
     [Parameter]
-    public EventCallback<IonModalWillDismissEventArgs> WillDismiss { get; set; }
+    public EventCallback<IonModalDismissEventArgs> WillDismiss { get; set; }
 
     /// <summary>
     /// Emitted before the modal has presented. Shorthand for ionModalWillPresent.
@@ -208,9 +223,15 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     [Parameter]
     public EventCallback WillPresent { get; set; }
 
+    /// <summary>
+    /// Emitted before the modal has presented. Shorthand for ionModalWillPresent.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IonModalCanDismissEventArgs> CanDismiss { get; set; }
+
     public IonModal()
     {
-        _didDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             /*
 {
@@ -222,21 +243,30 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
              */
 
             //IsOpen = false;
-            await DidDismiss.InvokeAsync(this);
-        }));
+            var dismissArgs = GetDismissArgs(args);
+            await DidDismiss.InvokeAsync(dismissArgs);
+        });
 
-        _didPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _didPresentReference = IonicEventCallback<JsonObject?>.Create(async _ =>
         {
             //IsOpen = true;
             await DidPresent.InvokeAsync(this);
-        }));
+        });
 
-        _ionBreakpointDidChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _ionBreakpointDidChangeReference = IonicEventCallback<JsonObject?>.Create(async _ =>
         {
+            /*
+{
+  "tagName": "ION-MODAL",
+  "detail": {
+    "breakpoint": 0.5
+  }
+}
+             */
             await IonBreakpointDidChange.InvokeAsync(this);
-        }));
+        });
 
-        _ionModalDidDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _ionModalDidDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             /*
 {
@@ -246,15 +276,17 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
   }
 }
              */
-            await IonModalDidDismiss.InvokeAsync(this);
-        }));
 
-        _ionModalDidPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+            var dismissArgs = GetDismissArgs(args);
+            await IonModalDidDismiss.InvokeAsync(dismissArgs);
+        });
+
+        _ionModalDidPresentReference = IonicEventCallback<JsonObject?>.Create(async _ =>
         {
             await IonModalDidPresent.InvokeAsync(this);
-        }));
+        });
 
-        _ionModalWillDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _ionModalWillDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             /*
 {
@@ -264,15 +296,16 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
   }
 }
              */
-            await IonModalWillDismiss.InvokeAsync(this);
-        }));
+            var dismissArgs = GetDismissArgs(args);
+            await IonModalWillDismiss.InvokeAsync(dismissArgs);
+        });
 
-        _ionModalWillPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _ionModalWillPresentReference = IonicEventCallback<JsonObject?>.Create(async _ =>
         {
             await IonModalWillPresent.InvokeAsync(this);
-        }));
+        });
 
-        _willDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _willDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             /*
 {
@@ -283,18 +316,23 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
 }
              */
 
-            var role = args?["detail"]?["role"]?.GetValue<string>();
-            var data = args?["detail"]?["data"]?.GetValue<object>();
-            //var to = args?["detail"]?["to"]?.GetValue<int>();
-            await WillDismiss.InvokeAsync(
-                new IonModalWillDismissEventArgs() { Sender = this, Data = data, Role = role });
-        }));
 
-        _willPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+            var dismissArgs = GetDismissArgs(args);
+            await WillDismiss.InvokeAsync(dismissArgs);
+        });
+
+        _willPresentReference = IonicEventCallback<JsonObject?>.Create(async _ =>
         {
             await WillPresent.InvokeAsync(this);
-        }));
+        });
 
+        _canDismissReference = IonicEventCallbackResult<bool>
+            .Create(async () =>
+            {
+                var args = new IonModalCanDismissEventArgs();
+                await CanDismiss.InvokeAsync(args);
+                return args.CanDismiss;
+            });
     }
 
     /// <summary>
@@ -313,6 +351,16 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
         //TODO: JS not implemented!
         throw new NotImplementedException();
         return await JsRuntime.InvokeAsync<int>("IonicSharp.IonModal.getCurrentBreakpoint", _self);
+    }
+    
+    /// <summary>
+    /// Move a sheet style modal to a specific breakpoint.
+    /// The breakpoint value must be a value defined in your breakpoints array.
+    /// </summary>
+    /// <param name="value"></param>
+    public async ValueTask SetCurrentBreakpointAsync(double value)
+    {
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.setCurrentBreakpoint", _self, value);
     }
 
     /*
@@ -344,32 +392,97 @@ Signature	setCurrentBreakpoint(breakpoint: number) => Promise<void>
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
+        await this.AttachIonListenersAsync(_self, new[]
         {
-            new { Event = "didDismiss"            , Ref = _didDismissReference             },
-            new { Event = "didPresent"            , Ref = _didPresentReference             },
-            new { Event = "ionBreakpointDidChange", Ref = _ionBreakpointDidChangeReference },
-            new { Event = "ionModalDidDismiss"    , Ref = _ionModalDidDismissReference     },
-            new { Event = "ionModalDidPresent"    , Ref = _ionModalDidPresentReference     },
-            new { Event = "ionModalWillDismiss"   , Ref = _ionModalWillDismissReference    },
-            new { Event = "ionModalWillPresent"   , Ref = _ionModalWillPresentReference    },
-            new { Event = "willDismiss"           , Ref = _willDismissReference            },
-            new { Event = "willPresent"           , Ref = _willPresentReference            }
-        }, _self);
+            IonEvent.Set("didDismiss"            , _didDismissReference             ),
+            IonEvent.Set("didPresent"            , _didPresentReference             ),
+            IonEvent.Set("ionBreakpointDidChange", _ionBreakpointDidChangeReference ),
+            IonEvent.Set("ionModalDidDismiss"    , _ionModalDidDismissReference     ),
+            IonEvent.Set("ionModalDidPresent"    , _ionModalDidPresentReference     ),
+            IonEvent.Set("ionModalWillDismiss"   , _ionModalWillDismissReference    ),
+            IonEvent.Set("ionModalWillPresent"   , _ionModalWillPresentReference    ),
+            IonEvent.Set("willDismiss"           , _willDismissReference            ),
+            IonEvent.Set("willPresent"           , _willPresentReference            )
+        });
+
+        await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.canDismissCallback", _self, _canDismissReference);
+        
+        if (Breakpoints?.Length > 0)
+            await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.breakpoints", _self, Breakpoints);
+    }
+
+    private IonModalDismissEventArgs GetDismissArgs(JsonObject? args)
+    {
+        var role = args?["detail"]?["role"]?.GetValue<string>();
+        var data = args?["detail"]?["data"]?.GetValue<object>();
+        return new IonModalDismissEventArgs() { Sender = this, Data = data, Role = role };
     }
 }
 
 public static class IonModalHandleBehavior
 {
+    public const string? Default = null;
     public const string Cycle = "cycle";
     public const string None = "none";
 }
 
-public class IonModalWillDismissEventArgs : EventArgs
+public class IonModalDismissEventArgs : EventArgs
 {
     public IonModal Sender { get; internal set; } = null!;
     
     public string? Role { get; internal set; }
     
     public object? Data { get; internal set; }
+}
+
+public class IonModalCanDismissEventArgs : EventArgs
+{
+    public IonModal Sender { get; internal set; } = null!;
+
+    public bool CanDismiss { get; set; } = true;
+}
+
+public interface IIonModalCanDismiss
+{
+    Func<Task<bool>> Value { get; }
+}
+
+/*public class IonModalCanDismiss : IIonModalCanDismiss
+{
+    public IonModalCanDismiss(bool value)
+    {
+        Value = value;
+    }
+    
+    public bool Value { get; }
+}
+
+public class IonModalCanDismissCallback : IIonModalCanDismiss
+{
+    public IonModalCanDismissCallback(Func<Task<bool>> callback)
+    {
+        Callback = callback;
+    }
+    
+    public Func<Task<bool>> Callback { get; }
+}*/
+
+public class IonModalCanDismiss : IIonModalCanDismiss
+{
+    private IonModalCanDismiss(Func<Task<bool>> value)
+    {
+        Value = value;
+    }
+    
+    public static IonModalCanDismiss Create(bool value)
+    {
+        return new IonModalCanDismiss(() => Task.FromResult(value));
+    }
+    
+    public static IonModalCanDismiss Create(Func<Task<bool>> callback)
+    {
+        return new IonModalCanDismiss(callback);
+    }
+    
+    public Func<Task<bool>> Value { get; }
 }

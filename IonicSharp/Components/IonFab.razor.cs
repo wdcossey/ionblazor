@@ -35,7 +35,6 @@ public partial class IonFab : IonComponent
     /// Close an active FAB list container.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public Task CloseAsync()
     {
         throw new NotImplementedException();

@@ -1,0 +1,17 @@
+﻿<div style="max-width: 320px;width: 100%;">
+    <IonRange @ref="_range" aria-label="Custom range" Pin="@true"></IonRange>
+</div>
+
+@code {
+    IonRange _range = null!;
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+        
+        await _range.SetValueAsync(50);
+    }
+}

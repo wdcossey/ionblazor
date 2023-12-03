@@ -1,0 +1,62 @@
+﻿<div class="ion-page">
+    <IonHeader>
+        <IonToolbar>
+            <IonTitle>App</IonTitle>
+        </IonToolbar>
+    </IonHeader>
+    <IonContent class="ion-padding">
+        <IonButton id="open-modal-boolean-value" expand="block">Open</IonButton>
+        <p>
+            *** This demo is hosted in a <b>&lt;ion-app&gt;</b>, the modal will <b>not</b> be bound to this preview pane!
+        </p>
+        <IonModal @ref="_modal" trigger="open-modal-boolean-value" CanDismiss="CanDismissCallback" IonModalWillPresent="@(() => _termsCheckbox.Checked = _canDismiss = false)"  >
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Modal</IonTitle>
+                    <IonButtons slot="end">
+                        <IonButton @onclick="@DismissAsync">Close</IonButton>
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent>
+                <p class="ion-padding-horizontal">You must accept the terms and conditions to close this modal.</p>
+                <IonItem>
+                    <IonLabel class="ion-text-wrap" for="terms">Do you accept the terms and conditions?</IonLabel>
+                    <IonCheckbox @ref="_termsCheckbox" id="terms" IonChange="TermsChangeCallback"></IonCheckbox>
+                </IonItem>
+            </IonContent>
+        </IonModal>
+    </IonContent>
+</div>
+
+@code {
+    IonModal _modal = null!;
+    IonCheckbox _termsCheckbox = null!;
+    bool _canDismiss = false;
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        
+        if (!firstRender)
+            return;
+
+        _canDismiss = _termsCheckbox.Checked is true;
+    }
+
+    private async Task DismissAsync()
+    {
+        await _modal.DismissAsync();
+    }
+
+    private void TermsChangeCallback(IonCheckboxChangeEventArgs args)
+    {
+        _canDismiss = _termsCheckbox.Checked is true;
+    }
+
+    private void CanDismissCallback(IonModalCanDismissEventArgs args)
+    {
+        args.CanDismiss = _canDismiss;// OR _termsCheckbox.Checked is true;
+    }
+
+}

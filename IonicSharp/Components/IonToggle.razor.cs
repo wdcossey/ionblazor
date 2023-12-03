@@ -4,9 +4,9 @@ public partial class IonToggle : IonComponent, IIonModeComponent, IIonContentCom
 {
     private ElementReference _self;
 
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionBlurReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionChangeReference = null;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionFocusReference = null;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
     /// <inheritdoc/>
     [Parameter]
@@ -109,12 +109,12 @@ public partial class IonToggle : IonComponent, IIonModeComponent, IIonContentCom
 
     public IonToggle()
     {
-        _ionBlurReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
+        _ionBlurReference = IonicEventCallback.Create(async () =>
         {
             await IonBlur.InvokeAsync();
-        }));
+        });
 
-        _ionChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var isChecked = args?["detail"]?["checked"]?.GetValue<bool?>();
             var value = args?["detail"]?["value"]?.GetValue<string?>();
@@ -123,12 +123,12 @@ public partial class IonToggle : IonComponent, IIonModeComponent, IIonContentCom
             Value = value;
 
             await IonChange.InvokeAsync(new IonToggleChangeEventArgs { Checked = isChecked, Value = value });
-        }));
+        });
 
-        _ionFocusReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
+        _ionFocusReference = IonicEventCallback.Create(async () =>
         {
             await IonFocus.InvokeAsync();
-        }));
+        });
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -138,12 +138,12 @@ public partial class IonToggle : IonComponent, IIonModeComponent, IIonContentCom
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
+        await this.AttachIonListenersAsync(_self, new []
         {
-            new { Event = "ionBlur", Ref = _ionBlurReference },
-            new { Event = "ionChange", Ref = _ionChangeReference },
-            new { Event = "ionFocus", Ref = _ionFocusReference }
-        }, _self);
+            IonEvent.Set("ionBlur"  , _ionBlurReference  ),
+            IonEvent.Set("ionChange", _ionChangeReference),
+            IonEvent.Set("ionFocus" , _ionFocusReference ),
+        });
     }
 }
 

@@ -1,0 +1,70 @@
+﻿@inject IJSRuntime JsRuntime
+@using System.Text.RegularExpressions
+
+<script>
+    function markIonInputTouched(element) {
+        if (element == null)
+            return;
+        
+        element.classList.add('ion-touched');
+    }
+    
+    function addIonInputClass(element, tokens) {
+        if (element == null)
+            return;
+        
+        element.classList.add(tokens);
+    }
+    
+    function resetIonInput(element) {
+        if (element == null)
+            return;
+        
+        element.classList.remove('ion-valid');
+        element.classList.remove('ion-invalid');
+    }
+    
+</script>
+
+<IonInput @ref="_input"
+          Type="@IonInputType.Email"
+          Fill="@IonInputFill.Solid"
+          Label="Email"
+          LabelPlacement="@IonInputLabelPlacement.Floating"
+          HelperText="Enter a valid email"
+          ErrorText="Invalid email"
+          IonInputEvent="OnIonInput"
+          IonBlur="OnIonBlur">
+</IonInput>
+
+@code {
+
+    private IonInput _input = null!;
+
+    private static readonly Regex EmailRegex = new(@"^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+    
+    private async void OnIonInput(IonInputInputEventArgs args) => await Validate(args);
+
+    private async void OnIonBlur() => await MarkTouched();
+
+    private bool ValidateEmail(string email) => 
+        EmailRegex.IsMatch(email);
+
+    private async ValueTask Validate(IonInputInputEventArgs args)
+    {
+        var value = args.Value;
+
+        await JsRuntime.InvokeVoidAsync("resetIonInput", _input.Reference);
+
+        if (string.IsNullOrWhiteSpace(value))
+            return;
+
+        var @class = ValidateEmail(value) ? "ion-valid" : "ion-invalid";
+
+        await JsRuntime.InvokeVoidAsync("addIonInputClass", _input.Reference, @class);
+    }
+
+    private async ValueTask MarkTouched() => 
+        await JsRuntime.InvokeVoidAsync("markIonInputTouched", _input.Reference);
+
+}

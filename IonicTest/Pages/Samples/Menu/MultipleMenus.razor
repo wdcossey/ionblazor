@@ -1,0 +1,48 @@
+﻿<IonMenu @ref="_firstMenu" MenuId="first-menu" ContentId="multiple-menus-content">
+  <IonHeader>
+    <IonToolbar>
+      <IonTitle>First Menu</IonTitle>
+    </IonToolbar>
+  </IonHeader>
+  <IonContent Class="ion-padding">This is the first menu content.</IonContent>
+</IonMenu>
+
+<IonMenu @ref="_secondMenu" MenuId="second-menu" ContentId="main-content">
+  <IonHeader>
+    <IonToolbar>
+      <IonTitle>Second Menu</IonTitle>
+    </IonToolbar>
+  </IonHeader>
+  <IonContent Class="ion-padding">This is the second menu content.</IonContent>
+</IonMenu>
+
+<IonMenu @ref="_endMenu" Side="@IonMenuSide.End" ContentId="main-content">
+  <IonHeader>
+    <IonToolbar>
+      <IonTitle>End Menu</IonTitle>
+    </IonToolbar>
+  </IonHeader>
+  <IonContent Class="ion-padding">This is the end menu content.</IonContent>
+</IonMenu>
+
+<div class="ion-page" id="multiple-menus-content">
+  <IonHeader>
+    <IonToolbar>
+      <IonTitle>Menu</IonTitle>
+    </IonToolbar>
+  </IonHeader>
+  <IonContent Class="ion-padding">
+    <p>Tap a button below to open a specific menu.</p>
+
+    <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await _firstMenu.OpenAsync(true))">Open First Menu</IonButton>
+    <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await _secondMenu.OpenAsync(true))">Open Second Menu</IonButton>
+    <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await _endMenu.OpenAsync(true))">Open End Menu</IonButton>
+  </IonContent>
+</div>
+
+@code {
+  private IonMenu _firstMenu = null!;
+  private IonMenu _secondMenu = null!;
+  private IonMenu _endMenu = null!;
+  
+}

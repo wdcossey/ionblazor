@@ -18,7 +18,8 @@
     </style>
     
     <IonButton id="open-theming-toast">Open Toast</IonButton>
-    <IonToast Trigger="open-theming-toast" Duration="3000" Message="Hello Styled World!" Class="custom-toast" Buttons="@WithButtons"></IonToast>
+    <IonToast Trigger="open-theming-toast" Duration="3000" Message="Hello Styled World!" Class="custom-toast" Buttons="@WithButtons"/>
+    
 </div>
 
 @code {
@@ -26,7 +27,7 @@
     {
         return new[]
         {
-            new IonToastButton()
+            new IonToastButton
             {
                 Text = "Dismiss",
                 Role = "cancel",

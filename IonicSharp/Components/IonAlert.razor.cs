@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using IonicSharp.Extensions;
 
 namespace IonicSharp.Components;
 
@@ -15,10 +16,15 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
 
-    private readonly DotNetObjectReference<ActionSheetButtonEventHelper<JsonObject?>> _buttonHandlerReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference;
 
     private AlertButton[]? _buttons;
     private AlertInput[]? _inputs;
+    
+    private Func<ValueTask<bool>> _dismissWrapper;
+    //private Func<ValueTask> _onDidDismissWrapper;
+    //private Func<ValueTask> _onWillDismissWrapper;
+    private Func<ValueTask> _presentWrapper;
 
     /// <summary>
     /// If <b>true</b>, the alert will animate.
@@ -153,71 +159,69 @@ public partial class IonAlert : IonComponent, IIonModeComponent
 
     public IonAlert()
     {
-        _didDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var values = GetValues(args);
             
-            await DidDismiss.InvokeAsync(new IonAlertDismissEventArgs()
+            await DidDismiss.InvokeAsync(new IonAlertDismissEventArgs
             {
+                Sender = this,
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
                 Values = values
             });
-        }));
+        });
 
-        _didPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await DidPresent.InvokeAsync(new IonAlertDidPresentEventArgs());
-        }));
+        _didPresentReference = IonicEventCallback.Create(async () => await DidPresent.InvokeAsync(new IonAlertDidPresentEventArgs { Sender = this }));
 
-        _ionAlertDidDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionAlertDidDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var values = GetValues(args);
 
-            await IonAlertDidDismiss.InvokeAsync(new IonAlertDismissEventArgs()
+            await IonAlertDidDismiss.InvokeAsync(new IonAlertDismissEventArgs
             {
+                Sender = this,
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
                 Values = values,
             });
-        }));
+        });
 
-        _ionAlertDidPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonAlertDidPresent.InvokeAsync(new IonAlertIonAlertDidPresentEventArgs());
-        }));
+        _ionAlertDidPresentReference = IonicEventCallback.Create(async () => await IonAlertDidPresent.InvokeAsync(new IonAlertIonAlertDidPresentEventArgs { Sender = this }));
 
-        _ionAlertWillDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionAlertWillDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var values = GetValues(args);
 
-            await IonAlertWillDismiss.InvokeAsync(new IonAlertDismissEventArgs()
+            await IonAlertWillDismiss.InvokeAsync(new IonAlertDismissEventArgs
             {
+                Sender = this,
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
                 Values = values,
             });
-        }));
+        });
 
-        _ionAlertWillPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
+        _ionAlertWillPresentReference = IonicEventCallback.Create(async () =>
         {
-            await IonAlertWillPresent.InvokeAsync(new IonAlertIonAlertWillPresentEventArgs());
-        }));
+            await IonAlertWillPresent.InvokeAsync(new IonAlertIonAlertWillPresentEventArgs { Sender = this });
+        });
 
-        _willDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _willDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var values = GetValues(args);
             
-            await WillDismiss.InvokeAsync(new IonAlertDismissEventArgs()
+            await WillDismiss.InvokeAsync(new IonAlertDismissEventArgs
             {
+                Sender = this,
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
                 Values = values,
             });
-        }));
+        });
 
-        _willPresentReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
+        _willPresentReference = IonicEventCallback.Create(async () =>
         {
-            await WillPresent.InvokeAsync(new IonAlertWillPresentEventArgs());
-        }));
+            await WillPresent.InvokeAsync(new IonAlertWillPresentEventArgs { Sender = this});
+        });
 
-        _buttonHandlerReference = DotNetObjectReference.Create(new ActionSheetButtonEventHelper<JsonObject?>(
+        _buttonHandlerReference = IonicEventCallback<JsonObject?>.Create(
             async args =>
             {
                 var index = args?["index"]?.GetValue<int?>();
@@ -226,7 +230,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
                 await (button?.Handler?.Invoke(new AlertButtonEventArgs { Button = button, Sender = this, Index = index }) ?? ValueTask.CompletedTask);
                 
                 await ButtonHandler.InvokeAsync(new AlertButtonHandlerEventArgs { Sender = this, Index = index, Button = button });
-            }));
+            });
 
     }
 
@@ -234,31 +238,27 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     /// Dismiss the alert overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask<bool> DismissAsync() => 
-        await JsRuntime.InvokeAsync<bool>("IonicSharp.IonAlert.dismiss", _self);
+    public async ValueTask<bool> DismissAsync() => await _dismissWrapper();
 
     /// <summary>
     /// Returns a promise that resolves when the alert did dismiss.
     /// </summary>
     /// <returns></returns>
     [Obsolete("Not available in Blazor (Razor) projects", true)]
-    public async ValueTask OnDidDismissAsync() => 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.onWillDismiss", _self);
+    public ValueTask OnDidDismissAsync() => ValueTask.CompletedTask;
 
     /// <summary>
     /// Returns a promise that resolves when the alert will dismiss.
     /// </summary>
     /// <returns></returns>
     [Obsolete("Not available in Blazor (Razor) projects", true)]
-    public async ValueTask OnWillDismissAsync() => 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.onWillDismiss", _self);
+    public ValueTask OnWillDismissAsync() => ValueTask.CompletedTask;
 
     /// <summary>
     /// Present the alert overlay after it has been created.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask PresentAsync() => 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.present", _self);
+    public async ValueTask PresentAsync() => await _presentWrapper();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -269,24 +269,31 @@ public partial class IonAlert : IonComponent, IIonModeComponent
 
         _buttons = Buttons?.Invoke();
         _inputs = Inputs?.Invoke();
-
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
+        
+        var ionComponent = await JsRuntime.ImportAsync("ionAlert");
+        
+        _dismissWrapper = () => ionComponent.InvokeAsync<bool>("dismiss", _self);
+        //_onDidDismissWrapper = () => ionAlertJs.InvokeVoidAsync("onDidDismiss", _self);
+        //_onWillDismissWrapper = () => ionAlertJs.InvokeVoidAsync("onWillDismiss", _self);
+        _presentWrapper = () => ionComponent.InvokeVoidAsync("present", _self);
+        
+        await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
-            new { Event = "didDismiss", Ref = _didDismissReference },
-            new { Event = "didPresent", Ref = _didPresentReference },
-            new { Event = "ionAlertDidDismiss", Ref = _ionAlertDidDismissReference },
-            new { Event = "ionAlertDidPresent", Ref = _ionAlertDidPresentReference },
-            new { Event = "ionAlertWillDismiss", Ref = _ionAlertWillDismissReference },
-            new { Event = "ionAlertWillPresent", Ref = _ionAlertWillPresentReference },
-            new { Event = "willDismiss", Ref = _willDismissReference },
-            new { Event = "willPresent", Ref = _willPresentReference }
-        }, _self);
+            IonEvent.Set("didDismiss", _didDismissReference ),
+            IonEvent.Set("didPresent", _didPresentReference ),
+            IonEvent.Set("ionAlertDidDismiss", _ionAlertDidDismissReference ),
+            IonEvent.Set("ionAlertDidPresent", _ionAlertDidPresentReference ),
+            IonEvent.Set("ionAlertWillDismiss", _ionAlertWillDismissReference ),
+            IonEvent.Set("ionAlertWillPresent", _ionAlertWillPresentReference ),
+            IonEvent.Set("willDismiss", _willDismissReference ),
+            IonEvent.Set("willPresent", _willPresentReference )
+        });
 
         if (_buttons?.Length > 0)
-            await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.addButtons", _self, _buttons, _buttonHandlerReference);
+            await ionComponent.InvokeVoidAsync("addButtons", _self, _buttons, _buttonHandlerReference);
 
         if (_inputs?.Length > 0)
-            await JsRuntime.InvokeVoidAsync("IonicSharp.IonAlert.addInputs", _self, _inputs);
+            await ionComponent.InvokeVoidAsync("addInputs", _self, _inputs);
     }
 
     private static IAlertValues GetValues(JsonObject? jObject)
@@ -329,6 +336,9 @@ public record AlertButton : IAlertButton
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CssClass { get; set; }
     
+    [JsonPropertyName("htmlAttributes"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IDictionary<string, string> HtmlAttributes { get; set; } = null!;
+
     [JsonIgnore] 
     public Func<AlertButtonEventArgs, ValueTask>? Handler { get; set; } = null!;
 }
@@ -338,7 +348,7 @@ public class AlertButtonEventArgs : EventArgs
     /// <summary>
     /// The <see cref="IonAlert"/> that this event occurred on.
     /// </summary>
-    public IonAlert? Sender { get; internal set; }
+    public IonAlert Sender { get; internal set; } = null!;
     
     /// <summary>
     /// The index of the button that was clicked.
@@ -413,25 +423,25 @@ tabindex?: number;
 public record AlertInputNumber : AlertInput
 {
     [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public override string? Type => "number";
+    public override string Type => "number";
 }
 
 public record AlertInputTextArea : AlertInput
 {
     [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public override string? Type => "textarea";
+    public override string Type => "textarea";
 }
 
 public record AlertInputRadio : AlertInput
 {
     [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public override string? Type => "radio";
+    public override string Type => "radio";
 }
 
 public record AlertInputCheckbox : AlertInput
 {
     [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public override string? Type => "checkbox";
+    public override string Type => "checkbox";
 }
 
 public class AlertButtonHandlerEventArgs : EventArgs
@@ -440,35 +450,39 @@ public class AlertButtonHandlerEventArgs : EventArgs
     /// <summary>
     /// The <see cref="IonAlert" /> that this event occurred on.
     /// </summary>
-    public IonAlert? Sender { get; internal set; }
+    public IonAlert Sender { get; internal init; } = null!;
     
     /// <summary>
     /// The index of the button that was clicked.
     /// </summary>
-    public int? Index { get; internal set; }
+    public int? Index { get; internal init; }
     
     /// <summary>
     /// The <see cref="IAlertButton" /> that was clicked.
     /// </summary>
-    public IAlertButton? Button { get; internal set; }
+    public IAlertButton? Button { get; internal init; }
 }
 
-public class IonAlertDidPresentEventArgs : EventArgs { }
+public class IonAlertDidPresentEventArgs : EventArgs
+{
+    public IonAlert Sender { get; internal init; } = null!;
+}
     
 public class IonAlertDismissEventArgs : EventArgs
 {
-    public string? Role { get; internal set; }
+    public IonAlert Sender { get; internal init; } = null!;
     
-    public IAlertValues? Values { get; internal set; }
+    public string? Role { get; internal init; }
+    
+    public IAlertValues? Values { get; internal init; }
 }
-    
-public class IonAlertIonAlertDidPresentEventArgs : EventArgs { }
 
-public interface IAlertValues
+public class IonAlertIonAlertDidPresentEventArgs : EventArgs
 {
-
+    public IonAlert Sender { get; internal init; } = null!;
 }
 
+public interface IAlertValues { }
 
 public interface IAlertValues<out TData> : IAlertValues
 {
@@ -477,20 +491,26 @@ public interface IAlertValues<out TData> : IAlertValues
 
 public class AlertValues : IAlertValues<object>
 {
-    public object? Values { get; internal set; }
+    public object? Values { get; internal init; }
 }
 
 public class AlertValuesArray : IAlertValues<string[]>
 {
-    public string[]? Values { get; internal set; }
+    public string[]? Values { get; internal init; }
 }
 
 public class AlertValuesDictionary : IAlertValues<IDictionary<string, string>>
 {
-    public IDictionary<string, string>? Values { get; internal set; }
+    public IDictionary<string, string>? Values { get; internal init; }
 }
 
-public class IonAlertIonAlertWillPresentEventArgs : EventArgs { }
+public class IonAlertIonAlertWillPresentEventArgs : EventArgs
+{
+    public IonAlert Sender { get; internal init; } = null!;
+}
 
-public class IonAlertWillPresentEventArgs : EventArgs { }
+public class IonAlertWillPresentEventArgs : EventArgs
+{
+    public IonAlert Sender { get; internal init; } = null!;
+}
     

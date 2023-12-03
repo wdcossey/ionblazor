@@ -1,0 +1,10 @@
+﻿@typeparam TValue where TValue: notnull
+
+@inherits IonSelectOptionBase<TValue>
+
+<ion-select-option @attributes="@Attributes"
+                   class="@Class"
+                   disabled="@Disabled"
+                   value="@Value">
+    @ChildContent
+</ion-select-option>

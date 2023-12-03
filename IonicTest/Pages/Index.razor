@@ -5,7 +5,7 @@
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 
-<ion-menu content-id="main-content">
+<IonMenu ContentId="main-content" >
     <IonHeader>
         <IonToolbar>
             <IonTitle>Menu Content</IonTitle>
@@ -179,6 +179,16 @@
 
             <IonItemGroup>
                 <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Input </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/input"))">
+                    <IonLabel>ion-input</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
                     <IonLabel> Item </IonLabel>
                 </IonItemDivider>
                 
@@ -252,11 +262,73 @@
 
             <IonItemGroup>
                 <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
-                    <IonLabel> Toast </IonLabel>
+                    <IonLabel> Menu </IonLabel>
                 </IonItemDivider>
                 
-                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/toast"))">
-                    <IonLabel>ion-toast</IonLabel>
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/menu"))">
+                    <IonLabel>ion-menu</IonLabel>
+                </IonItem>
+                
+            </IonItemGroup>
+
+        <IonItemGroup>
+            <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                <IonLabel> Toast </IonLabel>
+            </IonItemDivider>
+                
+            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/toast"))">
+                <IonLabel>ion-toast</IonLabel>
+            </IonItem>
+        </IonItemGroup>
+        
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Popover </IonLabel>
+                </IonItemDivider>
+                    
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/popover"))">
+                    <IonLabel>ion-popover</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+            
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Select </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/select"))">
+                    <IonLabel>ion-select</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+            
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Range </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/range"))">
+                    <IonLabel>ion-range</IonLabel>
+                </IonItem>
+            </IonItemGroup>
+            
+            <IonItemGroup>
+                <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                    <IonLabel> Progress Indicators </IonLabel>
+                </IonItemDivider>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/loading"))">
+                    <IonLabel>ion-loading</IonLabel>
+                </IonItem>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/progress-bar"))">
+                    <IonLabel>ion-progress-bar</IonLabel>
+                </IonItem>
+                
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/spinner"))">
+                    <IonLabel>ion-spinner</IonLabel>
+                </IonItem>
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/skeleton-text"))">
+                    <IonLabel>ion-skeleton-text</IonLabel>
                 </IonItem>
             </IonItemGroup>
 
@@ -269,12 +341,7 @@
             <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/toggle"))">
                 <IonLabel>ion-toggle</IonLabel>
             </IonItem>
-
             
-            
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/spinner"))">
-                <IonLabel>ion-spinner</IonLabel>
-            </IonItem>
             <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/toolbar"))">
                 <IonLabel>ion-toolbar</IonLabel>
             </IonItem>
@@ -293,12 +360,10 @@
             <IonItem Button="true" @onclick="@(() => NavigationManager.NavigateTo("/samples/segment-button"))">
                 <IonLabel>ion-segment-button</IonLabel>
             </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/skeleton-text"))">
-                <IonLabel>ion-skeleton-text</IonLabel>
-            </IonItem>
-            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/progress-bar"))">
-                <IonLabel>ion-progress-bar</IonLabel>
-            </IonItem>
+        
+            
+            
+            
 
             <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/modal"))">
                 <IonLabel>ion-modal</IonLabel>
@@ -309,13 +374,13 @@
 
         </IonList>
     </IonContent>
-</ion-menu>
+</IonMenu>
 
 <div class="ion-page" id="main-content">
     <IonHeader>
         <IonToolbar>
             <IonButtons slot="start">
-                <ion-menu-button></ion-menu-button>
+                <IonMenuButton/>
             </IonButtons>
             <IonTitle>Menu</IonTitle>
         </IonToolbar>
@@ -447,7 +512,7 @@
         <ion-button id="open-modal" expand="block">Open</ion-button>
     </IonContent>
 
-    <ion-modal trigger="select-fruits" id="selected-fruits" @ref="modal">
+    <ion-modal trigger="select-fruits" id="selected-fruits" @ref="@modal">
         <IonHeader>
             <IonToolbar>
                 <IonButtons slot="start">
@@ -476,26 +541,57 @@
         </IonContent>
     </ion-modal>
 
-    <ion-modal trigger="open-modal" id="modal-test">
+    <IonModal Trigger="open-modal" @ref="@_inputModal">
         <IonHeader>
             <IonToolbar>
                 <IonButtons slot="start">
-                    <IonButton onclick="cancel()">Cancel</IonButton>
+                    <IonButton @onclick="@cancel">Cancel</IonButton>
                 </IonButtons>
                 <IonTitle>Welcome</IonTitle>
                 <IonButtons slot="end">
-                    <IonButton onclick="@confirm" Strong="@true">Confirm</IonButton>
+                    <IonButton @onclick="@confirm" Strong="@true">Confirm</IonButton>
                 </IonButtons>
             </IonToolbar>
         </IonHeader>
         <IonContent Class="ion-padding">
             <IonItem>
                 <IonLabel Position="@IonLabelPosition.Stacked">Enter your name</IonLabel>
-                <ion-input id="input-name" type="text" placeholder="Your name" value="@inputNameValue" @ref="inputNameRef"></ion-input>
+                <IonInput @ref="@inputNameRef"
+                          id="input-name"
+                          Type="@IonInputType.Text"
+                          Placeholder="Your name"
+                          IonChange="@(args => inputNameValue = args.Value)"
+                          IonInputEvent="@(args => inputNameValue = args.Value)">
+                </IonInput>
+
+                @*
+await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputNameRef, InputNameObjectReference);
+        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionInput", inputNameRef, InputNameInputObjectReference);
+        
+*@
             </IonItem>
         </IonContent>
-    </ion-modal>
-    
+    </IonModal>
+
+    <IonList>
+        <IonItem>
+            <IonSelect TValue="@(string)" Label="Default label"  Multiple="@true" Placeholder="Favorite Fruit" IonChange="@(args => 
+                                                                                                                                {
+                                                                                                                                    Console.WriteLine(args.Value.ToString());
+                                                                                                                                    Console.WriteLine(string.Join("|", (args.Sender.Value as string[]) ?? new [] { (string?)args.Sender.Value }));
+                                                                                                                                })">
+                <IonSelectOption Value="apple">Apple</IonSelectOption>
+                <IonSelectOption Value="banana">Banana</IonSelectOption>
+                <IonSelectOption Value="orange">Orange</IonSelectOption>
+            </IonSelect>
+        </IonItem>
+    </IonList> 
+
+    <IonButton id="click-trigger">Left-Click Me</IonButton>
+    <IonPopover Trigger="click-trigger" TriggerAction="@IonPopoverTriggerAction.Click">
+      <IonContent Class="ion-padding">Hello World!</IonContent>
+    </IonPopover>
+
     <IonButton id="open-action-sheet">Open ActionSheet by Trigger</IonButton>
     <IonButton @onclick="@(async () => { await _actionSheet.PresentAsync(); })" >Open ActionSheet by Method</IonButton>
 
@@ -541,8 +637,9 @@
 
     ElementReference list;      //document.querySelector('ion-list#modal-list');
     ElementReference modal;     //document.querySelector('ion-modal');
-    ElementReference inputNameRef; //ion-input#input-name
-
+    IonInput inputNameRef; //ion-input#input-name
+    private IonModal _inputModal;
+    
     IonActionSheet<ActionSheetButtonData> _actionSheet;
     
     //IJSObjectReference selectedFruitsText;// = document.querySelector('#selected-fruits');
@@ -645,18 +742,18 @@
             return Task.CompletedTask;
         }));
 
-        InputNameObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
+        /*InputNameObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
         {
             inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
             return Task.CompletedTask;
-        }));
+        }));*/
 
 
-        InputNameInputObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
+        /*InputNameInputObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
         {
             inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
             return Task.CompletedTask;
-        }));
+        }));*/
 
         ModalDidDismissReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
         {
@@ -667,9 +764,6 @@
 
         await JsRuntime.InvokeVoidAsync("addIonEventListener", "ionChange", modal, ModalReference);
         await JsRuntime.InvokeVoidAsync("addIonEventListener", "ionModalDidDismiss", modal, ModalDidDismissReference);
-
-        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputNameRef, InputNameObjectReference);
-        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionInput", inputNameRef, InputNameInputObjectReference);
         
         //(ev) => {renderList(ev.target.value); }
         //selectedFruitsText = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "#selected-fruits");
@@ -708,11 +802,14 @@
         StateHasChanged();
     }
     
-    private async void confirm() {
-        var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#modal-test");
-        //var input = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-input"); //const input = document.querySelector('ion-input');
-        //var value = await input.InvokeAsync<string>("getProperty", "value");
-        await modal.InvokeVoidAsync("dismiss",  inputNameValue, "confirm"); //modal.dismiss(input.value, 'confirm');
+    private async Task cancel()
+    {
+        await _inputModal.DismissAsync(role: "cancel");
+    }
+    
+    private async Task confirm()
+    {
+        await _inputModal.DismissAsync(inputNameValue, "confirm");
     }
 
     private async Task AddCard()
@@ -754,6 +851,5 @@
         renderList = filterList(args.Value);
         StateHasChanged();
     }
-
 }
 

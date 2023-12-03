@@ -1,0 +1,18 @@
+﻿
+<IonHeader>
+  <IonToolbar>
+    <IonTitle>Toast</IonTitle>
+  </IonToolbar>
+</IonHeader>
+<IonContent class="ion-padding">
+    <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await PresentToastAsync(IonToastPosition.Top))">Present Toast At the Top</IonButton>
+    <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await PresentToastAsync(IonToastPosition.Middle))">Present Toast At the Middle</IonButton>
+    <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await PresentToastAsync(IonToastPosition.Bottom))">Present Toast At the Bottom</IonButton>
+</IonContent>
+
+@code {
+    private async ValueTask PresentToastAsync(string position) 
+    {
+        await IonToastController.PresentAsync(message: "Hello World!", duration: 1500, position: position);
+    }
+}

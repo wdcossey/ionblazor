@@ -57,7 +57,16 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    
+                    <DevicePreview Mode="@IonMode.MaterialDesign">
+                        <IonHeader>
+                          <IonToolbar>
+                            <IonTitle>Toolbar</IonTitle>
+                          </IonToolbar>
+                          <IonToolbar>
+                            <IonSearchBar></IonSearchBar>
+                          </IonToolbar>
+                        </IonHeader>
+                    </DevicePreview>
                 </div>
             </div>
         </div>
@@ -67,8 +76,7 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonSearchBar Debounce="1000"></IonSearchBar>
-                    <ion-list></ion-list>
+                    <Debounce/>
                 </div>
             </div>
         </div>
@@ -97,7 +105,7 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <CustomIonSearchBar></CustomIonSearchBar>
+                    <CustomIonSearchBar/>
                 </div>
             </div>
         </div>

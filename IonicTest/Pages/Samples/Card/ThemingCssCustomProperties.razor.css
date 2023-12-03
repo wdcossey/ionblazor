@@ -1,0 +1,16 @@
+﻿::deep ion-card {
+    --background: #292929;
+    --color: #ffffff;
+}
+
+::deep ion-card-title {
+    --color: transparent;
+    background: linear-gradient(180deg,#8d40d0 0,#7455dd);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+::deep ion-card-subtitle {
+    --color: #9780e5;
+}

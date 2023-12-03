@@ -3,8 +3,8 @@
 public partial class IonRadio : IonComponent, IIonModeComponent, IIonContentComponent, IIonColorComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionBlurReference;
-    private readonly DotNetObjectReference<IonicEventCallback>? _ionFocusReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
     /// <inheritdoc/>
     [Parameter]
@@ -88,15 +88,9 @@ public partial class IonRadio : IonComponent, IIonModeComponent, IIonContentComp
 
     public IonRadio()
     {
-        _ionBlurReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonBlur.InvokeAsync();
-        }));
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
 
-        _ionFocusReference = DotNetObjectReference.Create<IonicEventCallback>(new(async () =>
-        {
-            await IonFocus.InvokeAsync();
-        }));
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync());
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -106,10 +100,10 @@ public partial class IonRadio : IonComponent, IIonModeComponent, IIonContentComp
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
+        await this.AttachIonListenersAsync(_self, new[]
         {
-            new { Event = "ionBlur", Ref = _ionBlurReference },
-            new { Event = "ionFocus", Ref = _ionFocusReference },
-        }, _self);
+            IonEvent.Set("ionBlur" , _ionBlurReference ),
+            IonEvent.Set("ionFocus", _ionFocusReference),
+        });
     }
 }

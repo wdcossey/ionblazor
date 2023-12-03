@@ -1,0 +1,69 @@
+﻿<IonList>
+    <IonItem>
+        <IonSelect TValue="@string" aria-label="Food" Placeholder="Select food" >
+            @foreach(var food in _foods)
+            {
+                <IonSelectOptionOf TValue="Food" Value="@food">@food.Name</IonSelectOptionOf>
+            }
+        </IonSelect>
+    </IonItem>
+</IonList>
+
+
+@code {
+  
+    private class Food
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
+        public string Type { get; set; } = null!;
+    }
+  
+    private readonly List<Food> _foods = new List<Food>
+    {
+        new Food { Id = 1, Name = "Apples", Type = "fruit" },
+        new Food { Id = 2, Name = "Carrots", Type = "vegetable" },
+        new Food { Id = 3, Name = "Cupcakes", Type = "dessert" }
+    };
+}
+
+@*
+<script>
+  const foods = [
+    {
+      id: 1,
+      name: 'Apples',
+      type: 'fruit',
+    },
+    {
+      id: 2,
+      name: 'Carrots',
+      type: 'vegetable',
+    },
+    {
+      id: 3,
+      name: 'Cupcakes',
+      type: 'dessert',
+    },
+  ];
+
+  const compareWithFn = (o1, o2) => {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  };
+
+  const selectEl = document.querySelector('ion-select');
+  selectEl.compareWith = compareWithFn;
+
+  foods.forEach((option, i) => {
+    const selectOption = document.createElement('ion-select-option');
+    selectOption.value = option;
+    selectOption.textContent = option.name;
+    selectEl.appendChild(selectOption);
+  });
+
+  const valueLabel = document.querySelector('ion-text');
+  selectEl.addEventListener('ionChange', () => {
+    console.log('Current value:', JSON.stringify(selectEl.value));
+  });
+</script>
+*@

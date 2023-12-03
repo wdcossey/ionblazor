@@ -3,7 +3,7 @@
 public partial class IonItemOptions : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionSwipeReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionSwipeReference;
     
     /// <inheritdoc/>
     [Parameter] public RenderFragment? ChildContent { get; set; }
@@ -23,14 +23,13 @@ public partial class IonItemOptions : IonComponent, IIonContentComponent
     
     public IonItemOptions()
     {
-        _ionSwipeReference = DotNetObjectReference
-            .Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionSwipeReference = IonicEventCallback<JsonObject?>.Create(async args =>
             {
                 await IonSwipe.InvokeAsync(new IonSwipeEventArgs
                 {
                     Side = args?["detail"]?["side"]?.GetValue<string>()
                 });
-            }));
+            });
     }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -40,10 +39,7 @@ public partial class IonItemOptions : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
         
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new []
-        {
-            new { Event = "ionSwipe", Ref = _ionSwipeReference }
-        }, _self);
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionSwipe", _ionSwipeReference));
     }
 }
 

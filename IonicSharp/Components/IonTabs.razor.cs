@@ -1,10 +1,17 @@
-﻿namespace IonicSharp.Components;
+﻿using IonicSharp.Extensions;
+
+namespace IonicSharp.Components;
 
 public partial class IonTabs : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionTabsDidChangeReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionTabsWillChangeReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsDidChangeReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsWillChangeReference;
+    
+    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
+    private readonly Func<ValueTask<string>> _getSelectedJsWrapper;
+    private readonly Func<string,ValueTask<JsonObject>> _getTabJsWrapper;
+    private readonly Func<string, ValueTask<bool>> _selectJsWrapper;
 
     /// <inheritdoc/>
     [Parameter]
@@ -24,45 +31,44 @@ public partial class IonTabs : IonComponent, IIonContentComponent
 
     public IonTabs()
     {
-        _ionTabsDidChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionTabs"));
+        _getSelectedJsWrapper = async () => await (await _lazyIonComponentJs.Value).InvokeAsync<string>("getSelected", _self);
+        _getTabJsWrapper = async tab => await (await _lazyIonComponentJs.Value).InvokeAsync<JsonObject>("getTab", _self, tab);
+        _selectJsWrapper = async tab => await (await _lazyIonComponentJs.Value).InvokeAsync<bool>("select", _self, tab);
+        
+        _ionTabsDidChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var tab = args?["detail"]?["tab"]?.GetValue<string>();
             await IonTabsDidChange.InvokeAsync(new IonTabsDidChangeEventArgs() { Tab = tab });
-        }));
+        });
 
-        _ionTabsWillChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionTabsWillChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var tab = args?["detail"]?["tab"]?.GetValue<string>();
             await IonTabsWillChange.InvokeAsync(new IonTabsWillChangeEventArgs() { Tab = tab });
-        }));
+        });
     }
 
     /// <summary>
     /// Get the currently selected tab.
     /// </summary>
     /// <returns></returns>
-    public async Task<string> GetSelectedAsync()
-    {
-        return await JsRuntime.InvokeAsync<string>("IonicSharp.IonTabs.getSelected", _self);
-    }
+    public ValueTask<string> GetSelectedAsync() => _getSelectedJsWrapper();
 
     /// <summary>
     /// Get a specific tab by the value of its tab property or an element reference.
     /// </summary>
     /// <returns></returns>
-    public async Task GetTabAsync(string tab)
+    public async ValueTask GetTabAsync(string tab)
     {
-        await JsRuntime.InvokeAsync<JsonObject>("IonicSharp.IonTabs.getTab", _self, tab);
+        var obj = await _getTabJsWrapper(tab);
     }
 
     /// <summary>
     /// Select a tab by the value of its tab property or an element reference.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask<bool> SelectAsync(string tab)
-    {
-        return await JsRuntime.InvokeAsync<bool>("IonicSharp.IonTabs.select", _self, tab);
-    }
+    public ValueTask<bool> SelectAsync(string tab) => _selectJsWrapper(tab);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -70,12 +76,12 @@ public partial class IonTabs : IonComponent, IIonContentComponent
 
         if (!firstRender)
             return;
-
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
+        
+        await this.AttachIonListenersAsync(_self, new[]
         {
-            new { Event = "ionTabsDidChange", Ref = _ionTabsDidChangeReference },
-            new { Event = "ionTabsWillChange", Ref = _ionTabsWillChangeReference }
-        }, _self);
+            IonEvent.Set("ionTabsDidChange" , _ionTabsDidChangeReference ),
+            IonEvent.Set("ionTabsWillChange", _ionTabsWillChangeReference)
+        });
     }
 }
 

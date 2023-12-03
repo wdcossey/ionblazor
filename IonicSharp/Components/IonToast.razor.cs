@@ -1,21 +1,26 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+using IonicSharp.Extensions;
 
 namespace IonicSharp.Components;
 
 public partial class IonToast : IonComponent, IIonColorComponent, IIonModeComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionToastDidDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionToastDidPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionToastWillDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionToastWillPresentReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _willDismissReference;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _willPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionToastDidDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionToastDidPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionToastWillDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionToastWillPresentReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
     
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
     
+    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
+    private readonly Func<ValueTask> _dismissJsWrapper;
+
     /// <summary>
     /// If <b>true</b>, the toast will animate.
     /// </summary>
@@ -173,52 +178,51 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     [Parameter] 
     public EventCallback<IonToastButtonEventArgs> ButtonHandler { get; set; }
     
+    /// <summary>
+    /// Dismiss the toast overlay after it has been presented.
+    /// </summary>
+    public ValueTask DismissAsync() => _dismissJsWrapper();
+    
     public IonToast()
     {
-         _didDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionToast"));
+        _dismissJsWrapper = async () => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("dismiss", _self);
+        
+         _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             await DidDismiss.InvokeAsync(new IonToastDismissEventArgs { Sender = this, Role = role });
-        }));
+        });
 
-        _didPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
+        _didPresentReference = IonicEventCallback.Create(async () =>
         {
             //IsOpen = true;
             await DidPresent.InvokeAsync(this);
-        }));
+        });
 
-        _ionToastDidDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionToastDidDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             await IonToastDidDismiss.InvokeAsync(new IonToastDismissEventArgs { Sender = this, Role = role });
-        }));
+        });
 
-        _ionToastDidPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
-        {
-            await IonToastDidPresent.InvokeAsync();
-        }));
+        _ionToastDidPresentReference = IonicEventCallback.Create(async () => await IonToastDidPresent.InvokeAsync());
 
-        _ionToastWillDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionToastWillDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             await IonToastWillDismiss.InvokeAsync(new IonToastDismissEventArgs { Sender = this, Role = role });
-        }));
+        });
 
-        _ionToastWillPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
-        {
-            await IonToastWillPresent.InvokeAsync(this);
-        }));
+        _ionToastWillPresentReference = IonicEventCallback.Create(async () => await IonToastWillPresent.InvokeAsync(this));
 
-        _willDismissReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _willDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             await WillDismiss.InvokeAsync(new IonToastDismissEventArgs { Sender = this, Role = role });
-        }));
+        });
 
-        _willPresentReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async _ =>
-        {
-            await WillPresent.InvokeAsync(this);
-        }));
+        _willPresentReference = IonicEventCallback.Create(async () => await WillPresent.InvokeAsync(this));
     }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -227,22 +231,22 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
 
         if (!firstRender)
             return;
-
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
+        
+        await this.AttachIonListenersAsync(_self, new[]
         {
-            new { Event = "didDismiss"             , Ref = _didDismissReference          },
-            new { Event = "didPresent"             , Ref = _didPresentReference          },
-            new { Event = "ionToastDidDismiss"    , Ref = _ionToastDidDismissReference  },
-            new { Event = "ionToastDidPresent"    , Ref = _ionToastDidPresentReference  },
-            new { Event = "ionToastWillDismiss"   , Ref = _ionToastWillDismissReference },
-            new { Event = "ionToastWillPresent"   , Ref = _ionToastWillPresentReference },
-            new { Event = "willDismiss"            , Ref = _willDismissReference         },
-            new { Event = "willPresent"            , Ref = _willPresentReference         }
-        }, _self);
+            IonEvent.Set("didDismiss"         , _didDismissReference         ),
+            IonEvent.Set("didPresent"         , _didPresentReference         ),
+            IonEvent.Set("ionToastDidDismiss" , _ionToastDidDismissReference ),
+            IonEvent.Set("ionToastDidPresent" , _ionToastDidPresentReference ),
+            IonEvent.Set("ionToastWillDismiss", _ionToastWillDismissReference),
+            IonEvent.Set("ionToastWillPresent", _ionToastWillPresentReference),
+            IonEvent.Set("willDismiss"        , _willDismissReference        ),
+            IonEvent.Set("willPresent"        , _willPresentReference        )
+        });
         
         var buttons = Buttons?.Invoke();
         
-        _buttonHandlerReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(
+        _buttonHandlerReference = IonicEventCallback<JsonObject?>.Create(
             async args =>
             {
                 var index = args?["index"]?.GetValue<int?>();
@@ -257,9 +261,9 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
                 await (button?.Handler?.Invoke(arguments) ?? ValueTask.CompletedTask);
                 
                 await ButtonHandler.InvokeAsync(arguments);
-            }));
+            });
         
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonToast.withButtons", _self, buttons, _buttonHandlerReference);
+        await (await _lazyIonComponentJs.Value).InvokeVoidAsync("withButtons", _self, buttons, _buttonHandlerReference);
     }
 }
 
@@ -341,7 +345,7 @@ public class IonToastDismissEventArgs : EventArgs
 
 public class IonToastButtonEventArgs : EventArgs
 {
-    public IonToast? Sender { get; internal set; }
+    public IonToast Sender { get; internal set; } = null!;
     public int? Index { get; internal set; }
     public IIonToastButton? Button { get; internal set; }
 }

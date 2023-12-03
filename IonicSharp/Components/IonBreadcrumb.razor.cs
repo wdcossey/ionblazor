@@ -1,10 +1,12 @@
-﻿namespace IonicSharp.Components;
+﻿using IonicSharp.Extensions;
+
+namespace IonicSharp.Components;
 
 public partial class IonBreadcrumb : IonComponent, IIonModeComponent, IIonContentComponent, IIonColorComponent
 {
     private ElementReference _self;
-    private DotNetObjectReference<IonicEventCallback>? _ionBlurReference = null;
-    private DotNetObjectReference<IonicEventCallback>? _ionFocusReference = null;
+    private DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+    private DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
     /// <inheritdoc/>
     [Parameter]
@@ -82,15 +84,8 @@ public partial class IonBreadcrumb : IonComponent, IIonModeComponent, IIonConten
 
     public IonBreadcrumb()
     {
-        _ionBlurReference = DotNetObjectReference.Create(new IonicEventCallback(async () =>
-        {
-            await OnBlur.InvokeAsync();
-        }));
-
-        _ionFocusReference = DotNetObjectReference.Create(new IonicEventCallback(async () =>
-        {
-            await OnFocus.InvokeAsync();
-        }));
+        _ionBlurReference = IonicEventCallback.Create(async () => await OnBlur.InvokeAsync());
+        _ionFocusReference = IonicEventCallback.Create(async () => await OnFocus.InvokeAsync());
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -99,12 +94,12 @@ public partial class IonBreadcrumb : IonComponent, IIonModeComponent, IIonConten
 
         if (!firstRender)
             return;
-
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
+        
+        await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
-            new { Event = "ionBlur" , Ref = _ionBlurReference  },
-            new { Event = "ionFocus", Ref = _ionFocusReference }
-        }, _self);
+            IonEvent.Set("ionBlur" , _ionBlurReference ),
+            IonEvent.Set("ionFocus", _ionFocusReference)
+        });
 
     }
 }

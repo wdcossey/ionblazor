@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using IonicSharp.Extensions;
 
 namespace IonicSharp.Components;
 
@@ -6,9 +7,15 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
 {
     private ElementReference _self;
 
-    private DotNetObjectReference<IonicEventCallback<__ionScrollEventArgs?>>? _ionScrollReference = null;
-    private DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionScrollEndReference = null;
-    private DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionScrollStartReference = null;
+    private DotNetObjectReference<IonicEventCallback<__ionScrollEventArgs?>> _ionScrollReference;
+    private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionScrollEndReference;
+    private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionScrollStartReference;
+    
+    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
+    private readonly Func<int,int,int,ValueTask> _scrollByPointJsWrapper;
+    private readonly Func<int,ValueTask> _scrollToBottomJsWrapper;
+    private readonly Func<int?,int?,int?,ValueTask> _scrollToPointJsWrapper;
+    private readonly Func<int?,ValueTask> _scrollToTopJsWrapper;
 
     /// <inheritdoc/>
     [Parameter]
@@ -75,12 +82,19 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
 
     public IonContent()
     {
-        _ionScrollReference = DotNetObjectReference.Create(new IonicEventCallback<__ionScrollEventArgs?>(async args =>
+        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionInput"));
+        
+        _scrollByPointJsWrapper = async (x, y, duration) => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("scrollByPoint", _self, x, y, duration);
+        _scrollToBottomJsWrapper = async duration => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("scrollToBottom", _self, duration);
+        _scrollToPointJsWrapper = async (x, y, duration) => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("scrollToPoint", _self, x, y, duration);
+        _scrollToTopJsWrapper = async duration => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("scrollToTop", _self, duration);
+        
+        _ionScrollReference = IonicEventCallback<__ionScrollEventArgs?>.Create(async args =>
         {
             await IonScroll.InvokeAsync(args?.Detail);
-        }));
+        });
 
-        _ionScrollEndReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(async args =>
+        _ionScrollEndReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
 /*
 {
@@ -92,9 +106,9 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
 */
             var isScrolling = args?["detail"]?["isScrolling"]?.GetValue<bool>();
             await IonScrollEnd.InvokeAsync();
-        }));
+        });
 
-        _ionScrollStartReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(async args =>
+        _ionScrollStartReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
 /*
 {
@@ -106,7 +120,7 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
  */
             var isScrolling = args?["detail"]?["isScrolling"]?.GetValue<bool>();
             await IonScrollStart.InvokeAsync();
-        }));
+        });
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -115,14 +129,13 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
 
         if (!firstRender)
             return;
-
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new object[]
+    
+        await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
-            new { Event = "ionScroll"     , Ref = _ionScrollReference      },
-            new { Event = "ionScrollEnd"  , Ref = _ionScrollEndReference   },
-            new { Event = "ionScrollStart", Ref = _ionScrollStartReference }
-        }, _self);
-
+            IonEvent.Set("ionScroll"     , _ionScrollReference      ),
+            IonEvent.Set("ionScrollEnd"  , _ionScrollEndReference   ),
+            IonEvent.Set("ionScrollStart", _ionScrollStartReference )
+        });
     }
 
     /// <summary>
@@ -136,7 +149,7 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
     public async ValueTask<object?> GetScrollElementAsync()
     {
         throw new NotSupportedException();
-        await JsRuntime.InvokeAsync<JsonObject>("IonicSharp.IonContent.getScrollElement", _self);
+        await JsRuntime.InvokeAsync<JsonObject>("getScrollElement", _self);
     }
 
     /// <summary>
@@ -146,14 +159,14 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
     /// <param name="y"></param>
     /// <param name="duration"></param>
     public async ValueTask ScrollByPointAsync(int x, int y, int duration) =>
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonContent.scrollByPoint", _self, x, y, duration);
+        await _scrollByPointJsWrapper(x, y, duration);
 
     /// <summary>
     /// Scroll to the bottom of the component.
     /// </summary>
     /// <param name="duration"></param>
     public async ValueTask ScrollToBottomAsync(int duration) =>
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonContent.scrollToBottom", _self, duration);
+        await _scrollToBottomJsWrapper(duration);
 
     /// <summary>
     /// Scroll to a specified X/Y location in the component.
@@ -162,20 +175,19 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
     /// <param name="y"></param>
     /// <param name="duration"></param>
     public async ValueTask ScrollToPointAsync(int? x = null, int? y = null, int? duration = null) =>
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonContent.scrollToPoint", _self, x, y, duration);
+        await _scrollToPointJsWrapper(x, y, duration);
     
     /// <summary>
     /// Scroll to the top of the component.
     /// </summary>
     /// <param name="duration"></param>
     public async ValueTask ScrollToTopAsync(int? duration) =>
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonContent.scrollToTop", _self, duration);
+        await _scrollToTopJsWrapper(duration);
 
     internal sealed class __ionScrollEventArgs
     {
         [JsonPropertyName("detail")] public IonScrollEventArgs Detail { get; set; } = null!;
     }
-
 
     public sealed class IonScrollEventArgs : EventArgs
     {

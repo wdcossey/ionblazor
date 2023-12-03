@@ -1,4 +1,5 @@
-﻿@inject IJSRuntime JsRuntime
+﻿@using IonicSharp.Extensions
+@inject IJSRuntime JsRuntime
 
 <IonButton @onclick="@(() => _actionSheet.IsOpen = true)">Open</IonButton>
 <IonActionSheet TButtonData="ActionSheetButtonData" 
@@ -30,7 +31,7 @@
 
     private async ValueTask ButtonHandler(ActionSheetButton<ActionSheetButtonData>? button, int? index)
     {
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonToastController.present", $"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};", "bottom", 3000, "logo-ionic");
+        await IonToastController.PresentAsync($"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};", "bottom", 3000, "logo-ionic");
     }
 
 }

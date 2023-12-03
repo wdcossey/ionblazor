@@ -33,6 +33,9 @@ public partial class RefresherSample
 
     private static readonly string[] Names = { "Burt Bear", "Charlie Cheetah", "Donald Duck", "Eva Eagle", "Ellie Elephant", "Gino Giraffe", "Isabella Iguana", "Karl Kitten", "Lionel Lion", "Molly Mouse", "Paul Puppy", "Rachel Rabbit", "Ted Turtle"};
 
+    //private IList<RenderFragment> _list = new List<RenderFragment>();
+    private readonly IList<(string Name, bool Unread)> _list = new List<(string Name, bool Unread)>();
+    
     private async Task AdvancedIonRefreshCallback(IonRefresherIonRefreshEventArgs args)
     {
         await Task.Delay(2000);
@@ -48,29 +51,52 @@ public partial class RefresherSample
     
     private void AddItems(int count, bool unread)
     {
-        throw new NotImplementedException();
         for (var i = 0; i < count; i++) {
-            //list.insertBefore(CreateItem(unread), list.firstChild);
+            _list.Insert(0, CreateItem(unread));
         }
     }
 
-    private void CreateItem(bool unread = false)
+    private (string Name, bool Unread) CreateItem(bool unread = false)
     {
-        throw new NotImplementedException();
         var name = ChooseRandomName();
-        //let item = document.createElement('ion-item');
-        //item.button = true;
-
-        // item.innerHTML += `
-        //   <ion-icon color="primary" name="${unread ? 'ellipse' : ''}" slot="start"></ion-icon>
-        //   <ion-label>
-        //     <h2>${name}</h2>
-        //     <p>New message from ${name}</p>
-        //   </ion-label>
-        // `;
-        
-        //return item;
+        return (name, unread);
     }
+    
+    //private RenderFragment CreateItem(bool unread = false)
+    //{
+    //    var name = ChooseRandomName();
+    //
+    //    return builder =>
+    //    {
+    //        builder.OpenComponent<IonItem>(0);
+    //        builder.OpenComponent<IonIcon>(1);
+    //        builder.AddMultipleAttributes(2, new Dictionary<string, object>()
+    //        {
+    //            { nameof(IonIcon.Color), IonColor.Primary },
+    //            { "name", unread ? "ellipse" : string.Empty },
+    //            { "slot", "start" },
+    //        });
+    //        builder.CloseComponent();
+    //        builder.CloseComponent();
+    //        
+    //    };
+    //}
+
+    //private void CreateItem(bool unread = false)
+    //{
+    //    //let item = document.createElement('ion-item');
+    //    //item.button = true;
+    //
+    //    // item.innerHTML += `
+    //    //   <ion-icon color="primary" name="${unread ? 'ellipse' : ''}" slot="start"></ion-icon>
+    //    //   <ion-label>
+    //    //     <h2>${name}</h2>
+    //    //     <p>New message from ${name}</p>
+    //    //   </ion-label>
+    //    // `;
+    //
+    //    //return item;
+    //}
 
     #endregion
     

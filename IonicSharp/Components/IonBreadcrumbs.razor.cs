@@ -1,4 +1,5 @@
 ﻿using System.Dynamic;
+using IonicSharp.Extensions;
 
 namespace IonicSharp.Components;
 
@@ -50,8 +51,7 @@ public partial class IonBreadcrumbs : IonComponent, IIonModeComponent, IIonConte
 
     public IonBreadcrumbs()
     {
-
-        _ionCollapsedClickReference = DotNetObjectReference.Create(new IonicEventCallback<JsonObject?>(async args =>
+        _ionCollapsedClickReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             IDictionary<string, string?> value = new Dictionary<string, string?>();
 
@@ -64,7 +64,7 @@ public partial class IonBreadcrumbs : IonComponent, IIonModeComponent, IIonConte
             }
 
             await IonCollapsedClick.InvokeAsync(value);
-        }));
+        });
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -74,8 +74,8 @@ public partial class IonBreadcrumbs : IonComponent, IIonModeComponent, IIonConte
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonBreadCrumbs.attachIonCollapsedClickListener", "ionCollapsedClick", _self,
-            _ionCollapsedClickReference);
+        var ionComponent = await JsRuntime.ImportAsync("ionBreadCrumbs");
+        await ionComponent.InvokeVoidAsync("attachIonCollapsedClickListener", _self, _ionCollapsedClickReference);
     }
 
 }

@@ -1,0 +1,18 @@
+﻿<IonButton id="popover-button">Open Menu</IonButton>
+<IonPopover Trigger="popover-button" DismissOnSelect="true">
+  <IonContent>
+    <IonList>
+      <IonItem Button="true" Detail="false">Option 1</IonItem>
+      <IonItem Button="true" Detail="false">Option 2</IonItem>
+      <IonItem Button="true" id="nested-trigger">More options...</IonItem>
+
+      <IonPopover Trigger="nested-trigger" DismissOnSelect="true" side="end">
+        <IonContent>
+          <IonList>
+            <IonItem Button="true" Detail="false">Nested option</IonItem>
+          </IonList>
+        </IonContent>
+      </IonPopover>
+    </IonList>
+  </IonContent>
+</IonPopover>

@@ -1,0 +1,26 @@
+﻿<div>
+    
+    <style>
+        ion-popover.popup-styling {
+            --background: rgba(40, 173, 218, 0.6);
+            --backdrop-opacity: 0.6;
+            --box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.6);
+            --color: white;
+            --width: 300px;
+        }
+        
+        ion-popover.popup-styling ion-content {
+            --background: rgba(40, 173, 218, 0.6);
+        }
+        
+        ion-popover.popup-styling::part(backdrop) {
+            background-color: rgb(6, 14, 106);
+        }
+    </style>
+
+    <IonButton id="trigger-button">Click Me</IonButton>
+    <IonPopover Class="popup-styling" Trigger="trigger-button" Reference="@IonPopoverReference.Default" TriggerAction="@IonPopoverTriggerAction.Default">
+        <IonContent Class="ion-padding">Hello Styled World!</IonContent>
+    </IonPopover>
+
+</div>

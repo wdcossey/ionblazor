@@ -1,0 +1,22 @@
+﻿<IonRange aria-label="Range with knob events" IonKnobMoveStart="IonKnobMoveStartCallback" IonKnobMoveEnd="IonKnobMoveEndCallback"></IonRange>
+<div>
+    <IonLabel>ionKnobMoveStart: <span>@_moveStart</span></IonLabel>
+</div>
+<div>
+    <IonLabel>ionKnobMoveEnd: <span>@_moveEnd</span></IonLabel>
+</div>
+
+@code {
+    private string _moveStart = null!;
+    private string _moveEnd = null!;
+
+    private void IonKnobMoveStartCallback(RangeChangeEventArgs args)
+    {
+        _moveStart = $"{(args.Value as RangeValue)?.Value}";
+    }
+
+    private void IonKnobMoveEndCallback(RangeChangeEventArgs args)
+    {
+        _moveEnd = $"{(args.Value as RangeValue)?.Value}";
+    }
+}

@@ -3,7 +3,7 @@
 public partial class IonSegment : IonComponent, IIonModeComponent, IIonContentComponent, IIonColorComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionChangeReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
 
     /// <inheritdoc/>
     [Parameter] 
@@ -57,13 +57,13 @@ public partial class IonSegment : IonComponent, IIonModeComponent, IIonContentCo
     
     public IonSegment()
     {
-        _ionChangeReference = DotNetObjectReference.Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var value = args?["detail"]?["value"]?.GetValue<string>();
             Value = value;
             
             await IonChange.InvokeAsync(new IonSegmentIonChangeEventArgs() { Sender  = this, Value = value });
-        }));
+        });
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -73,10 +73,7 @@ public partial class IonSegment : IonComponent, IIonModeComponent, IIonContentCo
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
-        {
-            new { Event = "ionChange", Ref = _ionChangeReference }
-        }, _self);
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionChange", _ionChangeReference ));
     }
 }
 

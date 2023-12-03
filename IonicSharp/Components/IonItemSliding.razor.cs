@@ -3,7 +3,7 @@
 public partial class IonItemSliding : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
-    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionDragReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionDragReference;
 
     /// <inheritdoc/>
     [Parameter]
@@ -23,22 +23,21 @@ public partial class IonItemSliding : IonComponent, IIonContentComponent
 
     public IonItemSliding()
     {
-        _ionDragReference = DotNetObjectReference
-            .Create<IonicEventCallback<JsonObject?>>(new(async args =>
+        _ionDragReference = IonicEventCallback<JsonObject?>
+            .Create(async args =>
             {
                 await IonDrag.InvokeAsync(new IonDragEventArgs
                 {
                     Amount = args?["detail"]?["amount"]?.GetValue<double>(),
                     Ratio = args?["detail"]?["ratio"]?.GetValue<double>(),
                 });
-            }));
+            });
     }
 
     /// <summary>
     /// Close the sliding item. Items can also be closed from the List.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public Task CloseAsync()
     {
         throw new NotImplementedException();
@@ -48,7 +47,6 @@ public partial class IonItemSliding : IonComponent, IIonContentComponent
     /// Close all of the sliding items in the list. Items can also be closed from the List.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public Task CloseOpenedAsync()
     {
         throw new NotImplementedException();
@@ -58,7 +56,6 @@ public partial class IonItemSliding : IonComponent, IIonContentComponent
     /// Get the amount the item is open in pixels.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public Task GetOpenAmountAsync()
     {
         throw new NotImplementedException();
@@ -71,7 +68,6 @@ public partial class IonItemSliding : IonComponent, IIonContentComponent
     /// the width of the options.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public Task GetSlidingRatioAsync()
     {
         throw new NotImplementedException();
@@ -81,7 +77,6 @@ public partial class IonItemSliding : IonComponent, IIonContentComponent
     /// Open the sliding item.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public Task OpenAsync()
     {
         throw new NotImplementedException();
@@ -94,10 +89,7 @@ public partial class IonItemSliding : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.attachListeners", new[]
-        {
-            new { Event = "ionDrag", Ref = _ionDragReference }
-        }, _self);
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionDrag", _ionDragReference));
     }
 }
 

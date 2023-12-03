@@ -8,7 +8,7 @@ public interface IIonComponent
 public abstract class IonComponent : ComponentBase, IIonComponent
 {
     [Inject]
-    protected IJSRuntime JsRuntime { get; set; } = null!;
+    internal IJSRuntime JsRuntime { get; set; } = null!;
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? Attributes { get; set; }

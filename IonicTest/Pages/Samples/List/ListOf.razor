@@ -1,0 +1,23 @@
+﻿<IonListOf TItem="ListOfItem" ItemsSource="@_itemsSource">
+    <ItemTemplate>
+        <IonItem>
+            <IonLabel>@context.Title</IonLabel>
+        </IonItem>
+    </ItemTemplate>
+</IonListOf>
+
+@code {
+    private readonly IEnumerable<ListOfItem> _itemsSource = new ListOfItem[]
+    {
+        new() { Title = "Pokémon Yellow" },
+        new() { Title = "Mega Man X" },
+        new() { Title = "The Legend of Zelda" },
+        new() { Title = "Pac-Man" },
+        new() { Title = "Super Mario World" },
+    };
+
+    public class ListOfItem
+    {
+        public string Title { get; set; }
+    }
+}
