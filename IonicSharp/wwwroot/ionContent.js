@@ -1,5 +1,5 @@
 ﻿export function getScrollElement(element) {
-    return element.getScrollElement();
+    return null;//element.getScrollElement();
 }
 
 export function scrollByPoint(element, x, y, duration) {

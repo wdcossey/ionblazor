@@ -112,6 +112,15 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public string? Position { get; set; } = IonToastPosition.Default;
+
+    /// <summary>
+    /// The element to anchor the toast's position to. Can be set as a direct reference or the ID of the element.<br/>
+    /// With <see cref="IonToastPosition.Bottom"/>, the toast will sit above the chosen element.<br/>
+    /// With <see cref="IonToastPosition.Top"/>, the toast will sit below the chosen element.<br/>
+    /// With <see cref="IonToastPosition.Middle"/>, the value of positionAnchor is ignored.
+    /// </summary>
+    [Parameter]
+    public string? PositionAnchor { get; set; }
     
     /// <summary>
     /// If <b>true</b>, the toast will be translucent.

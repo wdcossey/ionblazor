@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Components;
 
-public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorComponent
+public partial class IonSearchbar : IonComponent, IIonModeComponent, IIonColorComponent
 {
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
@@ -20,7 +20,7 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
     /// Set the input's autocomplete property.
     /// </summary>
     [Parameter]
-    public string? AutoComplete { get; set; } = SearchBarAutoComplete.Off;
+    public string? AutoComplete { get; set; } = SearchbarAutoComplete.Off;
 
     /// <summary>
     /// Set the input's autocorrect property. <p/>
@@ -165,7 +165,7 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
     public EventCallback IonCancel { get; set; }
 
     /// <summary>
-    /// The <see cref="IonChange"/> event is fired for <see cref="IonSearchBar"/> elements when the user modifies the
+    /// The <see cref="IonChange"/> event is fired for <see cref="IonSearchbar"/> elements when the user modifies the
     /// element's value.
     /// Unlike the <see cref="IonInput"/> event, the <see cref="IonChange"/> event is not necessarily fired for each
     /// alteration to an element's value. <p/>
@@ -174,7 +174,7 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
     /// <see cref="IonChange"/> can also fire when clicking the clear or cancel buttons.
     /// </summary>
     [Parameter]
-    public EventCallback<IonSearchBarChangeEventArgs> IonChange { get; set; }
+    public EventCallback<IonSearchbarChangeEventArgs> IonChange { get; set; }
 
     /// <summary>
     /// Emitted when the clear input button is clicked.
@@ -189,12 +189,12 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
     public EventCallback IonFocus { get; set; }
 
     /// <summary>
-    /// Emitted when the value of the <see cref="IonSearchBar"/> element has changed.
+    /// Emitted when the value of the <see cref="IonSearchbar"/> element has changed.
     /// </summary>
     [Parameter]
-    public EventCallback<IonSearchBarInputEventArgs> IonInput { get; set; }
+    public EventCallback<IonSearchbarInputEventArgs> IonInput { get; set; }
 
-    public IonSearchBar()
+    public IonSearchbar()
     {
         _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
 
@@ -206,7 +206,7 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
             Value = value;
 
-            await IonChange.InvokeAsync(new IonSearchBarChangeEventArgs { Value = value, IsTrusted = isTrusted });
+            await IonChange.InvokeAsync(new IonSearchbarChangeEventArgs { Value = value, IsTrusted = isTrusted });
         });
 
         _ionClearReference = IonicEventCallback.Create(async () => await IonClear.InvokeAsync());
@@ -219,39 +219,10 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
             //Value = value;
 
-            await IonInput.InvokeAsync(new IonSearchBarInputEventArgs { Value = value, IsTrusted = isTrusted });
+            await IonInput.InvokeAsync(new IonSearchbarInputEventArgs { Value = value, IsTrusted = isTrusted });
         });
     }
-
-    public async Task<IonSearchBar> SetValue(string? value)
-    {
-        throw new NotImplementedException();
-        Value = value;
-        return this;
-    }
-
-    /// <summary>
-    /// Returns the native &lt;input&gt; element used under the hood.
-    /// </summary>
-    public async Task<JsonElement?> GetInputElementAsync()
-    {
-        //TODO: implement
-        return await JsRuntime.InvokeAsync<JsonElement?>("getSearchbarInputElement", _self);
-    }
-
-    /// <summary>
-    /// Sets focus on the native input in ion-searchbar. Use this method instead of the global input.focus().<p/>
-    /// Developers who wish to focus an input when a page enters should call setFocus()
-    /// in the ionViewDidEnter() lifecycle method.<p/>
-    /// Developers who wish to focus an input when an overlay is presented
-    /// should call setFocus after didPresent has resolved.
-    /// </summary>
-    public async Task SetFocusAsync()
-    {
-        //TODO: implement
-        await JsRuntime.InvokeVoidAsync("setSearchbarFocus", _self);
-    }
-
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -269,9 +240,32 @@ public partial class IonSearchBar : IonComponent, IIonModeComponent, IIonColorCo
             IonEvent.Set("ionInput" , _ionInputReference ),
         });
     }
+    
+    public async Task<IonSearchbar> SetValue(string? value)
+    {
+        throw new NotImplementedException();
+        Value = value;
+        return this;
+    }
+
+    /// <summary>
+    /// Returns the native &lt;input&gt; element used under the hood.
+    /// </summary>
+    [Obsolete("Not available in Blazor (Razor) projects", true)]
+    public async ValueTask GetInputElementAsync() => await JsComponent.InvokeAsync<ElementReference>("getInputElement", _self);
+    
+    /// <summary>
+    /// Sets focus on the native input in <see cref="IonSearchbar"/>. Use this method instead of the global
+    /// input.focus().<br/>
+    /// Developers who wish to focus an input when a page enters should call <see cref="SetFocusAsync"/> in the
+    /// ionViewDidEnter() lifecycle method.<br/>
+    /// Developers who wish to focus an input when an overlay is presented should call <see cref="SetFocusAsync"/> after
+    /// <see cref="IonModal.DidPresent"/> has resolved.
+    /// </summary>
+    public async ValueTask SetFocusAsync() => await JsComponent.InvokeAsync<string>("setFocus", _self);
 }
 
-public static class SearchBarAutoComplete
+public static class SearchbarAutoComplete
 {
     public const string Name = "name";
     public const string Email = "email";
@@ -397,13 +391,13 @@ public enum ButtonBehavior
     Never
 }
 
-public class IonSearchBarChangeEventArgs : EventArgs
+public class IonSearchbarChangeEventArgs : EventArgs
 {
     public string? Value { get; internal set; }
     public bool? IsTrusted { get; internal set; }
 }
 
-public class IonSearchBarInputEventArgs : EventArgs
+public class IonSearchbarInputEventArgs : EventArgs
 {
     public string? Value { get; internal set; }
     public bool? IsTrusted { get; internal set; }

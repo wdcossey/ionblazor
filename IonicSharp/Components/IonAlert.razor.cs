@@ -20,11 +20,6 @@ public partial class IonAlert : IonComponent, IIonModeComponent
 
     private AlertButton[]? _buttons;
     private AlertInput[]? _inputs;
-    
-    private Func<ValueTask<bool>> _dismissWrapper;
-    //private Func<ValueTask> _onDidDismissWrapper;
-    //private Func<ValueTask> _onWillDismissWrapper;
-    private Func<ValueTask> _presentWrapper;
 
     /// <summary>
     /// If <b>true</b>, the alert will animate.
@@ -238,7 +233,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     /// Dismiss the alert overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask<bool> DismissAsync() => await _dismissWrapper();
+    public async ValueTask<bool> DismissAsync() => await JsComponent.InvokeAsync<bool>("dismiss", _self);
 
     /// <summary>
     /// Returns a promise that resolves when the alert did dismiss.
@@ -258,7 +253,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     /// Present the alert overlay after it has been created.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask PresentAsync() => await _presentWrapper();
+    public async ValueTask PresentAsync() => await JsComponent.InvokeVoidAsync("present", _self);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -269,14 +264,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
 
         _buttons = Buttons?.Invoke();
         _inputs = Inputs?.Invoke();
-        
-        var ionComponent = await JsRuntime.ImportAsync("ionAlert");
-        
-        _dismissWrapper = () => ionComponent.InvokeAsync<bool>("dismiss", _self);
-        //_onDidDismissWrapper = () => ionAlertJs.InvokeVoidAsync("onDidDismiss", _self);
-        //_onWillDismissWrapper = () => ionAlertJs.InvokeVoidAsync("onWillDismiss", _self);
-        _presentWrapper = () => ionComponent.InvokeVoidAsync("present", _self);
-        
+
         await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
             IonEvent.Set("didDismiss", _didDismissReference ),
@@ -290,10 +278,10 @@ public partial class IonAlert : IonComponent, IIonModeComponent
         });
 
         if (_buttons?.Length > 0)
-            await ionComponent.InvokeVoidAsync("addButtons", _self, _buttons, _buttonHandlerReference);
+            await JsComponent.InvokeVoidAsync("addButtons", _self, _buttons, _buttonHandlerReference);
 
         if (_inputs?.Length > 0)
-            await ionComponent.InvokeVoidAsync("addInputs", _self, _inputs);
+            await JsComponent.InvokeVoidAsync("addInputs", _self, _inputs);
     }
 
     private static IAlertValues GetValues(JsonObject? jObject)

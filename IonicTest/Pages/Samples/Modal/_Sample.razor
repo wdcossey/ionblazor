@@ -53,12 +53,34 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="container">
-                    <DevicePreview Mode="@IonMode.MaterialDesign">
-                        <SheetModal/>
-                    </DevicePreview>
+
                 </div>
             </div>
         </div>
+        
+        <PreviewContainer Title="Sheet Modal">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <SheetModal/>
+            </DevicePreview>
+        </PreviewContainer>
+        
+        <PreviewContainer Title="Styling" >
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <Styling/>
+            </DevicePreview>
+        </PreviewContainer>
+        
+        <PreviewContainer SubTitle="Animations">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <StylingAnimations/>
+            </DevicePreview>
+        </PreviewContainer>
+        
+        <PreviewContainer SubTitle="Custom Dialogs">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <CustomDialogs/>
+            </DevicePreview>
+        </PreviewContainer>
         
         
     </IonContent>

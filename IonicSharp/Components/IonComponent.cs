@@ -5,16 +5,51 @@ public interface IIonComponent
     
 }
 
-public abstract class IonComponent : ComponentBase, IIonComponent
+public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposable
 {
     [Inject]
     internal IJSRuntime JsRuntime { get; set; } = null!;
-
+    
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? Attributes { get; set; }
 
     [Parameter]
     public virtual string? Class { get; set; }
+
+    protected readonly Lazy<ValueTask<IJSObjectReference>> JsComponent;
+
+    protected IonComponent()
+    {
+        JsComponent = new Lazy<ValueTask<IJSObjectReference>>(() =>
+        {
+            var type = GetType();
+            
+            System.Text.StringBuilder nameBuilder;
+            
+            if (type.IsGenericType)
+            {
+                nameBuilder = new System.Text.StringBuilder(type.Name[..^2]);
+            }
+            else
+            {
+                nameBuilder = new System.Text.StringBuilder(type.Name);
+            }
+            
+            //new System.Text.StringBuilder(type.Name)
+            if (!char.IsLower(nameBuilder[0]))
+                nameBuilder[0] = char.ToLowerInvariant(nameBuilder[0]);
+
+            
+            
+            return JsRuntime.ImportAsync(nameBuilder.ToString());
+        });
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (JsComponent.IsValueCreated)
+            await (await JsComponent.Value).DisposeAsync();
+    }
 }
 
 public interface IIonColorComponent
@@ -36,6 +71,7 @@ public interface IIonModeComponent
 {
     /// <summary>
     /// The mode determines which platform styles to use.
+    /// <see cref="IonMode"/>
     /// </summary>
     string? Mode { get; set; }
 }

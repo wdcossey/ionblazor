@@ -6,7 +6,6 @@ public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonCo
 {
     private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeObjectReference = null!;
-    private Func<object, ValueTask> _setValueWrapper;
     
     /// <inheritdoc/>
     [Parameter]
@@ -64,7 +63,7 @@ public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonCo
         else
             actualValue = value;
         
-        await _setValueWrapper(actualValue);
+        await JsComponent.InvokeVoidAsync("setValue", _self, value /*value ?? Array.Empty<string>()*/);
         
         Value = value;
         return this;
@@ -98,9 +97,6 @@ public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonCo
 
                 await IonChange.InvokeAsync(new AccordionGroupIonChangeEventArgs { Sender = this, Value = Value });
             });
-
-        var ionComponent = await JsRuntime.ImportAsync("ionAccordionGroup");
-        _setValueWrapper = value => ionComponent.InvokeVoidAsync("setValue", _self, value /*value ?? Array.Empty<string>()*/);
         
         //Multiple is not true ? result?.FirstOrDefault() : result;
         await SetValue(Value);

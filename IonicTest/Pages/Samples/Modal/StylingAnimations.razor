@@ -1,14 +1,26 @@
-﻿<IonHeader>
+
+<IonHeader>
     <IonToolbar>
         <IonTitle>App</IonTitle>
     </IonToolbar>
 </IonHeader>
-<IonContent class="ion-padding">
-    <IonButton id="open-modal-sheet" Expand="block">Open Sheet Modal</IonButton>
-
-    <IonModal @ref="_modal" Trigger="open-modal-sheet" Handle="@true" InitialBreakpoint="@(0.25d)"  >
+<IonContent Class="ion-padding">
+    <IonButton id="open-modal" Expand="@IonButtonExpand.Block">Open Modal</IonButton>
+    
+    <style>
+        
+    </style>
+    
+    <IonModal @ref="_modal" Class="modal-styling-animation" EnterAnimation="@_enterAnimation" Trigger="open-modal">
+        <IonHeader>
+            <IonToolbar>
+                <IonTitle>Modal</IonTitle>
+                <IonButtons slot="end">
+                    <IonButton @onclick="@(async () => await _modal.DismissAsync())">Close</IonButton>
+                </IonButtons>
+            </IonToolbar>
+        </IonHeader>
         <IonContent>
-            <IonSearchbar @ref="_searchbar" @onclick="@(async () => await _modal.SetCurrentBreakpointAsync(0.75))" Placeholder="Search" ></IonSearchbar>
             <IonList>
                 <IonItem>
                     <IonAvatar slot="start">
@@ -51,19 +63,3 @@
     </IonModal>
 </IonContent>
 
-@code {
-  
-    IonModal _modal = null!;
-    IonSearchbar _searchbar = null!;
-  
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-        
-        if (!firstRender)
-            return;
-        
-        await _modal.SetInitialBreakpointAsync(0.25);
-        await _modal.SetBreakpointsAsync(0, 0.25, 0.5, 0.75);
-    }
-}

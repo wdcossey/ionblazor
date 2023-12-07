@@ -2,78 +2,63 @@
 
 <div class="ion-page" id="main-content">
     <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    
-                </div>
-            </div>
-        </div>
+        <PreviewContainer Title="Basic Usage">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <BasicUsage/>
+            </DevicePreview>
+        </PreviewContainer>
         
-        <h2>Header & Footer</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    
-                </div>
-            </div>
-        </div>
+        <PreviewContainer Title="Header & Footer">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <HeaderAndFooter/>
+            </DevicePreview>
+        </PreviewContainer>
         
+        <PreviewContainer Title="Fullscreen Content">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <FullscreenContent/>
+            </DevicePreview>
+        </PreviewContainer>
+
         <h2>Fullscreen Content</h2>
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="container">
-                    
+
                 </div>
             </div>
         </div>
         
-        <h2>Fixed Content</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    
-                </div>
-            </div>
-        </div>
+        <PreviewContainer Title="Fixed Content">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <FixedContent/>
+            </DevicePreview>
+        </PreviewContainer>
         
-        <h2>Scroll Methods</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <ScrollMethods/>
-                </div>
-            </div>
-        </div>
+        <PreviewContainer Title="Scroll Methods">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <ScrollMethods/>
+            </DevicePreview>
+        </PreviewContainer>
         
-        <h2>Scroll By Point (relative)</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <ScrollByPoint/>
-                </div>
-            </div>
-        </div>
+        <PreviewContainer Title="Scroll By Point (relative)">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <ScrollByPoint/>
+            </DevicePreview>
+        </PreviewContainer>
+
+        <PreviewContainer Title="Scroll To Point (absolute)">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <ScrollToPoint/>
+            </DevicePreview>
+        </PreviewContainer>
         
-        <h2>Scroll To Point (absolute)</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <ScrollToPoint/>
-                </div>
-            </div>
-        </div>
-        
-        <h2>Scroll Events</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <ScrollEvents/>
-                </div>
-            </div>
-        </div>
-        
-        
+        <PreviewContainer Title="Scroll Events">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <ScrollEvents/>
+            </DevicePreview>
+        </PreviewContainer>
+
+
     </IonContent>
 </div>

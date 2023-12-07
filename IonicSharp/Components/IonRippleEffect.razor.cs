@@ -3,6 +3,7 @@
 public partial class IonRippleEffect : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
+    private readonly Func<int,int,ValueTask> _addRippleJsWrapper;
 
     /// <inheritdoc/>
     [Parameter]
@@ -14,13 +15,15 @@ public partial class IonRippleEffect : IonComponent, IIonContentComponent
     [Parameter]
     public string? Type { get; set; } = IonRippleEffectType.Default;
 
+    public IonRippleEffect()
+    {
+        _addRippleJsWrapper = async (x, y) => await JsComponent.InvokeVoidAsync("addRipple", _self, x, y);
+    }
+    
     /// <summary>
     /// Adds the ripple effect to the parent element.
     /// </summary>
-    public async Task AddRippleAsync(int x, int y)
-    {
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonRippleEffect.addRipple", _self, x, y);
-    }
+    public async Task AddRippleAsync(int x, int y) => await _addRippleJsWrapper(x, y);
 }
 
 public static class IonRippleEffectType

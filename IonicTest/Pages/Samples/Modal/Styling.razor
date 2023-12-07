@@ -1,0 +1,79 @@
+  <IonHeader>
+      <IonToolbar>
+          <IonTitle>App</IonTitle>
+      </IonToolbar>
+  </IonHeader>
+  <IonContent Class="ion-padding">
+      <IonButton id="open-modal-styling" Expand="@IonButtonExpand.Block">Open Modal</IonButton>
+
+      <style>
+          ion-modal.modal-styling {
+              --height: 50%;
+              --border-radius: 16px;
+              --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+          }
+          
+          ion-modal.modal-styling::part(backdrop) {
+              background: rgba(209, 213, 219);
+              opacity: 1;
+          }
+          
+          ion-modal.modal-styling ion-toolbar {
+              --background: rgb(14 116 144);
+              --color: white;
+          }
+      </style>
+      
+      <IonModal @ref="_modal" Class="modal-styling" Trigger="open-modal-styling">
+          <IonContent>
+              <IonToolbar>
+                  <IonTitle>Modal</IonTitle>
+                  <IonButtons slot="end">
+                      <IonButton Color="@IonColor.Light" @onclick="@(async () => await _modal.DismissAsync())">Close</IonButton>
+                  </IonButtons>
+              </IonToolbar>
+              <IonList>
+                  <IonItem>
+                      <IonAvatar slot="start">
+                          <IonImg Src="https://i.pravatar.cc/300?u=b" />
+                      </IonAvatar>
+                      <IonLabel>
+                          <h2>Connor Smith</h2>
+                          <p>Sales Rep</p>
+                      </IonLabel>
+                  </IonItem>
+                  <IonItem>
+                      <IonAvatar slot="start">
+                          <IonImg Src="https://i.pravatar.cc/300?u=a" />
+                      </IonAvatar>
+                      <IonLabel>
+                          <h2>Daniel Smith</h2>
+                          <p>Product Designer</p>
+                      </IonLabel>
+                  </IonItem>
+                  <IonItem>
+                      <IonAvatar slot="start">
+                          <IonImg Src="https://i.pravatar.cc/300?u=d" />
+                      </IonAvatar>
+                      <IonLabel>
+                          <h2>Greg Smith</h2>
+                          <p>Director of Operations</p>
+                      </IonLabel>
+                  </IonItem>
+                  <IonItem>
+                      <IonAvatar slot="start">
+                          <IonImg Src="https://i.pravatar.cc/300?u=e" />
+                      </IonAvatar>
+                      <IonLabel>
+                          <h2>Zoey Smith</h2>
+                          <p>CEO</p>
+                      </IonLabel>
+                  </IonItem>
+              </IonList>
+          </IonContent>
+      </IonModal>
+  </IonContent>
+  
+  @code {
+    private IonModal _modal = null!;
+  }

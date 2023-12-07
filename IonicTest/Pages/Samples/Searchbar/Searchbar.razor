@@ -6,11 +6,11 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonSearchBar></IonSearchBar>
-                    <IonSearchBar Placeholder="Custom Placeholder"></IonSearchBar>
-                    <IonSearchBar Disabled="true" Placeholder="Disabled"></IonSearchBar>
-                    <IonSearchBar Value="Value"></IonSearchBar>
-                    <IonSearchBar Animated="true" Placeholder="Animated"></IonSearchBar>
+                    <IonSearchbar></IonSearchbar>
+                    <IonSearchbar Placeholder="Custom Placeholder"></IonSearchbar>
+                    <IonSearchbar Disabled="true" Placeholder="Disabled"></IonSearchbar>
+                    <IonSearchbar Value="Value"></IonSearchbar>
+                    <IonSearchbar Animated="true" Placeholder="Animated"></IonSearchbar>
                 </div>
             </div>
         </div>
@@ -20,8 +20,8 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonSearchBar></IonSearchBar>
-                    <IonSearchBar SearchIcon="search-circle" Placeholder="Custom Search Icon"></IonSearchBar>
+                    <IonSearchbar></IonSearchbar>
+                    <IonSearchbar SearchIcon="search-circle" Placeholder="Custom Search Icon"></IonSearchbar>
                 </div>
             </div>
         </div>
@@ -31,10 +31,10 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonSearchBar ShowClearButton="ButtonBehavior.Focus" Value="Show on Focus"></IonSearchBar>
-                    <IonSearchBar ShowClearButton="ButtonBehavior.Always" Value="Always Show"></IonSearchBar>
-                    <IonSearchBar ShowClearButton="ButtonBehavior.Never" Value="Never Show"></IonSearchBar>
-                    <IonSearchBar ShowClearButton="ButtonBehavior.Always" ClearIcon="trash-bin" Value="Custom Clear Icon"></IonSearchBar>
+                    <IonSearchbar ShowClearButton="ButtonBehavior.Focus" Value="Show on Focus"></IonSearchbar>
+                    <IonSearchbar ShowClearButton="ButtonBehavior.Always" Value="Always Show"></IonSearchbar>
+                    <IonSearchbar ShowClearButton="ButtonBehavior.Never" Value="Never Show"></IonSearchbar>
+                    <IonSearchbar ShowClearButton="ButtonBehavior.Always" ClearIcon="trash-bin" Value="Custom Clear Icon"></IonSearchbar>
                 </div>
             </div>
         </div>
@@ -44,10 +44,10 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonSearchBar ShowCancelButton="ButtonBehavior.Focus" Placeholder="Show on Focus"></IonSearchBar>
-                    <IonSearchBar ShowCancelButton="ButtonBehavior.Always" Placeholder="Always Show"></IonSearchBar>
-                    <IonSearchBar ShowCancelButton="ButtonBehavior.Never" Placeholder="Never Show"></IonSearchBar>
-                    <IonSearchBar ShowCancelButton="ButtonBehavior.Always" CancelButtonText="Custom Cancel" CancelButtonIcon="trash" Placeholder="Custom Cancel Button"></IonSearchBar>
+                    <IonSearchbar ShowCancelButton="ButtonBehavior.Focus" Placeholder="Show on Focus"></IonSearchbar>
+                    <IonSearchbar ShowCancelButton="ButtonBehavior.Always" Placeholder="Always Show"></IonSearchbar>
+                    <IonSearchbar ShowCancelButton="ButtonBehavior.Never" Placeholder="Never Show"></IonSearchbar>
+                    <IonSearchbar ShowCancelButton="ButtonBehavior.Always" CancelButtonText="Custom Cancel" CancelButtonIcon="trash" Placeholder="Custom Cancel Button"></IonSearchbar>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
                             <IonTitle>Toolbar</IonTitle>
                           </IonToolbar>
                           <IonToolbar>
-                            <IonSearchBar></IonSearchBar>
+                            <IonSearchbar></IonSearchbar>
                           </IonToolbar>
                         </IonHeader>
                     </DevicePreview>
@@ -86,16 +86,16 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonSearchBar Placeholder="Default"></IonSearchBar>
-                    <IonSearchBar Color="primary" Placeholder="Primary"></IonSearchBar>
-                    <IonSearchBar Color="secondary" Placeholder="Secondary"></IonSearchBar>
-                    <IonSearchBar Color="tertiary" Placeholder="Tertiary"></IonSearchBar>
-                    <IonSearchBar Color="success" Placeholder="Success"></IonSearchBar>
-                    <IonSearchBar Color="warning" Placeholder="Warning"></IonSearchBar>
-                    <IonSearchBar Color="danger" Placeholder="Danger"></IonSearchBar>
-                    <IonSearchBar Color="light" Placeholder="Light"></IonSearchBar>
-                    <IonSearchBar Color="medium" Placeholder="Medium"></IonSearchBar>
-                    <IonSearchBar Color="dark" Placeholder="Dark"></IonSearchBar>
+                    <IonSearchbar Placeholder="Default"></IonSearchbar>
+                    <IonSearchbar Color="primary" Placeholder="Primary"></IonSearchbar>
+                    <IonSearchbar Color="secondary" Placeholder="Secondary"></IonSearchbar>
+                    <IonSearchbar Color="tertiary" Placeholder="Tertiary"></IonSearchbar>
+                    <IonSearchbar Color="success" Placeholder="Success"></IonSearchbar>
+                    <IonSearchbar Color="warning" Placeholder="Warning"></IonSearchbar>
+                    <IonSearchbar Color="danger" Placeholder="Danger"></IonSearchbar>
+                    <IonSearchbar Color="light" Placeholder="Light"></IonSearchbar>
+                    <IonSearchbar Color="medium" Placeholder="Medium"></IonSearchbar>
+                    <IonSearchbar Color="dark" Placeholder="Dark"></IonSearchbar>
                 </div>
             </div>
         </div>
@@ -105,30 +105,18 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <CustomIonSearchBar/>
+                    <CustomIonSearchbar/>
                 </div>
             </div>
         </div>
         
         <h2>Events</h2>
-        <h3>getInputElement</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonSearchBar @ref="ionSearchBarInputElementRef"></IonSearchBar>
-                    <p>
-                        <code>@inputElementMessage</code>
-                    </p>
-                    <IonButton @onclick="@GetInputElementAsync">Get Input Element</IonButton>
-                </div>
-            </div>
-        </div>
         
         <h3>setFocus</h3>
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonSearchBar @ref="ionSearchBarSetFocusRef" IonBlur="@(() => focusMessage = "Lost focus")" IonFocus="@(() => focusMessage = "Has focus")"></IonSearchBar>
+                    <IonSearchbar @ref="_ionSearchbarSetFocusRef" IonBlur="@(() => focusMessage = "Lost focus")" IonFocus="@(() => focusMessage = "Has focus")"></IonSearchbar>
                     <p>
                         <code>@focusMessage</code>
                     </p>
