@@ -1,0 +1,7 @@
+{
+  "name": "blazor-ionic-framework",
+  "version": "1.0.0",
+  "dependencies": {
+    "@ionic/core": "^7.5.7"
+  }
+}

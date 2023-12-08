@@ -13,10 +13,6 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     private readonly DotNetObjectReference<IonicEventCallback> _ionLoadingWillPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
-    
-    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
-    private readonly Func<object?,string?,ValueTask<bool>> _dismissJsWrapper;
-    private readonly Func<ValueTask> _presentJsWrapper;
 
     /// <inheritdoc/>
     [Parameter]
@@ -164,11 +160,6 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     
     public IonLoading()
     {
-        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionLoading"));
-
-        _dismissJsWrapper = async (data, role) => await (await _lazyIonComponentJs.Value).InvokeAsync<bool>("dismiss", _self, data, role);
-        _presentJsWrapper = async () => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("present", _self);
-        
         _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var dismissArgs = GetDismissArgs(args);
@@ -236,7 +227,14 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     /// </summary>
     /// <returns></returns>
     public ValueTask<bool> DismissAsync<TData>(TData? data = null, string? role = null) where TData : class => 
-        _dismissJsWrapper(data, role);
+        JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
+    
+    /// <summary>
+    /// Dismiss the loading overlay after it has been presented.
+    /// </summary>
+    /// <returns></returns>
+    public ValueTask<bool> DismissAsync(string? role = null) => 
+        JsComponent.InvokeAsync<bool>("dismiss", _self, role);
     
     /// <summary>
     /// Returns a promise that resolves when the loading did dismiss.
@@ -262,7 +260,13 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     /// Present the loading overlay after it has been created.
     /// </summary>
     /// <returns></returns>
-    public ValueTask PresentAsync() => _presentJsWrapper();
+    public ValueTask PresentAsync() => JsComponent.InvokeVoidAsync("present", _self);
+    
+    /// <summary>
+    /// Sets the <see cref="Message"/>
+    /// </summary>
+    /// <returns></returns>
+    public ValueTask SetMessageAsync(string? message) => JsComponent.InvokeVoidAsync("setMessage", _self, message);
     
     private IonLoadingDismissEventArgs GetDismissArgs(JsonObject? args)
     {
