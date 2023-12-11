@@ -8,11 +8,6 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
     //private readonly DotNetObjectReference<IonicEventCallbackResult<JsonObject, string?>> _counterFormatterReference;
-    
-    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
-    private readonly Func<string?,ValueTask<string>> _setValueJsWrapper;
-    private readonly Func<string?,ValueTask> _counterFormatJsWrapper;
-    private readonly Func<ValueTask> _setFocusJsWrapper;
 
     public ElementReference Reference => _self;
 
@@ -325,12 +320,6 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     
     public IonInput()
     {
-        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionInput"));
-
-        _setValueJsWrapper = async value => await (await _lazyIonComponentJs.Value).InvokeAsync<string>("setValue", _self, value);
-        _counterFormatJsWrapper = async format => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("counterFormat", _self, format);
-        _setFocusJsWrapper = async () => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("setFocus", _self);
-        
         _ionBlurReference = IonicEventCallback.Create(async () =>
         {
             await IonBlur.InvokeAsync(this);
@@ -358,7 +347,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
             if (inputArgs.Value?.Equals(value) is false)
             {
                 Value = inputArgs.Value;
-                await _setValueJsWrapper.Invoke(inputArgs.Value);
+                await JsComponent.InvokeVoidAsync("setValue", _self, inputArgs.Value);
             }
         });
         
@@ -385,7 +374,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
             IonEvent.Set("ionInput" , _ionInputReference )
         });
         
-        await _counterFormatJsWrapper.Invoke(CounterFormat);
+        await JsComponent.InvokeVoidAsync("counterFormat", _self, CounterFormat);
     }
     
     /*
@@ -416,7 +405,8 @@ Signature	setFocus() => Promise<void>
     /// Developers who wish to focus an input when an overlay is presented should call <see cref="SetFocusAsync"/> after
     /// <see cref="IonModal.DidPresent"/> has resolved.
     /// </summary>
-    public async ValueTask SetFocusAsync() => await _setFocusJsWrapper.Invoke();  
+    public async ValueTask SetFocusAsync() => 
+        await JsComponent.InvokeVoidAsync("setFocus", _self);
 }
 
 public static class IonInputAutocapitalize

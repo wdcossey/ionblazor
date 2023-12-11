@@ -2,6 +2,8 @@
 
 public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComponent
 {
+    private readonly string _id = $"{Guid.NewGuid():N}";
+    
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
@@ -13,6 +15,20 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<bool>> _canDismissReference;
+    
+    private string Script => Breakpoints?.Length > 0 ? 
+                              $$"""
+                              <script>
+                                console.log("running script: {{_id}}");
+                                var modal = document.querySelector(`[is-modal="{{_id}}"]`);
+                                //console.log(`modal: ${modal}`);
+                                if (modal) {
+                                    modal.initialBreakpoint = {{InitialBreakpoint}};
+                                    modal.breakpoints = [{{string.Join(",", Breakpoints)}}];
+                                }
+                  
+                              </script>
+                              """ : "";
     
     //private readonly DotNetObjectReference<IonicEventCallbackResult<JsonObject?, bool>>? _canDismissCallbackReference;
     //private Func<Task<bool>>? _canDismissCallback;
@@ -365,7 +381,6 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     public async ValueTask SetCurrentBreakpointAsync(double value) => 
         await JsComponent.InvokeVoidAsync("setCurrentBreakpoint", _self, value);
 
-    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -390,8 +405,8 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
 
         if (Breakpoints?.Length > 0)
         {
-            await JsComponent.InvokeVoidAsync("initialBreakpoint", _self, InitialBreakpoint);
-            await JsComponent.InvokeVoidAsync("breakpoints", _self, Breakpoints);
+            //await JsComponent.InvokeVoidAsync("initialBreakpoint", _self, InitialBreakpoint); 
+            //await JsComponent.InvokeVoidAsync("breakpoints", _self, Breakpoints);
         }
 
         if (string.IsNullOrWhiteSpace(EnterAnimation) is false)

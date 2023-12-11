@@ -16,11 +16,11 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
     [Parameter]
     public virtual string? Class { get; set; }
 
-    protected readonly Lazy<ValueTask<IJSObjectReference>> JsComponent;
+    protected readonly Lazy<Task<IJSObjectReference>> JsComponent;
 
     protected IonComponent()
     {
-        JsComponent = new Lazy<ValueTask<IJSObjectReference>>(() =>
+        JsComponent = new Lazy<Task<IJSObjectReference>>(() =>
         {
             var type = GetType();
             
@@ -39,7 +39,6 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
             if (!char.IsLower(nameBuilder[0]))
                 nameBuilder[0] = char.ToLowerInvariant(nameBuilder[0]);
 
-            
             
             return JsRuntime.ImportAsync(nameBuilder.ToString());
         });

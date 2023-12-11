@@ -9,7 +9,7 @@
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
         <Nullable>enable</Nullable>
         <WindowsPackageType>None</WindowsPackageType>
-        
+        <LangVersion>12.0</LangVersion>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 
         <PackageId>IonicSharp</PackageId>

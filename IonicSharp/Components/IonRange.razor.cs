@@ -14,10 +14,6 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionKnobMoveStartReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<int, string?>> _pinFormatterReference;
     
-    private readonly Func<int,ValueTask> _setValueFunc;
-    private readonly Func<int,int,ValueTask> _setUpperLowerValueFunc;
-    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponent;
-
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -144,12 +140,14 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     /// <summary>
     /// Set the value of the range.
     /// </summary>
-    public ValueTask SetValueAsync(int value) => _setValueFunc(value);
+    public ValueTask SetValueAsync(int value) => 
+        JsComponent.InvokeVoidAsync("setValue", _self, value);
 
     /// <summary>
     /// Set the value of the range.
     /// </summary>
-    public ValueTask SetValueAsync(int lower, int upper) => _setUpperLowerValueFunc(lower, upper);
+    public ValueTask SetValueAsync(int lower, int upper) => 
+        JsComponent.InvokeVoidAsync("setUpperLowerValue", _self, lower, upper);
     
     /// <summary>
     /// Emitted when the <see cref="IonRange"/> loses focus.
@@ -195,10 +193,6 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
 
     public IonRange()
     {
-        _lazyIonComponent = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionRange"));
-        _setValueFunc = async value => await (await _lazyIonComponent.Value).InvokeVoidAsync("setValue", _self, value);
-        _setUpperLowerValueFunc = async (lower, upper) => await (await _lazyIonComponent.Value).InvokeVoidAsync("setUpperLowerValue", _self, lower, upper);
-
         _ionBlurReference = IonicEventCallback.Create(async () =>
         {
             await IonBlur.InvokeAsync();

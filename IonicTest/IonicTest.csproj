@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <!--<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>-->
-        <TargetFrameworks></TargetFrameworks>
+        <TargetFrameworks>;net8.0-maccatalyst</TargetFrameworks>
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
         <!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
@@ -33,6 +33,12 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
+
+<!--    <PropertyGroup Condition=" '$(TargetFramework)'=='net8.0-maccatalyst' ">-->
+<!--        <CodesignEntitlements>Platforms\MacCatalyst\Entitlements.plist</CodesignEntitlements>-->
+<!--        <CodesignKey>Apple Development: William Cossey (TL8D27VK74)</CodesignKey>-->
+<!--        <CodesignProvision>com.companyname.ionictest</CodesignProvision>-->
+<!--    </PropertyGroup>-->
 
     <ItemGroup>
         <!-- App Icon -->
