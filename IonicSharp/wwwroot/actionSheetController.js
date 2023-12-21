@@ -10,5 +10,10 @@ export async function presentActionSheet(header, buttons, buttonHandler) {
     actionSheet.buttons = buttons;
 
     document.body.appendChild(actionSheet);
+
+    actionSheet.addEventListener('didDismiss', () => {
+        actionSheet.remove();
+    });
+    
     await actionSheet.present();
 }

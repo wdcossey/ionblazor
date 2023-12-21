@@ -564,7 +564,14 @@ public struct IonInputEvent
     public bool IsTrusted { get; init; }
 }
 
-public class IonInputChangeEventArgs : EventArgs
+public interface IIonInputEventArgs
+{
+    string? Value { get; }
+
+    IonInputEvent Event { get; } 
+}
+
+public class IonInputChangeEventArgs : EventArgs, IIonInputEventArgs
 {
     public IonInput Sender { get; init; } = null!;
 
@@ -573,7 +580,7 @@ public class IonInputChangeEventArgs : EventArgs
     public IonInputEvent Event { get; init; } 
 }
 
-public class IonInputInputEventArgs : EventArgs
+public class IonInputInputEventArgs : EventArgs, IIonInputEventArgs
 {
     public IonInput Sender { get; init; } = null!;
 

@@ -2,10 +2,15 @@ export function dismiss(element, data, role) {
     return element.dismiss(data, role);
 }
 
-export function present(element) {
-    return element.present();
+export async function present(element) {
+    await element.present();
 }
 
 export function setMessage(element, message) {
-    return element.message = message;
+    element.message = message;
+}
+
+export async function presentWithMessage(element, message) {
+    element.message = message;
+    await present(element);
 }

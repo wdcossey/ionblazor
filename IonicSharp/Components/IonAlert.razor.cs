@@ -336,7 +336,7 @@ public class AlertButtonEventArgs : EventArgs
     /// <summary>
     /// The <see cref="IonAlert"/> that this event occurred on.
     /// </summary>
-    public IonAlert Sender { get; internal set; } = null!;
+    public IonAlert? Sender { get; internal set; } = null!;
     
     /// <summary>
     /// The index of the button that was clicked.

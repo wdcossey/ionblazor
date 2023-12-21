@@ -266,8 +266,21 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     /// Sets the <see cref="Message"/>
     /// </summary>
     /// <returns></returns>
-    public ValueTask SetMessageAsync(string? message) => JsComponent.InvokeVoidAsync("setMessage", _self, message);
+    public async ValueTask SetMessageAsync(string? message)
+    {
+        await JsComponent.InvokeVoidAsync("setMessage", _self, message);
+        //this.Message = message;
+    }
     
+    /// <summary>
+    /// Sets the <see cref="Message"/>
+    /// </summary>
+    /// <returns></returns>
+    public async ValueTask PresentWithMessageAsync(string? message)
+    {
+        await JsComponent.InvokeVoidAsync("presentWithMessage", _self, message);
+    }
+
     private IonLoadingDismissEventArgs GetDismissArgs(JsonObject? args)
     {
         var role = args?["detail"]?["role"]?.GetValue<string>();

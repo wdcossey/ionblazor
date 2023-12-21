@@ -349,7 +349,7 @@ public class IonToastDismissEventArgs : EventArgs
 
 public class IonToastButtonEventArgs : EventArgs
 {
-    public IonToast Sender { get; internal set; } = null!;
+    public IonToast? Sender { get; internal set; } = null!;
     public int? Index { get; internal set; }
     public IIonToastButton? Button { get; internal set; }
 }

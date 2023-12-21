@@ -241,9 +241,9 @@ public partial class IonSearchbar : IonComponent, IIonModeComponent, IIonColorCo
         });
     }
     
-    public async Task<IonSearchbar> SetValue(string? value)
+    public async Task<IonSearchbar> SetValueAsync(string? value = null)
     {
-        throw new NotImplementedException();
+        await JsComponent.InvokeVoidAsync("setValue", _self, value);
         Value = value;
         return this;
     }
