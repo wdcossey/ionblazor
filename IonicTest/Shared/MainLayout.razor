@@ -16,7 +16,7 @@
             await JsRuntime.InvokeVoidAsync("document.body.style.setProperty", "--ion-color-primary", color.ToArgbHex());
             await JsRuntime.InvokeVoidAsync("document.body.style.setProperty", "--ion-color-primary-rgb", $"{red}, {green}, {blue}");
         }
-        
+
         await base.OnAfterRenderAsync(firstRender);
     }
 }
