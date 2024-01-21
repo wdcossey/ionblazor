@@ -9,7 +9,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
     //private readonly DotNetObjectReference<IonicEventCallbackResult<JsonObject, string?>> _counterFormatterReference;
 
-    public ElementReference Reference => _self;
+    public ElementReference IonElement => _self;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -305,7 +305,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     /// Emitted when the input has focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<object?> IonFocus { get; set; }
 
     /// <summary>
     /// The ionInput event is fired each time the user modifies the input's value. Unlike the ionChange event, the
@@ -407,6 +407,9 @@ Signature	setFocus() => Promise<void>
     /// </summary>
     public async ValueTask SetFocusAsync() => 
         await JsComponent.InvokeVoidAsync("setFocus", _self);
+    
+    public async ValueTask SetValueAsync(string? value) => 
+        await JsComponent.InvokeVoidAsync("setValue", _self, value);
 }
 
 public static class IonInputAutocapitalize

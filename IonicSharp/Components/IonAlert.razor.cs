@@ -284,7 +284,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
             await JsComponent.InvokeVoidAsync("addInputs", _self, _inputs);
     }
 
-    private static IAlertValues GetValues(JsonObject? jObject)
+    internal static IAlertValues GetValues(JsonObject? jObject)
     {
         return jObject?["detail"]?["data"]?["values"] switch
         {
@@ -453,12 +453,12 @@ public class AlertButtonHandlerEventArgs : EventArgs
 
 public class IonAlertDidPresentEventArgs : EventArgs
 {
-    public IonAlert Sender { get; internal init; } = null!;
+    public IonAlert? Sender { get; internal init; } = null!;
 }
     
 public class IonAlertDismissEventArgs : EventArgs
 {
-    public IonAlert Sender { get; internal init; } = null!;
+    public IonAlert? Sender { get; internal init; } = null!;
     
     public string? Role { get; internal init; }
     
@@ -467,7 +467,7 @@ public class IonAlertDismissEventArgs : EventArgs
 
 public class IonAlertIonAlertDidPresentEventArgs : EventArgs
 {
-    public IonAlert Sender { get; internal init; } = null!;
+    public IonAlert? Sender { get; internal init; } = null!;
 }
 
 public interface IAlertValues { }

@@ -1,4 +1,4 @@
-export async function presentAlert(header, subHeader, message, buttons, buttonHandler, htmlAttributes) {
+export async function presentAlert(header, subHeader, message, buttons, inputs, buttonHandler, didDismissHandler, htmlAttributes) {
     const alert = document.createElement('ion-alert');
     alert.header = header;
     alert.subHeader = subHeader;
@@ -14,9 +14,17 @@ export async function presentAlert(header, subHeader, message, buttons, buttonHa
         alert.buttons = buttons;
     }
 
+    if (inputs) {
+        alert.inputs = inputs;
+    }
+    
     document.body.appendChild(alert);
     
-    alert.addEventListener('didDismiss', () => {
+    alert.addEventListener('didDismiss', (ev) => {
+        if (didDismissHandler) {
+            didDismissHandler.invokeMethodAsync(dotNetCallbackMethod, { tagName: ev.target.tagName, detail: ev.detail });
+        }
+        
         alert.remove();
     });
     

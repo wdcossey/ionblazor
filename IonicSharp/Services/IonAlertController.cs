@@ -14,9 +14,18 @@ public class IonAlertController: ComponentBase, IAsyncDisposable
         string? subHeader = null, 
         string? message = null,
         Func<IEnumerable<AlertButton>>? buttonsFunc = null,
-        IDictionary<string, string> htmlAttributes = null!)
+        Func<IEnumerable<AlertInput>>? inputsFunc = null,
+        IDictionary<string, string>? htmlAttributes = null,
+        Action<IonAlertDismissEventArgs>? onDidDismiss = null!)
     {
+        //AlertInput[]?
+        //[Parameter] public Func<AlertInput[]>? Inputs { get; set; }
+        //      if (_inputs?.Length > 0)
+        //await JsComponent.InvokeVoidAsync("addInputs", _self, _inputs);
+        
         IEnumerable<AlertButton>? buttons = null;
+        IEnumerable<AlertInput>? inputs = inputsFunc?.Invoke() ?? Array.Empty<AlertInput>();
+        
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
         
         if (buttonsFunc is not null)
@@ -33,7 +42,20 @@ public class IonAlertController: ComponentBase, IAsyncDisposable
                 });
         }
         
-        await (_ionComponent?.InvokeVoidAsync("presentAlert", header, subHeader, message, buttons, buttonHandler, htmlAttributes) ?? ValueTask.CompletedTask);
+        var didDismissHandler = IonicEventCallback<JsonObject?>.Create(async args =>
+        {
+            var values = IonAlert.GetValues(args);
+            
+            onDidDismiss?.Invoke(new IonAlertDismissEventArgs
+            {
+                Sender = null,
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+                Values = values
+            });
+        });
+        
+        
+        await (_ionComponent?.InvokeVoidAsync("presentAlert", header, subHeader, message, buttons, inputs, buttonHandler, didDismissHandler, htmlAttributes) ?? ValueTask.CompletedTask);
     }
 
     public async ValueTask DisposeAsync()
