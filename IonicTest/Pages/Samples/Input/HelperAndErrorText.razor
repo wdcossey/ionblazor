@@ -54,17 +54,17 @@
     {
         var value = args.Value;
 
-        await JsRuntime.InvokeVoidAsync("resetIonInput", _input.Reference);
+        await JsRuntime.InvokeVoidAsync("resetIonInput", _input.IonElement);
 
         if (string.IsNullOrWhiteSpace(value))
             return;
 
         var @class = ValidateEmail(value) ? "ion-valid" : "ion-invalid";
 
-        await JsRuntime.InvokeVoidAsync("addIonInputClass", _input.Reference, @class);
+        await JsRuntime.InvokeVoidAsync("addIonInputClass", _input.IonElement, @class);
     }
 
     private async ValueTask MarkTouched() => 
-        await JsRuntime.InvokeVoidAsync("markIonInputTouched", _input.Reference);
+        await JsRuntime.InvokeVoidAsync("markIonInputTouched", _input.IonElement);
 
 }

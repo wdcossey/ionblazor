@@ -12,6 +12,8 @@ public partial class IonPopover : IonComponent, IIonModeComponent, IIonContentCo
     private readonly DotNetObjectReference<IonicEventCallback> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
     
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter] public RenderFragment? ChildContent { get; set; }
     

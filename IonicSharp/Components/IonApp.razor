@@ -1,7 +1,7 @@
 ﻿@inherits IonComponent
 
-<CascadingValue Name="@nameof(Mode)" TValue="@(string)" Value="Mode">
-    <ion-app>
+<CascadingValue Name="ion-app-mode" TValue="@(string)" Value="Mode">
+    <ion-app @ref="_self">
         @ChildContent
     </ion-app>
 </CascadingValue>

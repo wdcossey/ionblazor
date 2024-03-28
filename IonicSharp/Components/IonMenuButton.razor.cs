@@ -4,10 +4,14 @@ public partial class IonMenuButton : IonComponent, IIonColorComponent, IIonModeC
 {
     private ElementReference _self;
     
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
+    [Parameter]
     public string? Color { get; set; }
 
     /// <inheritdoc/>
+    [Parameter]
     public string? Mode { get; set; }
     
     /// <summary>

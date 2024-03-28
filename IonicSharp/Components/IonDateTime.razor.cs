@@ -11,6 +11,8 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _isDateEnabledReference;
 
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

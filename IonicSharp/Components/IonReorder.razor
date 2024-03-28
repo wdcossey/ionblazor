@@ -1,6 +1,7 @@
 ﻿@inherits IonComponent
 
-<ion-reorder @attributes="@Attributes"
+<ion-reorder @ref="_self"
+             @attributes="@Attributes"
              class="@Class">
     @ChildContent
 </ion-reorder>

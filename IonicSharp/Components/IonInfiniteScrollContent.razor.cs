@@ -2,6 +2,10 @@
 
 public partial class IonInfiniteScrollContent : IonComponent
 {
+    private ElementReference _self;
+    
+    public override ElementReference IonElement => _self;
+
     /// <summary>
     /// An animated SVG spinner that shows while loading.
     /// </summary>

@@ -6,7 +6,9 @@ public partial class IonList : IonComponent, IIonModeComponent, IIonContentCompo
 {
     protected ElementReference Self;
     private Func<ValueTask<bool>> _closeSlidingItemsWrapper = null!;
-
+    
+    public override ElementReference IonElement => Self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

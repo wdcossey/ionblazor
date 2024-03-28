@@ -2,7 +2,9 @@
 
 public partial class IonSelectOption: IonSelectOptionDefault
 {
-
+    private ElementReference _self;
+    
+    public override ElementReference IonElement => _self;
 }
 
 public abstract class IonSelectOptionDefault: IonSelectOptionBase<string>

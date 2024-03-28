@@ -1,6 +1,7 @@
 ﻿@inherits IonComponent
 
-<ion-buttons @attributes="@Attributes"
+<ion-buttons @ref="_self"
+             @attributes="@Attributes"
              class="@Class"
              collapse="@Collapse">
     @ChildContent

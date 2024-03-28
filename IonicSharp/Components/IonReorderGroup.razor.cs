@@ -4,7 +4,9 @@ public partial class IonReorderGroup : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionItemReorderReference;
-
+    
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

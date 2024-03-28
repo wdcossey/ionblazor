@@ -21,6 +21,8 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     private AlertButton[]? _buttons;
     private AlertInput[]? _inputs;
 
+    public override ElementReference IonElement => _self;
+    
     /// <summary>
     /// If <b>true</b>, the alert will animate.
     /// </summary>

@@ -4,7 +4,9 @@ public partial class IonRippleEffect : IonComponent, IIonContentComponent
 {
     private ElementReference _self;
     private readonly Func<int,int,ValueTask> _addRippleJsWrapper;
-
+    
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

@@ -25,7 +25,11 @@
             shape="@Shape"
             toggle-icon="@ToggleIcon"
             value="@Value">
-    <CascadingValue Value="@(Multiple is true ? typeof(TValue[]) : typeof(TValue))" Name="TValue">
-        @ChildContent
+    <CascadingValue Value="@(this)" Name="Parent">
+        <CascadingValue Value="@Multiple" Name="IsMultiple">
+            <CascadingValue Value="@(Multiple is true ? typeof(TValue[]) : typeof(TValue))" Name="TValue">
+                @ChildContent
+            </CascadingValue>
+        </CascadingValue>
     </CascadingValue>
 </ion-select>

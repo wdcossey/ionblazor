@@ -8,6 +8,8 @@ public partial class IonBreadcrumb : IonComponent, IIonModeComponent, IIonConten
     private DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

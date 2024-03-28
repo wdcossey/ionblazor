@@ -13,7 +13,9 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
-
+    
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc />
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

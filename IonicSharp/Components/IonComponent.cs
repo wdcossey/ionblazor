@@ -2,7 +2,7 @@
 
 public interface IIonComponent
 {
-    
+    ElementReference IonElement { get; }
 }
 
 public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposable
@@ -16,6 +16,11 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
     [Parameter]
     public virtual string? Class { get; set; }
 
+    /// <summary>
+    /// Reference to the Ionic (Html) component
+    /// </summary>
+    public abstract ElementReference IonElement { get; }
+    
     protected readonly Lazy<Task<IJSObjectReference>> JsComponent;
 
     protected IonComponent()

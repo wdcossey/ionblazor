@@ -18,6 +18,8 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
+    public override ElementReference IonElement => _self;
+
     /// <summary>
     /// If <b>true</b>, the toast will animate.
     /// </summary>

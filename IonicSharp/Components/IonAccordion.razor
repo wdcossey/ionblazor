@@ -1,6 +1,7 @@
 ﻿@inherits IonComponent
 
-<ion-accordion @attributes="@Attributes"
+<ion-accordion @ref="_self"
+               @attributes="@Attributes"
                class="@Class"
                disabled="@Disabled?.ToString().ToLowerInvariant()"
                mode="@Mode"

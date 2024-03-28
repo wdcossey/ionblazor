@@ -7,6 +7,8 @@ public partial class IonRefresher: IonComponent, IIonContentComponent
     private readonly DotNetObjectReference<IonicEventCallback> _ionRefreshReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionStartReference;
     
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter] public RenderFragment? ChildContent { get; set; }
     

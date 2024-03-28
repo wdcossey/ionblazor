@@ -11,6 +11,8 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionScrollEndReference;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionScrollStartReference;
 
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

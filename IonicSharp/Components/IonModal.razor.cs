@@ -16,10 +16,12 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<bool>> _canDismissReference;
     
+    public override ElementReference IonElement => _self;
+    
     private string Script => Breakpoints?.Length > 0 ? 
                               $$"""
                               <script>
-                                console.log("running script: {{_id}}");
+                                //console.log("running script: {{_id}}");
                                 var modal = document.querySelector(`[is-modal="{{_id}}"]`);
                                 //console.log(`modal: ${modal}`);
                                 if (modal) {

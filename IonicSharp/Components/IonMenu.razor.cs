@@ -7,7 +7,9 @@ public partial class IonMenu: IonComponent, IIonModeComponent, IIonContentCompon
     private readonly DotNetObjectReference<IonicEventCallback> _ionDidOpenReference ;
     private readonly DotNetObjectReference<IonicEventCallback> _ionWillCloseReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionWillOpenReference;
-
+    
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter, EditorRequired]
     public RenderFragment? ChildContent { get; set; }

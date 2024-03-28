@@ -11,9 +11,13 @@
 
     <!--<script type="module" src="_content/IonicSharp/ionicSharp.bundle.js"></script>-->
     
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script type="module" src="_content/IonicSharp/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="_content/IonicSharp/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="_content/IonicSharp/@ionic/core/css/ionic.bundle.css" />
+    
+<!--    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />-->
     
     <link href="css/app.css" rel="stylesheet" />
     <link href="IonicTest.styles.css" rel="stylesheet" />
@@ -58,6 +62,16 @@
         
     </script>
 
+    <script>
+        window.Ionic = {
+            config: {
+                //rippleEffect: false,
+                mode: 'md',
+                innerHTMLTemplatesEnabled: true,
+            }
+        }
+    </script>
+    
     <script src="_content/IonicSharp/wrapper.js"></script>
 </head>
 

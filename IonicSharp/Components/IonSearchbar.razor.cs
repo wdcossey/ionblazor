@@ -9,7 +9,9 @@ public partial class IonSearchbar : IonComponent, IIonModeComponent, IIonColorCo
     private readonly DotNetObjectReference<IonicEventCallback> _ionClearReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
-
+    
+    public override ElementReference IonElement => _self;
+    
     /// <summary>
     /// If true, enable searchbar animation.
     /// </summary>

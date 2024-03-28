@@ -8,6 +8,8 @@ public partial class IonBreadcrumbs : IonComponent, IIonModeComponent, IIonConte
     private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionCollapsedClickReference = null;
 
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

@@ -9,7 +9,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
     //private readonly DotNetObjectReference<IonicEventCallbackResult<JsonObject, string?>> _counterFormatterReference;
 
-    public ElementReference IonElement => _self;
+    public override ElementReference IonElement => _self;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -287,7 +287,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     /// Emitted when the input loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonInput> IonBlur { get; set; }
 
     /// <summary>
     /// The ionChange event is fired when the user modifies the input's value. Unlike the ionInput event,
@@ -410,6 +410,21 @@ Signature	setFocus() => Promise<void>
     
     public async ValueTask SetValueAsync(string? value) => 
         await JsComponent.InvokeVoidAsync("setValue", _self, value);
+    
+    public async ValueTask MarkTouchedAsync() => 
+        await JsComponent.InvokeVoidAsync("markTouched", _self);
+    
+    public async ValueTask MarkUnTouchedAsync() => 
+        await JsComponent.InvokeVoidAsync("markUnTouched", _self);
+    
+    public async ValueTask MarkInvalidAsync() => 
+        await JsComponent.InvokeVoidAsync("markInvalid", _self);
+    
+    public async ValueTask MarkValidAsync() => 
+        await JsComponent.InvokeVoidAsync("markValid", _self);
+    
+    public async ValueTask RemoveMarkingAsync() => 
+        await JsComponent.InvokeVoidAsync("removeMarking", _self);
 }
 
 public static class IonInputAutocapitalize

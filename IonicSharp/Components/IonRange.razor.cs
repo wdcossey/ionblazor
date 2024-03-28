@@ -14,6 +14,8 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionKnobMoveStartReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<int, string?>> _pinFormatterReference;
     
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

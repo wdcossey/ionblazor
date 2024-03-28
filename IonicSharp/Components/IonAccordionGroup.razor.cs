@@ -7,6 +7,8 @@ public partial class IonAccordionGroup : IonComponent, IIonModeComponent, IIonCo
     private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeObjectReference = null!;
     
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

@@ -18,10 +18,9 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference = null!;
     private DotNetObjectReference<IonicEventCallback> _willPresentReference = null!;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
-    
-    //TODO: Remove `_id`
-    private readonly Guid _id = Guid.NewGuid();
 
+    public override ElementReference IonElement => _self;
+    
     [Parameter] 
     public bool? Animated { get; set; }
 

@@ -9,7 +9,7 @@ public partial class IonTextarea : IonComponent, IIonColorComponent, IIonModeCom
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
     //private readonly DotNetObjectReference<IonicEventCallbackResult<JsonObject, string?>> _counterFormatterReference;
 
-    public ElementReference Reference => _self;
+    public override ElementReference IonElement => _self;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

@@ -13,7 +13,9 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     private readonly DotNetObjectReference<IonicEventCallback> _ionLoadingWillPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
-
+    
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
