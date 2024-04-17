@@ -2,6 +2,8 @@
 
 public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComponent
 {
+    private readonly string _id = $"{Guid.NewGuid():N}";
+    
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
@@ -13,6 +15,22 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<bool>> _canDismissReference;
+    
+    public override ElementReference IonElement => _self;
+    
+    private string Script => Breakpoints?.Length > 0 ? 
+                              $$"""
+                              <script>
+                                //console.log("running script: {{_id}}");
+                                var modal = document.querySelector(`[is-modal="{{_id}}"]`);
+                                //console.log(`modal: ${modal}`);
+                                if (modal) {
+                                    modal.initialBreakpoint = {{InitialBreakpoint}};
+                                    modal.breakpoints = [{{string.Join(",", Breakpoints)}}];
+                                }
+                  
+                              </script>
+                              """ : "";
     
     //private readonly DotNetObjectReference<IonicEventCallbackResult<JsonObject?, bool>>? _canDismissCallbackReference;
     //private Func<Task<bool>>? _canDismissCallback;
@@ -48,7 +66,10 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// Values are relative to the height of the modal, not the height of the screen. One of the values in this array
     /// must be the value of the initialBreakpoint property. For example: [0, .25, .5, 1]
     /// </summary>
-    [Parameter] public double[]? Breakpoints { get; set; } = null;
+    [Parameter]
+    public double[]? Breakpoints { get; set; } = null;
+    
+    public async ValueTask SetBreakpointsAsync(params double[]? breakpoints) => await JsComponent.InvokeVoidAsync("breakpoints", _self, breakpoints);
 
     /*/// <summary>
     /// Determines whether or not a modal can dismiss when calling the dismiss method.
@@ -63,7 +84,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     public async ValueTask SetCanDismissAsync(bool value)
     {
         _canDismissCallback = null!;
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.canDismiss", _self, value);
+        await JsComponent.InvokeVoidAsync("canDismiss", _self, value);
     }
 
     public ValueTask SetCanDismissAsync(Func<Task<bool>> callback)
@@ -75,7 +96,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     ///// <summary>
     ///// Animation to use when the modal is presented.
     ///// </summary>
-    //[Parameter] public object EnterAnimation { get; set; }
+    [Parameter] public string EnterAnimation { get; set; }
 
     [Parameter] public bool? Handle { get; set; }
 
@@ -102,9 +123,9 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// </summary>
     [Parameter] public double? InitialBreakpoint { get; set; }
     
-    public async ValueTask InitialBreakpointAsync(double? value)
+    public async ValueTask SetInitialBreakpointAsync(double? value)
     {
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.initialBreakpoint", _self, value);
+        await JsComponent.InvokeVoidAsync("initialBreakpoint", _self, value);
     }
     
     /// <summary>
@@ -118,7 +139,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
 
     public async ValueTask<bool> SetIsOpenAsync(bool value)
     {
-        var result = await JsRuntime.InvokeAsync<bool>("IonicSharp.IonModal.isOpen", _self, value);
+        var result = await JsComponent.InvokeAsync<bool>("isOpen", _self, value);
         //IsOpen = result;
         return result;
     }
@@ -338,52 +359,29 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// <summary>
     /// Dismiss the modal overlay after it has been presented.
     /// </summary>
-    public async ValueTask<bool> DismissAsync(object? data = null, string? role = null)
-    {
-        return await JsRuntime.InvokeAsync<bool>("IonicSharp.IonModal.dismiss", _self, data, role);
-    }
+    public async ValueTask<bool> DismissAsync(object? data = null, string? role = null) => 
+        await JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
 
     /// <summary>
     /// Returns the current breakpoint of a sheet style modal
     /// </summary>
-    public async ValueTask<int> GetCurrentBreakpointAsync(object? data = null, string? role = null)
-    {
-        //TODO: JS not implemented!
-        throw new NotImplementedException();
-        return await JsRuntime.InvokeAsync<int>("IonicSharp.IonModal.getCurrentBreakpoint", _self);
-    }
+    public async ValueTask<int> GetCurrentBreakpointAsync() => 
+        await JsComponent.InvokeAsync<int>("getCurrentBreakpoint", _self);
+    
+    /// <summary>
+    /// Present the modal overlay after it has been created.
+    /// </summary>
+    /// <param name="value"></param>
+    public async ValueTask PresentAsync() => 
+        await JsComponent.InvokeVoidAsync("present", _self);
     
     /// <summary>
     /// Move a sheet style modal to a specific breakpoint.
     /// The breakpoint value must be a value defined in your breakpoints array.
     /// </summary>
     /// <param name="value"></param>
-    public async ValueTask SetCurrentBreakpointAsync(double value)
-    {
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.setCurrentBreakpoint", _self, value);
-    }
-
-    /*
-Methods
-dismiss
-Description	
-Signature	dismiss(data?: any, role?: string) => Promise<boolean>
-getCurrentBreakpoint
-Description	
-Signature	getCurrentBreakpoint() => Promise<number ｜ undefined>
-onDidDismiss
-Description	Returns a promise that resolves when the modal did dismiss.
-Signature	onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
-onWillDismiss
-Description	Returns a promise that resolves when the modal will dismiss.
-Signature	onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
-present
-Description	Present the modal overlay after it has been created.
-Signature	present() => Promise<void>
-setCurrentBreakpoint
-Description	Move a sheet style modal to a specific breakpoint. The breakpoint value must be a value defined in your breakpoints array.
-Signature	setCurrentBreakpoint(breakpoint: number) => Promise<void>
-     */
+    public async ValueTask SetCurrentBreakpointAsync(double value) => 
+        await JsComponent.InvokeVoidAsync("setCurrentBreakpoint", _self, value);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -405,16 +403,34 @@ Signature	setCurrentBreakpoint(breakpoint: number) => Promise<void>
             IonEvent.Set("willPresent"           , _willPresentReference            )
         });
 
-        await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.canDismissCallback", _self, _canDismissReference);
-        
+        await JsComponent.InvokeVoidAsync("canDismissCallback", _self, _canDismissReference);
+
         if (Breakpoints?.Length > 0)
-            await JsRuntime.InvokeVoidAsync("IonicSharp.IonModal.breakpoints", _self, Breakpoints);
+        {
+            //await JsComponent.InvokeVoidAsync("initialBreakpoint", _self, InitialBreakpoint); 
+            //await JsComponent.InvokeVoidAsync("breakpoints", _self, Breakpoints);
+        }
+
+        if (string.IsNullOrWhiteSpace(EnterAnimation) is false)
+            await JsComponent.InvokeVoidAsync("enterAnimation", _self, EnterAnimation);
+ 
     }
+    
 
     private IonModalDismissEventArgs GetDismissArgs(JsonObject? args)
     {
         var role = args?["detail"]?["role"]?.GetValue<string>();
-        var data = args?["detail"]?["data"]?.GetValue<object>();
+        object? data = null;
+        switch (args?["detail"]?["data"])
+        {
+            case JsonArray array:
+                data = array.Deserialize<object?[]>();
+                break;
+            case JsonValue jsonValue:
+                data = jsonValue.GetValue<object?>();
+                break;
+        }
+        
         return new IonModalDismissEventArgs() { Sender = this, Data = data, Role = role };
     }
 }

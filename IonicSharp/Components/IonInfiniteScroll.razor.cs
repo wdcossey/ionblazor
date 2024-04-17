@@ -6,6 +6,8 @@ public partial class IonInfiniteScroll : IonComponent, IIonContentComponent
 
     private DotNetObjectReference<IonicEventCallback> _ionInfiniteReference;
     
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

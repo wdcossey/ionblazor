@@ -19,15 +19,8 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     private DotNetObjectReference<IonicEventCallback> _willPresentReference = null!;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
-    private Func<IEnumerable<ActionSheetButton<TButtonData>>?, DotNetObjectReference<IonicEventCallback<JsonObject?>>, ValueTask> _addButtonsWrapper = null!;
-    private Func<IEnumerable<ActionSheetButton<TButtonData>>?, string?, ValueTask<bool>> _dismissWrapper = null!;
-    //private Func<ValueTask> _onDidDismissWrapper = null!;
-    //private Func<ValueTask> _onWillDismissWrapper = null!;
-    private Func<ValueTask> _presentWrapper = null!;
+    public override ElementReference IonElement => _self;
     
-    //TODO: Remove `_id`
-    private readonly Guid _id = Guid.NewGuid();
-
     [Parameter] 
     public bool? Animated { get; set; }
 
@@ -120,11 +113,6 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
 
     [Parameter] 
     public EventCallback<ActionSheetButtonHandlerEventArgs<TButtonData>> ButtonHandler { get; set; }
-
-    public IonActionSheet()
-    {
-        
-    }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -225,16 +213,8 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
             IonEvent.Set("willDismiss", _willDismissReference ),
             IonEvent.Set("willPresent", _willPresentReference ),
         });
-
-        var ionComponent = await JsRuntime.ImportAsync("ionActionSheet");
         
-        _addButtonsWrapper = (btns, handler) => ionComponent.InvokeVoidAsync("addButtons", _self, btns, handler);
-        _dismissWrapper = (data, role) => ionComponent.InvokeAsync<bool>("dismiss", _self, data, role);
-        //_onDidDismissWrapper = () => ionComponent.InvokeVoidAsync("onDidDismiss", _self);
-        //_onWillDismissWrapper = () => ionComponent.InvokeVoidAsync("onWillDismiss", _self);
-        _presentWrapper = () => ionComponent.InvokeVoidAsync("present", _self);
-        
-        await _addButtonsWrapper(buttons, _buttonHandlerReference);
+        await JsComponent.InvokeVoidAsync("addButtons", _self, buttons, _buttonHandlerReference);
     }
 
     /// <summary>
@@ -244,7 +224,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     /// <param name="role"></param>
     /// <returns></returns>
     public ValueTask<bool> DismissAsync(IEnumerable<ActionSheetButton<TButtonData>>? data, string? role) => 
-        _dismissWrapper(data, role);
+        JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
 
     /// <summary>
     /// Returns a promise that resolves when the action sheet did dismiss.
@@ -261,7 +241,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     /// <summary>
     /// Present the action sheet overlay after it has been created.
     /// </summary>
-    public ValueTask PresentAsync() => _presentWrapper();
+    public ValueTask PresentAsync() => JsComponent.InvokeVoidAsync("present", _self);
 }
 
 public interface IActionSheetButtonData

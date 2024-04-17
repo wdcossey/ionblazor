@@ -8,13 +8,8 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
     //private readonly DotNetObjectReference<IonicEventCallbackResult<JsonObject, string?>> _counterFormatterReference;
-    
-    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
-    private readonly Func<string?,ValueTask<string>> _setValueJsWrapper;
-    private readonly Func<string?,ValueTask> _counterFormatJsWrapper;
-    private readonly Func<ValueTask> _setFocusJsWrapper;
 
-    public ElementReference Reference => _self;
+    public override ElementReference IonElement => _self;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -292,7 +287,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     /// Emitted when the input loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonInput> IonBlur { get; set; }
 
     /// <summary>
     /// The ionChange event is fired when the user modifies the input's value. Unlike the ionInput event,
@@ -310,7 +305,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     /// Emitted when the input has focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<object?> IonFocus { get; set; }
 
     /// <summary>
     /// The ionInput event is fired each time the user modifies the input's value. Unlike the ionChange event, the
@@ -325,12 +320,6 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     
     public IonInput()
     {
-        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionInput"));
-
-        _setValueJsWrapper = async value => await (await _lazyIonComponentJs.Value).InvokeAsync<string>("setValue", _self, value);
-        _counterFormatJsWrapper = async format => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("counterFormat", _self, format);
-        _setFocusJsWrapper = async () => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("setFocus", _self);
-        
         _ionBlurReference = IonicEventCallback.Create(async () =>
         {
             await IonBlur.InvokeAsync(this);
@@ -358,7 +347,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
             if (inputArgs.Value?.Equals(value) is false)
             {
                 Value = inputArgs.Value;
-                await _setValueJsWrapper.Invoke(inputArgs.Value);
+                await JsComponent.InvokeVoidAsync("setValue", _self, inputArgs.Value);
             }
         });
         
@@ -385,7 +374,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
             IonEvent.Set("ionInput" , _ionInputReference )
         });
         
-        await _counterFormatJsWrapper.Invoke(CounterFormat);
+        await JsComponent.InvokeVoidAsync("counterFormat", _self, CounterFormat);
     }
     
     /*
@@ -416,7 +405,26 @@ Signature	setFocus() => Promise<void>
     /// Developers who wish to focus an input when an overlay is presented should call <see cref="SetFocusAsync"/> after
     /// <see cref="IonModal.DidPresent"/> has resolved.
     /// </summary>
-    public async ValueTask SetFocusAsync() => await _setFocusJsWrapper.Invoke();  
+    public async ValueTask SetFocusAsync() => 
+        await JsComponent.InvokeVoidAsync("setFocus", _self);
+    
+    public async ValueTask SetValueAsync(string? value) => 
+        await JsComponent.InvokeVoidAsync("setValue", _self, value);
+    
+    public async ValueTask MarkTouchedAsync() => 
+        await JsComponent.InvokeVoidAsync("markTouched", _self);
+    
+    public async ValueTask MarkUnTouchedAsync() => 
+        await JsComponent.InvokeVoidAsync("markUnTouched", _self);
+    
+    public async ValueTask MarkInvalidAsync() => 
+        await JsComponent.InvokeVoidAsync("markInvalid", _self);
+    
+    public async ValueTask MarkValidAsync() => 
+        await JsComponent.InvokeVoidAsync("markValid", _self);
+    
+    public async ValueTask RemoveMarkingAsync() => 
+        await JsComponent.InvokeVoidAsync("removeMarking", _self);
 }
 
 public static class IonInputAutocapitalize
@@ -574,7 +582,14 @@ public struct IonInputEvent
     public bool IsTrusted { get; init; }
 }
 
-public class IonInputChangeEventArgs : EventArgs
+public interface IIonInputEventArgs
+{
+    string? Value { get; }
+
+    IonInputEvent Event { get; } 
+}
+
+public class IonInputChangeEventArgs : EventArgs, IIonInputEventArgs
 {
     public IonInput Sender { get; init; } = null!;
 
@@ -583,7 +598,7 @@ public class IonInputChangeEventArgs : EventArgs
     public IonInputEvent Event { get; init; } 
 }
 
-public class IonInputInputEventArgs : EventArgs
+public class IonInputInputEventArgs : EventArgs, IIonInputEventArgs
 {
     public IonInput Sender { get; init; } = null!;
 

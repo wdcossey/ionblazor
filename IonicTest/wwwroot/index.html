@@ -9,12 +9,16 @@
     <link href="css/app.css" rel="stylesheet" />
     <link href="IonicTest.styles.css" rel="stylesheet" />-->
 
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-    <script type="module" src="src/exampleJsInterop.js"></script>
+    <!--<script type="module" src="_content/IonicSharp/ionicSharp.bundle.js"></script>-->
     
+    <script type="module" src="_content/IonicSharp/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="_content/IonicSharp/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="_content/IonicSharp/@ionic/core/css/ionic.bundle.css" />
+    
+<!--    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />-->
+    
     <link href="css/app.css" rel="stylesheet" />
     <link href="IonicTest.styles.css" rel="stylesheet" />
     
@@ -55,46 +59,19 @@
                 return utcDay !== 0 && utcDay !== 6;
             }
         }
-
-        function ionDateTimeSetValue(element, value) {
-            element.value = value;
-        }
-
-        function ionDateTimeCancel(element, closeOverlay) {
-            element.cancel(closeOverlay);
-        }
-
-        function ionDateTimeConfirm(element, closeOverlay) {
-            element.confirm(closeOverlay);
-        }
-
-        function ionDateTimeReset(element, startDate) {
-            element.reset(startDate);
-        }
-
+        
     </script>
-
 
     <script>
-
-        function ionModalSetIsOpen(element, value) {
-            return element.isOpen = value;
-        }
-
-        function ionModalDismiss(element, data, role) {
-            return element.dismiss(data, role);
-        }
-
-        function ionModalCanDismiss(element, value) {
-            element.canDismiss = value;
+        window.Ionic = {
+            config: {
+                //rippleEffect: false,
+                mode: 'md',
+                innerHTMLTemplatesEnabled: true,
+            }
         }
     </script>
-
-
-    <script>
-
-    </script>
-
+    
     <script src="_content/IonicSharp/wrapper.js"></script>
 </head>
 
@@ -102,8 +79,7 @@
 
     <div class="status-bar-safe-area"></div>
     
-    <ion-app>Loading...</ion-app>
-    <!-- <div id="app">Loading...</div>-->
+    <div id="app-host">Loading...</div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
@@ -128,7 +104,7 @@
         function addIonEventListener(type, element, ref) {
 
             element.addEventListener(type, (ev) => {
-                //console.log(ev);
+                //console.log(type, element, ev);
                 ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
             });
             //element.addEventListener('ionInput', e => ref.invokeMethodAsync('OnCustomEvent', e));
@@ -193,51 +169,6 @@
             writable: true,
             configurable: true
         });
-    </script>
-
-    <script>
-        async function getSearchbarInputElement(element) {
-            return await element.getInputElement();
-        }
-        
-        function setSearchbarFocus(element) {
-            element.setFocus();
-        }
-    </script>
-
-    <script>
-        function completeIonReorderGroup(element, listOrReorder) {
-            element.complete(listOrReorder);
-        }
-    </script>
-
-    <script>
-        function ionListCloseSlidingItems(element) {
-            return element.closeSlidingItems();
-        }
-    </script>
-
-    <script>
-
-        function cancelIonRefresher(element) {
-            element.cancel();
-        }
-
-        function completeIonRefresher(element) {
-            element.complete();
-        }
-        
-        function getProgressIonRefresher(element) {
-            return element.getProgress();
-        }
-    </script>
-
-    <script>
-        this['ionInfiniteScrollHelper'] = new Object();
-
-        ionInfiniteScrollHelper.complete = (elm) => {
-            elm.complete();
-        };
     </script>
 
  

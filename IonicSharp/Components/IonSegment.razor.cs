@@ -4,7 +4,9 @@ public partial class IonSegment : IonComponent, IIonModeComponent, IIonContentCo
 {
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
-
+    
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter] 
     public RenderFragment? ChildContent { get; set; }

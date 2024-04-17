@@ -19,6 +19,8 @@ public partial class IonPicker<TColumn, TColumnOption, TButton> : IonComponent, 
     
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
     
+    public override ElementReference IonElement => _self;
+    
     /// <summary>
     /// If <b>true</b>, the picker will animate.
     /// </summary>

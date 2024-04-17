@@ -1,0 +1,68 @@
+﻿<IonHeader>
+    <IonToolbar>
+        <IonTitle>App</IonTitle>
+    </IonToolbar>
+</IonHeader>
+<IonContent class="ion-padding">
+    <IonButton id="open-custom-dialog" Expand="@IonButtonExpand.Block">Open Custom Dialog</IonButton>
+
+    <style>
+      ion-modal#example-modal {
+        --width: fit-content;
+        --min-width: 250px;
+        --height: fit-content;
+        --border-radius: 6px;
+        --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+      }
+    
+      ion-modal#example-modal h1 {
+        margin: 20px 20px 10px 20px;
+      }
+    
+      ion-modal#example-modal ion-icon {
+        margin-right: 6px;
+    
+        width: 48px;
+        height: 48px;
+    
+        padding: 4px 0;
+    
+        color: #aaaaaa;
+      }
+    
+      ion-modal#example-modal .wrapper {
+        margin-bottom: 10px;
+      }
+    </style>
+    
+    <IonModal @ref="_modal" id="example-modal" trigger="open-custom-dialog">
+        <div class="wrapper">
+            <h1>Dialog header</h1>
+
+            <IonList lines="none">
+                <IonItem Button="@true" Detail="@false" @onclick="Dismiss">
+                    <IonIcon Name="person-circle"></IonIcon>
+                    <IonLabel>Item 1</IonLabel>
+                </IonItem>
+                <IonItem Button="@true" Detail="@false" @onclick="Dismiss">
+                    <IonIcon Name="person-circle"></IonIcon>
+                    <IonLabel>Item 2</IonLabel>
+                </IonItem>
+                <IonItem Button="@true" Detail="@false" @onclick="Dismiss">
+                    <IonIcon Name="person-circle"></IonIcon>
+                    <IonLabel>Item 3</IonLabel>
+                </IonItem>
+            </IonList>
+        </div>
+    </IonModal>
+</IonContent>
+
+@code {
+    private IonModal _modal;
+    
+    private async void Dismiss()
+    {
+        await _modal.DismissAsync();
+    }
+
+}

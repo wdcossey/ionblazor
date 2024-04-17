@@ -97,12 +97,6 @@
         }
     },
     
-    IonRippleEffect: {
-        addRipple : function (element, x, y) {
-            element.addRipple(x, y);
-        }
-    },
-
     IonTab : {
         setActive : function (element) {
             element.setActive();

@@ -1,26 +1,85 @@
 ﻿using System.Collections;
+using System.ComponentModel.Design;
 
 namespace IonicSharp.Services;
 
-public class IonToastController: IComponent, IAsyncDisposable
+public class IonToastController: ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
     
-    private static IJSObjectReference? _ionComponent;
+    private static IJSObjectReference _ionComponent = null!;
     
-    public static async ValueTask PresentAsync(
-        string message, 
-        string? position, 
+    public static ValueTask PresentAsync(
+        string? header = null,
+        string? message = null, 
+        string? position = null, 
         int duration = 1500, 
         string? icon = null,
-        Func<IEnumerable>? buttonsFunc = null)
+        string? positionAnchor = null,
+        bool? translucent = null,
+        bool? animated = null,
+        Func<IEnumerable<IIonToastButton>>? buttonsFunc = null,
+        IDictionary<string, string>? htmlAttributes = null)
     {
-        await (_ionComponent?.InvokeVoidAsync("presentToast", message, position, duration, icon) ?? ValueTask.CompletedTask);
+        IEnumerable<IIonToastButton>? buttons = null;
+        DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
+        
+        if (buttonsFunc is not null)
+        {
+            buttons = buttonsFunc?.Invoke();
+            buttonHandler = IonicEventCallback<JsonObject?>.Create(
+                async args =>
+                {
+                    var index = args?["index"]?.GetValue<int?>();
+                    var button = buttons?.ElementAtOrDefault(index ?? -1);
+                    await (button?.Handler?.Invoke(new IonToastButtonEventArgs() { Sender = null, Button = button, Index = index}) ?? ValueTask.CompletedTask);
+                    // ReSharper disable once AccessToModifiedClosure
+                    buttonHandler?.Dispose();
+                });
+        }
+        
+        return _ionComponent.InvokeVoidAsync("presentToast", header, message, position, duration, icon, positionAnchor, buttons, buttonHandler, translucent, animated, htmlAttributes);
+    }
+    
+    public static ValueTask PresentAsync(
+        string? header = null,
+        string? message = null,
+        string? position = null, 
+        TimeSpan? duration  = null, 
+        string? icon = null,
+        string? positionAnchor = null,
+        bool? translucent = null,
+        bool? animated = null,
+        Func<IEnumerable<IIonToastButton>>? buttonsFunc = null,
+        IDictionary<string, string>? htmlAttributes = null)
+    {
+        var durationAsInt = (int?)duration?.TotalMilliseconds ?? 1500;
+        return PresentAsync(
+            header: header, 
+            message: message, 
+            position: position, 
+            duration: durationAsInt, 
+            icon: icon, 
+            positionAnchor: positionAnchor,
+            translucent: translucent, 
+            animated: animated,
+            buttonsFunc: buttonsFunc, 
+            htmlAttributes: htmlAttributes);
     }
 
-    public async ValueTask DisposeAsync() => await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
-
-    public void Attach(RenderHandle renderHandle) { }
+    public ValueTask DisposeAsync()
+    {
+        GC.SuppressFinalize(this);
+        return _ionComponent.DisposeAsync();
+    }
     
-    public async Task SetParametersAsync(ParameterView parameters) => _ionComponent ??= await JsRuntime.ImportAsync("toastController");
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+
+        _ionComponent = await JsRuntime.ImportAsync("toastController");
+    }
 }

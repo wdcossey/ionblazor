@@ -2,6 +2,12 @@
 
 public partial class IonHeader : IonComponent, IIonModeComponent, IIonContentComponent
 {
+    private ElementReference _self;
+    
+    public override ElementReference IonElement => _self;
+
+    //private string? _cascadingMode;
+
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -13,8 +19,24 @@ public partial class IonHeader : IonComponent, IIonModeComponent, IIonContentCom
     public string? Collapse { get; set; } = IonHeaderCollapse.Default;
 
     /// <inheritdoc/>
-    [Parameter]
+    //[Parameter]
+    [CascadingParameter(Name = nameof(Mode))]
     public string? Mode { get; set; } = IonMode.Default;
+
+    /*[CascadingParameter(Name = "ion-app-mode")]
+    private string? CascadingMode
+    {
+        get => _cascadingMode;
+        set
+        {
+            _cascadingMode = value;
+            
+            if (Mode != IonMode.Default)
+                return;
+            
+            Mode = value;
+        }
+    }*/
 
     /// <summary>
     /// If true, the header will be translucent. Only applies when the mode is "ios" and the device supports backdrop-filter.

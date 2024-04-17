@@ -2,7 +2,8 @@
 
 @inherits IonSelectOptionBase<TValue>
 
-<ion-select-option @attributes="@Attributes"
+<ion-select-option @ref="_self"
+                   @attributes="@Attributes"
                    class="@Class"
                    disabled="@Disabled"
                    value="@Value">

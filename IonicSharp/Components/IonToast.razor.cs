@@ -17,9 +17,8 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
     
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
-    
-    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
-    private readonly Func<ValueTask> _dismissJsWrapper;
+
+    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the toast will animate.
@@ -112,6 +111,15 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public string? Position { get; set; } = IonToastPosition.Default;
+
+    /// <summary>
+    /// The element to anchor the toast's position to. Can be set as a direct reference or the ID of the element.<br/>
+    /// With <see cref="IonToastPosition.Bottom"/>, the toast will sit above the chosen element.<br/>
+    /// With <see cref="IonToastPosition.Top"/>, the toast will sit below the chosen element.<br/>
+    /// With <see cref="IonToastPosition.Middle"/>, the value of positionAnchor is ignored.
+    /// </summary>
+    [Parameter]
+    public string? PositionAnchor { get; set; }
     
     /// <summary>
     /// If <b>true</b>, the toast will be translucent.
@@ -181,13 +189,11 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// <summary>
     /// Dismiss the toast overlay after it has been presented.
     /// </summary>
-    public ValueTask DismissAsync() => _dismissJsWrapper();
+    public ValueTask DismissAsync() =>
+        JsComponent.InvokeVoidAsync("dismiss", _self);
     
     public IonToast()
     {
-        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionToast"));
-        _dismissJsWrapper = async () => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("dismiss", _self);
-        
          _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
@@ -263,7 +269,7 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
                 await ButtonHandler.InvokeAsync(arguments);
             });
         
-        await (await _lazyIonComponentJs.Value).InvokeVoidAsync("withButtons", _self, buttons, _buttonHandlerReference);
+        await JsComponent.InvokeVoidAsync("withButtons", _self, buttons, _buttonHandlerReference);
     }
 }
 
@@ -345,7 +351,7 @@ public class IonToastDismissEventArgs : EventArgs
 
 public class IonToastButtonEventArgs : EventArgs
 {
-    public IonToast Sender { get; internal set; } = null!;
+    public IonToast? Sender { get; internal set; } = null!;
     public int? Index { get; internal set; }
     public IIonToastButton? Button { get; internal set; }
 }

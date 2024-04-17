@@ -14,8 +14,8 @@ export function canDismissCallback(element, callback) {
     element.canDismiss = (args) => callback.invokeMethodAsync(dotNetCallbackMethod, args);
 }
 
-export function getCurrentBreakpoint(element, value) {
-
+export function getCurrentBreakpoint(element) {
+    return element.getCurrentBreakpoint();
 }
 
 export function breakpoints(element, value) {
@@ -26,6 +26,14 @@ export function initialBreakpoint(element, value) {
     element.initialBreakpoint = value;
 }
 
+export function present(element) {
+    element.present();
+}
+
 export function setCurrentBreakpoint(element, value) {
     element.setCurrentBreakpoint(value);
+}
+
+export function enterAnimation(element, value) {
+    //element.enterAnimation = eval(value);
 }

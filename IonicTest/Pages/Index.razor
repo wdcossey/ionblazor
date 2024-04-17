@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 
 <IonMenu ContentId="main-content" >
-    <IonHeader>
+    <IonHeader Mode="@IonMode.MaterialDesign">
         <IonToolbar>
             <IonTitle>Menu Content</IonTitle>
         </IonToolbar>
@@ -360,17 +360,10 @@
             <IonItem Button="true" @onclick="@(() => NavigationManager.NavigateTo("/samples/segment-button"))">
                 <IonLabel>ion-segment-button</IonLabel>
             </IonItem>
-        
-            
-            
-            
 
             <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/modal"))">
                 <IonLabel>ion-modal</IonLabel>
             </IonItem>
-            
-                            
-
 
         </IonList>
     </IonContent>
@@ -388,57 +381,6 @@
     
     <IonContent Class="container">
         
-        <IonFab slot="fixed" Vertical="@IonVerticalAlignment.Top" Horizontal="@IonHorizontalAlignment.Start">
-            <IonFabButton>
-              <IonIcon Name="chevron-forward-circle"></IonIcon>
-            </IonFabButton>
-            <IonFabList Side="end">
-              <IonFabButton>
-                <IonIcon Name="document"></IonIcon>
-              </IonFabButton>
-              <IonFabButton>
-                <IonIcon Name="color-palette"></IonIcon>
-              </IonFabButton>
-              <IonFabButton>
-                <IonIcon Name="globe"></IonIcon>
-              </IonFabButton>
-            </IonFabList>
-          </IonFab>
-        
-          <IonFab slot="fixed" Vertical="@IonVerticalAlignment.Top" Horizontal="@IonHorizontalAlignment.End" Edge="true">
-            <IonFabButton>
-              <IonIcon Name="chevron-down-circle"></IonIcon>
-            </IonFabButton>
-            <IonFabList Side="bottom">
-              <IonFabButton>
-                <IonIcon Name="document"></IonIcon>
-              </IonFabButton>
-              <IonFabButton>
-                <IonIcon Name="color-palette"></IonIcon>
-              </IonFabButton>
-              <IonFabButton>
-                <IonIcon Name="globe"></IonIcon>
-              </IonFabButton>
-            </IonFabList>
-          </IonFab>
-              
-          <IonFab slot="fixed" Vertical="@IonVerticalAlignment.Bottom" Horizontal="@IonHorizontalAlignment.End">
-            <IonFabButton>
-              <IonIcon Name="chevron-up-circle"></IonIcon>
-            </IonFabButton>
-            <IonFabList Side="top">
-              <IonFabButton>
-                <IonIcon Name="document"></IonIcon>
-              </IonFabButton>
-              <IonFabButton>
-                <IonIcon Name="color-palette"></IonIcon>
-              </IonFabButton>
-              <IonFabButton>
-                <IonIcon Name="globe"></IonIcon>
-              </IonFabButton>
-            </IonFabList>
-          </IonFab>
-        
         <IonList Inset="true">
             <IonItem Button="@true" Detail="@false" id="select-fruits">
                 <IonLabel>Favorite Fruits</IonLabel>
@@ -447,16 +389,14 @@
             <IonButton Expand="ButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => presentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
 
         </IonList>
-
-        <ion-toast isOpen=true message="Hello World!" duration=1500></ion-toast>
-
+        
         <IonList>
-            <IonItemSliding IonDrag="@(args => { Debug.WriteLine("IonDrag -- Amount: {0}; Ratio: {1}", args.Amount, args.Ratio); })">
+            <IonItemSliding IonDrag="@(args => { Console.WriteLine("IonDrag -- Amount: {0}; Ratio: {1}", args.Amount, args.Ratio); })">
                 <IonItem>
                     <IonLabel aria-label="Sliding Item with End Options">Sliding Item with End Options</IonLabel>
                 </IonItem>
 
-                <IonItemOptions IonSwipe="@(args => { Debug.WriteLine("IonSwipe -- Side: {0}", new object[] { args.Side }); })">
+                <IonItemOptions IonSwipe="@(args => { Console.WriteLine("IonSwipe -- Side: {0}", new object[] { args.Side }); })">
                     <IonItemOption>Favorite</IonItemOption>
                     <IonItemOption Color="@IonColor.Danger">Delete</IonItemOption>
                 </IonItemOptions>
@@ -503,16 +443,16 @@
             </IonItemSliding>
         </IonList>
 
-        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <IonDateTimeButton Datetime="datetime"></IonDateTimeButton>
 
-        <ion-modal>
-            <ion-datetime id="datetime"></ion-datetime>
-        </ion-modal>
+        <IonModal>
+            <IonDateTime id="datetime"></IonDateTime>
+        </IonModal>
 
-        <ion-button id="open-modal" expand="block">Open</ion-button>
+        <IonButton id="open-modal" Expand="block">Open</IonButton>
     </IonContent>
 
-    <ion-modal trigger="select-fruits" id="selected-fruits" @ref="@modal">
+    <IonModal @ref="_selectfruits" Trigger="select-fruits" id="selected-fruits" IonModalDidDismiss="IonModalDidDismiss">
         <IonHeader>
             <IonToolbar>
                 <IonButtons slot="start">
@@ -524,22 +464,23 @@
                 </IonButtons>
             </IonToolbar>
             <IonToolbar>
-                <IonSearchBar Debounce="1000" Value="@searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchBar>
+                <IonSearchbar Debounce="1000" Value="@searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchbar>
             </IonToolbar>
         </IonHeader>
         <IonContent Color="@IonColor.Light" Class="ion-padding">
-            <IonList id="modal-list" Inset="@true">
+            <IonList id="modal-list" Inset="@false">
                 @foreach (var item in renderList)
                 {
-                    var @checked = workingSelectedFruits.Contains(item.value);
+                    var isChecked = workingSelectedFruits.Contains(item.value);
                     <IonItem>
-                        <IonLabel>@item.text</IonLabel>
-                        <IonCheckbox aria-label="@item.text" slot="end" Value="@item.value" Checked="@(@checked)"></IonCheckbox>
+                        <IonCheckbox aria-label="@item.text" Value="@item.value" Checked="@isChecked" IonChange="IonChange">
+                            <IonLabel>@item.text</IonLabel>
+                        </IonCheckbox>
                     </IonItem>
                 }
             </IonList>
         </IonContent>
-    </ion-modal>
+    </IonModal>
 
     <IonModal Trigger="open-modal" @ref="@_inputModal">
         <IonHeader>
@@ -636,15 +577,13 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 @code {
 
     ElementReference list;      //document.querySelector('ion-list#modal-list');
-    ElementReference modal;     //document.querySelector('ion-modal');
+    private IonModal _selectfruits;     //document.querySelector('ion-modal');
     IonInput inputNameRef; //ion-input#input-name
     private IonModal _inputModal;
     
     IonActionSheet<ActionSheetButtonData> _actionSheet;
     
     //IJSObjectReference selectedFruitsText;// = document.querySelector('#selected-fruits');
-    private DotNetObjectReference<CustomEventHelper<JsonObject?>> ModalReference;
-    private DotNetObjectReference<CustomEventHelper<JsonObject?>> ModalDidDismissReference;
     private DotNetObjectReference<CustomEventHelper<JsonObject?>> InputNameObjectReference;
     private DotNetObjectReference<CustomEventHelper<JsonObject?>> InputNameInputObjectReference;
     
@@ -719,29 +658,6 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
     //await searchbar.InvokeVoidAsync("addCustomEventListener", "ionInput", EventCallback.Factory.Create<string>(this, val => { throw new InvalidOperationException(); }));
 
-        ModalReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
-        {
-            //{"checked":true,"value":"apricot"}
-            var tagName = args["tagName"]?.GetValue<string>();
-
-            if (tagName?.Equals("ION-CHECKBOX", StringComparison.InvariantCultureIgnoreCase) is not true)
-                return Task.CompletedTask;
-
-
-            var detail = (@checked: args["detail"]?["checked"]?.GetValue<bool>(), @value: args["detail"]?["value"]?.GetValue<string>());
-
-            if (detail.@checked is true)
-            {
-                workingSelectedFruits.Add(detail.value);
-            }
-            else
-            {
-                workingSelectedFruits.Remove(detail.value);
-            }
-
-            return Task.CompletedTask;
-        }));
-
         /*InputNameObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
         {
             inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
@@ -754,16 +670,6 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
             inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
             return Task.CompletedTask;
         }));*/
-
-        ModalDidDismissReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
-        {
-            searchbarValue = null;
-            StateHasChanged();
-            return Task.CompletedTask;
-        }));
-
-        await JsRuntime.InvokeVoidAsync("addIonEventListener", "ionChange", modal, ModalReference);
-        await JsRuntime.InvokeVoidAsync("addIonEventListener", "ionModalDidDismiss", modal, ModalDidDismissReference);
         
         //(ev) => {renderList(ev.target.value); }
         //selectedFruitsText = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "#selected-fruits");
@@ -786,8 +692,9 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
    */
     private async void cancelChanges() {
         workingSelectedFruits = selectedFruits.ToHashSet();
-        var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
-        await modal.InvokeVoidAsync("dismiss", null, "cancel"); //modal.dismiss(undefined, 'cancel');
+        await _selectfruits.DismissAsync(role: "cancel");
+        //1var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
+        //await modal.InvokeVoidAsync("dismiss", null, "cancel"); //modal.dismiss(undefined, 'cancel');
         StateHasChanged();
     }
 
@@ -797,8 +704,9 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
    */
     private async void confirmChanges() {
         selectedFruits = workingSelectedFruits.ToList();
-        var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
-        await modal.InvokeVoidAsync("dismiss", selectedFruits); //modal.dismiss(selectedFruits)
+        //var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
+        //await modal.InvokeVoidAsync("dismiss", selectedFruits); //modal.dismiss(selectedFruits)
+        await _selectfruits.DismissAsync(data: selectedFruits);
         StateHasChanged();
     }
     
@@ -846,10 +754,38 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
         presentToast("bottom", $"Button Index: {args.Index}; Role: {args.Button?.Role}; Text: {args.Button?.Text}; Action: {args.Button?.Data?.Action};");
     }
 
-    private void SearchbarCallback(IonSearchBarInputEventArgs args)
+    private void SearchbarCallback(IonSearchbarInputEventArgs args)
     {
         renderList = filterList(args.Value);
         StateHasChanged();
     }
+
+    private void IonModalDidDismiss(IonModalDismissEventArgs args)
+    {
+        searchbarValue = null;
+        StateHasChanged();
+    }
+
+    private void IonChange(IonCheckboxChangeEventArgs args)
+    {
+    //{"checked":true,"value":"apricot"}
+        //var tagName = args["tagName"]?.GetValue<string>();
+        //
+        //if (tagName?.Equals("ION-CHECKBOX", StringComparison.InvariantCultureIgnoreCase) is not true)
+        //    return Task.CompletedTask;
+        //
+        //
+        //var detail = (@checked: args["detail"]?["checked"]?.GetValue<bool>(), @value: args["detail"]?["value"]?.GetValue<string>());
+
+        if (args.Checked is true)
+        {
+            workingSelectedFruits.Add(args.Value!);
+        }
+        else
+        {
+            workingSelectedFruits.Remove(args.Value!);
+        }
+    }
+
 }
 

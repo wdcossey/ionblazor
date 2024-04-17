@@ -1,4 +1,4 @@
-﻿<IonSearchBar Debounce="1000" IonInput="OnIonInput"></IonSearchBar>
+﻿<IonSearchbar Debounce="1000" IonInput="OnIonInput"></IonSearchbar>
 <IonList>
     @foreach (var item in _results)
     {
@@ -31,7 +31,7 @@
         base.OnInitialized();
     }
 
-    private void OnIonInput(IonSearchBarInputEventArgs args)
+    private void OnIonInput(IonSearchbarInputEventArgs args)
     {
         FilterItems(args.Value?.ToLowerInvariant());
     }

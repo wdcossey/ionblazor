@@ -13,7 +13,15 @@
 11. IonSpinner
 12. IonPopover
 13. IonSplitPane
-14. IonSearchBar
+14. IonSearchbar
 15. IonSegment (Samples)
 16. IonSegmentButton
 
+Undocumented events - IonModal:
+- ionBackButton
+- ionBackdropTap
+- ionChange
+- ionGestureCaptured
+- ionKeyboardDidShow
+- ionMenuChange
+- ionSplitPaneVisible

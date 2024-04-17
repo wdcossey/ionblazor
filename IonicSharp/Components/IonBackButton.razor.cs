@@ -2,6 +2,10 @@
 
 public partial class IonBackButton : IonComponent, IIonModeComponent, IIonColorComponent
 {
+    private ElementReference _self;
+    
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter] public string? Color { get; set; }
     

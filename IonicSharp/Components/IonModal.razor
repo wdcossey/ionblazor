@@ -1,4 +1,5 @@
-﻿@inherits IonComponent
+﻿@using System.Text.Encodings.Web
+@inherits IonComponent
 
 <ion-modal @ref="_self"
            @attributes="@Attributes"
@@ -8,12 +9,18 @@
            backdrop-dismiss="@BackdropDismiss"
            handle="@Handle"
            handle-behavior="@HandleBehavior"
+           breakpoints="@Breakpoints"
            initial-breakpoint="@InitialBreakpoint"
            is-open="@IsOpen"
            keep-contents-mounted="@KeepContentsMounted"
            keyboard-close="@KeyboardClose"
            mode="@Mode"
            show-backdrop="@ShowBackdrop"
-           trigger="@Trigger">
+           trigger="@Trigger"
+           is-modal="@_id">
     @ChildContent
 </ion-modal>
+
+@((MarkupString)Script)
+
+

@@ -8,11 +8,8 @@ public partial class IonTabs : IonComponent, IIonContentComponent
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsDidChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsWillChangeReference;
     
-    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
-    private readonly Func<ValueTask<string>> _getSelectedJsWrapper;
-    private readonly Func<string,ValueTask<JsonObject>> _getTabJsWrapper;
-    private readonly Func<string, ValueTask<bool>> _selectJsWrapper;
-
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -31,11 +28,6 @@ public partial class IonTabs : IonComponent, IIonContentComponent
 
     public IonTabs()
     {
-        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionTabs"));
-        _getSelectedJsWrapper = async () => await (await _lazyIonComponentJs.Value).InvokeAsync<string>("getSelected", _self);
-        _getTabJsWrapper = async tab => await (await _lazyIonComponentJs.Value).InvokeAsync<JsonObject>("getTab", _self, tab);
-        _selectJsWrapper = async tab => await (await _lazyIonComponentJs.Value).InvokeAsync<bool>("select", _self, tab);
-        
         _ionTabsDidChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var tab = args?["detail"]?["tab"]?.GetValue<string>();
@@ -53,7 +45,8 @@ public partial class IonTabs : IonComponent, IIonContentComponent
     /// Get the currently selected tab.
     /// </summary>
     /// <returns></returns>
-    public ValueTask<string> GetSelectedAsync() => _getSelectedJsWrapper();
+    public ValueTask<string> GetSelectedAsync() => 
+        JsComponent.InvokeAsync<string>("getSelected", _self);
 
     /// <summary>
     /// Get a specific tab by the value of its tab property or an element reference.
@@ -61,14 +54,15 @@ public partial class IonTabs : IonComponent, IIonContentComponent
     /// <returns></returns>
     public async ValueTask GetTabAsync(string tab)
     {
-        var obj = await _getTabJsWrapper(tab);
+        var obj = await JsComponent.InvokeAsync<JsonObject>("getTab", _self, tab);
     }
 
     /// <summary>
     /// Select a tab by the value of its tab property or an element reference.
     /// </summary>
     /// <returns></returns>
-    public ValueTask<bool> SelectAsync(string tab) => _selectJsWrapper(tab);
+    public ValueTask<bool> SelectAsync(string tab) => 
+        JsComponent.InvokeAsync<bool>("select", _self, tab);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

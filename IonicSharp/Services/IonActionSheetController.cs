@@ -1,6 +1,6 @@
 ﻿namespace IonicSharp.Services;
 
-public class IonActionSheetController : IComponent, IAsyncDisposable
+public class IonActionSheetController : ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
     
@@ -28,19 +28,23 @@ public class IonActionSheetController : IComponent, IAsyncDisposable
                 });
         }
 
-        try
-        {
-            await (_ionComponent?.InvokeVoidAsync("presentActionSheet", header, buttons, buttonHandler) ?? ValueTask.CompletedTask);
-        }
-        finally
-        {
-            //buttonHandler?.Dispose();
-        }
+        await (_ionComponent?.InvokeVoidAsync("presentActionSheet", header, buttons, buttonHandler) ?? ValueTask.CompletedTask);
     }
 
-    public async ValueTask DisposeAsync() => await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
-
-    public void Attach(RenderHandle renderHandle) { }
+    public async ValueTask DisposeAsync()
+    {
+        GC.SuppressFinalize(this);
+        await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
+        _ionComponent = null;
+    }
     
-    public async Task SetParametersAsync(ParameterView parameters) => _ionComponent ??= await JsRuntime.ImportAsync("actionSheetController");
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+
+        _ionComponent = await JsRuntime.ImportAsync("actionSheetController");
+    }
 }

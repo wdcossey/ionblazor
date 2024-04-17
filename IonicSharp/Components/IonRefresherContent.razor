@@ -1,6 +1,7 @@
 ﻿@inherits IonComponent
 
-<ion-refresher-content @attributes="@Attributes"
+<ion-refresher-content @ref="_self"
+                       @attributes="@Attributes"
                        class="@Class"
                        pulling-icon="@PullingIcon"
                        pulling-text="@((MarkupString)(PullingText ?? string.Empty))"

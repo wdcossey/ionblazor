@@ -10,14 +10,9 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _isDateEnabledReference;
-    private readonly Func<ValueTask> _isDateEnabledJsWrapper;
-    private readonly Func<string?,ValueTask> _resetJsWrapper;
-    private readonly Func<bool?,ValueTask> _confirmJsWrapper;
-    private readonly Func<bool?,ValueTask> _cancelJsWrapper;
-    private readonly Func<string[],ValueTask> _setValueJsWrapper;
-    
-    private readonly Lazy<ValueTask<IJSObjectReference>> _lazyIonComponentJs;
 
+    public override ElementReference IonElement => _self;
+    
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -53,7 +48,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// If <b>true</b>, the user cannot interact with the datetime.
     /// </summary>
     [Parameter]
-    public bool Disabled { get; set; }
+    public bool? Disabled { get; set; }
 
     /// <summary>
     /// The text to display on the picker's "Done" button.
@@ -65,7 +60,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// The first day of the week to use for <see cref="IonDateTime"/>. The default value is 0 and represents Sunday.
     /// </summary>
     [Parameter]
-    public int FirstDayOfWeek { get; set; }
+    public int? FirstDayOfWeek { get; set; }
 
     ///// <summary>
     ///// Used to apply custom text and background colors to specific dates.
@@ -158,13 +153,13 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// Only applies to presentation="date" and preferWheel="false".
     /// </summary>
     [Parameter]
-    public bool Multiple { get; set; }
+    public bool? Multiple { get; set; }
 
     /// <summary>
     /// The name of the control, which is submitted with the form data.
     /// </summary>
     [Parameter]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// If <b>true</b>, a wheel picker will be rendered instead of a calendar grid where possible.<br/>
@@ -177,7 +172,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// following values: "time", "month", "month-year", or "year".
     /// </summary>
     [Parameter]
-    public bool PreferWheel { get; set; }
+    public bool? PreferWheel { get; set; }
 
     /// <summary>
     /// Which values you want to select.<br/>
@@ -187,13 +182,13 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// "time-date" will show the time picker first and date picker second.<br/>
     /// </summary>
     [Parameter]
-    public string Presentation { get; set; } = IonDateTimePresentation.DateTime;
+    public string? Presentation { get; set; } = IonDateTimePresentation.Default;
 
     /// <summary>
     /// If <b>true</b>, the datetime appears normal but is not interactive.
     /// </summary>
     [Parameter]
-    public bool Readonly { get; set; }
+    public bool? Readonly { get; set; }
 
     /// <summary>
     /// If <b>true</b>, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the
@@ -201,7 +196,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// customize these buttons. If custom buttons are set in the button slot then the default buttons will not be rendered.
     /// </summary>
     [Parameter]
-    public bool ShowClearButton { get; set; }
+    public bool? ShowClearButton { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the default "Cancel" and "OK" buttons will be rendered at the bottom of the
@@ -209,7 +204,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// these buttons. If custom buttons are set in the button slot then the default buttons will not be rendered.
     /// </summary>
     [Parameter]
-    public bool ShowDefaultButtons { get; set; }
+    public bool? ShowDefaultButtons { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the default "Time" label will be rendered for the time selector of the ion-datetime component.
@@ -217,21 +212,21 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// If a custom label is set in the time-label slot then the default label will not be rendered.
     /// </summary>
     [Parameter]
-    public bool ShowDefaultTimeLabel { get; set; } = true;
+    public bool? ShowDefaultTimeLabel { get; set; } = true;
 
     /// <summary>
     /// If <b>true</b>, a header will be shown above the calendar picker.
     /// This will include both the slotted title, and the selected date.
     /// </summary>
     [Parameter]
-    public bool ShowDefaultTitle { get; set; }
+    public bool? ShowDefaultTitle { get; set; }
 
     /// <summary>
     /// If cover, the ion-datetime will expand to cover the full width of its container.
     /// If fixed, the ion-datetime will have a fixed width.
     /// </summary>
     [Parameter]
-    public string Size { get; set; } = IonDateTimeSize.Fixed;
+    public string? Size { get; set; } = IonDateTimeSize.Default;
 
     ///// <summary>
     ///// A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or
@@ -248,7 +243,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
 
     public async Task<IonDateTime> SetValue(params string[]? value)
     {
-        await _setValueJsWrapper(value ?? Array.Empty<string>());
+        await JsComponent.InvokeVoidAsync("setValue", _self, value ?? Array.Empty<string>());
         Value = value?.Any() is true ? string.Join(',', value) : null;
         return this;
     }
@@ -288,14 +283,6 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
 
     public IonDateTime()
     {
-        _lazyIonComponentJs = new Lazy<ValueTask<IJSObjectReference>>(() => JsRuntime.ImportAsync("ionDateTime"));
-
-        _isDateEnabledJsWrapper = async () => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("isDateEnabled", _self, _isDateEnabledReference);
-        _resetJsWrapper = async startDate => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("reset", _self, startDate);
-        _confirmJsWrapper = async closeOverlay => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("confirm", _self, closeOverlay);
-        _cancelJsWrapper = async closeOverlay => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("cancel", _self, closeOverlay);
-        _setValueJsWrapper = async value => await (await _lazyIonComponentJs.Value).InvokeVoidAsync("setValue", _self, value);
-        
         _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
 
         _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync(this));
@@ -334,20 +321,23 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// <summary>
     /// Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
     /// </summary>
-    public ValueTask CancelAsync(bool? closeOverlay = null) => _cancelJsWrapper(closeOverlay);
+    public ValueTask CancelAsync(bool? closeOverlay = null) => 
+        JsComponent.InvokeVoidAsync("cancel", _self, closeOverlay);
 
     /// <summary>
     /// Confirms the selected datetime value, updates the value property, and optionally closes the popover or modal
     /// that the datetime was presented in.
     /// </summary>
-    public ValueTask ConfirmAsync(bool? closeOverlay = null) => _confirmJsWrapper(closeOverlay);
+    public ValueTask ConfirmAsync(bool? closeOverlay = null) => 
+        JsComponent.InvokeVoidAsync("confirm", _self, closeOverlay);
 
     /// <summary>
     /// Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string
     /// will reset the state of the component to the provided date. If no value is provided, the internal state
     /// will be reset to the clamped value of the min, max and today.
     /// </summary>
-    public ValueTask ResetAsync(string? startDate = null) => _resetJsWrapper(startDate);
+    public ValueTask ResetAsync(string? startDate = null) => 
+        JsComponent.InvokeVoidAsync("reset", _self, startDate);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -366,13 +356,13 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
         });
         
         if (IsDateEnabled is not null)
-            await _isDateEnabledJsWrapper();
+            await JsComponent.InvokeVoidAsync("isDateEnabled", _self, _isDateEnabledReference);
     }
 }
 
 public class IonDateTimeChangeEventArgs : EventArgs
 {
-    public IonDateTime Sender { get; internal set; }
+    public IonDateTime Sender { get; internal set; } = null!;
     
     public string? Value { get; internal set; }
 }
@@ -386,6 +376,7 @@ public static class IonDateTimeHourCycle
 
 public static class IonDateTimePresentation
 {
+    public const string? Default = null;
     public const string Date = "date";
     public const string DateTime = "date-time";
     public const string Month = "month";
@@ -397,6 +388,7 @@ public static class IonDateTimePresentation
 
 public static class IonDateTimeSize
 {
+    public const string? Default = null;
     public const string Cover = "cover";
     public const string Fixed = "fixed";
 }

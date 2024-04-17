@@ -9,7 +9,7 @@
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
         <Nullable>enable</Nullable>
         <WindowsPackageType>None</WindowsPackageType>
-        
+        <LangVersion>12.0</LangVersion>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 
         <PackageId>IonicSharp</PackageId>
@@ -47,6 +47,20 @@
 
     <ItemGroup>
       <Folder Include="Components\Input\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Remove Remove="..\node_modules\@ionic\core\dist\ionic\**\*.*" />
+      <Content Include="..\node_modules\@ionic\core\dist\ionic\**\*.*">
+          <Link>wwwroot\@ionic\core\dist\ionic\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+
+      <Remove Remove="..\node_modules\@ionic\core\css\**\*.*" />
+      <Content Include="..\node_modules\@ionic\core\css\ionic.bundle.css">
+          <Link>wwwroot\@ionic\core\css\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
     
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

@@ -1,6 +1,7 @@
 ﻿@inherits IonComponent
 
-<ion-note @attributes="@Attributes"
+<ion-note @ref="_self"
+          @attributes="@Attributes"
           color="@Color"
           mode="@Mode">
     @ChildContent

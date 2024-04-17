@@ -1,0 +1,65 @@
+
+<IonHeader>
+    <IonToolbar>
+        <IonTitle>App</IonTitle>
+    </IonToolbar>
+</IonHeader>
+<IonContent Class="ion-padding">
+    <IonButton id="open-modal" Expand="@IonButtonExpand.Block">Open Modal</IonButton>
+    
+    <style>
+        
+    </style>
+    
+    <IonModal @ref="_modal" Class="modal-styling-animation" EnterAnimation="@_enterAnimation" Trigger="open-modal">
+        <IonHeader>
+            <IonToolbar>
+                <IonTitle>Modal</IonTitle>
+                <IonButtons slot="end">
+                    <IonButton @onclick="@(async () => await _modal.DismissAsync())">Close</IonButton>
+                </IonButtons>
+            </IonToolbar>
+        </IonHeader>
+        <IonContent>
+            <IonList>
+                <IonItem>
+                    <IonAvatar slot="start">
+                        <IonImg Src="https://i.pravatar.cc/300?u=b" />
+                    </IonAvatar>
+                    <IonLabel>
+                        <h2>Connor Smith</h2>
+                        <p>Sales Rep</p>
+                    </IonLabel>
+                </IonItem>
+                <IonItem>
+                    <IonAvatar slot="start">
+                        <IonImg Src="https://i.pravatar.cc/300?u=a" />
+                    </IonAvatar>
+                    <IonLabel>
+                        <h2>Daniel Smith</h2>
+                        <p>Product Designer</p>
+                    </IonLabel>
+                </IonItem>
+                <IonItem>
+                    <IonAvatar slot="start">
+                        <IonImg Src="https://i.pravatar.cc/300?u=d" />
+                    </IonAvatar>
+                    <IonLabel>
+                        <h2>Greg Smith</h2>
+                        <p>Director of Operations</p>
+                    </IonLabel>
+                </IonItem>
+                <IonItem>
+                    <IonAvatar slot="start">
+                        <IonImg Src="https://i.pravatar.cc/300?u=e" />
+                    </IonAvatar>
+                    <IonLabel>
+                        <h2>Zoey Smith</h2>
+                        <p>CEO</p>
+                    </IonLabel>
+                </IonItem>
+            </IonList>
+        </IonContent>
+    </IonModal>
+</IonContent>
+
