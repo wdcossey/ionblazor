@@ -5,10 +5,10 @@ export function counterFormatter(element, callback) {
 }
 
 export function counterFormat(element, format) {
-    
+
     if (format == null)
         return;
-    
+
     element.counterFormatter = (inputLength, maxLength) => {
         return eval(format);
     };
@@ -17,6 +17,11 @@ export function counterFormat(element, format) {
 export function setValue(element, value) {
     element.value = value;
     return element.value;
+}
+
+export async function getInputElement(element, callback) {
+    let result = await element.getInputElement();
+    return await callback.invokeMethodAsync('OnCallbackEvent', {result});
 }
 
 export function setFocus(element) {

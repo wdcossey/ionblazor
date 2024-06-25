@@ -9,9 +9,9 @@ public partial class IonSearchbar : IonComponent, IIonModeComponent, IIonColorCo
     private readonly DotNetObjectReference<IonicEventCallback> _ionClearReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
-    
+
     public override ElementReference IonElement => _self;
-    
+
     /// <summary>
     /// If true, enable searchbar animation.
     /// </summary>
@@ -224,7 +224,7 @@ public partial class IonSearchbar : IonComponent, IIonModeComponent, IIonColorCo
             await IonInput.InvokeAsync(new IonSearchbarInputEventArgs { Value = value, IsTrusted = isTrusted });
         });
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -242,7 +242,7 @@ public partial class IonSearchbar : IonComponent, IIonModeComponent, IIonColorCo
             IonEvent.Set("ionInput" , _ionInputReference ),
         });
     }
-    
+
     public async Task<IonSearchbar> SetValueAsync(string? value = null)
     {
         await JsComponent.InvokeVoidAsync("setValue", _self, value);
@@ -254,8 +254,8 @@ public partial class IonSearchbar : IonComponent, IIonModeComponent, IIonColorCo
     /// Returns the native &lt;input&gt; element used under the hood.
     /// </summary>
     [Obsolete("Not available in Blazor (Razor) projects", true)]
-    public async ValueTask GetInputElementAsync() => await JsComponent.InvokeAsync<ElementReference>("getInputElement", _self);
-    
+    public async ValueTask<ElementReference> GetInputElementAsync() => await JsComponent.InvokeAsync<ElementReference>("getInputElement", _self);
+
     /// <summary>
     /// Sets focus on the native input in <see cref="IonSearchbar"/>. Use this method instead of the global
     /// input.focus().<br/>
@@ -331,32 +331,32 @@ public enum EnterKeyHints
     /// done
     /// </summary>
     Done,
-    
+
     /// <summary>
     /// enter
     /// </summary>
     Enter,
-    
+
     /// <summary>
     /// go
     /// </summary>
     Go,
-    
+
     /// <summary>
     /// next
     /// </summary>
     Next,
-    
+
     /// <summary>
     /// previous
     /// </summary>
     Previous,
-    
+
     /// <summary>
     /// search
     /// </summary>
     Search,
-    
+
     /// <summary>
     /// send
     /// </summary>
