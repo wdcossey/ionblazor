@@ -11,54 +11,56 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     private readonly DotNetObjectReference<IonicEventCallback> _ionLoadingWillPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
-    
+
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc/>
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
-    
+
     /// <inheritdoc/>
-    [Parameter, EditorRequired]
+    [Parameter]
     public RenderFragment? ChildContent { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, the loading indicator will animate.
     /// </summary>
-    [Parameter] 
+    [Parameter]
     public bool? Animated { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, the loading indicator will be dismissed when the backdrop is clicked.
     /// </summary>
     [Parameter]
     public bool? BackdropDismiss { get; set; }
-    
+
     /// <summary>
     /// Additional classes to apply for custom CSS.
     /// If multiple classes are provided they should be separated by spaces.
     /// </summary>
     [Parameter]
     public string? CssClass { get; set; }
-    
+
     /// <summary>
     /// Number of milliseconds to wait before dismissing the loading indicator.
     /// </summary>
     [Parameter]
     public int? Duration { get; set; }
-    
+
     /// <summary>
     /// Animation to use when the loading indicator is presented.
     /// </summary>
-    [Obsolete("Not available in Blazor (Razor) projects", true)]
+    [Obsolete("Not available in Blazor/Razor", true)]
     public string? EnterAnimation { get; set; }
-    
+
     /// <summary>
-    /// Additional attributes to pass to the loader.
+    /// Additional attributes to pass to the loader.<br/>
+    /// The is not available in Blazor/Razor, use
+    /// <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/components/splat-attributes-and-arbitrary-parameters?view=aspnetcore-8.0" >attribute splatting</a>
     /// </summary>
-    [Obsolete("Not available in Blazor (Razor) projects", true)]
+    [Obsolete("Not available in Blazor/Razor, use attribute splatting", true)]
     public IDictionary<string, string?> HtmlAttributes { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, the loading indicator will open.
     /// If <b>false</b>, the loading indicator will close.
@@ -69,13 +71,13 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     /// </summary>
     [Parameter]
     public bool? IsOpen { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, the keyboard will be automatically dismissed when the overlay is presented.
     /// </summary>
     [Parameter]
     public bool? KeyboardClose { get; set; }
-    
+
     /// <summary>
     /// Optional text content to display in the loading indicator.
     /// <br/><br/>
@@ -84,26 +86,26 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     /// </summary>
     [Parameter]
     public string? Message { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, a backdrop will be displayed behind the loading indicator.
     /// </summary>
     [Parameter]
     public bool? ShowBackdrop { get; set; }
-    
+
     /// <summary>
     /// The name of the spinner to display.
     /// </summary>
     [Parameter]
     public string? Spinner { get; set; } = IonLoadingSpinner.Default;
-    
+
     /// <summary>
     /// If <b>true</b>, the loading indicator will be translucent.
     /// Only applies when the mode is <see cref="IonMode.iOS"/> and the device supports backdrop-filter.
     /// </summary>
     [Parameter]
     public bool? Translucent { get; set; }
-    
+
     /// <summary>
     /// An ID corresponding to the trigger element that causes the loading indicator to open when clicked.
     /// </summary>
@@ -120,7 +122,7 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     /// Emitted after the loading indicator has presented. Shorthand for <see cref="IonLoadingDidPresent"/>.
     /// </summary>
     [Parameter]
-    public EventCallback DidPresent { get; set; }
+    public EventCallback<IonLoadingPresentEventArgs> DidPresent { get; set; }
 
     /// <summary>
     /// Emitted after the loading has dismissed.
@@ -132,7 +134,7 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     /// Emitted after the loading has presented.
     /// </summary>
     [Parameter]
-    public EventCallback IonLoadingDidPresent { get; set; }
+    public EventCallback<IonLoadingPresentEventArgs> IonLoadingDidPresent { get; set; }
 
     /// <summary>
     /// Emitted before the loading has dismissed.
@@ -144,7 +146,7 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     /// Emitted before the loading has presented.
     /// </summary>
     [Parameter]
-    public EventCallback IonLoadingWillPresent { get; set; }
+    public EventCallback<IonLoadingPresentEventArgs> IonLoadingWillPresent { get; set; }
 
     /// <summary>
     /// Emitted before the loading indicator has dismissed. Shorthand for <see cref="IonLoadingWillDismiss"/>.
@@ -156,8 +158,8 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     /// Emitted before the loading indicator has presented. Shorthand for <see cref="IonLoadingWillPresent"/>.
     /// </summary>
     [Parameter]
-    public EventCallback WillPresent { get; set; }
-    
+    public EventCallback<IonLoadingPresentEventArgs> WillPresent { get; set; }
+
     public IonLoading()
     {
         _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
@@ -165,32 +167,49 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
             var dismissArgs = GetDismissArgs(args);
             await DidDismiss.InvokeAsync(dismissArgs);
         });
-        
-        _didPresentReference = IonicEventCallback.Create(async () => await DidPresent.InvokeAsync());
-        
+
+        _didPresentReference = IonicEventCallback.Create(async () =>
+        {
+            IonLoadingPresentEventArgs presentArgs = GetPresentArgs();
+            await DidPresent.InvokeAsync(presentArgs);
+        });
+
         _ionLoadingDidDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var dismissArgs = GetDismissArgs(args);
             await IonLoadingDidDismiss.InvokeAsync(dismissArgs);
         });
-        
-        _ionLoadingDidPresentReference = IonicEventCallback.Create(async () => await IonLoadingDidPresent.InvokeAsync());
-        
+
+        _ionLoadingDidPresentReference = IonicEventCallback.Create(async () =>
+        {
+            IonLoadingPresentEventArgs presentArgs = GetPresentArgs();
+            await IonLoadingDidPresent.InvokeAsync(presentArgs);
+        });
+
         _ionLoadingWillDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            var dismissArgs = GetDismissArgs(args);
+            IonLoadingDismissEventArgs dismissArgs = GetDismissArgs(args);
             await IonLoadingWillDismiss.InvokeAsync(dismissArgs);
         });
-        
-        _ionLoadingWillPresentReference = IonicEventCallback.Create(async () => await IonLoadingWillPresent.InvokeAsync());
-        
+
+        _ionLoadingWillPresentReference = IonicEventCallback.Create(async () =>
+        {
+            IonLoadingPresentEventArgs presentArgs = GetPresentArgs();
+            await IonLoadingWillPresent.InvokeAsync(presentArgs);
+        });
+
         _willDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            var dismissArgs = GetDismissArgs(args);
+            IonLoadingDismissEventArgs dismissArgs = GetDismissArgs(args);
             await WillDismiss.InvokeAsync(dismissArgs);
         });
-        _willPresentReference = IonicEventCallback.Create(async () => await WillPresent.InvokeAsync());
-        
+
+        _willPresentReference = IonicEventCallback.Create(async () =>
+        {
+            IonLoadingPresentEventArgs presentArgs = GetPresentArgs();
+            await WillPresent.InvokeAsync(presentArgs);
+        });
+
         /*
          * {
   "tagName": "ION-LOADING",
@@ -201,7 +220,7 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
 }
          */
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -221,21 +240,21 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
             IonEvent.Set("willPresent"          , _willPresentReference ),
         });
     }
-    
+
     /// <summary>
     /// Dismiss the loading overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
-    public ValueTask<bool> DismissAsync<TData>(TData? data = null, string? role = null) where TData : class => 
+    public ValueTask<bool> DismissAsync<TData>(TData? data = null, string? role = null) where TData : class =>
         JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
-    
+
     /// <summary>
     /// Dismiss the loading overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
-    public ValueTask<bool> DismissAsync(string? role = null) => 
+    public ValueTask<bool> DismissAsync(string? role = null) =>
         JsComponent.InvokeAsync<bool>("dismiss", _self, role);
-    
+
     /// <summary>
     /// Returns a promise that resolves when the loading did dismiss.
     /// </summary>
@@ -245,7 +264,7 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     {
         throw new NotImplementedException();
     }
-    
+
     /// <summary>
     /// Returns a promise that resolves when the loading will dismiss.
     /// </summary>
@@ -255,13 +274,13 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     {
         throw new NotImplementedException();
     }
-    
+
     /// <summary>
     /// Present the loading overlay after it has been created.
     /// </summary>
     /// <returns></returns>
     public ValueTask PresentAsync() => JsComponent.InvokeVoidAsync("present", _self);
-    
+
     /// <summary>
     /// Sets the <see cref="Message"/>
     /// </summary>
@@ -271,7 +290,7 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
         await JsComponent.InvokeVoidAsync("setMessage", _self, message);
         //this.Message = message;
     }
-    
+
     /// <summary>
     /// Sets the <see cref="Message"/>
     /// </summary>
@@ -285,18 +304,56 @@ public partial class IonLoading: IonComponent, IIonModeComponent, IIonContentCom
     {
         var role = args?["detail"]?["role"]?.GetValue<string>();
         var data = args?["detail"]?["data"];
-        return new IonLoadingDismissEventArgs() { Sender = this, Data = data, Role = role };
+        var htmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>();
+
+        return new IonLoadingDismissEventArgs()
+        {
+            Sender = this,
+            Data = data,
+            Role = role,
+            HtmlAttributes = htmlAttributes
+        };
+    }
+
+    private IonLoadingPresentEventArgs GetPresentArgs()
+    {
+        return new IonLoadingPresentEventArgs()
+        {
+            Sender = this
+        };
     }
 }
 
-public class IonLoadingDismissEventArgs : EventArgs
+public sealed class IonLoadingPresentEventArgs : EventArgs
 {
-    public IonLoading Sender { get; internal set; } = null!;
-    
-    public string? Role { get; internal set; }
-    
-    public object? Data { get; internal set; }
+    /// <summary>
+    /// The <see cref="IonLoading"/> that triggered the event. This will be null if created by <see cref="IonLoadingController"/>
+    /// </summary>
+    public IonLoading? Sender { get; internal set; } = null!;
+
+    /// <summary>
+    /// The HTML attributes that were passed to the loader, used by <see cref="IonLoadingController"/>
+    /// </summary>
+    public Dictionary<string, string>? HtmlAttributes { get; internal set; }
 }
+
+public sealed class IonLoadingDismissEventArgs : EventArgs
+{
+    /// <summary>
+    /// The <see cref="IonLoading"/> that triggered the event. This will be null if created by <see cref="IonLoadingController"/>
+    /// </summary>
+    public IonLoading? Sender { get; internal set; } = null!;
+
+    public string? Role { get; internal set; }
+
+    public object? Data { get; internal set; }
+
+    /// <summary>
+    /// The HTML attributes that were passed to the loader, used by <see cref="IonLoadingController"/>
+    /// </summary>
+    public Dictionary<string, string>? HtmlAttributes { get; internal set; }
+}
+
 
 public class IonLoadingSpinner
 {

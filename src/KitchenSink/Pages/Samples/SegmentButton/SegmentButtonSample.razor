@@ -1,156 +1,150 @@
 ﻿@page "/samples/segment-button"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonSegment value="buttons">
-                      <IonSegmentButton Value="default">
-                        <IonLabel>Default</IonLabel>
-                      </IonSegmentButton>
-                      <IonSegmentButton Value="segment">
-                        <IonLabel>Segment</IonLabel>
-                      </IonSegmentButton>
-                      <IonSegmentButton Value="buttons">
-                        <IonLabel>Button</IonLabel>
-                      </IonSegmentButton>
-                    </IonSegment>
-                    
-                    <IonSegment value="buttons">
-                      <IonSegmentButton Value="disabled" Disabled="true">
-                        <IonLabel>Disabled</IonLabel>
-                      </IonSegmentButton>
-                      <IonSegmentButton Value="segment">
-                        <IonLabel>Segment</IonLabel>
-                      </IonSegmentButton>
-                      <IonSegmentButton Value="buttons">
-                        <IonLabel>Button</IonLabel>
-                      </IonSegmentButton>
-                    </IonSegment>
-                </div>
-            </div>
-        </div>
-          
-        <h2>Layout</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonSegment value="heart">
-                        <IonSegmentButton Value="call">
-                            <IonIcon Name="call"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="heart">
-                            <IonIcon Name="heart"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="pin">
-                            <IonIcon Name="pin"></IonIcon>
-                        </IonSegmentButton>
-                    </IonSegment>
-                    
-                    <IonSegment value="heart">
-                        <IonSegmentButton Value="call">
-                            <IonLabel>Call</IonLabel>
-                            <IonIcon Name="call"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="heart">
-                            <IonLabel>Heart</IonLabel>
-                            <IonIcon Name="heart"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="pin">
-                            <IonLabel>Pin</IonLabel>
-                            <IonIcon Name="pin"></IonIcon>
-                        </IonSegmentButton>
-                    </IonSegment>
-                    
-                    <IonSegment value="heart">
-                        <IonSegmentButton Value="call" Layout="@IonSegmentButtonLayout.IconBottom">
-                            <IonLabel>Call</IonLabel>
-                            <IonIcon Name="call"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="heart" Layout="@IonSegmentButtonLayout.IconBottom">
-                            <IonLabel>Heart</IonLabel>
-                            <IonIcon Name="heart"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="pin" Layout="@IonSegmentButtonLayout.IconBottom">
-                            <IonLabel>Pin</IonLabel>
-                            <IonIcon Name="pin"></IonIcon>
-                        </IonSegmentButton>
-                    </IonSegment>
-                    
-                    <IonSegment value="heart">
-                        <IonSegmentButton Value="call" Layout="@IonSegmentButtonLayout.IconStart">
-                            <IonLabel>Call</IonLabel>
-                            <IonIcon Name="call"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="heart" Layout="@IonSegmentButtonLayout.IconStart">
-                            <IonLabel>Heart</IonLabel>
-                            <IonIcon Name="heart"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="pin" Layout="@IonSegmentButtonLayout.IconStart">
-                            <IonLabel>Pin</IonLabel>
-                            <IonIcon Name="pin"></IonIcon>
-                        </IonSegmentButton>
-                    </IonSegment>
-                    
-                    <IonSegment value="heart">
-                        <IonSegmentButton Value="call" Layout="@IonSegmentButtonLayout.IconEnd">
-                            <IonLabel>Call</IonLabel>
-                            <IonIcon Name="call"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="heart" Layout="@IonSegmentButtonLayout.IconEnd">
-                            <IonLabel>Heart</IonLabel>
-                            <IonIcon Name="heart"></IonIcon>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="pin" Layout="@IonSegmentButtonLayout.IconEnd">
-                            <IonLabel>Pin</IonLabel>
-                            <IonIcon Name="pin"></IonIcon>
-                        </IonSegmentButton>
-                    </IonSegment>
-                </div>
-            </div>
-        </div>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonSegment value="buttons">
+              <IonSegmentButton Value="default">
+                <IonLabel>Default</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton Value="segment">
+                <IonLabel>Segment</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton Value="buttons">
+                <IonLabel>Button</IonLabel>
+              </IonSegmentButton>
+            </IonSegment>
 
-        <h2>Theming</h2>
-        <h3>CSS Shadow Parts</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonSegment Class="css-shadow-parts"  value="custom">
-                        <IonSegmentButton Value="custom">
-                            <IonLabel>Custom</IonLabel>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="segment">
-                            <IonLabel>Segment</IonLabel>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="buttons">
-                            <IonLabel>Buttons</IonLabel>
-                        </IonSegmentButton>
-                    </IonSegment>
-                </div>
-            </div>
+            <IonSegment value="buttons">
+              <IonSegmentButton Value="disabled" Disabled="true">
+                <IonLabel>Disabled</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton Value="segment">
+                <IonLabel>Segment</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton Value="buttons">
+                <IonLabel>Button</IonLabel>
+              </IonSegmentButton>
+            </IonSegment>
         </div>
-        
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonSegment Class="css-custom-properties" Value="custom">
-                        <IonSegmentButton Value="custom">
-                            <IonLabel>Custom</IonLabel>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="segment">
-                            <IonLabel>Segment</IonLabel>
-                        </IonSegmentButton>
-                        <IonSegmentButton Value="buttons">
-                            <IonLabel>Buttons</IonLabel>
-                        </IonSegmentButton>
-                    </IonSegment>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Layout</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonSegment value="heart">
+                <IonSegmentButton Value="call">
+                    <IonIcon Name="call"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="heart">
+                    <IonIcon Name="heart"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="pin">
+                    <IonIcon Name="pin"></IonIcon>
+                </IonSegmentButton>
+            </IonSegment>
+
+            <IonSegment value="heart">
+                <IonSegmentButton Value="call">
+                    <IonLabel>Call</IonLabel>
+                    <IonIcon Name="call"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="heart">
+                    <IonLabel>Heart</IonLabel>
+                    <IonIcon Name="heart"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="pin">
+                    <IonLabel>Pin</IonLabel>
+                    <IonIcon Name="pin"></IonIcon>
+                </IonSegmentButton>
+            </IonSegment>
+
+            <IonSegment value="heart">
+                <IonSegmentButton Value="call" Layout="@IonSegmentButtonLayout.IconBottom">
+                    <IonLabel>Call</IonLabel>
+                    <IonIcon Name="call"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="heart" Layout="@IonSegmentButtonLayout.IconBottom">
+                    <IonLabel>Heart</IonLabel>
+                    <IonIcon Name="heart"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="pin" Layout="@IonSegmentButtonLayout.IconBottom">
+                    <IonLabel>Pin</IonLabel>
+                    <IonIcon Name="pin"></IonIcon>
+                </IonSegmentButton>
+            </IonSegment>
+
+            <IonSegment value="heart">
+                <IonSegmentButton Value="call" Layout="@IonSegmentButtonLayout.IconStart">
+                    <IonLabel>Call</IonLabel>
+                    <IonIcon Name="call"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="heart" Layout="@IonSegmentButtonLayout.IconStart">
+                    <IonLabel>Heart</IonLabel>
+                    <IonIcon Name="heart"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="pin" Layout="@IonSegmentButtonLayout.IconStart">
+                    <IonLabel>Pin</IonLabel>
+                    <IonIcon Name="pin"></IonIcon>
+                </IonSegmentButton>
+            </IonSegment>
+
+            <IonSegment value="heart">
+                <IonSegmentButton Value="call" Layout="@IonSegmentButtonLayout.IconEnd">
+                    <IonLabel>Call</IonLabel>
+                    <IonIcon Name="call"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="heart" Layout="@IonSegmentButtonLayout.IconEnd">
+                    <IonLabel>Heart</IonLabel>
+                    <IonIcon Name="heart"></IonIcon>
+                </IonSegmentButton>
+                <IonSegmentButton Value="pin" Layout="@IonSegmentButtonLayout.IconEnd">
+                    <IonLabel>Pin</IonLabel>
+                    <IonIcon Name="pin"></IonIcon>
+                </IonSegmentButton>
+            </IonSegment>
         </div>
-        
-        
-    </IonContent>
+    </div>
+</div>
+
+<h2>Theming</h2>
+<h3>CSS Shadow Parts</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonSegment Class="css-shadow-parts"  value="custom">
+                <IonSegmentButton Value="custom">
+                    <IonLabel>Custom</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton Value="segment">
+                    <IonLabel>Segment</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton Value="buttons">
+                    <IonLabel>Buttons</IonLabel>
+                </IonSegmentButton>
+            </IonSegment>
+        </div>
+    </div>
+</div>
+
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonSegment Class="css-custom-properties" Value="custom">
+                <IonSegmentButton Value="custom">
+                    <IonLabel>Custom</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton Value="segment">
+                    <IonLabel>Segment</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton Value="buttons">
+                    <IonLabel>Buttons</IonLabel>
+                </IonSegmentButton>
+            </IonSegment>
+        </div>
+    </div>
 </div>

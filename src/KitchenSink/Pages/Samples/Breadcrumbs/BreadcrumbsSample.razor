@@ -1,173 +1,168 @@
 ﻿@page "/samples/breadcrumbs"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        @*<h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">*@
-                    <BasicUsage/>
-                @*</div>
-            </div>
-        </div>*@
-        
-        <h2>Using Icons</h2>
-        <h3>Icons on Items</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IconsOnItems/>
-                </div>
-            </div>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <BasicUsage/>
         </div>
-        
-        <h3>Custom Separators</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonBreadcrumbs>
-                        <IonBreadcrumb Href="#home">
-                            Home
-                            <IonIcon slot="separator" Name="arrow-forward-circle"></IonIcon>
-                        </IonBreadcrumb>
-                        <IonBreadcrumb Href="#electronics">
-                            Electronics
-                            <IonIcon slot="separator" Name="arrow-forward-circle"></IonIcon>
-                        </IonBreadcrumb>
-                        <IonBreadcrumb Href="#cameras">
-                            Cameras
-                            <IonIcon slot="separator" Name="arrow-forward-circle"></IonIcon>
-                        </IonBreadcrumb>
-                        <IonBreadcrumb Href="#film">
-                            Film
-                            <IonIcon slot="separator" Name="arrow-forward-circle"></IonIcon>
-                        </IonBreadcrumb>
-                    </IonBreadcrumbs>
-                </div>
-            </div>
-        </div>
-        
-        <h2>Collapsing Items</h2>
-        <h3>Max Items</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonBreadcrumbs MaxItems="4">
-                        <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
-                        <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
-                        <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
-                        <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
-                        <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
-                        <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
-                    </IonBreadcrumbs>
-                </div>
-            </div>
-        </div>
-        
-        <h3>Items Before or After Collapse</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <div>Before Collapse = 2</div>
-                    <IonBreadcrumbs MaxItems="4" ItemsBeforeCollapse="2">
-                        <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
-                        <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
-                        <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
-                        <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
-                        <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
-                        <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
-                    </IonBreadcrumbs>
-                    
-                    <div class="ion-margin-top">Before Collapse = 0</div>
-                    <IonBreadcrumbs MaxItems="4" ItemsBeforeCollapse="0">
-                        <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
-                        <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
-                        <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
-                        <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
-                        <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
-                        <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
-                    </IonBreadcrumbs>
-                    
-                    <div class="ion-margin-top">After Collapse = 2</div>
-                    <IonBreadcrumbs MaxItems="4" ItemsAfterCollapse="2">
-                        <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
-                        <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
-                        <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
-                        <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
-                        <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
-                        <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
-                    </IonBreadcrumbs>
-                    
-                    <div class="ion-margin-top">Before Collapse = 2, After Collapse = 2</div>
-                    <IonBreadcrumbs MaxItems="4" ItemsBeforeCollapse="2" ItemsAfterCollapse="2">
-                        <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
-                        <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
-                        <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
-                        <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
-                        <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
-                        <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
-                    </IonBreadcrumbs>
-                </div>
-            </div>
-        </div>
-        
-        <h3>Collapsed Indicator Click -- Expand Breadcrumbs</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonBreadcrumbs @ref="_breadcrumbs" MaxItems="_maxItems" IonCollapsedClick="IonCollapsedClick">
-                        <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
-                        <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
-                        <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
-                        <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
-                        <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
-                        <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
-                    </IonBreadcrumbs>
-                </div>
-            </div>
-        </div>
-        
-        <h3>Collapsed Indicator Click -- Present Popover</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonBreadcrumbs  @ref="_breadcrumbsPopover" MaxItems="4" IonCollapsedClick="IonCollapsedClickPopover">
-                        <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
-                        <IonBreadcrumb id="testing" Href="#electronics">Electronics</IonBreadcrumb>
-                        <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
-                        <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
-                        <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
-                        <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
-                    </IonBreadcrumbs>
-                    <IonPopover @ref="_popover" DidDismiss="PopoverDidDismiss" Reference="@IonPopoverReference.Default" Trigger="testing" TriggerAction="@IonPopoverTriggerAction.Click">
-                        <IonContent>
-                            <IonList>@_popoverContent</IonList>
-                        </IonContent>
-                    </IonPopover>
-                </div>
-            </div>
-        </div>
-        
-        <h2>Theming</h2>
-        <h3>Colors</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <Colors/>
-                </div>
-            </div>
-        </div>
-    
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <CssCustomProperties/>
-                </div>
-            </div>
-        </div>
+    </div>
+</div>
 
-    </IonContent>
+<h2>Using Icons</h2>
+<h3>Icons on Items</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IconsOnItems/>
+        </div>
+    </div>
+</div>
+
+<h3>Custom Separators</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonBreadcrumbs>
+                <IonBreadcrumb Href="#home">
+                    Home
+                    <IonIcon slot="separator" Name="arrow-forward-circle"></IonIcon>
+                </IonBreadcrumb>
+                <IonBreadcrumb Href="#electronics">
+                    Electronics
+                    <IonIcon slot="separator" Name="arrow-forward-circle"></IonIcon>
+                </IonBreadcrumb>
+                <IonBreadcrumb Href="#cameras">
+                    Cameras
+                    <IonIcon slot="separator" Name="arrow-forward-circle"></IonIcon>
+                </IonBreadcrumb>
+                <IonBreadcrumb Href="#film">
+                    Film
+                    <IonIcon slot="separator" Name="arrow-forward-circle"></IonIcon>
+                </IonBreadcrumb>
+            </IonBreadcrumbs>
+        </div>
+    </div>
+</div>
+
+<h2>Collapsing Items</h2>
+<h3>Max Items</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonBreadcrumbs MaxItems="4">
+                <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
+                <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
+                <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
+                <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
+                <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
+                <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
+            </IonBreadcrumbs>
+        </div>
+    </div>
+</div>
+
+<h3>Items Before or After Collapse</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <div>Before Collapse = 2</div>
+            <IonBreadcrumbs MaxItems="4" ItemsBeforeCollapse="2">
+                <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
+                <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
+                <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
+                <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
+                <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
+                <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
+            </IonBreadcrumbs>
+
+            <div class="ion-margin-top">Before Collapse = 0</div>
+            <IonBreadcrumbs MaxItems="4" ItemsBeforeCollapse="0">
+                <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
+                <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
+                <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
+                <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
+                <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
+                <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
+            </IonBreadcrumbs>
+
+            <div class="ion-margin-top">After Collapse = 2</div>
+            <IonBreadcrumbs MaxItems="4" ItemsAfterCollapse="2">
+                <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
+                <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
+                <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
+                <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
+                <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
+                <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
+            </IonBreadcrumbs>
+
+            <div class="ion-margin-top">Before Collapse = 2, After Collapse = 2</div>
+            <IonBreadcrumbs MaxItems="4" ItemsBeforeCollapse="2" ItemsAfterCollapse="2">
+                <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
+                <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
+                <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
+                <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
+                <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
+                <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
+            </IonBreadcrumbs>
+        </div>
+    </div>
+</div>
+
+<h3>Collapsed Indicator Click -- Expand Breadcrumbs</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonBreadcrumbs @ref="_breadcrumbs" MaxItems="_maxItems" IonCollapsedClick="IonCollapsedClick">
+                <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
+                <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
+                <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
+                <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
+                <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
+                <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
+            </IonBreadcrumbs>
+        </div>
+    </div>
+</div>
+
+<h3>Collapsed Indicator Click -- Present Popover</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonBreadcrumbs  @ref="_breadcrumbsPopover" MaxItems="4" IonCollapsedClick="IonCollapsedClickPopover">
+                <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
+                <IonBreadcrumb id="testing" Href="#electronics">Electronics</IonBreadcrumb>
+                <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
+                <IonBreadcrumb Href="#cameras">Cameras</IonBreadcrumb>
+                <IonBreadcrumb Href="#film">Film</IonBreadcrumb>
+                <IonBreadcrumb Href="#35mm">35 mm</IonBreadcrumb>
+            </IonBreadcrumbs>
+            <IonPopover @ref="_popover" DidDismiss="PopoverDidDismiss" Reference="@IonPopoverReference.Default" Trigger="testing" TriggerAction="@IonPopoverTriggerAction.Click">
+                <IonContent>
+                    <IonList>@_popoverContent</IonList>
+                </IonContent>
+            </IonPopover>
+        </div>
+    </div>
+</div>
+
+<h2>Theming</h2>
+<h3>Colors</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <Colors/>
+        </div>
+    </div>
+</div>
+
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <CssCustomProperties/>
+        </div>
+    </div>
 </div>
 
 @code {
@@ -179,5 +174,5 @@
         _breadcrumbs.MaxItems = _maxItems = null;
     }
 
-    
-} 
+
+}

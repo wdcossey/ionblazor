@@ -1,91 +1,86 @@
 ﻿@page "/samples/checkbox"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonCheckbox>I agree to the terms and conditions</IonCheckbox>
-                    <br/><br/>
-                    <IonCheckbox>Default CheckBox</IonCheckbox>
-                    <br/><br/>
-                    <IonCheckbox Checked="@true">Checked CheckBox</IonCheckbox>
-                    <br/><br/>
-                    <IonCheckbox Disabled="@true">Disabled CheckBox</IonCheckbox>
-                    <br/><br/>
-                    <IonCheckbox Checked="@true" Disabled="@true">Disabled Checked CheckBox</IonCheckbox>
-                </div>
-            </div>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonCheckbox>I agree to the terms and conditions</IonCheckbox>
+            <br/><br/>
+            <IonCheckbox>Default CheckBox</IonCheckbox>
+            <br/><br/>
+            <IonCheckbox Checked="@true">Checked CheckBox</IonCheckbox>
+            <br/><br/>
+            <IonCheckbox Disabled="@true">Disabled CheckBox</IonCheckbox>
+            <br/><br/>
+            <IonCheckbox Checked="@true" Disabled="@true">Disabled Checked CheckBox</IonCheckbox>
         </div>
+    </div>
+</div>
 
-        <h2>Label Placement</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonCheckbox LabelPlacement="@IonLabelPlacement.Start">Label at the Start</IonCheckbox>
-                    <br/>
-                    <IonCheckbox LabelPlacement="@IonLabelPlacement.End">Label at the End</IonCheckbox>
-                    <br/>
-                    <IonCheckbox LabelPlacement="@IonLabelPlacement.Fixed">Fixed Width Label</IonCheckbox>
-                </div>
-            </div>
+<h2>Label Placement</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonCheckbox LabelPlacement="@IonLabelPlacement.Start">Label at the Start</IonCheckbox>
+            <br/>
+            <IonCheckbox LabelPlacement="@IonLabelPlacement.End">Label at the End</IonCheckbox>
+            <br/>
+            <IonCheckbox LabelPlacement="@IonLabelPlacement.Fixed">Fixed Width Label</IonCheckbox>
         </div>
+    </div>
+</div>
 
-        <h2>Justification</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonList>
-                      <IonItem>
-                        <IonCheckbox Justify="@IonJustify.Start">Packed at the Start of Line</IonCheckbox>
-                      </IonItem>
-                        <IonItem>
-                        <IonCheckbox Justify="@IonJustify.End">Packed at the End of Line</IonCheckbox>
-                      </IonItem>
-                        <IonItem>
-                        <IonCheckbox Justify="@IonJustify.SpaceBetween">Space Between Label and Control</IonCheckbox>
-                      </IonItem>
-                    </IonList>
-                </div>
-            </div>
+<h2>Justification</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonList>
+              <IonItem>
+                <IonCheckbox Justify="@IonJustify.Start">Packed at the Start of Line</IonCheckbox>
+              </IonItem>
+                <IonItem>
+                <IonCheckbox Justify="@IonJustify.End">Packed at the End of Line</IonCheckbox>
+              </IonItem>
+                <IonItem>
+                <IonCheckbox Justify="@IonJustify.SpaceBetween">Space Between Label and Control</IonCheckbox>
+              </IonItem>
+            </IonList>
         </div>
+    </div>
+</div>
 
-        <h2>Indeterminate Checkboxes</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonCheckbox Indeterminate="@true">Indeterminate checkbox</IonCheckbox>
-                </div>
-            </div>
+<h2>Indeterminate Checkboxes</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonCheckbox Indeterminate="@true">Indeterminate checkbox</IonCheckbox>
         </div>
-        
-        <h2>Theming</h2>
-        <h3>Colors</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonCheckbox aria-label="Primary toggle" Color="@IonColor.Primary" Checked="@true"></IonCheckbox>
-                    <IonCheckbox aria-label="Secondary toggle" Color="@IonColor.Secondary" Checked="@true"></IonCheckbox>
-                    <IonCheckbox aria-label="Tertiary toggle" Color="@IonColor.Tertiary" Checked="@true"></IonCheckbox>
-                    <IonCheckbox aria-label="Success toggle" Color="@IonColor.Success" Checked="@true"></IonCheckbox>
-                    <IonCheckbox aria-label="Warning toggle" Color="@IonColor.Warning" Checked="@true"></IonCheckbox>
-                    <IonCheckbox aria-label="Danger toggle" Color="@IonColor.Danger" Checked="@true"></IonCheckbox>
-                    <IonCheckbox aria-label="Light toggle" Color="@IonColor.Light" Checked="@true"></IonCheckbox>
-                    <IonCheckbox aria-label="Medium toggle" Color="@IonColor.Medium" Checked="@true"></IonCheckbox>
-                    <IonCheckbox aria-label="Dark toggle" Color="@IonColor.Dark" Checked="@true"></IonCheckbox>
-                </div>
-            </div>
-        </div>
-        
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonCheckbox Class="css-custom-properties">Themed checkbox</IonCheckbox>
-                </div>
-            </div>
-        </div>
+    </div>
+</div>
 
-    </IonContent>
+<h2>Theming</h2>
+<h3>Colors</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonCheckbox aria-label="Primary toggle" Color="@IonColor.Primary" Checked="@true"></IonCheckbox>
+            <IonCheckbox aria-label="Secondary toggle" Color="@IonColor.Secondary" Checked="@true"></IonCheckbox>
+            <IonCheckbox aria-label="Tertiary toggle" Color="@IonColor.Tertiary" Checked="@true"></IonCheckbox>
+            <IonCheckbox aria-label="Success toggle" Color="@IonColor.Success" Checked="@true"></IonCheckbox>
+            <IonCheckbox aria-label="Warning toggle" Color="@IonColor.Warning" Checked="@true"></IonCheckbox>
+            <IonCheckbox aria-label="Danger toggle" Color="@IonColor.Danger" Checked="@true"></IonCheckbox>
+            <IonCheckbox aria-label="Light toggle" Color="@IonColor.Light" Checked="@true"></IonCheckbox>
+            <IonCheckbox aria-label="Medium toggle" Color="@IonColor.Medium" Checked="@true"></IonCheckbox>
+            <IonCheckbox aria-label="Dark toggle" Color="@IonColor.Dark" Checked="@true"></IonCheckbox>
+        </div>
+    </div>
+</div>
+
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonCheckbox Class="css-custom-properties">Themed checkbox</IonCheckbox>
+        </div>
+    </div>
 </div>

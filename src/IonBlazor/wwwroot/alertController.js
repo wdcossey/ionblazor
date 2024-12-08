@@ -17,16 +17,16 @@ export async function presentAlert(header, subHeader, message, buttons, inputs, 
     if (inputs) {
         alert.inputs = inputs;
     }
-    
+
     document.body.appendChild(alert);
-    
+
     alert.addEventListener('didDismiss', (ev) => {
         if (didDismissHandler) {
             didDismissHandler.invokeMethodAsync(dotNetCallbackMethod, { tagName: ev.target.tagName, detail: ev.detail });
         }
-        
-        alert.remove();
+
+        setTimeout(function(){ alert.remove() }, 2000);
     });
-    
+
     await alert.present();
 }

@@ -1,1 +1,11 @@
-﻿N/A
+﻿<IonButton @onclick="@(Present)">Click Me</IonButton>
+
+@code
+{
+    private async Task Present()
+    {
+        await IonLoadingController.PresentAsync(
+            message: "Dismissing after 3 seconds...",
+            htmlAttributes: new Dictionary<string, string> { { "data-ref-id", Guid.NewGuid().ToString("D") } });
+    }
+}

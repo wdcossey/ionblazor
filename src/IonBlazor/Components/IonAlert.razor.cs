@@ -21,7 +21,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     private AlertInput[]? _inputs;
 
     public override ElementReference IonElement => _self;
-    
+
     /// <summary>
     /// If <b>true</b>, the alert will animate.
     /// </summary>
@@ -150,7 +150,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
     [Parameter]
     public EventCallback<IonAlertWillPresentEventArgs> WillPresent { get; set; }
 
-    [Parameter] 
+    [Parameter]
     public EventCallback<AlertButtonHandlerEventArgs> ButtonHandler { get; set; }
 
     public IonAlert()
@@ -158,7 +158,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
         _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var values = GetValues(args);
-            
+
             await DidDismiss.InvokeAsync(new IonAlertDismissEventArgs
             {
                 Sender = this,
@@ -203,7 +203,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
         _willDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var values = GetValues(args);
-            
+
             await WillDismiss.InvokeAsync(new IonAlertDismissEventArgs
             {
                 Sender = this,
@@ -224,7 +224,7 @@ public partial class IonAlert : IonComponent, IIonModeComponent
                 var button = _buttons?.ElementAtOrDefault(index ?? -1);
 
                 await (button?.Handler?.Invoke(new AlertButtonEventArgs { Button = button, Sender = this, Index = index }) ?? ValueTask.CompletedTask);
-                
+
                 await ButtonHandler.InvokeAsync(new AlertButtonHandlerEventArgs { Sender = this, Index = index, Button = button });
             });
 
@@ -303,14 +303,14 @@ public interface IAlertButton
 {
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? Text { get; }
-        
+
     [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? Role { get; }
 
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? CssClass { get; }
-    
-    [JsonIgnore] 
+
+    [JsonIgnore]
     Func<AlertButtonEventArgs, ValueTask>? Handler { get; }
 }
 
@@ -318,17 +318,17 @@ public record AlertButton : IAlertButton
 {
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Text { get; set; }
-        
+
     [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Role { get; set; }
 
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CssClass { get; set; }
-    
+
     [JsonPropertyName("htmlAttributes"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public IDictionary<string, string> HtmlAttributes { get; set; } = null!;
 
-    [JsonIgnore] 
+    [JsonIgnore]
     public Func<AlertButtonEventArgs, ValueTask>? Handler { get; set; } = null!;
 }
 
@@ -338,12 +338,12 @@ public class AlertButtonEventArgs : EventArgs
     /// The <see cref="IonAlert"/> that this event occurred on.
     /// </summary>
     public IonAlert? Sender { get; internal set; } = null!;
-    
+
     /// <summary>
     /// The index of the button that was clicked.
     /// </summary>
     public int? Index { get; internal set; }
-    
+
     /// <summary>
     /// The <see cref="IAlertButton" /> that was clicked.
     /// </summary>
@@ -354,10 +354,10 @@ public record AlertInput
 {
     [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public virtual string? Type { get; set; }
-    
+
     [JsonPropertyName("name"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Name { get; set; }
-    
+
     [JsonPropertyName("placeholder"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Placeholder { get; set; }
 
@@ -390,7 +390,7 @@ public record AlertInput
 
     [JsonPropertyName("tabindex"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? TabIndex { get; set; }
-    
+
     /*
 type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
   name?: string;
@@ -435,17 +435,17 @@ public record AlertInputCheckbox : AlertInput
 
 public class AlertButtonHandlerEventArgs : EventArgs
 {
-    
+
     /// <summary>
     /// The <see cref="IonAlert" /> that this event occurred on.
     /// </summary>
     public IonAlert Sender { get; internal init; } = null!;
-    
+
     /// <summary>
     /// The index of the button that was clicked.
     /// </summary>
     public int? Index { get; internal init; }
-    
+
     /// <summary>
     /// The <see cref="IAlertButton" /> that was clicked.
     /// </summary>
@@ -456,13 +456,13 @@ public class IonAlertDidPresentEventArgs : EventArgs
 {
     public IonAlert? Sender { get; internal init; } = null!;
 }
-    
+
 public class IonAlertDismissEventArgs : EventArgs
 {
     public IonAlert? Sender { get; internal init; } = null!;
-    
+
     public string? Role { get; internal init; }
-    
+
     public IAlertValues? Values { get; internal init; }
 }
 
@@ -502,4 +502,3 @@ public class IonAlertWillPresentEventArgs : EventArgs
 {
     public IonAlert Sender { get; internal init; } = null!;
 }
-    

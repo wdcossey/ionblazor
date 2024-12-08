@@ -1,53 +1,48 @@
 ﻿@page "/samples/reorder"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <ion-list>
-                      <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-                        <IonReorderGroup Disabled="false" IonItemReorder="OnIonItemReorder">
-                            <ion-item>
-                                <IonLabel>
-                                  Item 1
-                                </IonLabel>
-                                <IonReorder slot="end"></IonReorder>
-                            </ion-item>
-                            
-                            <ion-item>
-                                <IonLabel>
-                                  Item 2
-                                </IonLabel>
-                                <IonReorder slot="end"></IonReorder>
-                            </ion-item>
-                            
-                            <ion-item>
-                                <IonLabel>
-                                  Item 3
-                                </IonLabel>
-                                <IonReorder slot="end"></IonReorder>
-                            </ion-item>
-                            
-                            <ion-item>
-                                <IonLabel>
-                                  Item 4
-                                </IonLabel>
-                                <IonReorder slot="end"></IonReorder>
-                            </ion-item>
-                            
-                            <ion-item>
-                                <IonLabel>
-                                  Item 5
-                                </IonLabel>
-                                <IonReorder slot="end"></IonReorder>
-                            </ion-item>
-                        </IonReorderGroup>
-                    </ion-list>
-                </div>
-            </div>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <ion-list>
+              <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+                <IonReorderGroup Disabled="false" IonItemReorder="OnIonItemReorder">
+                    <ion-item>
+                        <IonLabel>
+                          Item 1
+                        </IonLabel>
+                        <IonReorder slot="end"></IonReorder>
+                    </ion-item>
+
+                    <ion-item>
+                        <IonLabel>
+                          Item 2
+                        </IonLabel>
+                        <IonReorder slot="end"></IonReorder>
+                    </ion-item>
+
+                    <ion-item>
+                        <IonLabel>
+                          Item 3
+                        </IonLabel>
+                        <IonReorder slot="end"></IonReorder>
+                    </ion-item>
+
+                    <ion-item>
+                        <IonLabel>
+                          Item 4
+                        </IonLabel>
+                        <IonReorder slot="end"></IonReorder>
+                    </ion-item>
+
+                    <ion-item>
+                        <IonLabel>
+                          Item 5
+                        </IonLabel>
+                        <IonReorder slot="end"></IonReorder>
+                    </ion-item>
+                </IonReorderGroup>
+            </ion-list>
         </div>
-        
-    </IonContent>
+    </div>
 </div>

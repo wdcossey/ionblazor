@@ -112,10 +112,13 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     [Parameter]
     public string? HandleBehavior { get; set; } = IonModalHandleBehavior.Default;
 
-    ///// <summary>
-    ///// Additional attributes to pass to the modal.
-    ///// </summary>
-    //[Parameter] public Dictionary<string, object> HtmlAttributes { get; set; }
+    /// <summary>
+    /// Additional attributes to pass to the loader.<br/>
+    /// The is not available in Blazor/Razor, use
+    /// <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/components/splat-attributes-and-arbitrary-parameters?view=aspnetcore-8.0" >attribute splatting</a>
+    /// </summary>
+    [Obsolete("Not available in Blazor/Razor, use attribute splatting", true)]
+    [Parameter] public Dictionary<string, object> HtmlAttributes { get; set; }
 
     /// <summary>
     /// A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a

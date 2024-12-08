@@ -7,7 +7,7 @@ public partial class IonButton : IonComponent, IIonModeComponent, IIonContentCom
     private DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -42,7 +42,7 @@ public partial class IonButton : IonComponent, IIonModeComponent, IIonContentCom
     /// or to <see cref="IonButtonExpand.Full"/> for a full-width button with square corners and no left or right borders.
     /// </summary>
     [Parameter]
-    public string? Expand { get; set; }
+    public string? Expand { get; set; } = IonButtonExpand.Default;
 
     /// <summary>
     /// Set to <see cref="IonButtonFill.Clear"/> for a transparent button that resembles a flat button,
@@ -65,6 +65,12 @@ public partial class IonButton : IonComponent, IIonModeComponent, IIonContentCom
     /// </summary>
     [Parameter]
     public string? Href { get; set; }
+
+    /// <summary>
+    /// The mode from the parent (<see cref="IonApp"/>).
+    /// </summary>
+    [CascadingParameter(Name = "ion-app-mode")]
+    internal string? CascadingMode { get; set; }
 
     /// <inheritdoc/>
     [Parameter]
@@ -148,7 +154,7 @@ public partial class IonButton : IonComponent, IIonModeComponent, IIonContentCom
 
         if (!firstRender)
             return;
-        
+
         await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
             IonEvent.Set("ionBlur" , _ionBlurReference ),
@@ -164,7 +170,7 @@ public static class IonButtonExpand {
     public const string Full = "full";
 }
 
-public static class IonButtonFill 
+public static class IonButtonFill
 {
     public const string Clear = "clear";
     public const string Default = "default";
@@ -172,20 +178,20 @@ public static class IonButtonFill
     public const string Solid = "solid";
 }
 
-public static class IonButtonShape 
+public static class IonButtonShape
 {
     public const string? Default = null;
     public const string Round = "round";
 }
 
-public static class IonButtonSize 
+public static class IonButtonSize
 {
     public const string Default = "default";
     public const string Large = "large";
     public const string Small = "small";
 }
 
-public static class IonButtonType 
+public static class IonButtonType
 {
     public const string Button = "button";
     public const string Reset = "reset";

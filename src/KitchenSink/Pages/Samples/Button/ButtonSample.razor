@@ -1,112 +1,105 @@
 ﻿@page "/samples/button"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <div class="container">
-                        <IonButton>Default</IonButton>
-                        <IonButton Disabled="@true">Disabled</IonButton>
-                    </div>
-                </div>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <div class="container">
+                <IonButton>Default</IonButton>
+                <IonButton Disabled="@true">Disabled</IonButton>
             </div>
         </div>
+    </div>
+</div>
 
-        <h2>Expand</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonButton Expand="@IonButtonExpand.Block">Block</IonButton>
-                    <IonButton Expand="@IonButtonExpand.Full">Full</IonButton>
-                </div>
-            </div>
+<h2>Expand</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonButton Expand="@IonButtonExpand.Block">Block</IonButton>
+            <IonButton Expand="@IonButtonExpand.Full">Full</IonButton>
         </div>
+    </div>
+</div>
 
-        <h2>Shape</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonButton >Default</IonButton>
-                    <IonButton Shape="@IonButtonShape.Round">Round</IonButton>
-                </div>
-            </div>
+<h2>Shape</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonButton >Default</IonButton>
+            <IonButton Shape="@IonButtonShape.Round">Round</IonButton>
         </div>
+    </div>
+</div>
 
-        <h2>Fill</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonButton Fill="@IonButtonFill.Default">Default</IonButton>
-                    <IonButton Fill="@IonButtonFill.Clear">Clear</IonButton>
-                    <IonButton Fill="@IonButtonFill.Outline">Outline</IonButton>
-                    <IonButton Fill="@IonButtonFill.Solid">Solid</IonButton>
-                </div>
-            </div>
+<h2>Fill</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonButton Fill="@IonButtonFill.Default">Default</IonButton>
+            <IonButton Fill="@IonButtonFill.Clear">Clear</IonButton>
+            <IonButton Fill="@IonButtonFill.Outline">Outline</IonButton>
+            <IonButton Fill="@IonButtonFill.Solid">Solid</IonButton>
         </div>
+    </div>
+</div>
 
 
-        <h2>Size</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonButton Size="@IonButtonSize.Small">Small</IonButton>
-                    <IonButton Size="@IonButtonSize.Default">Default</IonButton>
-                    <IonButton Size="@IonButtonSize.Large">Default</IonButton>
-                </div>
-            </div>
+<h2>Size</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonButton Size="@IonButtonSize.Small">Small</IonButton>
+            <IonButton Size="@IonButtonSize.Default">Default</IonButton>
+            <IonButton Size="@IonButtonSize.Large">Default</IonButton>
         </div>
+    </div>
+</div>
 
 
-        <h2>Icons</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonButton>
-                        <IonIcon slot="start" Name="star"></IonIcon>
-                        Left Icon
-                    </IonButton>
-                    <IonButton>
-                        Right Icon
-                        <IonIcon slot="end" Name="star"></IonIcon>
-                    </IonButton>
-                    <IonButton>
-                        <IonIcon slot="icon-only" Name="star"></IonIcon>
-                    </IonButton>
-                </div>
-            </div>
+<h2>Icons</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonButton>
+                <IonIcon slot="start" Name="star"></IonIcon>
+                Left Icon
+            </IonButton>
+            <IonButton>
+                Right Icon
+                <IonIcon slot="end" Name="star"></IonIcon>
+            </IonButton>
+            <IonButton>
+                <IonIcon slot="icon-only" Name="star"></IonIcon>
+            </IonButton>
         </div>
-        
-        <h2>Theming</h2>
-        <h3>Colors</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonButton>Default</IonButton>
-                    <IonButton Color="@IonColor.Primary">Primary</IonButton>
-                    <IonButton Color="@IonColor.Secondary">Secondary</IonButton>
-                    <IonButton Color="@IonColor.Tertiary">Tertiary</IonButton>
-                    <IonButton Color="@IonColor.Success">Success</IonButton>
-                    <IonButton Color="@IonColor.Warning">Warning</IonButton>
-                    <IonButton Color="@IonColor.Danger">Danger</IonButton>
-                    <IonButton Color="@IonColor.Light">Light</IonButton>
-                    <IonButton Color="@IonColor.Medium">Medium</IonButton>
-                    <IonButton Color="@IonColor.Dark">Dark</IonButton>
-                </div>
-            </div>
-        </div>
-        
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <CustomButton/>
-                </div>
-            </div>
-        </div>
+    </div>
+</div>
 
-        
+<h2>Theming</h2>
+<h3>Colors</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonButton>Default</IonButton>
+            <IonButton Color="@IonColor.Primary">Primary</IonButton>
+            <IonButton Color="@IonColor.Secondary">Secondary</IonButton>
+            <IonButton Color="@IonColor.Tertiary">Tertiary</IonButton>
+            <IonButton Color="@IonColor.Success">Success</IonButton>
+            <IonButton Color="@IonColor.Warning">Warning</IonButton>
+            <IonButton Color="@IonColor.Danger">Danger</IonButton>
+            <IonButton Color="@IonColor.Light">Light</IonButton>
+            <IonButton Color="@IonColor.Medium">Medium</IonButton>
+            <IonButton Color="@IonColor.Dark">Dark</IonButton>
+        </div>
+    </div>
+</div>
 
-    </IonContent>
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <CustomButton/>
+        </div>
+    </div>
 </div>

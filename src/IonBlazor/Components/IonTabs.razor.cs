@@ -5,9 +5,9 @@ public partial class IonTabs : IonComponent, IIonContentComponent
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsDidChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsWillChangeReference;
-    
+
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -43,7 +43,7 @@ public partial class IonTabs : IonComponent, IIonContentComponent
     /// Get the currently selected tab.
     /// </summary>
     /// <returns></returns>
-    public ValueTask<string> GetSelectedAsync() => 
+    public ValueTask<string> GetSelectedAsync() =>
         JsComponent.InvokeAsync<string>("getSelected", _self);
 
     /// <summary>
@@ -59,7 +59,7 @@ public partial class IonTabs : IonComponent, IIonContentComponent
     /// Select a tab by the value of its tab property or an element reference.
     /// </summary>
     /// <returns></returns>
-    public ValueTask<bool> SelectAsync(string tab) => 
+    public ValueTask<bool> SelectAsync(string tab) =>
         JsComponent.InvokeAsync<bool>("select", _self, tab);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -68,7 +68,7 @@ public partial class IonTabs : IonComponent, IIonContentComponent
 
         if (!firstRender)
             return;
-        
+
         await this.AttachIonListenersAsync(_self, new[]
         {
             IonEvent.Set("ionTabsDidChange" , _ionTabsDidChangeReference ),

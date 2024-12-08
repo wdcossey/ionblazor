@@ -1,198 +1,193 @@
 ﻿@page "/samples/date-time"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime></IonDateTime>
-                </div>
-            </div>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime></IonDateTime>
         </div>
-        
-        <h2>Date Constraints</h2>
-        <h3>Max and Min Dates</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime Value="2022-04-21T00:00:00"
-                                 Min="2022-03-01T00:00:00"
-                                 Max="2022-05-31T23:59:59">
-                    </IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Date Constraints</h2>
+<h3>Max and Min Dates</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime Value="2022-04-21T00:00:00"
+                         Min="2022-03-01T00:00:00"
+                         Max="2022-05-31T23:59:59">
+            </IonDateTime>
         </div>
-        
-        <h3>Selecting Specific Values</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime MinuteValues="0,15,30,45"
-                                 DayValues="5,10,15,20,25,30">
-                    </IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Selecting Specific Values</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime MinuteValues="0,15,30,45"
+                         DayValues="5,10,15,20,25,30">
+            </IonDateTime>
         </div>
-        
-        <h3>Advanced Date Constraints</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime IsDateEnabled="@(AdvancedDateConstraintsIsEnabled)" >
-                    </IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Advanced Date Constraints</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime IsDateEnabled="@(AdvancedDateConstraintsIsEnabled)" >
+            </IonDateTime>
         </div>
-        
-        <h2>Localization</h2>
-        <h3>Custom Locale</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime Locale="es-ES"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Localization</h2>
+<h3>Custom Locale</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime Locale="es-ES"></IonDateTime>
         </div>
-        
-        <h3>Hour Cycle</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime Locale="en-GB" HourCycle="h12"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Hour Cycle</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime Locale="en-GB" HourCycle="h12"></IonDateTime>
         </div>
-        
-        <h3>First Day of the Week</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime FirstDayOfWeek="1"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>First Day of the Week</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime FirstDayOfWeek="1"></IonDateTime>
         </div>
-        
-        <h3>Time Label</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime Locale="es-ES">
-                        <span slot="time-label">Tiempo</span>
-                    </IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Time Label</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime Locale="es-ES">
+                <span slot="time-label">Tiempo</span>
+            </IonDateTime>
         </div>
-        
-        <h3>Locale Extension Tags</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime Locale="en-GB-u-hc-h12"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Locale Extension Tags</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime Locale="en-GB-u-hc-h12"></IonDateTime>
         </div>
-        
-        <h2>Presentation</h2>
-        <h3>Month and Year Selection</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime Presentation="@IonDateTimePresentation.MonthYear"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Presentation</h2>
+<h3>Month and Year Selection</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime Presentation="@IonDateTimePresentation.MonthYear"></IonDateTime>
         </div>
-        
-        <h3>Time Selection</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime Presentation="@IonDateTimePresentation.Time"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Time Selection</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime Presentation="@IonDateTimePresentation.Time"></IonDateTime>
         </div>
-        
-        <h3>Date Selection</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime Presentation="@IonDateTimePresentation.Date"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Date Selection</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime Presentation="@IonDateTimePresentation.Date"></IonDateTime>
         </div>
-        
-        <h3>Wheel Style Pickers</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime Presentation="@IonDateTimePresentation.DateTime" PreferWheel="true"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Wheel Style Pickers</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime Presentation="@IonDateTimePresentation.DateTime" PreferWheel="true"></IonDateTime>
         </div>
-        
-        <h2>Multiple Date Selection</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime @ref="_multipleDateSelectionRef" Presentation="@IonDateTimePresentation.Date" Multiple="true"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Multiple Date Selection</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime @ref="_multipleDateSelectionRef" Presentation="@IonDateTimePresentation.Date" Multiple="true"></IonDateTime>
         </div>
-        
-        <h2>Titles</h2>
-        <h3>Showing the Default Title</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime ShowDefaultTitle="true"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Titles</h2>
+<h3>Showing the Default Title</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime ShowDefaultTitle="true"></IonDateTime>
         </div>
-        
-        <h3>Customizing the Title</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime>
-                      <span slot="title">Select a Reservation Date</span>
-                    </IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Customizing the Title</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime>
+              <span slot="title">Select a Reservation Date</span>
+            </IonDateTime>
         </div>
-        
-        <h2>Buttons</h2>
-        <h3>Showing Confirmation Buttons</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime ShowDefaultButtons="true"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Buttons</h2>
+<h3>Showing Confirmation Buttons</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime ShowDefaultButtons="true"></IonDateTime>
         </div>
-        
-        <h3>Customizing Button Texts</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime ShowDefaultButtons="true" DoneText="All set" CancelText="Never mind"></IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Customizing Button Texts</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime ShowDefaultButtons="true" DoneText="All set" CancelText="Never mind"></IonDateTime>
         </div>
-        
-        <h3>Customizing Button Elements</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonDateTime @ref="_customButtonElementsRef">
-                      <IonButtons slot="buttons">
-                        <IonButton Color="@IonColor.Danger" @onclick="@(() => _customButtonElementsRef.ResetAsync())">Reset</IonButton>
-                        <IonButton Color="@IonColor.Primary" @onclick="@(() => _customButtonElementsRef.CancelAsync())">Never mind</IonButton>
-                        <IonButton Color="@IonColor.Primary" @onclick="@(() => _customButtonElementsRef.ConfirmAsync())">All Set</IonButton>
-                      </IonButtons>
-                    </IonDateTime>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>Customizing Button Elements</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime @ref="_customButtonElementsRef">
+              <IonButtons slot="buttons">
+                <IonButton Color="@IonColor.Danger" @onclick="@(() => _customButtonElementsRef.ResetAsync())">Reset</IonButton>
+                <IonButton Color="@IonColor.Primary" @onclick="@(() => _customButtonElementsRef.CancelAsync())">Never mind</IonButton>
+                <IonButton Color="@IonColor.Primary" @onclick="@(() => _customButtonElementsRef.ConfirmAsync())">All Set</IonButton>
+              </IonButtons>
+            </IonDateTime>
         </div>
-        
-    </IonContent>
+    </div>
 </div>

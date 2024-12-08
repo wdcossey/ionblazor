@@ -1,245 +1,239 @@
 ﻿@page "/samples/toolbar"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container" style="width: 344px; height: 704px">
-                    <div class="ion-page">
-                        <DevicePreview Mode="@IonMode.MaterialDesign">
-                            <style>
-                                .content {
-                                    left: 0;
-                                    right: 0;
-                                    top: 0;
-                                    bottom: 0;
-                                    display: flex;
-                                    position: absolute;
-                                    flex-direction: column;
-                                    justify-content: space-between;
-                                    contain: layout size style;
-                                    overflow: hidden;
-                                    z-index: 0;
-                                }
-                            </style>
-                            <IonHeader>
-                                <IonToolbar>
-                                    <IonTitle>Header Toolbar</IonTitle>
-                                </IonToolbar>
-                            </IonHeader>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container" style="width: 344px; height: 704px">
+            <div class="ion-page">
+                <DevicePreview Mode="@IonMode.MaterialDesign">
+                    <style>
+                        .content {
+                            left: 0;
+                            right: 0;
+                            top: 0;
+                            bottom: 0;
+                            display: flex;
+                            position: absolute;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            contain: layout size style;
+                            overflow: hidden;
+                            z-index: 0;
+                        }
+                    </style>
+                    <IonHeader>
+                        <IonToolbar>
+                            <IonTitle>Header Toolbar</IonTitle>
+                        </IonToolbar>
+                    </IonHeader>
 
-                            <IonFooter>
-                                <IonToolbar>
-                                    <IonTitle>Footer Toolbar</IonTitle>
-                                </IonToolbar>
-                            </IonFooter>
-                        </DevicePreview>
-                    </div>
-                </div>
-            </div>
-        </div>
-          
-        <h2>Buttons in Toolbars</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonToolbar>
-                        <IonButtons slot="start">
-                            <IonButton>
-                                Start
-                            </IonButton>
-                        </IonButtons>
-                        <IonTitle>Start / End Buttons</IonTitle>
-                        <IonButtons slot="end">
-                            <IonButton>
-                              End
-                            </IonButton>
-                        </IonButtons>
-                    </IonToolbar>
-                    
-                    <IonToolbar>
-                        <IonButtons slot="secondary">
-                            <IonButton>
-                                Secondary
-                            </IonButton>
-                        </IonButtons>
-                        <IonButtons slot="primary">
-                            <IonButton>
-                                Primary
-                            </IonButton>
-                        </IonButtons>
-                        <IonTitle>Primary / Secondary Buttons</IonTitle>
-                    </IonToolbar>
-                    
-                    <IonToolbar>
-                        <IonButtons slot="secondary">
-                            <IonButton>
-                                <IonIcon slot="icon-only" Name="person-circle"></IonIcon>
-                            </IonButton>
-                            <IonButton>
-                                <IonIcon slot="icon-only" Name="search"></IonIcon>
-                            </IonButton>
-                        </IonButtons>
-                        <IonButtons slot="primary">
-                            <IonButton>
-                                <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
-                            </IonButton>
-                        </IonButtons>
-                        <IonTitle>Icon Buttons</IonTitle>
-                    </IonToolbar>
-                    
-                    <IonToolbar>
-                        <IonButtons slot="secondary">
-                            <IonButton Fill="solid">
-                                <IonIcon slot="start" Name="person-circle"></IonIcon>
-                                Contact
-                            </IonButton>
-                        </IonButtons>
-                        <IonButtons slot="primary">
-                            <IonButton Fill="solid">
-                                Help
-                                <IonIcon slot="end" Name="help-circle"></IonIcon>
-                            </IonButton>
-                        </IonButtons>
-                        <IonTitle>Solid Buttons</IonTitle>
-                    </IonToolbar>
-                    
-                    <IonToolbar>
-                        <IonButtons slot="secondary">
-                            <IonButton Fill="outline">
-                                <IonIcon slot="start" Name="star"></IonIcon>
-                                Star
-                            </IonButton>
-                        </IonButtons>
-                        <IonButtons slot="primary">
-                            <IonButton Fill="outline">
-                                Edit
-                                <IonIcon slot="end" Name="create"></IonIcon>
-                            </IonButton>
-                        </IonButtons>
-                        <IonTitle>Outline Buttons</IonTitle>
-                    </IonToolbar>
-                    
-                    <IonToolbar>
-                        <IonButtons slot="start">
-                            <IonBackButton DefaultHref="#"></IonBackButton>
-                        </IonButtons>
-                        <IonTitle>Back Button</IonTitle>
-                    </IonToolbar>
-                    
-                    <IonToolbar>
-                        <IonButtons slot="start">
-                            <IonMenuButton AutoHide="@false"></IonMenuButton>
-                        </IonButtons>
-                        <IonTitle>Menu Button</IonTitle>
-                    </IonToolbar>
-                </div>
-            </div>
-        </div>
-          
-        <h2>Searchbars in Toolbars</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonHeader>
+                    <IonFooter>
                         <IonToolbar>
-                            <IonTitle>Toolbar</IonTitle>
+                            <IonTitle>Footer Toolbar</IonTitle>
                         </IonToolbar>
-                        <IonToolbar>
-                            <IonSearchbar></IonSearchbar>
-                        </IonToolbar>
-                    </IonHeader>
-                </div>
+                    </IonFooter>
+                </DevicePreview>
             </div>
         </div>
-          
-        <h2>Segments in Toolbars</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonHeader>
-                        <IonToolbar>
-                            <IonSegment Value="all">
-                                <IonSegmentButton Value="all">
-                                    <IonLabel>All</IonLabel>
-                                </IonSegmentButton>
-                                <IonSegmentButton Value="favorites">
-                                    <IonLabel>Favorites</IonLabel>
-                                </IonSegmentButton>
-                            </IonSegment>
-                        </IonToolbar>
-                    </IonHeader>
-                </div>
+    </div>
+</div>
+
+<h2>Buttons in Toolbars</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonToolbar>
+                <IonButtons slot="start">
+                    <IonButton>
+                        Start
+                    </IonButton>
+                </IonButtons>
+                <IonTitle>Start / End Buttons</IonTitle>
+                <IonButtons slot="end">
+                    <IonButton>
+                      End
+                    </IonButton>
+                </IonButtons>
+            </IonToolbar>
+
+            <IonToolbar>
+                <IonButtons slot="secondary">
+                    <IonButton>
+                        Secondary
+                    </IonButton>
+                </IonButtons>
+                <IonButtons slot="primary">
+                    <IonButton>
+                        Primary
+                    </IonButton>
+                </IonButtons>
+                <IonTitle>Primary / Secondary Buttons</IonTitle>
+            </IonToolbar>
+
+            <IonToolbar>
+                <IonButtons slot="secondary">
+                    <IonButton>
+                        <IonIcon slot="icon-only" Name="person-circle"></IonIcon>
+                    </IonButton>
+                    <IonButton>
+                        <IonIcon slot="icon-only" Name="search"></IonIcon>
+                    </IonButton>
+                </IonButtons>
+                <IonButtons slot="primary">
+                    <IonButton>
+                        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
+                    </IonButton>
+                </IonButtons>
+                <IonTitle>Icon Buttons</IonTitle>
+            </IonToolbar>
+
+            <IonToolbar>
+                <IonButtons slot="secondary">
+                    <IonButton Fill="solid">
+                        <IonIcon slot="start" Name="person-circle"></IonIcon>
+                        Contact
+                    </IonButton>
+                </IonButtons>
+                <IonButtons slot="primary">
+                    <IonButton Fill="solid">
+                        Help
+                        <IonIcon slot="end" Name="help-circle"></IonIcon>
+                    </IonButton>
+                </IonButtons>
+                <IonTitle>Solid Buttons</IonTitle>
+            </IonToolbar>
+
+            <IonToolbar>
+                <IonButtons slot="secondary">
+                    <IonButton Fill="outline">
+                        <IonIcon slot="start" Name="star"></IonIcon>
+                        Star
+                    </IonButton>
+                </IonButtons>
+                <IonButtons slot="primary">
+                    <IonButton Fill="outline">
+                        Edit
+                        <IonIcon slot="end" Name="create"></IonIcon>
+                    </IonButton>
+                </IonButtons>
+                <IonTitle>Outline Buttons</IonTitle>
+            </IonToolbar>
+
+            <IonToolbar>
+                <IonButtons slot="start">
+                    <IonBackButton DefaultHref="#"></IonBackButton>
+                </IonButtons>
+                <IonTitle>Back Button</IonTitle>
+            </IonToolbar>
+
+            <IonToolbar>
+                <IonButtons slot="start">
+                    <IonMenuButton AutoHide="@false"></IonMenuButton>
+                </IonButtons>
+                <IonTitle>Menu Button</IonTitle>
+            </IonToolbar>
+        </div>
+    </div>
+</div>
+
+<h2>Searchbars in Toolbars</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Toolbar</IonTitle>
+                </IonToolbar>
+                <IonToolbar>
+                    <IonSearchbar></IonSearchbar>
+                </IonToolbar>
+            </IonHeader>
+        </div>
+    </div>
+</div>
+
+<h2>Segments in Toolbars</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonHeader>
+                <IonToolbar>
+                    <IonSegment Value="all">
+                        <IonSegmentButton Value="all">
+                            <IonLabel>All</IonLabel>
+                        </IonSegmentButton>
+                        <IonSegmentButton Value="favorites">
+                            <IonLabel>Favorites</IonLabel>
+                        </IonSegmentButton>
+                    </IonSegment>
+                </IonToolbar>
+            </IonHeader>
+        </div>
+    </div>
+</div>
+
+<h2>Progress Bars in Toolbars</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Toolbar</IonTitle>
+                    <IonProgressBar Type="@IonProgressBarType.Indeterminate"></IonProgressBar>
+                </IonToolbar>
+            </IonHeader>
+        </div>
+    </div>
+</div>
+
+<h2>Theming</h2>
+<h3>Colors</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonToolbar>
+                <IonTitle>Default Toolbar</IonTitle>
+            </IonToolbar>
+            <IonToolbar Color="primary">
+                <IonTitle>Primary Toolbar</IonTitle>
+            </IonToolbar>
+            <IonToolbar Color="secondary">
+                <IonTitle>Secondary Toolbar</IonTitle>
+            </IonToolbar>
+            <IonToolbar Color="tertiary">
+                <IonTitle>Tertiary Toolbar</IonTitle>
+            </IonToolbar>
+            <IonToolbar Color="success">
+                <IonTitle>Success Toolbar</IonTitle>
+            </IonToolbar>
+            <IonToolbar Color="warning">
+                <IonTitle>Warning Toolbar</IonTitle>
+            </IonToolbar>
+            <IonToolbar Color="danger">
+                <IonTitle>Danger Toolbar</IonTitle>
+            </IonToolbar>
+            <IonToolbar Color="light">
+                <IonTitle>Light Toolbar</IonTitle>
+            </IonToolbar>
+            <IonToolbar Color="medium">
+                <IonTitle>Medium Toolbar</IonTitle>
+            </IonToolbar>
+            <IonToolbar Color="dark">
+                <IonTitle>Dark Toolbar</IonTitle>
+            </IonToolbar>
+        </div>
+    </div>
+</div>
+
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <div class="custom-css">
+                <IonToolbar>
+                    <IonTitle>Custom Toolbar</IonTitle>
+                </IonToolbar>
             </div>
         </div>
-          
-        <h2>Progress Bars in Toolbars</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonHeader>
-                        <IonToolbar>
-                            <IonTitle>Toolbar</IonTitle>
-                            <IonProgressBar Type="@IonProgressBarType.Indeterminate"></IonProgressBar>
-                        </IonToolbar>
-                    </IonHeader>
-                </div>
-            </div>
-        </div>
-          
-        <h2>Theming</h2>
-        <h3>Colors</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonToolbar>
-                        <IonTitle>Default Toolbar</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar Color="primary">
-                        <IonTitle>Primary Toolbar</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar Color="secondary">
-                        <IonTitle>Secondary Toolbar</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar Color="tertiary">
-                        <IonTitle>Tertiary Toolbar</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar Color="success">
-                        <IonTitle>Success Toolbar</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar Color="warning">
-                        <IonTitle>Warning Toolbar</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar Color="danger">
-                        <IonTitle>Danger Toolbar</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar Color="light">
-                        <IonTitle>Light Toolbar</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar Color="medium">
-                        <IonTitle>Medium Toolbar</IonTitle>
-                    </IonToolbar>
-                    <IonToolbar Color="dark">
-                        <IonTitle>Dark Toolbar</IonTitle>
-                    </IonToolbar>
-                </div>
-            </div>
-        </div>
-        
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <div class="custom-css">
-                        <IonToolbar>
-                            <IonTitle>Custom Toolbar</IonTitle>
-                        </IonToolbar>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-    </IonContent>
+    </div>
 </div>

@@ -19,47 +19,47 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
     public override ElementReference IonElement => _self;
-    
-    [Parameter] 
+
+    [Parameter]
     public bool? Animated { get; set; }
 
     [Parameter]
     public bool? BackdropDismiss { get; set; }
 
-    [Parameter] 
+    [Parameter]
     public Func<IEnumerable<ActionSheetButton<TButtonData>>>? Buttons { get; set; }
 
     [Parameter, Obsolete("Ignored, use `CssClass`", true)]
     public override string? Class { get; set; }
 
-    [Parameter] 
+    [Parameter]
     public string? CssClass { get; set; }
 
     //[Parameter] public string? EnterAnimation { get; set; }
-    [Parameter] 
+    [Parameter]
     public string? Header { get; set; }
-    
-    //[Parameter] 
+
+    //[Parameter]
     //public Func<string[]>? HtmlAttributes { get; set; }
-    
-    [Parameter] 
+
+    [Parameter]
     public bool? IsOpen { get; set; }
-    
-    [Parameter] 
+
+    [Parameter]
     public bool? KeyboardClose { get; set; }
 
     //[Parameter] public string? LeaveAnimation { get; set; }
-    
-    [Parameter] 
+
+    [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
-    
-    [Parameter] 
+
+    [Parameter]
     public string? SubHeader { get; set; }
-    
-    [Parameter] 
+
+    [Parameter]
     public bool? Translucent { get; set; }
-    
-    [Parameter] 
+
+    [Parameter]
     public string? Trigger { get; set; }
 
     /// <summary>
@@ -110,9 +110,9 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     [Parameter]
     public EventCallback<ActionSheetEventArgs<TButtonData>> WillPresent { get; set; }
 
-    [Parameter] 
+    [Parameter]
     public EventCallback<ActionSheetButtonHandlerEventArgs<TButtonData>> ButtonHandler { get; set; }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -190,7 +190,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
                 var index = args?["index"]?.GetValue<int?>();
                 var button = buttons?.ElementAtOrDefault(index ?? -1);
                 await (button?.Handler?.Invoke(button, index) ?? ValueTask.CompletedTask);
-                
+
                 await ButtonHandler.InvokeAsync(new ActionSheetButtonHandlerEventArgs<TButtonData>()
                 {
                     Sender = this,
@@ -198,7 +198,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
                     Button = button
                 });
             });
-        
+
         await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
             IonEvent.Set("didDismiss", _didDismissReference ),
@@ -212,7 +212,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
             IonEvent.Set("willDismiss", _willDismissReference ),
             IonEvent.Set("willPresent", _willPresentReference ),
         });
-        
+
         await JsComponent.InvokeVoidAsync("addButtons", _self, buttons, _buttonHandlerReference);
     }
 
@@ -222,7 +222,7 @@ public partial class IonActionSheet<TButtonData> : IonComponent, IIonModeCompone
     /// <param name="data"></param>
     /// <param name="role"></param>
     /// <returns></returns>
-    public ValueTask<bool> DismissAsync(IEnumerable<ActionSheetButton<TButtonData>>? data, string? role) => 
+    public ValueTask<bool> DismissAsync(IEnumerable<ActionSheetButton<TButtonData>>? data, string? role) =>
         JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
 
     /// <summary>
@@ -260,32 +260,32 @@ public class ActionSheetButton<TData>
 {
     public delegate ValueTask HandlerDelegate<TButtonData>(ActionSheetButton<TButtonData>? button, int? index)
         where TButtonData : class, IActionSheetButtonData;
-    
+
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Text { get; set; }
-        
+
     [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Role { get; set; }
-        
+
     [JsonPropertyName("icon"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Icon { get; set; }
-    
+
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CssClass { get; set; }
-    
+
     [JsonPropertyName("htmlAttributes"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public IDictionary<string, string> HtmlAttributes { get; set; } = null!;
-    
+
     [JsonIgnore]
     public HandlerDelegate<TData>? Handler { get; set; }
-        
+
     [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public TData? Data { get; set; }
 }
 
 public class SimpleActionSheetButton : ActionSheetButton<ActionSheetButtonData>
 {
-    
+
 }
 
 /*public class ActionSheetButtonEventHelper<TArgs>

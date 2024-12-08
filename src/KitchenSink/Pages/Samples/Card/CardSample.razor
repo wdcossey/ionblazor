@@ -1,213 +1,208 @@
 ﻿@page "/samples/card"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container" ScrollEvents="@true" >
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonCard>
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent>
-                        Here's a small text description for the card content. Nothing more, nothing less.
-                      </IonCardContent>
-                    </IonCard>
-                </div>
-            </div>
-        </div>
-        
-        <h2>Media Cards</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonCard>
-                      <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent>
-                        Here's a small text description for the card content. Nothing more, nothing less.
-                      </IonCardContent>
-                    </IonCard>
-                </div>
-            </div>
-        </div>
-        
-        <h2>Card Buttons</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonCard>
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent>
-                        Here's a small text description for the card content. Nothing more, nothing less.
-                      </IonCardContent>
-                    
-                      <IonButton Fill="@IonButtonFill.Clear">Action 1</IonButton>
-                      <IonButton Fill="@IonButtonFill.Clear">Action 2</IonButton>
-                    </IonCard>
-                </div>
-            </div>
-        </div>
-        
-        <h2>List Card</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <style>
-                      ion-item {
-                        --padding-start: 0;
-                      }
-                    </style>
-                    
-                    <IonCard>
-                        <IonCardHeader>
-                            <IonCardTitle>Card Title</IonCardTitle>
-                            <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                        </IonCardHeader>
-                        <IonCardContent>
-                            <IonList>
-                                <IonItem>
-                                    <IonThumbnail slot="start">
-                                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
-                                    </IonThumbnail>
-                                    <IonLabel>Item</IonLabel>
-                                </IonItem>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonCard>
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
 
-                                <IonItem>
-                                    <IonThumbnail slot="start">
-                                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
-                                    </IonThumbnail>
-                                    <IonLabel>Item</IonLabel>
-                                </IonItem>
-
-                                <IonItem>
-                                    <IonThumbnail slot="start">
-                                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
-                                    </IonThumbnail>
-                                    <IonLabel>Item</IonLabel>
-                                </IonItem>
-
-                                <IonItem lines="none">
-                                    <IonThumbnail slot="start">
-                                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
-                                    </IonThumbnail>
-                                    <IonLabel>Item</IonLabel>
-                                </IonItem>
-                            </IonList>
-                        </IonCardContent>
-                    </IonCard>
-                </div>
-            </div>
+              <IonCardContent>
+                Here's a small text description for the card content. Nothing more, nothing less.
+              </IonCardContent>
+            </IonCard>
         </div>
+    </div>
+</div>
 
-        <h2>Theming</h2>
-        <h3>Colors</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonCard Color="@IonColor.Primary">
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent> Card Content </IonCardContent>
-                    </IonCard>
-                    
-                    <IonCard Color="@IonColor.Secondary">
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent> Card Content </IonCardContent>
-                    </IonCard>
-                    
-                    <IonCard Color="@IonColor.Tertiary">
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent> Card Content </IonCardContent>
-                    </IonCard>
-                    
-                    <IonCard Color="@IonColor.Success">
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent> Card Content </IonCardContent>
-                    </IonCard>
-                    
-                    <IonCard Color="@IonColor.Warning">
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent> Card Content </IonCardContent>
-                    </IonCard>
-                    
-                    <IonCard Color="@IonColor.Danger">
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent> Card Content </IonCardContent>
-                    </IonCard>
-                    
-                    <IonCard Color="@IonColor.Light">
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent> Card Content </IonCardContent>
-                    </IonCard>
-                    
-                    <IonCard Color="@IonColor.Medium">
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent> Card Content </IonCardContent>
-                    </IonCard>
-                    
-                    <IonCard Color="@IonColor.Dark">
-                      <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                      </IonCardHeader>
-                    
-                      <IonCardContent> Card Content </IonCardContent>
-                    </IonCard>
-                </div>
-            </div>
+<h2>Media Cards</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonCard>
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent>
+                Here's a small text description for the card content. Nothing more, nothing less.
+              </IonCardContent>
+            </IonCard>
         </div>
-        
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <ThemingCssCustomProperties/>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Card Buttons</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonCard>
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent>
+                Here's a small text description for the card content. Nothing more, nothing less.
+              </IonCardContent>
+
+              <IonButton Fill="@IonButtonFill.Clear">Action 1</IonButton>
+              <IonButton Fill="@IonButtonFill.Clear">Action 2</IonButton>
+            </IonCard>
         </div>
-        
-    </IonContent>
+    </div>
+</div>
+
+<h2>List Card</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <style>
+              ion-item {
+                --padding-start: 0;
+              }
+            </style>
+
+            <IonCard>
+                <IonCardHeader>
+                    <IonCardTitle>Card Title</IonCardTitle>
+                    <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+                </IonCardHeader>
+                <IonCardContent>
+                    <IonList>
+                        <IonItem>
+                            <IonThumbnail slot="start">
+                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
+                            </IonThumbnail>
+                            <IonLabel>Item</IonLabel>
+                        </IonItem>
+
+                        <IonItem>
+                            <IonThumbnail slot="start">
+                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
+                            </IonThumbnail>
+                            <IonLabel>Item</IonLabel>
+                        </IonItem>
+
+                        <IonItem>
+                            <IonThumbnail slot="start">
+                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
+                            </IonThumbnail>
+                            <IonLabel>Item</IonLabel>
+                        </IonItem>
+
+                        <IonItem lines="none">
+                            <IonThumbnail slot="start">
+                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
+                            </IonThumbnail>
+                            <IonLabel>Item</IonLabel>
+                        </IonItem>
+                    </IonList>
+                </IonCardContent>
+            </IonCard>
+        </div>
+    </div>
+</div>
+
+<h2>Theming</h2>
+<h3>Colors</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonCard Color="@IonColor.Primary">
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent> Card Content </IonCardContent>
+            </IonCard>
+
+            <IonCard Color="@IonColor.Secondary">
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent> Card Content </IonCardContent>
+            </IonCard>
+
+            <IonCard Color="@IonColor.Tertiary">
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent> Card Content </IonCardContent>
+            </IonCard>
+
+            <IonCard Color="@IonColor.Success">
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent> Card Content </IonCardContent>
+            </IonCard>
+
+            <IonCard Color="@IonColor.Warning">
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent> Card Content </IonCardContent>
+            </IonCard>
+
+            <IonCard Color="@IonColor.Danger">
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent> Card Content </IonCardContent>
+            </IonCard>
+
+            <IonCard Color="@IonColor.Light">
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent> Card Content </IonCardContent>
+            </IonCard>
+
+            <IonCard Color="@IonColor.Medium">
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent> Card Content </IonCardContent>
+            </IonCard>
+
+            <IonCard Color="@IonColor.Dark">
+              <IonCardHeader>
+                <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+              </IonCardHeader>
+
+              <IonCardContent> Card Content </IonCardContent>
+            </IonCard>
+        </div>
+    </div>
+</div>
+
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <ThemingCssCustomProperties/>
+        </div>
+    </div>
 </div>

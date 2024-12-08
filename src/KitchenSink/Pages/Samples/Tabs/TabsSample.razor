@@ -1,106 +1,101 @@
 ﻿@page "/samples/tabs"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <DevicePreview Mode="@IonMode.MaterialDesign">
-                        <IonTabs @ref="_tabs">
-                            <IonTab tab="home">
-                                <ion-nav id="home-nav"></ion-nav>
-                                <div id="home-page" class="ion-page">
-                                    <IonHeader>
-                                        <IonToolbar>
-                                            <IonTitle>Listen now</IonTitle>
-                                        </IonToolbar>
-                                    </IonHeader>
-                                    <IonContent>
-                                        <div class="example-content">
-                                            Listen now content<br/>
-                                            <IonButton @onclick="@(() => _tabs.SelectAsync("search"))">Search</IonButton>
-                                        </div>
-                                    </IonContent>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <DevicePreview Mode="@IonMode.MaterialDesign">
+                <IonTabs @ref="_tabs">
+                    <IonTab tab="home">
+                        <ion-nav id="home-nav"></ion-nav>
+                        <div id="home-page" class="ion-page">
+                            <IonHeader>
+                                <IonToolbar>
+                                    <IonTitle>Listen now</IonTitle>
+                                </IonToolbar>
+                            </IonHeader>
+                            <IonContent>
+                                <div class="example-content">
+                                    Listen now content<br/>
+                                    <IonButton @onclick="@(() => _tabs.SelectAsync("search"))">Search</IonButton>
                                 </div>
-                            </IonTab>
-                            <IonTab tab="radio">
-                                <ion-nav id="radio-nav"></ion-nav>
-                                <div id="radio-page" class="ion-page">
-                                    <IonHeader>
-                                        <IonToolbar>
-                                            <IonTitle>Radio</IonTitle>
-                                        </IonToolbar>
-                                    </IonHeader>
-                                    <IonContent>
-                                        <div class="example-content">
-                                            Radio content<br/>
-                                            <IonButton @onclick="@(() => _tabs.SelectAsync("home"))">Home</IonButton>
-                                        </div>
-                                    </IonContent>
+                            </IonContent>
+                        </div>
+                    </IonTab>
+                    <IonTab tab="radio">
+                        <ion-nav id="radio-nav"></ion-nav>
+                        <div id="radio-page" class="ion-page">
+                            <IonHeader>
+                                <IonToolbar>
+                                    <IonTitle>Radio</IonTitle>
+                                </IonToolbar>
+                            </IonHeader>
+                            <IonContent>
+                                <div class="example-content">
+                                    Radio content<br/>
+                                    <IonButton @onclick="@(() => _tabs.SelectAsync("home"))">Home</IonButton>
                                 </div>
-                            </IonTab>
-                            <IonTab tab="library">
-                                <ion-nav id="library-nav"></ion-nav>
-                                <div id="library-page" class="ion-page">
-                                    <IonHeader>
-                                        <IonToolbar>
-                                            <IonTitle>Library</IonTitle>
-                                        </IonToolbar>
-                                    </IonHeader>
-                                    <IonContent>
-                                        <div class="example-content">
-                                            Library content<br/>
-                                            <IonButton @onclick="@(() => _tabs.SelectAsync("radio"))">Radio</IonButton>
-                                        </div>
-                                                                        
-                                    </IonContent>
+                            </IonContent>
+                        </div>
+                    </IonTab>
+                    <IonTab tab="library">
+                        <ion-nav id="library-nav"></ion-nav>
+                        <div id="library-page" class="ion-page">
+                            <IonHeader>
+                                <IonToolbar>
+                                    <IonTitle>Library</IonTitle>
+                                </IonToolbar>
+                            </IonHeader>
+                            <IonContent>
+                                <div class="example-content">
+                                    Library content<br/>
+                                    <IonButton @onclick="@(() => _tabs.SelectAsync("radio"))">Radio</IonButton>
                                 </div>
-                            </IonTab>
-                            <IonTab Tab="search">
-                                <ion-nav id="search-nav"></ion-nav>
-                                <div id="search-page" class="ion-page">
-                                    <IonHeader>
-                                        <IonToolbar>
-                                            <IonTitle>Search</IonTitle>
-                                        </IonToolbar>
-                                    </IonHeader>
-                                    <IonContent>
-                                        <div class="example-content">
-                                            Search content
-                                            <br/>
-                                            <IonButton @onclick="@(() => _tabs.SelectAsync("library"))">Library</IonButton>
-                                            <br/>
-                                            <IonButton @onclick="@(async () => Console.WriteLine(await _tabs.GetSelectedAsync()))">Selected Tab</IonButton>
-                                        </div>
-                                    </IonContent>
+
+                            </IonContent>
+                        </div>
+                    </IonTab>
+                    <IonTab Tab="search">
+                        <ion-nav id="search-nav"></ion-nav>
+                        <div id="search-page" class="ion-page">
+                            <IonHeader>
+                                <IonToolbar>
+                                    <IonTitle>Search</IonTitle>
+                                </IonToolbar>
+                            </IonHeader>
+                            <IonContent>
+                                <div class="example-content">
+                                    Search content
+                                    <br/>
+                                    <IonButton @onclick="@(() => _tabs.SelectAsync("library"))">Library</IonButton>
+                                    <br/>
+                                    <IonButton @onclick="@(async () => Console.WriteLine(await _tabs.GetSelectedAsync()))">Selected Tab</IonButton>
                                 </div>
-                            </IonTab>
-                            <IonTabBar slot="bottom">
-                                <IonTabButton Tab="home">
-                                    <IonIcon Name="play-circle"></IonIcon>
-                                    Listen Now
-                                </IonTabButton>
-                                <IonTabButton Tab="radio">
-                                    <IonIcon Name="radio"></IonIcon>
-                                    Radio
-                                </IonTabButton>
-                                <IonTabButton Tab="library">
-                                    <IonIcon Name="library"></IonIcon>
-                                    Library
-                                </IonTabButton>
-                                <IonTabButton Tab="search">
-                                    <IonIcon Name="search"></IonIcon>
-                                    Search
-                                </IonTabButton>
-                            </IonTabBar>
-                        </IonTabs>
-                    </DevicePreview>
-                </div>
-            </div>
+                            </IonContent>
+                        </div>
+                    </IonTab>
+                    <IonTabBar slot="bottom">
+                        <IonTabButton Tab="home">
+                            <IonIcon Name="play-circle"></IonIcon>
+                            Listen Now
+                        </IonTabButton>
+                        <IonTabButton Tab="radio">
+                            <IonIcon Name="radio"></IonIcon>
+                            Radio
+                        </IonTabButton>
+                        <IonTabButton Tab="library">
+                            <IonIcon Name="library"></IonIcon>
+                            Library
+                        </IonTabButton>
+                        <IonTabButton Tab="search">
+                            <IonIcon Name="search"></IonIcon>
+                            Search
+                        </IonTabButton>
+                    </IonTabBar>
+                </IonTabs>
+            </DevicePreview>
         </div>
-        
-    </IonContent>
+    </div>
 </div>
 
 @code {

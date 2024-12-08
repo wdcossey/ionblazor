@@ -13,7 +13,7 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     private readonly DotNetObjectReference<IonicEventCallback> _ionToastWillPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
-    
+
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
     public override ElementReference IonElement => _self;
@@ -23,40 +23,40 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public bool? Animated { get; set; }
-    
+
     /// <summary>
     /// An array of buttons for the toast.
     /// </summary>
     [Parameter]
     public Func<IReadOnlyCollection<IIonToastButton>>? Buttons { get; set; }
-    
+
     /// <inheritdoc/>
     [Parameter]
     public string? Color { get; set; }
-    
+
     /// <summary>
     /// Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     /// </summary>
     [Parameter]
     public string? CssClass { get; set; }
-    
+
     /// <summary>
     /// How many milliseconds to wait before hiding the toast.
     /// By default, it will show until <see cref="DismissAsync"/> is called.
     /// </summary>
     [Parameter]
     public int? Duration { get; set; }
-    
+
     //enterAnimation
-    
+
     /// <summary>
     /// Header to be shown in the toast.
     /// </summary>
     [Parameter]
     public string? Header { get; set; }
-    
+
     //htmlAttributes
-    
+
     /// <summary>
     /// The name of the icon to display, or the path to a valid SVG file. See <see cref="IonIcon"/>
     /// <a href="https://ionic.io/ionicons">https://ionic.io/ionicons</a>
@@ -72,13 +72,13 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public bool? IsOpen { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, the keyboard will be automatically dismissed when the overlay is presented.
     /// </summary>
     [Parameter]
     public bool? KeyboardClose { get; set; }
-    
+
     /// <summary>
     /// Defines how the message and buttons are laid out in the toast.
     /// <see cref="IonToastLayout.Baseline"/>: The message and the buttons will appear on the same line.
@@ -88,7 +88,7 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public string? Layout { get; set; } = IonToastLayout.Default;
-    
+
     //leaveAnimation
 
     /// <summary>
@@ -98,8 +98,8 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public string? Message { get; set; }
-    
-    
+
+
     /// <inheritdoc/>
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
@@ -118,7 +118,7 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public string? PositionAnchor { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, the toast will be translucent.
     /// Only applies when the mode is <see cref="IonMode.iOS"/> and the device supports
@@ -126,7 +126,7 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public bool? Translucent { get; set; }
-    
+
     /// <summary>
     /// An ID corresponding to the trigger element that causes the toast to open when clicked.
     /// </summary>
@@ -144,7 +144,7 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public EventCallback DidPresent { get; set; }
-    
+
     /// <summary>
     /// Emitted after the toast has dismissed.
     /// </summary>
@@ -180,16 +180,16 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public EventCallback WillPresent { get; set; }
-    
-    [Parameter] 
+
+    [Parameter]
     public EventCallback<IonToastButtonEventArgs> ButtonHandler { get; set; }
-    
+
     /// <summary>
     /// Dismiss the toast overlay after it has been presented.
     /// </summary>
     public ValueTask DismissAsync() =>
         JsComponent.InvokeVoidAsync("dismiss", _self);
-    
+
     public IonToast()
     {
          _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
@@ -228,14 +228,14 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
 
         _willPresentReference = IonicEventCallback.Create(async () => await WillPresent.InvokeAsync(this));
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
 
         if (!firstRender)
             return;
-        
+
         await this.AttachIonListenersAsync(_self, new[]
         {
             IonEvent.Set("didDismiss"         , _didDismissReference         ),
@@ -247,9 +247,9 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
             IonEvent.Set("willDismiss"        , _willDismissReference        ),
             IonEvent.Set("willPresent"        , _willPresentReference        )
         });
-        
+
         var buttons = Buttons?.Invoke();
-        
+
         _buttonHandlerReference = IonicEventCallback<JsonObject?>.Create(
             async args =>
             {
@@ -263,10 +263,10 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
                 };
 
                 await (button?.Handler?.Invoke(arguments) ?? ValueTask.CompletedTask);
-                
+
                 await ButtonHandler.InvokeAsync(arguments);
             });
-        
+
         await JsComponent.InvokeVoidAsync("withButtons", _self, buttons, _buttonHandlerReference);
     }
 }
@@ -275,19 +275,19 @@ public interface IIonToastButton
 {
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? Text { get; }
-    
+
     [JsonPropertyName("icon"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? Icon { get; }
-    
+
     [JsonPropertyName("side"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? Side { get; }
-    
+
     [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? Role { get; }
-    
+
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? CssClass { get; }
-    
+
     [JsonIgnore]
     Func<IonToastButtonEventArgs, ValueTask>? Handler { get; }
 }
@@ -296,20 +296,20 @@ public class IonToastButton: IIonToastButton
 {
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Text { get; set; }
-    
+
     [JsonPropertyName("icon"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Icon { get; set; }
 
     [JsonPropertyName("side"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Side { get; set; } = ToastButtonSide.Default;
-    
+
     [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Role { get; set; } = ToastButtonRole.Default;
-    
+
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CssClass { get; set; }
 
-    [JsonIgnore] 
+    [JsonIgnore]
     public Func<IonToastButtonEventArgs, ValueTask>? Handler { get; set; } = null!;
 }
 

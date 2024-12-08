@@ -11,7 +11,7 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionScrollStartReference;
 
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -81,7 +81,7 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
             .Create(async args => await IonScroll.InvokeAsync(args?.Detail));
 
         _ionScrollEndReference = IonicEventCallback<JsonObject?>.Create(async _ =>
-        { 
+        {
             //var isScrolling = args?["detail"]?["isScrolling"]?.GetValue<bool>();
             await IonScrollEnd.InvokeAsync();
         });
@@ -99,7 +99,7 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
 
         if (!firstRender)
             return;
-    
+
         await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
             IonEvent.Set("ionScroll"     , _ionScrollReference      ),
@@ -143,7 +143,7 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
     /// <param name="duration"></param>
     public async ValueTask ScrollToPointAsync(int? x = null, int? y = null, int? duration = null) =>
         await JsComponent.InvokeVoidAsync("scrollToPoint", _self, x, y, duration);
-    
+
     /// <summary>
     /// Scroll to the top of the component.
     /// </summary>
@@ -161,46 +161,46 @@ public partial class IonContent : IonComponent, IIonContentComponent, IIonColorC
         [JsonPropertyName("scrollTop")]
         public double ScrollTop { get; init; }
 
-        [JsonPropertyName("scrollLeft")] 
+        [JsonPropertyName("scrollLeft")]
         public double ScrollLeft { get; init; }
 
-        [JsonPropertyName("type")] 
+        [JsonPropertyName("type")]
         public string? Type { get; init; }
 
-        [JsonPropertyName("event")] 
+        [JsonPropertyName("event")]
         public IonContentScrollEvent? Event { get; init; }
 
-        [JsonPropertyName("startX")] 
+        [JsonPropertyName("startX")]
         public double StartX { get; init; }
 
-        [JsonPropertyName("startY")] 
+        [JsonPropertyName("startY")]
         public double StartY { get; init; }
 
-        [JsonPropertyName("startTime")] 
+        [JsonPropertyName("startTime")]
         public double StartTime { get; init; }
 
-        [JsonPropertyName("currentX")] 
+        [JsonPropertyName("currentX")]
         public double CurrentX { get; init; }
 
-        [JsonPropertyName("currentY")] 
+        [JsonPropertyName("currentY")]
         public double CurrentY { get; init; }
 
-        [JsonPropertyName("velocityX")] 
+        [JsonPropertyName("velocityX")]
         public double VelocityX { get; init; }
 
-        [JsonPropertyName("velocityY")] 
+        [JsonPropertyName("velocityY")]
         public double VelocityY { get; init; }
 
-        [JsonPropertyName("deltaX")] 
+        [JsonPropertyName("deltaX")]
         public double DeltaX { get; init; }
 
-        [JsonPropertyName("deltaY")] 
+        [JsonPropertyName("deltaY")]
         public double DeltaY { get; init; }
 
-        [JsonPropertyName("currentTime")] 
+        [JsonPropertyName("currentTime")]
         public double CurrentTime { get; init; }
 
-        [JsonPropertyName("isScrolling")] 
+        [JsonPropertyName("isScrolling")]
         public bool IsScrolling { get; init; }
 
         public sealed class IonContentScrollEvent

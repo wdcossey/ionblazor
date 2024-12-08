@@ -1,4 +1,6 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Text;
+
+namespace IonBlazor.Components;
 
 public interface IIonComponent
 {
@@ -8,7 +10,7 @@ public interface IIonComponent
 public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposable
 {
     [Inject]
-    internal IJSRuntime JsRuntime { get; set; } = null!;
+    internal IJSRuntime JsRuntime { get; init; } = null!;
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? Attributes { get; set; }
@@ -27,11 +29,10 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
     {
         JsComponent = new Lazy<Task<IJSObjectReference>>(() =>
         {
-            var type = GetType();
+            Type type = GetType();
 
-            var nameBuilder = type.IsGenericType ? new System.Text.StringBuilder(type.Name[..^2]) : new System.Text.StringBuilder(type.Name);
+            StringBuilder nameBuilder = type.IsGenericType ? new StringBuilder(type.Name[..^2]) : new StringBuilder(type.Name);
 
-            //new System.Text.StringBuilder(type.Name)
             if (!char.IsLower(nameBuilder[0]))
                 nameBuilder[0] = char.ToLowerInvariant(nameBuilder[0]);
 
@@ -41,8 +42,15 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
 
     public async ValueTask DisposeAsync()
     {
-        if (JsComponent.IsValueCreated)
-            await (await JsComponent.Value).DisposeAsync();
+        try
+        {
+            if (JsComponent.IsValueCreated)
+                await (await JsComponent.Value).DisposeAsync();
+        }
+        finally
+        {
+            GC.SuppressFinalize(this);
+        }
     }
 }
 

@@ -1,88 +1,83 @@
 ﻿@page "/SkeletonTextSample"
 @page "/samples/skeleton-text"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <IonList>
-                        @if (_loaded)
-                        {
-                            <IonListHeader>
-                                <IonSkeletonText Animated="@true" style="width: 80px"></IonSkeletonText>
-                            </IonListHeader>
-                            <IonItem>
-                                <IonThumbnail slot="start">
-                                    <IonSkeletonText Animated="@true"></IonSkeletonText>
-                                </IonThumbnail>
-                                <IonLabel>
-                                    <h3>
-                                        <IonSkeletonText Animated="@true" style="width: 80%;"></IonSkeletonText>
-                                    </h3>
-                                    <p>
-                                        <IonSkeletonText Animated="@true" style="width: 60%;"></IonSkeletonText>
-                                    </p>
-                                    <p>
-                                        <IonSkeletonText Animated="@true" style="width: 30%;"></IonSkeletonText>
-                                    </p>
-                                </IonLabel>
-                            </IonItem>
-                        }
-                        else
-                        {
-                            <IonListHeader>Albums</IonListHeader>
-                            <IonItem>
-                                <IonThumbnail slot="start">
-                                    <IonIcon style="width: 100%; height: 100%" Name="musical-notes"></IonIcon>
-                                </IonThumbnail>
-                                <IonLabel>
-                                    <h3>Abbey Road</h3>
-                                    <p>The Beatles</p>
-                                    <p>1969</p>
-                                </IonLabel>
-                            </IonItem>
-                        }
-                    </IonList><br />
-                    <IonButton @onclick="@(BasicUsageToggle)">Toggle</IonButton>
-                </div>
-            </div>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonList>
+                @if (_loaded)
+                {
+                    <IonListHeader>
+                        <IonSkeletonText Animated="@true" style="width: 80px"></IonSkeletonText>
+                    </IonListHeader>
+                    <IonItem>
+                        <IonThumbnail slot="start">
+                            <IonSkeletonText Animated="@true"></IonSkeletonText>
+                        </IonThumbnail>
+                        <IonLabel>
+                            <h3>
+                                <IonSkeletonText Animated="@true" style="width: 80%;"></IonSkeletonText>
+                            </h3>
+                            <p>
+                                <IonSkeletonText Animated="@true" style="width: 60%;"></IonSkeletonText>
+                            </p>
+                            <p>
+                                <IonSkeletonText Animated="@true" style="width: 30%;"></IonSkeletonText>
+                            </p>
+                        </IonLabel>
+                    </IonItem>
+                }
+                else
+                {
+                    <IonListHeader>Albums</IonListHeader>
+                    <IonItem>
+                        <IonThumbnail slot="start">
+                            <IonIcon style="width: 100%; height: 100%" Name="musical-notes"></IonIcon>
+                        </IonThumbnail>
+                        <IonLabel>
+                            <h3>Abbey Road</h3>
+                            <p>The Beatles</p>
+                            <p>1969</p>
+                        </IonLabel>
+                    </IonItem>
+                }
+            </IonList><br />
+            <IonButton @onclick="@(BasicUsageToggle)">Toggle</IonButton>
         </div>
-        
-        
-        <h2>Theming</h2>
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame">
-                    <div class="css-custom-properties">
-                        <IonList>
-                            <IonListHeader>
-                                <IonSkeletonText Animated="@true" style="width: 80px"></IonSkeletonText>
-                            </IonListHeader>
-                            <IonItem>
-                                <IonThumbnail slot="start">
-                                    <IonSkeletonText Animated="@true"></IonSkeletonText>
-                                </IonThumbnail>
-                                <IonLabel>
-                                    <h3>
-                                        <IonSkeletonText Animated="@true" style="width: 80%;"></IonSkeletonText>
-                                    </h3>
-                                    <p>
-                                        <IonSkeletonText Animated="@true" style="width: 60%;"></IonSkeletonText>
-                                    </p>
-                                    <p>
-                                        <IonSkeletonText Animated="@true" style="width: 30%;"></IonSkeletonText>
-                                    </p>
-                                </IonLabel>
-                            </IonItem>
-                        </IonList>
-                    </div>
-                    
-                </div>
+    </div>
+</div>
+
+
+<h2>Theming</h2>
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <div class="css-custom-properties">
+                <IonList>
+                    <IonListHeader>
+                        <IonSkeletonText Animated="@true" style="width: 80px"></IonSkeletonText>
+                    </IonListHeader>
+                    <IonItem>
+                        <IonThumbnail slot="start">
+                            <IonSkeletonText Animated="@true"></IonSkeletonText>
+                        </IonThumbnail>
+                        <IonLabel>
+                            <h3>
+                                <IonSkeletonText Animated="@true" style="width: 80%;"></IonSkeletonText>
+                            </h3>
+                            <p>
+                                <IonSkeletonText Animated="@true" style="width: 60%;"></IonSkeletonText>
+                            </p>
+                            <p>
+                                <IonSkeletonText Animated="@true" style="width: 30%;"></IonSkeletonText>
+                            </p>
+                        </IonLabel>
+                    </IonItem>
+                </IonList>
             </div>
+
         </div>
-        
-    </IonContent>
+    </div>
 </div>

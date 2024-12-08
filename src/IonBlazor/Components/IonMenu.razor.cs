@@ -7,9 +7,9 @@ public partial class IonMenu: IonComponent, IIonModeComponent, IIonContentCompon
     private readonly DotNetObjectReference<IonicEventCallback> _ionDidOpenReference ;
     private readonly DotNetObjectReference<IonicEventCallback> _ionWillCloseReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionWillOpenReference;
-    
+
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc/>
     [Parameter, EditorRequired]
     public RenderFragment? ChildContent { get; set; }
@@ -58,35 +58,35 @@ public partial class IonMenu: IonComponent, IIonModeComponent, IIonContentCompon
     /// </summary>
     [Parameter]
     public string? Type { get; set; } = IonMenuType.Default;
-    
+
     /// <inheritdoc/>
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
-    
+
     /// <summary>
     /// Emitted when the menu is closed.
     /// </summary>
     [Parameter]
     public EventCallback IonDidClose { get; set; }
-    
+
     /// <summary>
     /// Emitted when the menu is open.
     /// </summary>
     [Parameter]
     public EventCallback IonDidOpen { get; set; }
-    
+
     /// <summary>
     /// Emitted when the menu is about to be closed.
     /// </summary>
     [Parameter]
     public EventCallback IonWillClose { get; set; }
-    
+
     /// <summary>
     /// Emitted when the menu is about to be opened.
     /// </summary>
     [Parameter]
     public EventCallback IonWillOpen { get; set; }
-    
+
     public IonMenu()
     {
         _ionDidCloseReference = IonicEventCallback.Create(async () => await IonDidClose.InvokeAsync());
@@ -94,7 +94,7 @@ public partial class IonMenu: IonComponent, IIonModeComponent, IIonContentCompon
         _ionWillCloseReference = IonicEventCallback.Create(async () => await IonWillClose.InvokeAsync());
         _ionWillOpenReference = IonicEventCallback.Create(async () => await IonWillOpen.InvokeAsync());
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -110,13 +110,13 @@ public partial class IonMenu: IonComponent, IIonModeComponent, IIonContentCompon
             IonEvent.Set("ionWillOpen" , _ionWillOpenReference ),
         });
     }
-    
+
     /// <summary>
     /// Closes the menu. If the menu is already closed or it can't be closed, it returns false.
     /// </summary>
     /// <param name="animated"></param>
     /// <returns></returns>
-    public async ValueTask<bool> CloseAsync(bool? animated = null) => 
+    public async ValueTask<bool> CloseAsync(bool? animated = null) =>
         await JsComponent.InvokeAsync<bool>("close", _self, animated);
 
     /// <summary>
@@ -125,24 +125,24 @@ public partial class IonMenu: IonComponent, IIonModeComponent, IIonContentCompon
     /// A menu is active when it can be opened or closed, meaning it's enabled and it's not part of a ion-split-pane.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask<bool> IsActiveAsync() => 
+    public async ValueTask<bool> IsActiveAsync() =>
         await JsComponent.InvokeAsync<bool>("isActive", _self);
-    
+
     /// <summary>
     /// Returns true is the menu is open.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask<bool> IsOpenAsync() => 
+    public async ValueTask<bool> IsOpenAsync() =>
         await JsComponent.InvokeAsync<bool>("isOpen", _self);
-    
+
     /// <summary>
     /// Opens the menu. If the menu is already open or it can't be opened, it returns false.
     /// </summary>
     /// <param name="animated"></param>
     /// <returns></returns>
-    public async ValueTask<bool> OpenAsync(bool? animated = null) => 
+    public async ValueTask<bool> OpenAsync(bool? animated = null) =>
         await JsComponent.InvokeAsync<bool>("open", _self, animated);
-    
+
     /// <summary>
     /// Opens or closes the button. If the operation can't be completed successfully, it returns false.
     /// </summary>
@@ -151,16 +151,16 @@ public partial class IonMenu: IonComponent, IIonModeComponent, IIonContentCompon
     /// <returns></returns>
     public async ValueTask<bool> SetOpenAsync(bool shouldOpen, bool? animated = null) =>
         await JsComponent.InvokeAsync<bool>("setOpen", _self, shouldOpen, animated);
-    
+
     /// <summary>
     /// Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
     /// If the operation can't be completed successfully, it returns false.
     /// </summary>
     /// <param name="animated"></param>
     /// <returns></returns>
-    public async ValueTask<bool> ToggleAsync(bool? animated = null) => 
+    public async ValueTask<bool> ToggleAsync(bool? animated = null) =>
         await JsComponent.InvokeAsync<bool>("toggle", _self, animated);
-    
+
 }
 
 public static class IonMenuType

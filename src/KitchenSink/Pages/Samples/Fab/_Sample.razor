@@ -1,87 +1,82 @@
 ﻿@page "/samples/fab"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <BasicUsage/>
-                </div>
-            </div>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <BasicUsage/>
         </div>
-        
-        <h2>List Side</h2>
-        <p>
-            The <code>side</code> property of the <a href="/docs/api/fab-list">fab list</a> component controls where it
-            appears relative to the main fab button. A single fab can have multiple fab lists as long as they
-            all have different values for <code>side</code>.
-        </p>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <ListSide/>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>List Side</h2>
+<p>
+    The <code>side</code> property of the <a href="/docs/api/fab-list">fab list</a> component controls where it
+    appears relative to the main fab button. A single fab can have multiple fab lists as long as they
+    all have different values for <code>side</code>.
+</p>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <ListSide/>
         </div>
-        
-        <h2>Positioning</h2>
-        <p>
-            In order to place the fab in a fixed position, it should be assigned to the <code>fixed</code> 
-            slot of the outer <a href="/docs/api/content">content</a> component. 
-            Use the <code>vertical</code> and <code>horizontal</code> props to control the alignment 
-            of the fab in the viewport. 
-            The <code>edge</code> prop will cause the fab button to overlap with the app's header or footer.
-        </p>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <Positioning/>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Positioning</h2>
+<p>
+    In order to place the fab in a fixed position, it should be assigned to the <code>fixed</code>
+    slot of the outer <a href="/docs/api/content">content</a> component.
+    Use the <code>vertical</code> and <code>horizontal</code> props to control the alignment
+    of the fab in the viewport.
+    The <code>edge</code> prop will cause the fab button to overlap with the app's header or footer.
+</p>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <Positioning/>
         </div>
-        
-        <h2>Button Sizing</h2>
-        <p>
-            Setting the <code>size</code> property of the main fab button to <code>"small"</code> 
-            will render it at a mini size. Note that this property will not have an effect when used with 
-            the inner fab buttons.
-        </p>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <ButtonSizing/>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Button Sizing</h2>
+<p>
+    Setting the <code>size</code> property of the main fab button to <code>"small"</code>
+    will render it at a mini size. Note that this property will not have an effect when used with
+    the inner fab buttons.
+</p>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <ButtonSizing/>
         </div>
-        
-        <h2>Theming</h2>
-        <h3>Colors</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <Colors/>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h2>Theming</h2>
+<h3>Colors</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <Colors/>
         </div>
-        
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <CssCustomProperties/>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <CssCustomProperties/>
         </div>
-        
-        <h3>CSS Shadow Parts</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <CssShadowParts/>
-                </div>
-            </div>
+    </div>
+</div>
+
+<h3>CSS Shadow Parts</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <CssShadowParts/>
         </div>
-        
-    </IonContent>
+    </div>
 </div>

@@ -1,97 +1,91 @@
 ﻿@page "/samples/item-divider"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
-                    <IonList>
-                        <ion-item-group>
-                            <IonItemDivider>
-                                <IonLabel> Section A </IonLabel>
-                            </IonItemDivider>
-                                
-                            <IonItem>
-                              <IonLabel>A1</IonLabel>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel>A2</IonLabel>
-                            </IonItem>
-                            <IonItem Lines="@IonItemLines.None">
-                                <IonLabel>A3</IonLabel>
-                            </IonItem>
-                        </ion-item-group>
-                        
-                        <ion-item-group>
-                            <IonItemDivider>
-                                <IonLabel> Section B </IonLabel>
-                            </IonItemDivider>
-                            <IonItem>
-                                <IonLabel>B1</IonLabel>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel>B2</IonLabel>
-                            </IonItem>
-                            <IonItem Lines="@IonItemLines.None">
-                                <IonLabel>B3</IonLabel>
-                            </IonItem>
-                        </ion-item-group>
-                    </IonList>
-                </div>
-            </div>
-        </div>
-        
-        <h2>Theming</h2>
-        <h3>Colors</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container">
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonList>
+                <ion-item-group>
                     <IonItemDivider>
-                        <IonLabel>Default</IonLabel>
+                        <IonLabel> Section A </IonLabel>
                     </IonItemDivider>
-                    <IonItemDivider color="primary">
-                        <IonLabel>Primary</IonLabel>
-                    </IonItemDivider>
-                    <IonItemDivider color="secondary">
-                        <IonLabel>Secondary</IonLabel>
-                    </IonItemDivider>
-                    <IonItemDivider color="tertiary">
-                        <IonLabel>Tertiary</IonLabel>
-                    </IonItemDivider>
-                    <IonItemDivider color="success">
-                        <IonLabel>Success</IonLabel>
-                    </IonItemDivider>
-                    <IonItemDivider color="warning">
-                        <IonLabel>Warning</IonLabel>
-                    </IonItemDivider>
-                    <IonItemDivider color="danger">
-                        <IonLabel>Danger</IonLabel>
-                    </IonItemDivider>
-                    <IonItemDivider color="light">
-                        <IonLabel>Light</IonLabel>
-                    </IonItemDivider>
-                    <IonItemDivider color="medium">
-                        <IonLabel>Medium</IonLabel>
-                    </IonItemDivider>
-                    <IonItemDivider color="dark">
-                        <IonLabel>Dark</IonLabel>
-                    </IonItemDivider>
-                </div>
-            </div>
-        </div>
-        
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="container css-custom-properties">
+
+                    <IonItem>
+                      <IonLabel>A1</IonLabel>
+                    </IonItem>
+                    <IonItem>
+                        <IonLabel>A2</IonLabel>
+                    </IonItem>
+                    <IonItem Lines="@IonItemLines.None">
+                        <IonLabel>A3</IonLabel>
+                    </IonItem>
+                </ion-item-group>
+
+                <ion-item-group>
                     <IonItemDivider>
-                      <IonLabel> Item Divider </IonLabel>
+                        <IonLabel> Section B </IonLabel>
                     </IonItemDivider>
-                </div>
-            </div>
+                    <IonItem>
+                        <IonLabel>B1</IonLabel>
+                    </IonItem>
+                    <IonItem>
+                        <IonLabel>B2</IonLabel>
+                    </IonItem>
+                    <IonItem Lines="@IonItemLines.None">
+                        <IonLabel>B3</IonLabel>
+                    </IonItem>
+                </ion-item-group>
+            </IonList>
         </div>
-        
-        
-    </IonContent>
+    </div>
+</div>
+
+<h2>Theming</h2>
+<h3>Colors</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonItemDivider>
+                <IonLabel>Default</IonLabel>
+            </IonItemDivider>
+            <IonItemDivider color="primary">
+                <IonLabel>Primary</IonLabel>
+            </IonItemDivider>
+            <IonItemDivider color="secondary">
+                <IonLabel>Secondary</IonLabel>
+            </IonItemDivider>
+            <IonItemDivider color="tertiary">
+                <IonLabel>Tertiary</IonLabel>
+            </IonItemDivider>
+            <IonItemDivider color="success">
+                <IonLabel>Success</IonLabel>
+            </IonItemDivider>
+            <IonItemDivider color="warning">
+                <IonLabel>Warning</IonLabel>
+            </IonItemDivider>
+            <IonItemDivider color="danger">
+                <IonLabel>Danger</IonLabel>
+            </IonItemDivider>
+            <IonItemDivider color="light">
+                <IonLabel>Light</IonLabel>
+            </IonItemDivider>
+            <IonItemDivider color="medium">
+                <IonLabel>Medium</IonLabel>
+            </IonItemDivider>
+            <IonItemDivider color="dark">
+                <IonLabel>Dark</IonLabel>
+            </IonItemDivider>
+        </div>
+    </div>
+</div>
+
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container css-custom-properties">
+            <IonItemDivider>
+              <IonLabel> Item Divider </IonLabel>
+            </IonItemDivider>
+        </div>
+    </div>
 </div>

@@ -12,13 +12,13 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionKnobMoveEndReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionKnobMoveStartReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<int, string?>> _pinFormatterReference;
-    
+
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
-    
+
     /// <summary>
     /// The start position of the range active bar. This feature is only available with a single knob
     /// (dualKnobs="false"). Valid values are greater than or equal to the min value and less than or equal to the
@@ -30,25 +30,25 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     /// <inheritdoc/>
     [Parameter]
     public string? Color { get; set; }
-    
+
     /// <summary>
     /// How long, in milliseconds, to wait to trigger the ionInput event after each change in the range value.
     /// </summary>
     [Parameter]
     public long? Debounce { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the range.
     /// </summary>
     [Parameter]
     public bool? Disabled { get; set; }
-    
+
     /// <summary>
     /// Show two knobs.
     /// </summary>
     [Parameter]
     public bool? DualKnobs { get; set; }
-    
+
     /// <summary>
     /// The text to display as the control's label. Use this over the label slot if you only need plain text.
     /// The <see cref="Label"/> property will take priority over the <see cref="Label"/> slot if both are used.
@@ -88,25 +88,25 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     /// Minimum integer value of the range.
     /// </summary>
     [Parameter]
-    public int? Min { get; set; } 
-    
+    public int? Min { get; set; }
+
     /// <inheritdoc/>
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
-    
+
     /// <summary>
     /// The name of the control, which is submitted with the form data.<br/>
     /// Default: <b>this.rangeId</b>
     /// </summary>
     [Parameter]
     public string? Name { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, a pin with integer value is shown when the knob is pressed.
     /// </summary>
     [Parameter]
     public bool? Pin { get; set; }
-    
+
     /// <summary>
     /// A callback used to format the pin text. By default the pin text is set to Math.round(value).
     /// </summary>
@@ -118,20 +118,20 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     /// </summary>
     [Parameter]
     public bool? Snaps { get; set; }
-    
+
     /// <summary>
     /// Specifies the value granularity.
     /// </summary>
     [Parameter]
     public int? Step { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, tick marks are displayed based on the step value. Only applies when
     /// <see cref="Snaps"/> is <b>true</b>.
     /// </summary>
     [Parameter]
     public bool? Ticks { get; set; }
-    
+
     /// <summary>
     /// the value of the range.
     /// </summary>
@@ -141,21 +141,21 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     /// <summary>
     /// Set the value of the range.
     /// </summary>
-    public ValueTask SetValueAsync(int value) => 
+    public ValueTask SetValueAsync(int value) =>
         JsComponent.InvokeVoidAsync("setValue", _self, value);
 
     /// <summary>
     /// Set the value of the range.
     /// </summary>
-    public ValueTask SetValueAsync(int lower, int upper) => 
+    public ValueTask SetValueAsync(int lower, int upper) =>
         JsComponent.InvokeVoidAsync("setUpperLowerValue", _self, lower, upper);
-    
+
     /// <summary>
     /// Emitted when the <see cref="IonRange"/> loses focus.
     /// </summary>
     [Parameter]
     public EventCallback IonBlur { get; set; }
-    
+
     /// <summary>
     /// The <see cref="IonChange"/> event is fired for <see cref="IonRange"/> elements when the user modifies the
     /// element's value: - When the user releases the knob after dragging; - When the user moves the knob with
@@ -170,21 +170,21 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     /// </summary>
     [Parameter]
     public EventCallback IonFocus { get; set; }
-    
+
     /// <summary>
     /// The <see cref="IonInput"/> event is fired for <see cref="IonRange"/> elements when the value is modified.
     /// Unlike <see cref="IonChange"/>, <see cref="IonInput"/> is fired continuously while the user is dragging the knob.
     /// </summary>
     [Parameter]
     public EventCallback<RangeChangeEventArgs> IonInput { get; set; }
-    
+
     /// <summary>
     /// Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard
     /// interaction.
     /// </summary>
     [Parameter]
     public EventCallback<RangeChangeEventArgs> IonKnobMoveEnd { get; set; }
-    
+
     /// <summary>
     /// Emitted when the user starts moving the range knob, whether through mouse drag, touch gesture, or keyboard
     /// interaction.
@@ -227,7 +227,7 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
             var value = GetRangeValue(args);
             await IonKnobMoveStart.InvokeAsync(new RangeChangeEventArgs { Sender = this, Value = value });
         });
-        
+
         _pinFormatterReference = IonicEventCallbackResult<int, string?>.Create(value =>
         {
             var result = PinFormatter?.Invoke(value);
@@ -241,7 +241,7 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
 
         if (!firstRender)
             return;
-        
+
         await this.AttachIonListenersAsync(_self, new []
         {
             IonEvent.Set("ionBlur"         , _ionBlurReference         ),
@@ -251,9 +251,9 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
             IonEvent.Set("ionKnobMoveEnd"  , _ionKnobMoveEndReference  ),
             IonEvent.Set("ionKnobMoveStart", _ionKnobMoveStartReference)
         });
-        
+
         //await (await _lazyIonComponent.Value).InvokeVoidAsync("pinFormatter", _self, _pinFormatterReference);
-        
+
         switch (Value)
         {
             case RangeUpperLowerValue dualRangeValue:
@@ -283,7 +283,7 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     }
 }
 
-public static class IonRangeLabelPlacement 
+public static class IonRangeLabelPlacement
 {
     public const string? Default = null;
     public const string End = "end";
@@ -302,7 +302,7 @@ public class RangeChangeEventArgs : IRangeChangeEventArgs
     /// The <see cref="IonRange" /> that this event occurred on.
     /// </summary>
     public IonRange? Sender { get; init; }
-    
+
     [JsonPropertyName("value"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public IRangeValue? Value { get; init; }
 

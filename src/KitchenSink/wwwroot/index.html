@@ -20,7 +20,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />-->
 
     <link href="css/app.css" rel="stylesheet" />
-    <link href="IonicTest.styles.css" rel="stylesheet" />
+    <link href="theme/variables.css" rel="stylesheet" />
+
+    <link href="KitchenSink.styles.css" rel="stylesheet" />
 
     <script type="text/javascript">
         window.showIonAlert = () => {
@@ -171,6 +173,22 @@
         });
     </script>
 
+
+    <script>
+        // Use matchMedia to check the user preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+        toggleDarkTheme(prefersDark.matches);
+
+        // Listen for changes to the prefers-color-scheme media query
+        prefersDark.addEventListener('change', (mediaQuery) => toggleDarkTheme(mediaQuery.matches));
+
+        // Add or remove the "dark" class on the document body
+        function toggleDarkTheme(shouldAdd) {
+            console.log('toggleDarkTheme', shouldAdd);
+            document.body.classList.toggle('dark', shouldAdd);
+        }
+    </script>
 
     <script src="_framework/blazor.webview.js" autostart="false"></script>
 

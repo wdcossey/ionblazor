@@ -2,16 +2,32 @@
 @using System.Text.Json
 @using System.Text.Json.Nodes
 @using System.Text.Json.Serialization
+@using Microsoft.Extensions.Logging
+
+@inject ILogger<BasicUsageInline> Logger
+
 <IonButton id="open-loading">Show Loading (Trigger)</IonButton>
 <IonButton @onclick="@(async () => { await _loading.PresentAsync(); })">Show Loading (Manual)</IonButton>
 
-<IonLoading Trigger="open-loading" Message="Dismissing after 3 seconds..." Duration="3000"></IonLoading>
+<IonLoading
+    data-id="@_id"
+    Trigger="open-loading"
+    Message="Dismissing after 3 seconds..."
+    Duration="3000"
+    DidPresent="@(() => Logger.LogInformation("Loading {State}", nameof(IonLoading.DidPresent)))"
+    DidDismiss="@(_ => Logger.LogInformation("Loading {State}", nameof(IonLoading.DidDismiss)))"
+    WillDismiss="@(_ => Logger.LogInformation("Loading {State}", nameof(IonLoading.WillDismiss)))"
+    WillPresent="@(() => Logger.LogInformation("Loading {State}", nameof(IonLoading.WillPresent)))">
+</IonLoading>
+
 <IonLoading @ref="_loading" Message="Dismissing after 30 seconds... We'll manually cancel it after 3 seconds..." Duration="30000" DidPresent="OnDidPresent" DidDismiss="OnDidDismiss"></IonLoading>
 
 @code {
+    private readonly string _id = Guid.NewGuid().ToString("D");
+
     private IonLoading _loading = null!;
 
-    private async void OnDidPresent()
+    private async Task OnDidPresent()
     {
         await Task.Delay(TimeSpan.FromSeconds(3));
         await _loading.DismissAsync(data: new TestData(){ Hello = "world"} , role: "winner");
@@ -19,10 +35,10 @@
 
     private void OnDidDismiss(IonLoadingDismissEventArgs args)
     {
-        var data = (args.Data as JsonObject)?.Deserialize<TestData>();
+        TestData? data = (args.Data as JsonObject)?.Deserialize<TestData>();
         Console.WriteLine($"Dismissed with data: {data}");
     }
-    
+
     private record TestData
     {
         [JsonPropertyName("hello")]

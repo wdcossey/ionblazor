@@ -1,6 +1,4 @@
-﻿using IonBlazor.Components;
-
-namespace IonBlazor.Services;
+﻿namespace IonBlazor.Services;
 
 public class IonActionSheetController : ComponentBase, IAsyncDisposable
 {

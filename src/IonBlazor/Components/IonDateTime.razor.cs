@@ -10,7 +10,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _isDateEnabledReference;
 
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -300,7 +300,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
                     break;
                 }
             }
-            
+
             Value = value;
 
             await IonChange.InvokeAsync(new IonDateTimeChangeEventArgs { Sender = this, Value = value });
@@ -319,14 +319,14 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// <summary>
     /// Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
     /// </summary>
-    public ValueTask CancelAsync(bool? closeOverlay = null) => 
+    public ValueTask CancelAsync(bool? closeOverlay = null) =>
         JsComponent.InvokeVoidAsync("cancel", _self, closeOverlay);
 
     /// <summary>
     /// Confirms the selected datetime value, updates the value property, and optionally closes the popover or modal
     /// that the datetime was presented in.
     /// </summary>
-    public ValueTask ConfirmAsync(bool? closeOverlay = null) => 
+    public ValueTask ConfirmAsync(bool? closeOverlay = null) =>
         JsComponent.InvokeVoidAsync("confirm", _self, closeOverlay);
 
     /// <summary>
@@ -334,7 +334,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
     /// will reset the state of the component to the provided date. If no value is provided, the internal state
     /// will be reset to the clamped value of the min, max and today.
     /// </summary>
-    public ValueTask ResetAsync(string? startDate = null) => 
+    public ValueTask ResetAsync(string? startDate = null) =>
         JsComponent.InvokeVoidAsync("reset", _self, startDate);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -343,7 +343,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
 
         if (!firstRender)
             return;
-        
+
         await this.AttachIonListenersAsync(_self, new IonEvent[]
         {
             IonEvent.Set("ionBlur"  , _ionBlurReference   ),
@@ -352,7 +352,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
             IonEvent.Set("ionFocus" , _ionFocusReference  ),
             //IonEvent.Set("isDateEnabled", _isDateEnabledFocusReference ),
         });
-        
+
         if (IsDateEnabled is not null)
             await JsComponent.InvokeVoidAsync("isDateEnabled", _self, _isDateEnabledReference);
     }
@@ -361,7 +361,7 @@ public partial class IonDateTime : IonComponent, IIonModeComponent, IIonContentC
 public class IonDateTimeChangeEventArgs : EventArgs
 {
     public IonDateTime Sender { get; internal set; } = null!;
-    
+
     public string? Value { get; internal set; }
 }
 

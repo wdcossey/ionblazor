@@ -1,92 +1,88 @@
 ﻿@page "/samples/spinner"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <h2>Basic Usage</h2>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame" style="min-height: 500px">
-                    <IonItem>
-                        <IonLabel>Default</IonLabel>
-                        <IonSpinner></IonSpinner>
-                    </IonItem>
-                                
-                    <IonItem>
-                        <IonLabel>Dots</IonLabel>
-                        <IonSpinner Name="@IonSpinnerName.Dots"></IonSpinner>
-                    </IonItem>
-                                
-                    <IonItem>
-                        <IonLabel>Lines</IonLabel>
-                        <IonSpinner Name="@IonSpinnerName.Lines"></IonSpinner>
-                    </IonItem>
-                                
-                    <IonItem>
-                        <IonLabel>Lines Small</IonLabel>
-                        <IonSpinner Name="@IonSpinnerName.LinesSmall"></IonSpinner>
-                    </IonItem>
-                                
-                    <IonItem>
-                        <IonLabel>Lines Sharp</IonLabel>
-                        <IonSpinner Name="@IonSpinnerName.LinesSharp"></IonSpinner>
-                    </IonItem>
-                                
-                    <IonItem>
-                        <IonLabel>Lines Sharp Small</IonLabel>
-                        <IonSpinner Name="@IonSpinnerName.LinesSharpSmall"></IonSpinner>
-                    </IonItem>
-                                
-                    <IonItem>
-                        <IonLabel>Bubbles</IonLabel>
-                        <IonSpinner Name="@IonSpinnerName.Bubbles"></IonSpinner>
-                    </IonItem>
-                                
-                    <IonItem>
-                        <IonLabel>Circles</IonLabel>
-                        <IonSpinner Name="@IonSpinnerName.Circles"></IonSpinner>
-                    </IonItem>
-                                
-                    <IonItem>
-                        <IonLabel>Circular</IonLabel>
-                        <IonSpinner Name="@IonSpinnerName.Circular"></IonSpinner>
-                    </IonItem>
-                                
-                    <IonItem>
-                        <IonLabel>Crescent</IonLabel>
-                        <IonSpinner Name="@IonSpinnerName.Crescent"></IonSpinner>
-                    </IonItem>
-                </div>
+<h2>Basic Usage</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame" style="min-height: 500px">
+            <IonItem>
+                <IonLabel>Default</IonLabel>
+                <IonSpinner></IonSpinner>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Dots</IonLabel>
+                <IonSpinner Name="@IonSpinnerName.Dots"></IonSpinner>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Lines</IonLabel>
+                <IonSpinner Name="@IonSpinnerName.Lines"></IonSpinner>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Lines Small</IonLabel>
+                <IonSpinner Name="@IonSpinnerName.LinesSmall"></IonSpinner>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Lines Sharp</IonLabel>
+                <IonSpinner Name="@IonSpinnerName.LinesSharp"></IonSpinner>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Lines Sharp Small</IonLabel>
+                <IonSpinner Name="@IonSpinnerName.LinesSharpSmall"></IonSpinner>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Bubbles</IonLabel>
+                <IonSpinner Name="@IonSpinnerName.Bubbles"></IonSpinner>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Circles</IonLabel>
+                <IonSpinner Name="@IonSpinnerName.Circles"></IonSpinner>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Circular</IonLabel>
+                <IonSpinner Name="@IonSpinnerName.Circular"></IonSpinner>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Crescent</IonLabel>
+                <IonSpinner Name="@IonSpinnerName.Crescent"></IonSpinner>
+            </IonItem>
+        </div>
+    </div>
+</div>
+
+<h2>Theming</h2>
+<h3>Colors</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame" style="min-height: 100px">
+            <IonSpinner></IonSpinner>
+            <IonSpinner Color="@IonColor.Primary"></IonSpinner>
+            <IonSpinner Color="@IonColor.Secondary"></IonSpinner>
+            <IonSpinner Color="@IonColor.Tertiary"></IonSpinner>
+            <IonSpinner Color="@IonColor.Success"></IonSpinner>
+            <IonSpinner Color="@IonColor.Warning"></IonSpinner>
+            <IonSpinner Color="@IonColor.Danger"></IonSpinner>
+            <IonSpinner Color="@IonColor.Light"></IonSpinner>
+            <IonSpinner Color="@IonColor.Medium"></IonSpinner>
+            <IonSpinner Color="@IonColor.Dark"></IonSpinner>
+        </div>
+    </div>
+</div>
+
+<h3>CSS Custom Properties</h3>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame" style="min-height: 100px">
+            <div class="custom-css">
+                <IonSpinner></IonSpinner>
             </div>
         </div>
-          
-        <h2>Theming</h2>
-        <h3>Colors</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame" style="min-height: 100px">
-                    <IonSpinner></IonSpinner>
-                    <IonSpinner Color="@IonColor.Primary"></IonSpinner>
-                    <IonSpinner Color="@IonColor.Secondary"></IonSpinner>
-                    <IonSpinner Color="@IonColor.Tertiary"></IonSpinner>
-                    <IonSpinner Color="@IonColor.Success"></IonSpinner>
-                    <IonSpinner Color="@IonColor.Warning"></IonSpinner>
-                    <IonSpinner Color="@IonColor.Danger"></IonSpinner>
-                    <IonSpinner Color="@IonColor.Light"></IonSpinner>
-                    <IonSpinner Color="@IonColor.Medium"></IonSpinner>
-                    <IonSpinner Color="@IonColor.Dark"></IonSpinner>
-                </div>
-            </div>
-        </div>
-        
-        <h3>CSS Custom Properties</h3>
-        <div class="playground__container">
-            <div class="playground__preview">
-                <div class="playground__frame" style="min-height: 100px">
-                    <div class="custom-css">
-                        <IonSpinner></IonSpinner>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </IonContent>
+    </div>
 </div>
