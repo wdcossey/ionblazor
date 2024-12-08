@@ -15,12 +15,6 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
-    /// This attribute is ignored. Deprecated
-    /// </summary>
-    [Obsolete("This attribute is ignored", true)]
-    public string? Accept { get; set; }
-
-    /// <summary>
     /// Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
     /// Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
     /// </summary>
@@ -236,15 +230,6 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     /// </summary>
     [Parameter]
     public string? Shape { get; set; }
-
-    /// <summary>
-    /// The initial size of the control. This value is in pixels unless the value of the type attribute is
-    /// "text" or "password", in which case it is an integer number of characters.
-    /// This attribute applies only when the type attribute is set to "text", "search", "tel", "url",
-    /// "email", or "password", otherwise it is ignored.
-    /// </summary>
-    [Parameter]
-    public int? Size { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the element will have its spelling and grammar checked.

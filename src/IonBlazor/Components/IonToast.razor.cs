@@ -35,12 +35,6 @@ public partial class IonToast : IonComponent, IIonColorComponent, IIonModeCompon
     public string? Color { get; set; }
 
     /// <summary>
-    /// Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-    /// </summary>
-    [Parameter]
-    public string? CssClass { get; set; }
-
-    /// <summary>
     /// How many milliseconds to wait before hiding the toast.
     /// By default, it will show until <see cref="DismissAsync"/> is called.
     /// </summary>

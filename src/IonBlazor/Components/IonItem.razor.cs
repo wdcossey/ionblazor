@@ -3,7 +3,7 @@
 public partial class IonItem : IonComponent, IIonModeComponent, IIonContentComponent, IIonColorComponent
 {
     private ElementReference _self;
-    
+
     public override ElementReference IonElement => _self;
 
     /// <inheritdoc/>
@@ -48,14 +48,6 @@ public partial class IonItem : IonComponent, IIonModeComponent, IIonContentCompo
     public string? Download { get; set; }
 
     /// <summary>
-    /// The fill for the item. If <see cref="IonItemFill.Solid"/> the item will have a background.
-    /// If<see cref="IonItemFill.Outline"/> the item will be
-    /// transparent with a border. Only available in <see cref="IonMode.MaterialDesign"/> mode.
-    /// </summary>
-    [Parameter]
-    public string? Fill { get; set; } = IonItemFill.Default;
-
-    /// <summary>
     /// Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be
     /// rendered.
     /// </summary>
@@ -81,12 +73,6 @@ public partial class IonItem : IonComponent, IIonModeComponent, IIonContentCompo
     public string? Rel { get; set; }
 
     /// <summary>
-    /// The shape of the item. If <see cref="IonItemShape.Round"/> it will have increased border radius.
-    /// </summary>
-    [Parameter]
-    public string? Shape { get; set; } = IonItemShape.Default;
-
-    /// <summary>
     /// Specifies where to display the linked URL. Only applies when an href is provided.
     /// Special keywords: <b>"_blank"</b>, <b>"_self"</b>, <b>"_parent"</b>, <b>"_top"</b>.
     /// </summary>
@@ -98,13 +84,6 @@ public partial class IonItem : IonComponent, IIonModeComponent, IIonContentCompo
     /// </summary>
     [Parameter]
     public string? Type { get; set; } = IonItemType.Default;
-}
-
-public static class IonItemFill
-{
-    public const string? Default = null;
-    public const string Outline = "outline";
-    public const string Solid = "solid";
 }
 
 public static class IonItemLines
