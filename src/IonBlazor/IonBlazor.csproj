@@ -59,8 +59,13 @@
       </Content>
 
       <Remove Remove="..\..\node_modules\@ionic\core\css\**\*.*" />
-      <Content Include="..\..\node_modules\@ionic\core\css\ionic.bundle.css">
+      <Content Include="..\..\node_modules\@ionic\core\css\*.css">
           <Link>wwwroot\@ionic\core\css\%(RecursiveDir)%(Filename)%(Extension)</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+
+      <Content Include="..\..\node_modules\@ionic\core\css\palettes\*.css">
+          <Link>wwwroot\@ionic\core\css\palettes\%(RecursiveDir)%(Filename)%(Extension)</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
