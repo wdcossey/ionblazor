@@ -2,7 +2,7 @@
 
 namespace IonBlazor.Components;
 
-public partial class IonPicker<TColumn, TColumnOption, TButton> : IonComponent, IIonModeComponent
+public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonComponent, IIonModeComponent
     where TColumn: class, IPickerColumn<TColumnOption>
     where TColumnOption: class, IPickerColumnOption
     where TButton: class, IPickerButton
@@ -157,7 +157,7 @@ public partial class IonPicker<TColumn, TColumnOption, TButton> : IonComponent, 
     [Parameter] 
     public EventCallback<PickerButtonHandlerEventArgs<TColumn, TColumnOption, TButton>> ButtonHandler { get; set; }
     
-    public IonPicker()
+    public IonPickerLegacy()
     {
         _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
@@ -270,7 +270,7 @@ public class IonPickerDismissEventArgs<TColumn, TColumnOption, TButton> : EventA
     where TColumnOption: class, IPickerColumnOption
     where TButton: class, IPickerButton
 {
-    public IonPicker<TColumn, TColumnOption, TButton> Sender { get; internal set; } = null!;
+    public IonPickerLegacy<TColumn, TColumnOption, TButton> Sender { get; internal set; } = null!;
     
     public string? Role { get; internal set; }
     
@@ -282,7 +282,7 @@ public class PickerEventArgs<TColumn, TColumnOption, TButton> : EventArgs
     where TColumnOption: class, IPickerColumnOption
     where TButton: class, IPickerButton
 {
-    public IonPicker<TColumn, TColumnOption, TButton>? Sender { get; internal set; }
+    public IonPickerLegacy<TColumn, TColumnOption, TButton>? Sender { get; internal set; }
 }
 
 public class PickerButtonHandlerEventArgs<TColumn, TColumnOption, TButton> : PickerEventArgs<TColumn, TColumnOption, TButton>

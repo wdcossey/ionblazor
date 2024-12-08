@@ -1,19 +1,16 @@
-﻿<IonButton @onclick="@(() => _picker.IsOpen = true)">Open</IonButton>
-<IonPicker @ref="_picker"
-           TColumn="PickerColumn"
+﻿<IonButton id="open-picker">Open</IonButton>
+<IonPickerLegacy TColumn="PickerColumn"
            TColumnOption="PickerColumnOption"
            TButton="PickerButton"
            Columns="@WithColumns"
            Buttons="@WithButtons"
-           IonPickerDidDismiss="@IonPickerDidDismiss"></IonPicker>
+           Trigger="open-picker"></IonPickerLegacy>
 
 <p>@((MarkupString)_message)</p>
 
 @code{
     
     string _message = string.Empty;
-    
-    IonPicker<PickerColumn, PickerColumnOption, PickerButton> _picker = null!;
     
     private IReadOnlyList<PickerColumn> WithColumns()
     {
@@ -40,7 +37,7 @@
             new()
             {
                 Text = "Cancel",
-                Role = "cancel"
+                Role = "cancel",
             },
             new()
             {
@@ -54,15 +51,12 @@
     {
         if (value is null) 
             return ValueTask.CompletedTask;
-            
+        
         _message = $"You selected: <b>{value["languages"].Value}</b>";
         StateHasChanged();
-        
+
         return ValueTask.CompletedTask;
     }
+    
 
-    private void IonPickerDidDismiss(IonPickerDismissEventArgs<PickerColumn, PickerColumnOption, PickerButton> args)
-    {
-        args.Sender.IsOpen = false; //or _picker.IsOpen = false;
-    }
 }
