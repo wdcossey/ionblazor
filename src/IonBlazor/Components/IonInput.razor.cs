@@ -156,18 +156,6 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     public string? LabelPlacement { get; set; }
 
     /// <summary>
-    /// Set the legacy property to true to forcibly use the legacy form control markup.
-    /// Ionic will only opt components in to the modern form markup when they are using either the aria-label attribute
-    /// or the label property. As a result, the legacy property should only be used as an escape hatch when you want to
-    /// avoid this automatic opt-in behavior.
-    /// <br/><br/>
-    /// Note that this property will be removed in an upcoming major release of Ionic, and all form components will be
-    /// opted-in to using the modern form markup.
-    /// </summary>
-    [Parameter, Obsolete("Note that this property will be removed in an upcoming major release of Ionic")]
-    public bool? Legacy { get; set; }
-
-    /// <summary>
     /// The maximum value, which must not be less than its minimum (min attribute) value.
     /// </summary>
     [Parameter]

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace IonBlazor.Components;
 
-public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIonColorComponent, IIonModeComponent 
+public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIonColorComponent, IIonModeComponent
     where TValue : notnull
 {
     private ElementReference _self;
@@ -13,17 +13,17 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
-    
+
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc />
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
-    
+
     /// <inheritdoc />
     [Parameter]
     public string? Color { get; set; }
-    
+
     /// <inheritdoc />
     [Parameter]
     public string? Mode { get; set; }
@@ -33,19 +33,19 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
     /// </summary>
     [Parameter]
     public string? CancelText { get; set; }
-    
+
     /// <summary>
     /// A property name or function used to compare object values
     /// </summary>
     [Parameter]
     public object? CompareWith { get; set; }
-    
+
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the select.
     /// </summary>
     [Parameter]
     public bool? Disabled { get; set; }
-    
+
     /// <summary>
     /// The toggle icon to show when the select is open.<br/>
     /// If defined, the icon rotation behavior in <b>md</b> mode will be disabled.<br/>
@@ -61,7 +61,7 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
     /// </summary>
     [Parameter]
     public string? Fill { get; set; } = IonSelectFill.Default;
-    
+
     /// <summary>
     /// The interface the select should use:
     /// <see cref="IonSelectInterface.ActionSheet"/>,
@@ -81,7 +81,7 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
     public void SetInterfaceOptions()
     {
         throw new NotImplementedException();
-    }   
+    }
 
     /// <summary>
     /// How to pack the label and select within a line. <see cref="Justify"/> does not apply when the label and select
@@ -129,16 +129,6 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
     public string? LabelPlacement { get; set; } = IonSelectLabelPlacement.Default;
 
     /// <summary>
-    /// Set the <b>legacy</b> property to <b>true</b> to forcibly use the legacy form control markup.
-    /// Ionic will only opt components in to the modern form markup when they are using either the <b>aria-label</b>
-    /// attribute or the <b>label</b> property. As a result, the <b>legacy</b> property should only be used as an escape
-    /// hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an
-    /// upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-    /// </summary>
-    [Parameter, Obsolete("Note that this property will be removed in an upcoming major release of Ionic")]
-    public bool? Legacy { get; set; }
-
-    /// <summary>
     /// If <b>true</b>, the select can accept multiple values.
     /// </summary>
     [Parameter]
@@ -173,7 +163,7 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
     /// </summary>
     [Parameter]
     public string? Shape { get; set; } = IonSelectShape.Default;
-    
+
     /// <summary>
     /// The toggle icon to use. Defaults to <b>chevronExpand</b> for ios mode, or <b>caretDownSharp</b> for md mode.
     /// </summary>
@@ -215,14 +205,13 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
     /// </summary>
     [Parameter]
     public EventCallback IonFocus { get; set; }
-    
-    
+
     public IonSelect()
     {
         _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
 
         _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync());
-        
+
         _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var value = args?["detail"]?["value"];
@@ -232,19 +221,19 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
                 JsonArray => value.Deserialize<TValue[]>(),
                 _ => new[] { value.GetValue<TValue>() }
             };
-            
+
             //Value = Multiple is true ? args.Detail.Value.ToArray() : args.Detail.Value.FirstOrDefault();
             //args.Detail.Sender = this;
-            
+
             await IonChange.InvokeAsync(new IonSelectChangeEventArgs<TValue>() { Sender = this, Value = new IonSelectValue<TValue>(values ?? Array.Empty<TValue>()) });
         });
 
         _ionDismissReference = IonicEventCallback.Create(async () => await IonDismiss.InvokeAsync());
 
         _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync());
-        
+
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -261,7 +250,7 @@ public partial class IonSelect<TValue> : IonComponent, IIonContentComponent, IIo
             IonEvent.Set("ionFocus"  , _ionFocusReference  )
         });
     }
-    
+
     /// <summary>
     /// Open the select overlay.
     /// The overlay is either an alert, action sheet, or popover, depending on the interface property on the
@@ -319,7 +308,7 @@ public class IonSelectShape
 {
     [JsonPropertyName("tagName")]
     public string? TagName { get; set; }
-    
+
     [JsonPropertyName("detail")]
     public IonSelectChangeEventArgs<TValue> Detail { get; set; } = null! ;
 }*/
@@ -328,8 +317,8 @@ public sealed class IonSelectChangeEventArgs<TValue> : EventArgs where TValue : 
 {
     [JsonIgnore]
     public IonSelect<TValue> Sender { get; internal set; } = null!;
-    
-    [JsonPropertyName("value")] 
+
+    [JsonPropertyName("value")]
     //[JsonConverter(typeof(IonSelectValueConverter))]
     public IonSelectValue<TValue> Value { get; init; } = null!;
 }
@@ -337,7 +326,7 @@ public sealed class IonSelectChangeEventArgs<TValue> : EventArgs where TValue : 
 public class IonSelectValue<TValue> : ReadOnlyCollection<TValue> where TValue : notnull
 {
     public IonSelectValue(IList<TValue> list) : base(list) { }
-    
+
     public override string ToString() => string.Join(",", this);
 }
 
@@ -371,7 +360,7 @@ public class IonSelectValue<TValue> : ReadOnlyCollection<TValue> where TValue : 
 
         return new IonSelectValue(items);
     }
-    
-    public override void Write(Utf8JsonWriter writer, IonSelectValue value, JsonSerializerOptions options) 
+
+    public override void Write(Utf8JsonWriter writer, IonSelectValue value, JsonSerializerOptions options)
         => throw new NotSupportedException();
 }*/

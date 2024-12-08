@@ -5,9 +5,9 @@ public partial class IonRadio : IonComponent, IIonModeComponent, IIonContentComp
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
-    
+
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -46,19 +46,6 @@ public partial class IonRadio : IonComponent, IIonModeComponent, IIonContentComp
     /// </summary>
     [Parameter]
     public string LabelPlacement { get; set; } = IonLabelPlacement.Start;
-
-    /// <summary>
-    /// Set the legacy property to true to forcibly use the legacy form control markup.
-    /// Ionic will only opt components in to the modern form markup when they are using either the aria-label attribute
-    /// or the default slot that contains the label text.
-    /// As a result, the legacy property should only be used as an escape hatch when you want to avoid this automatic
-    /// opt-in behavior.
-    /// <br/><br/>
-    /// Note that this property will be removed in an upcoming major release of Ionic,
-    /// and all form components will be opted-in to using the modern form markup.
-    /// </summary>
-    [Parameter, Obsolete("Note that this property will be removed in an upcoming major release of Ionic")]
-    public bool? Legacy { get; set; }
 
     /// <inheritdoc/>
     [Parameter]

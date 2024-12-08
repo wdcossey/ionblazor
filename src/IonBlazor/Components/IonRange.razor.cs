@@ -70,15 +70,6 @@ public partial class IonRange : IonComponent, IIonContentComponent, IIonColorCom
     public string? LabelPlacement { get; set; } = IonRangeLabelPlacement.Default;
 
     /// <summary>
-    /// Set the legacy property to true to forcibly use the legacy form control markup. Ionic will only opt components
-    /// in to the modern form markup when they are using either the aria-label attribute or the label property.
-    /// As a result, the legacy property should only be used as an escape hatch when you want to avoid this automatic
-    /// opt-in behavior.
-    /// </summary>
-    [Parameter, Obsolete("Note that this property will be removed in an upcoming major release of Ionic")]
-    public string? Legacy { get; set; }
-
-    /// <summary>
     /// Maximum integer value of the range.
     /// </summary>
     [Parameter]
