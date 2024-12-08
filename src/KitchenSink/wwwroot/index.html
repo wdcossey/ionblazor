@@ -14,6 +14,7 @@
     <script type="module" src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.js"></script>
     <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/palettes/dark.system.css" />
 
 <!--    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
@@ -178,15 +179,16 @@
         // Use matchMedia to check the user preference
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-        toggleDarkTheme(prefersDark.matches);
+        // Initialize the dark palette based on the initial
+        // value of the prefers-color-scheme media query
+        toggleDarkPalette(prefersDark.matches);
 
         // Listen for changes to the prefers-color-scheme media query
-        prefersDark.addEventListener('change', (mediaQuery) => toggleDarkTheme(mediaQuery.matches));
+        prefersDark.addEventListener('change', (mediaQuery) => toggleDarkPalette(mediaQuery.matches));
 
-        // Add or remove the "dark" class on the document body
-        function toggleDarkTheme(shouldAdd) {
-            console.log('toggleDarkTheme', shouldAdd);
-            document.body.classList.toggle('dark', shouldAdd);
+        // Add or remove the "ion-palette-dark" class on the html element
+        function toggleDarkPalette(shouldAdd) {
+            document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
         }
     </script>
 
