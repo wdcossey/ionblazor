@@ -1,0 +1,26 @@
+﻿@namespace IonicTest.Pages.Samples.Picker
+
+<div> <!-- wrapper for css theming in Blazor, so we can use `::deep` -->
+    <IonPicker>
+        <IonPickerColumn value="red" IonChange="OnChange">
+            <IonPickerColumnOption Value="" Disabled="@true" >--</IonPickerColumnOption>
+            <IonPickerColumnOption Value="red">Red</IonPickerColumnOption>
+            <IonPickerColumnOption Value="blue">Blue</IonPickerColumnOption>
+            <IonPickerColumnOption Value="green">Green</IonPickerColumnOption>
+        </IonPickerColumn>
+    </IonPicker>
+</div>
+
+<p>@((MarkupString)_message)</p>
+
+@code {
+    IonPickerColumn _pickerColumn = null!;
+    string _message = string.Empty;
+
+    private void OnChange(IonPickerColumnIonChangeEventArgs args)
+    {
+        _message = $"You selected: <b>{args.Value}</b>";
+        StateHasChanged();
+    }
+
+}

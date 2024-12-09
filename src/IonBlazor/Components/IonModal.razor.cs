@@ -1,4 +1,6 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Text.Json.Serialization;
+
+namespace IonBlazor.Components;
 
 public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComponent
 {
@@ -353,7 +355,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
         _canDismissReference = IonicEventCallbackResult<bool>
             .Create(async () =>
             {
-                var args = new IonModalCanDismissEventArgs();
+                IonModalCanDismissEventArgs args = new();
                 await CanDismiss.InvokeAsync(args);
                 return args.CanDismiss;
             });
@@ -423,16 +425,12 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     private IonModalDismissEventArgs GetDismissArgs(JsonObject? args)
     {
         var role = args?["detail"]?["role"]?.GetValue<string>();
-        object? data = null;
-        switch (args?["detail"]?["data"])
+        var data = args?["detail"]?["data"] switch
         {
-            case JsonArray array:
-                data = array.Deserialize<object?[]>();
-                break;
-            case JsonValue jsonValue:
-                data = jsonValue.GetValue<object?>();
-                break;
-        }
+            JsonArray array => array.Deserialize<object?[]>(),
+            JsonValue jsonValue => jsonValue.GetValue<object?>(),
+            _ => null
+        };
 
         return new IonModalDismissEventArgs() { Sender = this, Data = data, Role = role };
     }
@@ -447,22 +445,28 @@ public static class IonModalHandleBehavior
 
 public class IonModalDismissEventArgs : EventArgs
 {
+    [JsonIgnore]
     public IonModal Sender { get; internal set; } = null!;
 
+    [JsonPropertyName("role")]
     public string? Role { get; internal set; }
 
+    [JsonPropertyName("data")]
     public object? Data { get; internal set; }
 }
 
 public class IonModalCanDismissEventArgs : EventArgs
 {
+    [JsonIgnore]
     public IonModal Sender { get; internal set; } = null!;
 
+    [JsonPropertyName("canDismiss")]
     public bool CanDismiss { get; set; } = true;
 }
 
 public interface IIonModalCanDismiss
 {
+    [JsonIgnore]
     Func<Task<bool>> Value { get; }
 }
 

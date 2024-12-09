@@ -1,0 +1,25 @@
+﻿@namespace IonicTest.Pages.Samples.Picker
+
+<IonPicker>
+    <IonPickerColumn @ref="@_pickerColumn" Value="javascript" IonChange="OnChange">
+        <IonPickerColumnOption Value="" Disabled="@true">--</IonPickerColumnOption>
+        <IonPickerColumnOption Value="javascript">Javascript</IonPickerColumnOption>
+        <IonPickerColumnOption Value="typescript">Typescript</IonPickerColumnOption>
+        <IonPickerColumnOption Value="rust">Rust</IonPickerColumnOption>
+        <IonPickerColumnOption Value="c#">C#</IonPickerColumnOption>
+    </IonPickerColumn>
+</IonPicker>
+
+<p>@((MarkupString)_message)</p>
+
+@code {
+    IonPickerColumn _pickerColumn = null!;
+    string _message = string.Empty;
+
+    private void OnChange(IonPickerColumnIonChangeEventArgs args)
+    {
+        _message = $"You selected: <b>{args.Value}</b>";
+        StateHasChanged();
+    }
+
+}

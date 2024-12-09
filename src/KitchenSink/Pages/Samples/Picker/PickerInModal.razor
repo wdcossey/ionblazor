@@ -1,0 +1,57 @@
+﻿@namespace IonicTest.Pages.Samples.Picker
+
+<IonButton id="open-modal">Open modal</IonButton>
+
+<!--  In Blazor we need to use a class name (or another CSS selector); so we can scope the styles to as specific element -->
+<style>
+    ion-modal.picker-modal {
+        --height: auto;
+
+        align-items: end;
+    }
+
+    ion-picker.picker-modal-picker {
+        margin-bottom: var(--ion-safe-area-bottom);
+    }
+</style>
+
+<IonModal @ref="_modal" Class="picker-modal" Trigger="open-modal" IsOpen="@false" DidDismiss="OnDidDismiss">
+    <IonToolbar>
+        <IonButtons slot="start">
+            <IonButton onclick="@(() => { _ = _modal.DismissAsync(null, "cancel"); } )">Cancel</IonButton>
+        </IonButtons>
+        <IonButtons slot="end">
+            <IonButton @onclick="@(() => { _ = _modal.DismissAsync(_currentValue, "confirm"); } )">Done</IonButton>
+        </IonButtons>
+    </IonToolbar>
+    <IonPicker Class="picker-modal-picker">
+        <IonPickerColumn Value="@_currentValue" IonChange="OnChange">
+            <IonPickerColumnOption Value="" Disabled="@true">--</IonPickerColumnOption>
+            <IonPickerColumnOption Value="javascript">Javascript</IonPickerColumnOption>
+            <IonPickerColumnOption Value="typescript">Typescript</IonPickerColumnOption>
+            <IonPickerColumnOption Value="rust">Rust</IonPickerColumnOption>
+            <IonPickerColumnOption Value="c#">C#</IonPickerColumnOption>
+        </IonPickerColumn>
+    </IonPicker>
+</IonModal>
+
+<p>@((MarkupString)_message)</p>
+
+@code {
+    IonModal _modal = null!;
+    IonPickerColumn _pickerColumn = null!;
+    string _currentValue = "javascript";
+    string _message = string.Empty;
+
+    private void OnChange(IonPickerColumnIonChangeEventArgs args)
+    {
+        _currentValue = args.Value!;
+    }
+
+    private void OnDidDismiss(IonModalDismissEventArgs args)
+    {
+        _message = System.Text.Json.JsonSerializer.Serialize(args);
+        StateHasChanged();
+    }
+
+}

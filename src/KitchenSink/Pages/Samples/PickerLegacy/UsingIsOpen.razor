@@ -1,4 +1,6 @@
-﻿<IonButton @onclick="@(() => _picker.IsOpen = true)">Open</IonButton>
+﻿@namespace IonicTest.Pages.Samples.PickerLegacy
+
+<IonButton @onclick="@(() => _picker.IsOpen = true)">Open</IonButton>
 <IonPickerLegacy @ref="_picker"
            TColumn="PickerColumn"
            TColumnOption="PickerColumnOption"
@@ -10,33 +12,33 @@
 <p>@((MarkupString)_message)</p>
 
 @code{
-    
+
     string _message = string.Empty;
-    
+
     IonPickerLegacy<PickerColumn, PickerColumnOption, PickerButton> _picker = null!;
-    
+
     private IReadOnlyList<PickerColumn> WithColumns()
     {
-        return new PickerColumn[]
-        {
+        return
+        [
             new()
             {
                 Name = "languages",
-                Options = new PickerColumnOption[]
-                {
+                Options =
+                [
                     new() { Text = "JavaScript", Value = "javascript" },
                     new() { Text = "TypeScript", Value = "typescript" },
                     new() { Text = "Rust", Value = "rust" },
-                    new() { Text = "C#", Value = "c#" },
-                }
+                    new() { Text = "C#", Value = "c#" }
+                ]
             }
-        };
+        ];
     }
 
     private IReadOnlyList<PickerButton> WithButtons()
     {
-        return new PickerButton[]
-        {
+        return
+        [
             new()
             {
                 Text = "Cancel",
@@ -47,17 +49,17 @@
                 Text = "Confirm",
                 Handler = ConfirmHandler
             }
-        };
+        ];
     }
 
     private ValueTask ConfirmHandler(Dictionary<string, PickedColumnOption>? value)
     {
-        if (value is null) 
+        if (value is null)
             return ValueTask.CompletedTask;
-            
+
         _message = $"You selected: <b>{value["languages"].Value}</b>";
         StateHasChanged();
-        
+
         return ValueTask.CompletedTask;
     }
 
