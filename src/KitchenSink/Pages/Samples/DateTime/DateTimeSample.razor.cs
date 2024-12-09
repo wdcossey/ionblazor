@@ -3,7 +3,7 @@
 public partial class DateTimeSample
 {
     private IonDateTime _multipleDateSelectionRef = null!;
-    private IonDateTime _customButtonElementsRef;
+    private IonDateTime _customButtonElementsRef = null!;
 
     private bool AdvancedDateConstraintsIsEnabled(string dateString)
     {
@@ -21,10 +21,10 @@ public partial class DateTimeSample
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
-        
+
         if (!firstRender)
             return;
-        
+
         await _multipleDateSelectionRef.SetValue("2022-06-03", "2022-06-13", "2022-06-29");
     }
 }

@@ -3,8 +3,8 @@
 public partial class BreadcrumbsSample
 {
     IonBreadcrumbs _breadcrumbsPopover = null!;
-    IonPopover _popover;
-    RenderFragment _popoverContent;
+    IonPopover _popover = null!;
+    RenderFragment _popoverContent = null!;
 
     private void IonCollapsedClickPopover(IDictionary<string, string?> args)
     {
@@ -15,7 +15,7 @@ public partial class BreadcrumbsSample
             var i = 0;
             foreach (var (k, v) in args)
             {
-                listHtml += 
+                listHtml +=
                     $$"""
                     <ion-item {{(i == args.Count - 1 ? "lines=\"none\"" : string.Empty)}} href="{{v}}">
                         <ion-label>{{k}}</ion-label>
@@ -31,7 +31,7 @@ public partial class BreadcrumbsSample
                   builder.CloseComponent();
                 */
             }
-            
+
             builder.AddMarkupContent(0, listHtml);
         };
 

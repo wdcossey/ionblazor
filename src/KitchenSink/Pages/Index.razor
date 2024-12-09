@@ -11,7 +11,7 @@
             <IonLabel>Favorite Fruits</IonLabel>
             <div slot="end" id="#selected-fruits">@($"{workingSelectedFruits.Count} Items")</div>
         </IonItem>
-        <IonButton Expand="ButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => presentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
+        <IonButton Expand="ButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => PresentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
 
     </IonList>
 
@@ -21,7 +21,7 @@
                 <IonLabel aria-label="Sliding Item with End Options">Sliding Item with End Options</IonLabel>
             </IonItem>
 
-            <IonItemOptions IonSwipe="@(args => { Console.WriteLine("IonSwipe -- Side: {0}", new object[] { args.Side }); })">
+            <IonItemOptions IonSwipe="@(args => { Console.WriteLine("IonSwipe -- Side: {0}", new object[] { args.Side ?? "<unknown>" }); })">
                 <IonItemOption>Favorite</IonItemOption>
                 <IonItemOption Color="@IonColor.Danger">Delete</IonItemOption>
             </IonItemOptions>
@@ -64,7 +64,7 @@
         </IonItemSliding>
     </IonList>
 
-    <IonDateTimeButton Datetime="datetime"></IonDateTimeButton>
+    <IonDateTimeButton DateTime="datetime"></IonDateTimeButton>
 
     <IonModal>
         <IonDateTime id="datetime"></IonDateTime>
@@ -72,7 +72,7 @@
 
     <IonButton id="open-modal" Expand="block">Open</IonButton>
 
-    <IonModal @ref="_selectfruits" Trigger="select-fruits" id="selected-fruits" IonModalDidDismiss="IonModalDidDismiss">
+    <IonModal @ref="_selectFruitsModalRef" Trigger="select-fruits" id="selected-fruits" IonModalDidDismiss="IonModalDidDismiss">
         <IonHeader>
             <IonToolbar>
                 <IonButtons slot="start">
@@ -84,7 +84,7 @@
                 </IonButtons>
             </IonToolbar>
             <IonToolbar>
-                <IonSearchbar Debounce="1000" Value="@searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchbar>
+                <IonSearchbar Debounce="1000" Value="@_searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchbar>
             </IonToolbar>
         </IonHeader>
         <IonContent Color="@IonColor.Light" Class="ion-padding">
@@ -102,7 +102,7 @@
         </IonContent>
     </IonModal>
 
-    <IonModal Trigger="open-modal" @ref="@_inputModal">
+    <IonModal Trigger="open-modal" @ref="@_inputModalRef">
         <IonHeader>
             <IonToolbar>
                 <IonButtons slot="start">
@@ -117,12 +117,12 @@
         <IonContent Class="ion-padding">
             <IonItem>
                 <IonLabel Position="@IonLabelPosition.Stacked">Enter your name</IonLabel>
-                <IonInput @ref="@inputNameRef"
+                <IonInput @ref="@_inputNameRef"
                           id="input-name"
                           Type="@IonInputType.Text"
                           Placeholder="Your name"
-                          IonChange="@(args => inputNameValue = args.Value)"
-                          IonInputEvent="@(args => inputNameValue = args.Value)">
+                          IonChange="@(args => _inputNameValue = args.Value)"
+                          IonInputEvent="@(args => _inputNameValue = args.Value)">
                 </IonInput>
 
                 @*
@@ -194,10 +194,9 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
 @code {
 
-    ElementReference list;      //document.querySelector('ion-list#modal-list');
-    private IonModal _selectfruits;     //document.querySelector('ion-modal');
-    IonInput inputNameRef; //ion-input#input-name
-    private IonModal _inputModal;
+    private IonModal _selectFruitsModalRef = null!;     //document.querySelector('ion-modal');
+    private IonInput _inputNameRef;                     //ion-input#input-name
+    private IonModal _inputModalRef = null!;
 
     IonActionSheet<ActionSheetButtonData> _actionSheet;
 
@@ -205,11 +204,11 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
     private DotNetObjectReference<CustomEventHelper<JsonObject?>> InputNameObjectReference;
     private DotNetObjectReference<CustomEventHelper<JsonObject?>> InputNameInputObjectReference;
 
-    private List<dynamic> cards = new List<dynamic>();
-    private string Title;
-    private string Content;
-    private string? searchbarValue;
-    private string? inputNameValue;
+    private readonly List<dynamic> cards = new();
+    private string? Title;
+    private string? _content;
+    private string? _searchbarValue;
+    private string? _inputNameValue;
 
     private (string text, string value)[] fruits = new (string text, string value)[]
     {
@@ -310,7 +309,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
    */
     private async void cancelChanges() {
         workingSelectedFruits = selectedFruits.ToHashSet();
-        await _selectfruits.DismissAsync(role: "cancel");
+        await _selectFruitsModalRef.DismissAsync(role: "cancel");
         //1var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
         //await modal.InvokeVoidAsync("dismiss", null, "cancel"); //modal.dismiss(undefined, 'cancel');
         StateHasChanged();
@@ -324,18 +323,18 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
         selectedFruits = workingSelectedFruits.ToList();
         //var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
         //await modal.InvokeVoidAsync("dismiss", selectedFruits); //modal.dismiss(selectedFruits)
-        await _selectfruits.DismissAsync(data: selectedFruits);
+        await _selectFruitsModalRef.DismissAsync(data: selectedFruits);
         StateHasChanged();
     }
 
     private async Task cancel()
     {
-        await _inputModal.DismissAsync(role: "cancel");
+        await _inputModalRef.DismissAsync(role: "cancel");
     }
 
     private async Task confirm()
     {
-        await _inputModal.DismissAsync(inputNameValue, "confirm");
+        await _inputModalRef.DismissAsync(_inputNameValue, "confirm");
     }
 
     private async Task AddCard()
@@ -348,20 +347,21 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
                 await JsRuntime.InvokeVoidAsync("showIonAlert");
                 return;
             }
-            cards.Add(new { Title = Title, Content = Content });
+            cards.Add(new { Title = Title, Content = _content });
             Title = string.Empty;
-            Content = string.Empty;
+            _content = string.Empty;
         }
     }
 }
 @code {
-    private async void presentToast(string position, string message) {
-        await JsRuntime.InvokeVoidAsync("presentToast", position, message);
+    private void PresentToast(string position, string message) {
+        _ = JsRuntime.InvokeVoidAsync("presentToast", position, message);
     }
 
-    private async Task DidPresent(ActionSheetEventArgs<ActionSheetButtonData> args)
+    private Task DidPresent(ActionSheetEventArgs<ActionSheetButtonData> args)
     {
         //await (args.Sender?.DismissAsync(null, "manual") ?? ValueTask.FromResult<bool>(false));
+        return Task.CompletedTask;
     }
 
     private void DidDismiss(ActionSheetDismissEventArgs<ActionSheetButtonData> args) {
@@ -369,7 +369,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
     }
 
     private void OnButtonHandler(ActionSheetButtonHandlerEventArgs<ActionSheetButtonData> args) {
-        presentToast("bottom", $"Button Index: {args.Index}; Role: {args.Button?.Role}; Text: {args.Button?.Text}; Action: {args.Button?.Data?.Action};");
+        PresentToast("bottom", $"Button Index: {args.Index}; Role: {args.Button?.Role}; Text: {args.Button?.Text}; Action: {args.Button?.Data?.Action};");
     }
 
     private void SearchbarCallback(IonSearchbarInputEventArgs args)
@@ -380,7 +380,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
     private void IonModalDidDismiss(IonModalDismissEventArgs args)
     {
-        searchbarValue = null;
+        _searchbarValue = null;
         StateHasChanged();
     }
 

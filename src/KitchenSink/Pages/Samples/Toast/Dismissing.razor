@@ -43,7 +43,7 @@
                 {
                     _handlerOutput = "Custom clicked";
                     StateHasChanged();
-                    await args.Sender.DismissAsync();
+                    await (args.Sender?.DismissAsync() ?? ValueTask.CompletedTask);
                 }
             }
         };

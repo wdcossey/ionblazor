@@ -6,7 +6,7 @@ public partial class IonBreadcrumbs : IonComponent, IIonModeComponent, IIonConte
     private DotNetObjectReference<IonicEventCallback<JsonObject?>>? _ionCollapsedClickReference = null;
 
     public override ElementReference IonElement => _self;
-    
+
     /// <inheritdoc/>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -54,7 +54,7 @@ public partial class IonBreadcrumbs : IonComponent, IIonModeComponent, IIonConte
         {
             IDictionary<string, string?> value = new Dictionary<string, string?>();
 
-            foreach (var node in args?["detail"]?.AsArray())
+            foreach (JsonNode? node in args?["detail"]?.AsArray() ?? [])
             {
                 var href = node?["href"]?.GetValue<string>();
                 var textContent = node?["textContent"]?.GetValue<string>()!;

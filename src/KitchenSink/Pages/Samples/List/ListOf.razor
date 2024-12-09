@@ -7,17 +7,17 @@
 </IonListOf>
 
 @code {
-    private readonly IEnumerable<ListOfItem> _itemsSource = new ListOfItem[]
-    {
+    private readonly IEnumerable<ListOfItem> _itemsSource =
+    [
         new() { Title = "Pokémon Yellow" },
         new() { Title = "Mega Man X" },
         new() { Title = "The Legend of Zelda" },
         new() { Title = "Pac-Man" },
-        new() { Title = "Super Mario World" },
-    };
+        new() { Title = "Super Mario World" }
+    ];
 
     public class ListOfItem
     {
-        public string Title { get; set; }
+        public required string Title { get; init; }
     }
 }
