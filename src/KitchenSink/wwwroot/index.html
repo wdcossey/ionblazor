@@ -11,8 +11,14 @@
 
     <!--<script type="module" src="_content/IonBlazor/ionBlazor.bundle.js"></script>-->
 
+    <!--<script type="module" src="_content/IonBlazor/@ionic/core/dist/ionic/index.esm.js"></script>-->
     <script type="module" src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.js"></script>
+    <script type="module">
+        import { createAnimation } from './_content/IonBlazor/@ionic/core/dist/ionic/index.esm.js';
+        window.createAnimation = createAnimation;
+    </script>
+
     <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/ionic.bundle.css" />
     <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/palettes/dark.system.css" />
 

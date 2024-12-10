@@ -35,5 +35,5 @@ export function setCurrentBreakpoint(element, value) {
 }
 
 export function enterAnimation(element, value) {
-    //element.enterAnimation = eval(value);
+    element.enterAnimation = eval(value);
 }

@@ -98,7 +98,7 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// <summary>
     /// Animation to use when the modal is presented.
     /// </summary>
-    [Parameter] public string EnterAnimation { get; set; }
+    [Parameter] public string? EnterAnimation { get; set; }
 
     [Parameter] public bool? Handle { get; set; }
 
@@ -376,7 +376,6 @@ public partial class IonModal : IonComponent, IIonModeComponent, IIonContentComp
     /// <summary>
     /// Present the modal overlay after it has been created.
     /// </summary>
-    /// <param name="value"></param>
     public async ValueTask PresentAsync() =>
         await JsComponent.InvokeVoidAsync("present", _self);
 
