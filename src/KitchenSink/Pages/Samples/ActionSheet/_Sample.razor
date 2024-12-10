@@ -1,0 +1,89 @@
+﻿@page "/samples/action-sheet"
+@using System.Text.Json
+@inject IJSRuntime JsRuntime
+
+<style>
+    device-preview .content {
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      height: 100%;
+    }
+
+</style>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Inline Action Sheets(Recommended)</h2>
+        <p><code>ion-action-sheet</code> can be used by writing the component directly in your template. This reduces the number of handlers you need to wire up in order to present the Action Sheet.</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <InlineActionSheets/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Using <code>isOpen</code></h2>
+        <p>The <code>isOpen</code> property on <code>ion-action-sheet</code> allows developers to control the presentation state of the Action Sheet from their application state. This means when <code>isOpen</code> is set to <code>true</code> the Action Sheet will be presented, and when <code>isOpen</code> is set to <code>false</code> the Action Sheet will be dismissed.</p>
+        <p><code>isOpen</code> uses a one-way data binding, meaning it will not automatically be set to <code>false</code> when the Action Sheet is dismissed. Developers should listen for the <code>ionActionSheetDidDismiss</code> or <code>didDismiss</code> event and set <code>isOpen</code> to <code>false</code>. The reason for this is it prevents the internals of <code>ion-action-sheet</code> from being tightly coupled with the state of the application. With a one way data binding, the Action Sheet only needs to concern itself with the boolean value that the reactive variable provides. With a two way data binding, the Action Sheet needs to concern itself with both the boolean value as well as the existence of the reactive variable itself. This can lead to non-deterministic behaviors and make applications harder to debug.</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <UsingIsOpen/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Controller Action Sheets</h2>
+        <p>The <code>actionSheetController</code> can be used in situations where more control is needed over when the Action Sheet is presented and dismissed.</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <ControllerActionSheets/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Collecting Role Information on Dismiss</h2>
+        <p>When the <code>didDismiss</code> event is fired, the <code>data</code> and <code>role</code> fields of the event detail can be used to gather information about how the Action Sheet was dismissed.</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <CollectingRoleInformation/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Theming</h2>
+        <h3>Styling</h3>
+        <p>We recommend passing a custom class to <code>cssClass</code> in the <code>create</code> method and using that to add custom styles to the host and inner elements. This property can also accept multiple classes separated by spaces.</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <ThemingStyling/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h3>CSS Custom Properties</h3>
+        <p>Any of the defined CSS Custom Properties can be used to style the Action Sheet without needing to target individual elements.</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <ThemingCssCustomProperties/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>

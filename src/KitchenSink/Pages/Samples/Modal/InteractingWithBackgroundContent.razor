@@ -1,26 +1,21 @@
-
-<IonHeader>
+﻿<IonHeader>
     <IonToolbar>
         <IonTitle>App</IonTitle>
     </IonToolbar>
 </IonHeader>
-<IonContent Class="ion-padding">
-    <IonButton id="open-modal" Expand="@IonButtonExpand.Block">Open Modal</IonButton>
+<IonContent class="ion-padding">
+    <p>You can interact with the +/- buttons until the sheet is fully expanded.</p>
 
-    <p>
-        *** This demo is hosted in a <b>&lt;ion-app&gt;</b>, the modal will <b>not</b> be bound to this preview pane!
-    </p>
+    <div class="counter__section">
+        <ion-button id="decrement" @onclick="@Decrement">-</ion-button>
+        <p id="counter">@_counter</p>
+        <IonButton id="increment" @onclick="@Increment">+</IonButton>
+    </div>
 
-    <IonModal @ref="_modal" Class="modal-styling-animation" EnterAnimation="@_enterAnimation" Trigger="open-modal">
-        <IonHeader>
-            <IonToolbar>
-                <IonTitle>Modal</IonTitle>
-                <IonButtons slot="end">
-                    <IonButton @onclick="@(async () => await _modal.DismissAsync())">Close</IonButton>
-                </IonButtons>
-            </IonToolbar>
-        </IonHeader>
+
+    <IonModal @ref="_modal" IsOpen="@true" InitialBreakpoint="@(0.25d)" BackdropDismiss="@false" BackdropBreakpoint="@(0.5d)"  >
         <IonContent>
+            <IonSearchbar @ref="_searchbar" @onclick="@(async () => await _modal.SetCurrentBreakpointAsync(0.75))" Placeholder="Search" ></IonSearchbar>
             <IonList>
                 <IonItem>
                     <IonAvatar slot="start">
@@ -62,3 +57,28 @@
         </IonContent>
     </IonModal>
 </IonContent>
+
+@code {
+
+    int _counter = 0;
+    IonModal _modal = null!;
+    IonSearchbar _searchbar = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+    }
+
+    private void Increment()
+    {
+        _counter++;
+    }
+
+    private void Decrement()
+    {
+        _counter--;
+    }
+}

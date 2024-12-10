@@ -1,22 +1,20 @@
-﻿@inject IJSRuntime JsRuntime
-
-<IonButton @onclick="@(() => _actionSheet.IsOpen = true)">Open</IonButton>
-<IonActionSheet TButtonData="ActionSheetButtonData" 
-                @ref="_actionSheet" 
-                Header="Actions" 
-                Buttons="@(() => 
-                         { 
-                             return new List<ActionSheetButton<ActionSheetButtonData>>() { 
-                                 new () { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" }, Handler = ButtonHandler }, 
-                                 new () { Text = "Share", Handler = ButtonHandler }, 
-                                 new () 
+﻿<IonButton @onclick="@(() => _actionSheet.IsOpen = true)">Open</IonButton>
+<IonActionSheet TButtonData="ActionSheetButtonData"
+                @ref="_actionSheet"
+                Header="Actions"
+                Buttons="@(() =>
+                         {
+                             return new List<ActionSheetButton<ActionSheetButtonData>>() {
+                                 new () { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" }, Handler = ButtonHandler },
+                                 new () { Text = "Share", Handler = ButtonHandler },
+                                 new ()
                                  {
-                                     Text = "Cancel", 
-                                     Role = "cancel", 
+                                     Text = "Cancel",
+                                     Role = "cancel",
                                      Data = new ActionSheetButtonData { Action = "cancel" },
                                      Handler = ButtonHandler
-                                 } 
-                             }; 
+                                 }
+                             };
                          })"
                 IonActionSheetDidDismiss="@IonActionSheetDidDismiss"></IonActionSheet>
 

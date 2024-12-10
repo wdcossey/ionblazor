@@ -2,13 +2,17 @@
 
 <div class="ion-page" id="main-content">
     <IonContent Class="container">
-        <PreviewContainer Title="Basic Usage">
-            <IonIcon Name="logo-ionic"></IonIcon>
-            <IonIcon Name="logo-ionic" Size="@IconSize.Large"></IonIcon>
-            <IonIcon Name="logo-ionic" Color="@IconColor.Primary"></IonIcon>
-            <IonIcon Name="logo-ionic" Size="@IconSize.Large" color="@IconColor.Primary"></IonIcon>
-            <IonIcon src="/img/blazor.svg" Size="@IconSize.Large"></IonIcon>            
-        </PreviewContainer>
+        <PlaygroundContainer>
+            <Header>
+                <h2>Basic Usage</h2>
+            </Header>
+            <ChildContent>
+                <IonIcon Name="logo-ionic"></IonIcon>
+                <IonIcon Name="logo-ionic" Size="@IconSize.Large"></IonIcon>
+                <IonIcon Name="logo-ionic" Color="@IconColor.Primary"></IonIcon>
+                <IonIcon Name="logo-ionic" Size="@IconSize.Large" color="@IconColor.Primary"></IonIcon>
+                <IonIcon src="/img/blazor.svg" Size="@IconSize.Large"></IonIcon>
+            </ChildContent>
+        </PlaygroundContainer>
     </IonContent>
 </div>
-

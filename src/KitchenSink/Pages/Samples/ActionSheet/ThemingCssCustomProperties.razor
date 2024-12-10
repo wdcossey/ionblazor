@@ -1,0 +1,20 @@
+﻿<style>
+    ion-action-sheet.css-custom-properties {
+        --background: #f58840;
+        --backdrop-opacity: 0.6;
+        --button-background-selected: #e97223;
+        --button-color: #000000;
+        --color: #fff;
+        /* role: "destructive" button iOS styling override */
+        --ion-color-danger: #000000;
+    }
+</style>
+<IonButton id="open-action-sheet-css-custom-properties">Open</IonButton>
+<IonActionSheet
+    TButtonData="ActionSheetButtonData"
+    CssClass="css-custom-properties"
+    Trigger="open-action-sheet-css-custom-properties"
+    Header="Example header"
+    SubHeader="Example subheader"
+    Buttons="@(() => { return new List<SimpleActionSheetButton>() { new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } }, new() { Text = "Share" }, new() { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })">
+</IonActionSheet>

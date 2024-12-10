@@ -1,12 +1,7 @@
 ﻿
-@if (string.IsNullOrWhiteSpace(Title) is false)
+@if (Header is not null)
 {
-    <h2>@Title</h2>
-}
-
-@if (string.IsNullOrWhiteSpace(SubTitle) is false)
-{
-    <h3>@SubTitle</h3>
+    @Header
 }
 
 <div class="playground__container">

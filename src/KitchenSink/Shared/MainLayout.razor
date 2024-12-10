@@ -291,6 +291,21 @@
 
                 <IonItemGroup>
                     <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
+                        <IonLabel> Modal </IonLabel>
+                    </IonItemDivider>
+
+                    <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/modal"))">
+                        <IonLabel>ion-modal</IonLabel>
+                    </IonItem>
+
+                    <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/backdrop"))">
+                        <IonLabel>ion-backdrop</IonLabel>
+                    </IonItem>
+
+                </IonItemGroup>
+
+                <IonItemGroup>
+                    <IonItemDivider Color="@IonColor.Primary" Sticky="@true">
                         <IonLabel> Toast </IonLabel>
                     </IonItemDivider>
 
@@ -377,10 +392,6 @@
                 </IonItem>
                 <IonItem Button="true" @onclick="@(() => NavigationManager.NavigateTo("/samples/segment-button"))">
                     <IonLabel>ion-segment-button</IonLabel>
-                </IonItem>
-
-                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/modal"))">
-                    <IonLabel>ion-modal</IonLabel>
                 </IonItem>
 
             </IonList>

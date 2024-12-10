@@ -1,0 +1,25 @@
+﻿<IonButton @onclick="@(async () => { await IonActionSheetController.PresentAsync(header: "Actions", ButtonsBuilder); })">
+    Open
+</IonButton>
+
+@code {
+
+    private IEnumerable<SimpleActionSheetButton> ButtonsBuilder()
+    {
+        return new List<SimpleActionSheetButton>()
+        {
+            new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" }, Handler = ButtonHandler },
+            new() { Text = "Share", Data = new ActionSheetButtonData { Action = "share" }, Handler = ButtonHandler },
+            new() { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" }, Handler = ButtonHandler }
+        };
+    }
+
+    private async ValueTask ButtonHandler(ActionSheetButton<ActionSheetButtonData>? button, int? index)
+    {
+        await IonToastController.PresentAsync(
+            message: $"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};",
+            position: "bottom",
+            duration: 3000,
+            icon: "logo-ionic");
+    }
+}

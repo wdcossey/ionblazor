@@ -19,14 +19,14 @@ figure {
     z-index: 1;
 }
 
+device-preview figure {
+    border: 12px solid black;
+    border-radius: 44px;
+}
+
 device-preview[mode="ios"] figure {
     border: 12px solid black;
     border-radius: 54px;
-}
-
-device-preview[mode="md"] figure {
-    border: 12px solid black;
-    border-radius: 44px;
 }
 
 .md-bar {
@@ -62,12 +62,12 @@ device-preview[mode="md"] figure {
     z-index: 1;
 }
 
-device-preview[mode="ios"] .content {
-    border-radius: 38px;
+device-preview .content {
+    border-radius: 32px;
 }
 
-device-preview[mode="md"] .content {
-    border-radius: 32px;
+device-preview[mode="ios"] .content {
+    border-radius: 38px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -78,7 +78,8 @@ device-preview[mode="md"] .content {
 
 @media only screen and (max-width: 600px) {
 
-    device-preview[mode="ios"] figure, device-preview[mode="md"] figure {
+    device-preview figure,
+    device-preview[mode="ios"] figure {
         border: 0;
         border-radius: 0;
         box-shadow: none;
@@ -86,8 +87,8 @@ device-preview[mode="md"] .content {
 }
 
 @media only screen and (max-width: 600px) {
-    device-preview[mode="ios"] .ios-notch, 
-    device-preview[mode="md"] .md-bar, 
+    device-preview[mode="ios"] .ios-notch,
+    device-preview:not([mode="ios"]) .md-bar,
     device-preview[mode="ios"] figure::after {
         display: none;
     }
