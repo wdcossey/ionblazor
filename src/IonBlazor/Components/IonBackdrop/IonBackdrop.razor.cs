@@ -5,6 +5,7 @@ public partial class IonBackdrop : IonComponent, IIonComponent
     private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionBackdropTapReference = null!;
 
+    /// <inheritdoc />
     public override ElementReference IonElement => _self;
 
     /// <summary>
