@@ -1,5 +1,3 @@
 ﻿namespace IonicTest.Pages.Samples.IonPasswordToggle;
 
-public partial class Sample : ComponentBase
-{
-}
+public partial class Sample : ComponentBase;

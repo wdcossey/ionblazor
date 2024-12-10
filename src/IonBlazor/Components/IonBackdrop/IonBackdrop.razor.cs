@@ -42,7 +42,7 @@ public partial class IonBackdrop : IonComponent, IIonComponent
         _ionBackdropTapReference = IonicEventCallback<JsonObject?>.Create(
             async _ =>
             {
-                await IonBackdropTap.InvokeAsync(new IonBackdropIonChangeEventArgs { Sender = this });
+                await IonBackdropTap.InvokeAsync(new IonBackdropTapEventArgs { Sender = this });
             });
 
         await this.AttachIonListenersAsync(_self, IonEvent.Set("ionBackdropTap", _ionBackdropTapReference));
