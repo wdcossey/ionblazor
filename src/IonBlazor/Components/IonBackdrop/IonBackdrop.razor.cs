@@ -48,8 +48,3 @@ public partial class IonBackdrop : IonComponent, IIonComponent
     }
 
 }
-
-public class IonBackdropIonChangeEventArgs : EventArgs
-{
-    public IonBackdrop Sender { get; internal init; } = null!;
-}
