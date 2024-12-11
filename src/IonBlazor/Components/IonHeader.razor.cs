@@ -3,7 +3,7 @@
 public partial class IonHeader : IonComponent, IIonModeComponent, IIonContentComponent
 {
     private ElementReference _self;
-    
+
     public override ElementReference IonElement => _self;
 
     //private string? _cascadingMode;
@@ -18,9 +18,15 @@ public partial class IonHeader : IonComponent, IIonModeComponent, IIonContentCom
     [Parameter]
     public string? Collapse { get; set; } = IonHeaderCollapse.Default;
 
+    /// <summary>
+    /// The mode from the parent (<see cref="IonApp"/>).
+    /// </summary>
+    [CascadingParameter(Name = "ion-app-mode")]
+    internal string? CascadingMode { get; set; }
+
     /// <inheritdoc/>
     //[Parameter]
-    [CascadingParameter(Name = nameof(Mode))]
+    [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
 
     /*[CascadingParameter(Name = "ion-app-mode")]
@@ -30,10 +36,10 @@ public partial class IonHeader : IonComponent, IIonModeComponent, IIonContentCom
         set
         {
             _cascadingMode = value;
-            
+
             if (Mode != IonMode.Default)
                 return;
-            
+
             Mode = value;
         }
     }*/

@@ -4,7 +4,7 @@
             @attributes="@Attributes"
             class="@Class"
             collapse="@Collapse"
-            mode="@Mode"
+            mode="@(Mode ?? CascadingMode)"
             translucent="@Translucent">
     @ChildContent
 </ion-header>

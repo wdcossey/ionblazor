@@ -73,7 +73,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
     /// Format the counter text. By default the counter text is set to "itemLength / maxLength".
     /// </summary>
     [Parameter]
-    public string? CounterFormat { get; set; }
+    public string? CounterFormatter { get; init; }
 
     /// <summary>
     /// Set the amount of time, in milliseconds, to wait to trigger the <see cref="IonInput"/> event after each
@@ -347,7 +347,7 @@ public partial class IonInput : IonComponent, IIonColorComponent, IIonModeCompon
             IonEvent.Set("ionInput" , _ionInputReference )
         });
 
-        await JsComponent.InvokeVoidAsync("counterFormat", _self, CounterFormat);
+        await JsComponent.InvokeVoidAsync("counterFormatter", _self, CounterFormatter);
     }
 
     /*
