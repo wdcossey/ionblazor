@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public partial class IonInputPasswordToggle : IonComponent, IIonModeComponent, IIonColorComponent
+public sealed partial class IonInputPasswordToggle : IonComponent, IIonModeComponent, IIonColorComponent
 {
     private ElementReference _self;
 

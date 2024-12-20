@@ -7,7 +7,9 @@ namespace IonicTest.Shared;
 
 public partial class MainLayout
 {
+    private IonToggle _darkToggle = null!;
     private IonMenu _mainMenu = null!;
+
 #if WINDOWS
     private readonly UISettings _windowsUiSettings = new();
 #endif
@@ -26,7 +28,7 @@ public partial class MainLayout
 
         NavigationManager.LocationChanged += async (object? sender, LocationChangedEventArgs e) =>
         {
-            await _mainMenu.CloseAsync(true);
+
         };
     }
 
@@ -36,6 +38,9 @@ public partial class MainLayout
         {
             Color? color = Application.AccentColor ?? Color.FromArgb("#FFCF40");
             await SetAccentColor(color);
+
+            var @checked = await JsRuntime.InvokeAsync<bool>("prefersDarkColorScheme");
+            _ = _darkToggle.SetChecked(@checked).AsTask();
         }
 
         await base.OnAfterRenderAsync(firstRender);
@@ -47,5 +52,11 @@ public partial class MainLayout
 
         await JsRuntime.InvokeVoidAsync("document.body.style.setProperty", "--ion-color-primary", color.ToArgbHex());
         await JsRuntime.InvokeVoidAsync("document.body.style.setProperty", "--ion-color-primary-rgb", $"{red}, {green}, {blue}");
+    }
+
+
+    private void DarkModeChange(IonToggleChangeEventArgs args)
+    {
+        JsRuntime.InvokeVoidAsync("document.documentElement.classList.toggle", "ion-palette-dark", args.Checked);
     }
 }

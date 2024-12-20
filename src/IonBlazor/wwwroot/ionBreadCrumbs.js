@@ -1,4 +1,6 @@
-﻿export function attachIonCollapsedClickListener(element, ref) {
+﻿import { dotNetCallbackMethod } from './common.js';
+
+export function attachIonCollapsedClickListener(element, ref) {
     element.addEventListener('ionCollapsedClick', (ev) => {
         ref.invokeMethodAsync(dotNetCallbackMethod, {
             tagName: ev.target.tagName,

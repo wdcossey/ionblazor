@@ -1,19 +1,19 @@
 ﻿namespace IonBlazor.Services;
 
-public class IonActionSheetController : ComponentBase, IAsyncDisposable
+public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
-    
+
     private static IJSObjectReference? _ionComponent;
-    
+
     public static async ValueTask PresentAsync<TButtonData>(
-        string? header = null, 
+        string? header = null,
         Func<IEnumerable<ActionSheetButton<TButtonData>>>? buttonsFunc = null)
         where TButtonData : class, IActionSheetButtonData
     {
         IEnumerable<ActionSheetButton<TButtonData>>? buttons = null;
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
-        
+
         if (buttonsFunc is not null)
         {
             buttons = buttonsFunc?.Invoke();
@@ -33,11 +33,10 @@ public class IonActionSheetController : ComponentBase, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        GC.SuppressFinalize(this);
         await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
         _ionComponent = null;
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);

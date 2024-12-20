@@ -4,9 +4,9 @@
 
 @code {
 
-    private IEnumerable<SimpleActionSheetButton> ButtonsBuilder()
+    private IEnumerable<BasicActionSheetButton> ButtonsBuilder()
     {
-        return new List<SimpleActionSheetButton>()
+        return new List<BasicActionSheetButton>()
         {
             new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" }, Handler = ButtonHandler },
             new() { Text = "Share", Data = new ActionSheetButtonData { Action = "share" }, Handler = ButtonHandler },

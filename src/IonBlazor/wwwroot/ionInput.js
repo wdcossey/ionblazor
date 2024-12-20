@@ -1,3 +1,5 @@
+import { dotNetCallbackMethod } from './common.js';
+
 export function counterFormatter(element, expression) {
     element.counterFormatter = eval(expression);
 }
@@ -9,7 +11,7 @@ export function setValue(element, value) {
 
 export async function getInputElement(element, callback) {
     let result = await element.getInputElement();
-    return await callback.invokeMethodAsync('OnCallbackEvent', {result});
+    return await callback.invokeMethodAsync(dotNetCallbackMethod, {result});
 }
 
 export function setFocus(element) {

@@ -1,4 +1,6 @@
-﻿export async function presentToast(header, message, position, duration = 1500, icon = null, positionAnchor= null, buttons= null, buttonHandler= null, translucent = null, animated = null, htmlAttributes= null) {
+﻿import { dotNetCallbackMethod } from './common.js';
+
+export async function presentToast(header, message, position, duration = 1500, icon = null, positionAnchor= null, buttons= null, buttonHandler= null, translucent = null, animated = null, htmlAttributes= null) {
     const toast = document.createElement('ion-toast');
     toast.duration = duration;
     toast.header = header;
@@ -9,7 +11,7 @@
     toast.animated = animated;
     toast.positionAnchor = positionAnchor;
     toast.htmlAttributes = htmlAttributes;
-    
+
     if (buttons) {
         buttons.forEach(function (button, index) {
             button.handler = () => {
@@ -18,12 +20,12 @@
         });
         toast.buttons = buttons;
     }
-    
+
     document.body.appendChild(toast);
 
     toast.addEventListener('didDismiss', () => {
         toast.remove();
     });
-    
+
     await toast.present();
 }

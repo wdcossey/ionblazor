@@ -1,3 +1,5 @@
+import { dotNetCallbackMethod } from './common.js';
+
 export async function presentLoading(message, duration, htmlAttributes, didDismissHandler, didPresentHandler) {
     const loading = document.createElement('ion-loading');
     loading.message = message;

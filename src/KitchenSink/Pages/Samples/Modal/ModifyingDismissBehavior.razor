@@ -70,7 +70,7 @@
             header: "Are you sure?",
             buttonsFunc: () => new[]
             {
-                new SimpleActionSheetButton
+                new BasicActionSheetButton
                 {
                     Text = "Yes",
                     Role = "confirm",
@@ -80,7 +80,7 @@
                         return ValueTask.CompletedTask;
                     }
                 },
-                new SimpleActionSheetButton
+                new BasicActionSheetButton
                 {
                     Text = "No",
                     Role = "cancel",

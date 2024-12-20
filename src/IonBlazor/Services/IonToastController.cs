@@ -1,16 +1,16 @@
 ﻿namespace IonBlazor.Services;
 
-public class IonToastController: ComponentBase, IAsyncDisposable
+public sealed class IonToastController: ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
-    
+
     private static IJSObjectReference _ionComponent = null!;
-    
+
     public static ValueTask PresentAsync(
         string? header = null,
-        string? message = null, 
-        string? position = null, 
-        int duration = 1500, 
+        string? message = null,
+        string? position = null,
+        int duration = 1500,
         string? icon = null,
         string? positionAnchor = null,
         bool? translucent = null,
@@ -20,7 +20,7 @@ public class IonToastController: ComponentBase, IAsyncDisposable
     {
         IEnumerable<IIonToastButton>? buttons = null;
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
-        
+
         if (buttonsFunc is not null)
         {
             buttons = buttonsFunc?.Invoke();
@@ -34,15 +34,15 @@ public class IonToastController: ComponentBase, IAsyncDisposable
                     buttonHandler?.Dispose();
                 });
         }
-        
+
         return _ionComponent.InvokeVoidAsync("presentToast", header, message, position, duration, icon, positionAnchor, buttons, buttonHandler, translucent, animated, htmlAttributes);
     }
-    
+
     public static ValueTask PresentAsync(
         string? header = null,
         string? message = null,
-        string? position = null, 
-        TimeSpan? duration  = null, 
+        string? position = null,
+        TimeSpan? duration  = null,
         string? icon = null,
         string? positionAnchor = null,
         bool? translucent = null,
@@ -52,24 +52,23 @@ public class IonToastController: ComponentBase, IAsyncDisposable
     {
         var durationAsInt = (int?)duration?.TotalMilliseconds ?? 1500;
         return PresentAsync(
-            header: header, 
-            message: message, 
-            position: position, 
-            duration: durationAsInt, 
-            icon: icon, 
+            header: header,
+            message: message,
+            position: position,
+            duration: durationAsInt,
+            icon: icon,
             positionAnchor: positionAnchor,
-            translucent: translucent, 
+            translucent: translucent,
             animated: animated,
-            buttonsFunc: buttonsFunc, 
+            buttonsFunc: buttonsFunc,
             htmlAttributes: htmlAttributes);
     }
 
     public ValueTask DisposeAsync()
     {
-        GC.SuppressFinalize(this);
         return _ionComponent.DisposeAsync();
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);

@@ -400,6 +400,13 @@
                         <IonMenuButton/>
                     </IonButtons>
                     <IonTitle>Content</IonTitle>
+
+                    <IonButtons slot="end">
+                        @*<IonButton id="popover-trigger">
+                            <IonIcon slot="icon-only" Name="brush"></IonIcon>
+                        </IonButton>*@
+                        <IonToggle @ref="@_darkToggle" IonChange="@DarkModeChange"/>
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
 
@@ -409,7 +416,27 @@
         </div>
     </IonSplitPane>
 
-
+    @*<IonPopover Trigger="popover-trigger" DismissOnSelect="@true" Side="@IonPopoverSide.End">
+        <IonContent>
+            <IonList>
+                <IonItem>
+                    <IonToggle @ref="@_darkToggle" IonChange="@DarkModeChange">Dark Mode</IonToggle>
+                </IonItem>
+                <IonItem>
+                    <IonGrid>
+                        <IonRow>
+                            <IonCol>
+                                <div style="background-color: red; width: 1rem; height: 1rem; border-radius: 5rem"></div>
+                            </IonCol>
+                            <IonCol>
+                                <div style="background-color: lime; width: 1rem; height: 1rem; border-radius: 5rem"></div>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
+                </IonItem>
+            </IonList>
+        </IonContent>
+    </IonPopover>*@
 
 
 </IonApp>

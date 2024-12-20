@@ -1,9 +1,9 @@
 ﻿namespace IonBlazor.Components;
 
-public partial class IonBackdrop : IonComponent, IIonComponent
+public sealed partial class IonBackdrop : IonComponent, IIonComponent
 {
     private ElementReference _self;
-    private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionBackdropTapReference = null!;
+    private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionBackdropTapReference;
 
     /// <inheritdoc />
     public override ElementReference IonElement => _self;
@@ -32,6 +32,12 @@ public partial class IonBackdrop : IonComponent, IIonComponent
     [Parameter]
     public EventCallback IonBackdropTap { get; set; }
 
+    public IonBackdrop()
+    {
+        _ionBackdropTapReference = IonicEventCallback<JsonObject?>
+            .Create(async _ => { await IonBackdropTap.InvokeAsync(new IonBackdropTapEventArgs { Sender = this }); });
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -39,13 +45,12 @@ public partial class IonBackdrop : IonComponent, IIonComponent
         if (!firstRender)
             return;
 
-        _ionBackdropTapReference = IonicEventCallback<JsonObject?>.Create(
-            async _ =>
-            {
-                await IonBackdropTap.InvokeAsync(new IonBackdropTapEventArgs { Sender = this });
-            });
-
         await this.AttachIonListenersAsync(_self, IonEvent.Set("ionBackdropTap", _ionBackdropTapReference));
     }
 
+    public override async ValueTask DisposeAsync()
+    {
+        _ionBackdropTapReference.Dispose();
+        await base.DisposeAsync();
+    }
 }

@@ -1,0 +1,11 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-list-header @ref="_self"
+                 @attributes="@Attributes"
+                 color="@Color"
+                 class="@Class"
+                 lines="@Lines"
+                 mode="@Mode">
+    @ChildContent
+</ion-list-header>

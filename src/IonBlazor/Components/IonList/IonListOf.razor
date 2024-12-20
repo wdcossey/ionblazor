@@ -1,0 +1,16 @@
+﻿@namespace IonBlazor.Components
+@inherits IonList
+
+@typeparam TItem where TItem: notnull
+
+<ion-list @ref="@_self"
+          @attributes="@Attributes"
+          class="@Class"
+          inset="@Inset"
+          lines="@Lines"
+          mode="@Mode">
+    @foreach (TItem item in ItemsSource)
+    {
+        @ItemTemplate(item)
+    }
+</ion-list>

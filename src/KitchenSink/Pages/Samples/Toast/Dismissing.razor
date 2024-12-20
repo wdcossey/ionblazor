@@ -1,4 +1,5 @@
-﻿<IonButton id="open-dismissing-toast">Open Toast</IonButton>
+﻿@using IonBlazor.Components.Abstractions
+<IonButton id="open-dismissing-toast">Open Toast</IonButton>
 <IonToast Trigger="open-dismissing-toast" Duration="3000" Message="Hello World!" Buttons="@WithButtons" IonToastDidDismiss="@IonToastDidDismiss"></IonToast>
 <p>@((MarkupString)_handlerOutput)</p>
 <p>@((MarkupString)_roleOutput)</p>

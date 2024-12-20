@@ -34,5 +34,5 @@
     Trigger="open-action-sheet-styling"
     Header="Example header"
     SubHeader="Example subheader"
-    Buttons="@(() => { return new List<SimpleActionSheetButton>() { new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } }, new() { Text = "Share" }, new() { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })">
+    Buttons="@(() => { return new List<BasicActionSheetButton>() { new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } }, new() { Text = "Share" }, new() { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })">
 </IonActionSheet>

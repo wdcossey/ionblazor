@@ -1,3 +1,5 @@
+import { dotNetCallbackMethod } from './common.js';
+
 export async function presentActionSheet(header, buttons, buttonHandler) {
     const actionSheet = document.createElement('ion-action-sheet');
     actionSheet.header = header;
@@ -14,6 +16,6 @@ export async function presentActionSheet(header, buttons, buttonHandler) {
     actionSheet.addEventListener('didDismiss', () => {
         actionSheet.remove();
     });
-    
+
     await actionSheet.present();
 }

@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>IonicTest</title>
     <base href="/" />
-    <!--<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="IonicTest.styles.css" rel="stylesheet" />-->
+    <!--<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" /-->
 
     <!--<script type="module" src="_content/IonBlazor/ionBlazor.bundle.js"></script>-->
 
@@ -19,8 +17,9 @@
         window.createAnimation = createAnimation;
     </script>
 
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/core.css" />
     <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/ionic.bundle.css" />
-    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/palettes/dark.system.css" />
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/palettes/dark.class.css" />
 
 <!--    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
@@ -46,31 +45,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
-    <!-- ion-date-time -->
-    <script>
-
-        function ionDateTimeIsDateEnabled(element, callback) {
-
-            //element.isDateEnabled = async (dateString) => {
-            //    let isEnabled = await callback.invokeMethodAsync('OnCallbackEvent', {dateString});
-            //    console.log(`${dateString}: ${isEnabled}`);
-            //    return false;
-            //}
-
-            element.isDateEnabled = (dateString) => {
-                const date = new Date(dateString);
-                const utcDay = date.getUTCDay();
-
-                /**
-                 * Date will be enabled if it is not
-                 * Sunday or Saturday
-                 */
-                return utcDay !== 0 && utcDay !== 6;
-            }
-        }
-
-    </script>
-
     <script>
         window.Ionic = {
             config: {
@@ -80,8 +54,6 @@
             }
         }
     </script>
-
-    <script src="_content/IonBlazor/wrapper.js"></script>
 </head>
 
 <body>
@@ -196,6 +168,9 @@
         function toggleDarkPalette(shouldAdd) {
             document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
         }
+
+        window.prefersDarkColorScheme = function () { return window.matchMedia('(prefers-color-scheme: dark)').matches };
+
     </script>
 
     <script src="_framework/blazor.webview.js" autostart="false"></script>

@@ -1,15 +1,12 @@
 ﻿namespace IonBlazor.Components;
 
-public partial class IonSplitPane : IonComponent, IIonContentComponent
+public sealed partial class IonSplitPane : IonContentComponent
 {
     private ElementReference _self;
-    private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionSplitPaneVisibleReference = null!;
+    private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionSplitPaneVisibleReference;
 
     /// <inheritdoc />
     public override ElementReference IonElement => _self;
-
-    /// <inheritdoc />
-    [Parameter] public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
     /// The <b>id</b> of the main content. When using a router this is typically <b>ion-router-outlet</b>.
@@ -35,6 +32,15 @@ public partial class IonSplitPane : IonComponent, IIonContentComponent
     [Parameter]
     public EventCallback IonSplitPaneVisible { get; set; }
 
+    public IonSplitPane()
+    {
+        _ionSplitPaneVisibleReference = IonicEventCallback<JsonObject?>.Create(
+            async args =>
+            {
+                await IonSplitPaneVisible.InvokeAsync(new IonSplitPaneVisibleEventArgs { Sender = this });
+            });
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -42,12 +48,12 @@ public partial class IonSplitPane : IonComponent, IIonContentComponent
         if (!firstRender)
             return;
 
-        _ionSplitPaneVisibleReference = IonicEventCallback<JsonObject?>.Create(
-            async args =>
-            {
-                await IonSplitPaneVisible.InvokeAsync(new IonSplitPaneVisibleEventArgs { Sender = this });
-            });
-
         await this.AttachIonListenersAsync(_self, IonEvent.Set("ionSplitPaneVisible", _ionSplitPaneVisibleReference));
+    }
+
+    public override async ValueTask DisposeAsync()
+    {
+        _ionSplitPaneVisibleReference.Dispose();
+        await base.DisposeAsync();
     }
 }

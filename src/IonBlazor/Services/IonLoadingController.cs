@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Services;
 
-public class IonLoadingController: ComponentBase, IAsyncDisposable
+public sealed class IonLoadingController: ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
@@ -48,7 +48,6 @@ public class IonLoadingController: ComponentBase, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        GC.SuppressFinalize(this);
         await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
         _ionComponent = null;
     }

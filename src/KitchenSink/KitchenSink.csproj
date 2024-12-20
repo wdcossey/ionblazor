@@ -15,16 +15,16 @@
         <Nullable>enable</Nullable>
 
         <!-- Display name -->
-        <ApplicationTitle>IonicTest</ApplicationTitle>
+        <ApplicationTitle>IonBlazor KitchenSink</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.ionictest</ApplicationId>
+        <ApplicationId>app.ionblazor.kitchensink</ApplicationId>
         <ApplicationIdGuid>050C294C-9CBF-44E0-9B5A-4122C884BCD3</ApplicationIdGuid>
 
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1</ApplicationVersion>
-        <WindowsPackageType>MSIX</WindowsPackageType>
+        <WindowsPackageType>None</WindowsPackageType>
         <EnableMsixTooling>true</EnableMsixTooling>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>

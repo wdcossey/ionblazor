@@ -1,4 +1,4 @@
-﻿import './common.js';
+﻿import { dotNetCallbackMethod } from './common.js';
 
 export function addButtons(element, buttons, callback) {
     buttons.forEach(function (button, index) {
@@ -32,4 +32,3 @@ export function onWillDismiss(element) {
 export function present(element) {
     element.present();
 }
-    

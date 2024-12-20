@@ -63,7 +63,7 @@
         return ValueTask.CompletedTask;
     }
 
-    private void IonPickerDidDismiss(IonPickerDismissEventArgs<PickerColumn, PickerColumnOption, PickerButton> args)
+    private void IonPickerDidDismiss(IonPickerLegacyDismissEventArgs<PickerColumn, PickerColumnOption, PickerButton> args)
     {
         args.Sender.IsOpen = false; //or _picker.IsOpen = false;
     }

@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Services;
 
-public class IonAlertController: ComponentBase, IAsyncDisposable
+public sealed class IonAlertController: ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
@@ -59,7 +59,6 @@ public class IonAlertController: ComponentBase, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        GC.SuppressFinalize(this);
         await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
         _ionComponent = null;
     }

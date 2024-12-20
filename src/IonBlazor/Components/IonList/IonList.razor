@@ -1,0 +1,13 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-list @ref="@_self"
+          @attributes="@Attributes"
+          class="@Class"
+          inset="@Inset"
+          lines="@Lines"
+          mode="@Mode">
+    <CascadingValue TValue="IIonComponent" Name="@nameof(Parent)" Value="@(this)">
+        @ChildContent
+    </CascadingValue>
+</ion-list>

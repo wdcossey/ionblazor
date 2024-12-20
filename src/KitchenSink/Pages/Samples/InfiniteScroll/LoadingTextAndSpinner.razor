@@ -26,13 +26,10 @@
         GenerateItems();
     }
 
-    private async Task IonInfiniteCallback(IonInfiniteScroll.IonInfiniteEventArgs args)
+    private Task IonInfiniteCallback(IonInfiniteEventArgs args)
     {
-        await Task.Delay(1500);
-        GenerateItems();
-        //This example does not call `CompleteAsync()`, the spinner will show indefinitely  
-        //await args.Sender.CompleteAsync(); 
-        await InvokeAsync(StateHasChanged);
+        //This example does not call `CompleteAsync()`, the spinner will show indefinitely
+        return Task.CompletedTask;
     }
 
     private void GenerateItems() => ItemCount += 50;

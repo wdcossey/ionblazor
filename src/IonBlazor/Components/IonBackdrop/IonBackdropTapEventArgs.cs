@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public class IonBackdropTapEventArgs : EventArgs
+public sealed record IonBackdropTapEventArgs
 {
-    public IonBackdrop Sender { get; internal init; } = null!;
+    public IonBackdrop? Sender { get; internal init; }
 }

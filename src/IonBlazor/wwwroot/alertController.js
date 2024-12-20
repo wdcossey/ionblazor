@@ -1,3 +1,5 @@
+import { dotNetCallbackMethod } from './common.js';
+
 export async function presentAlert(header, subHeader, message, buttons, inputs, buttonHandler, didDismissHandler, htmlAttributes) {
     const alert = document.createElement('ion-alert');
     alert.header = header;

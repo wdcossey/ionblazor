@@ -1,0 +1,11 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-buttons @ref="_self"
+             @attributes="@Attributes"
+             class="@Class"
+             collapse="@Collapse">
+    <CascadingValue TValue="@IIonComponent" Name="@nameof(Parent)" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-buttons>

@@ -1,4 +1,6 @@
-﻿export function isOpen(element, value) {
+﻿import { dotNetCallbackMethod } from './common.js';
+
+export function isOpen(element, value) {
     return element.isOpen = value;
 }
 

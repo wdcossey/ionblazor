@@ -156,7 +156,10 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
     <IonButton id="open-action-sheet">Open ActionSheet by Trigger</IonButton>
     <IonButton @onclick="@(async () => { await _actionSheet.PresentAsync(); })" >Open ActionSheet by Method</IonButton>
 
-<IonActionSheet
+    <IonButton @ref="_buttonRef">Focus Me</IonButton>
+    <IonButton @onclick="@(() => { _ = MainApp?.SetFocusAsync(_buttonRef.IonElement); })" >Focus Button</IonButton>
+
+    <IonActionSheet
         @ref="_actionSheet"
         TButtonData="ActionSheetButtonData"
         Trigger="open-action-sheet"
@@ -194,8 +197,12 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
 @code {
 
+    [CascadingParameter(Name = "ion-app")] private IonApp? MainApp { get; init; }
+
     private IonModal _selectFruitsModalRef = null!;     //document.querySelector('ion-modal');
-    private IonInput _inputNameRef;                     //ion-input#input-name
+    private IonInput _inputNameRef = null!;             //ion-input#input-name
+    private IonInput _focusInputRef = null!;
+    private IonButton _buttonRef = null!;
     private IonModal _inputModalRef = null!;
 
     IonActionSheet<ActionSheetButtonData> _actionSheet;
@@ -267,13 +274,12 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
         if (!firstRender)
             return;
 
+        //modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal");
+        //var searchbar = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-searchbar");
 
-    //modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal");
-    //var searchbar = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-searchbar");
+        //document.querySelector('ion-searchbar').addEventListener('ionInput', e => console.log(e.target.value));
 
-    //document.querySelector('ion-searchbar').addEventListener('ionInput', e => console.log(e.target.value));
-
-    //await searchbar.InvokeVoidAsync("addCustomEventListener", "ionInput", EventCallback.Factory.Create<string>(this, val => { throw new InvalidOperationException(); }));
+        //await searchbar.InvokeVoidAsync("addCustomEventListener", "ionInput", EventCallback.Factory.Create<string>(this, val => { throw new InvalidOperationException(); }));
 
         /*InputNameObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
         {

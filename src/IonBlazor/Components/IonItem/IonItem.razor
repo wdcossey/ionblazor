@@ -1,0 +1,22 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-item @ref="_self"
+          @attributes="@Attributes"
+          class="@Class"
+          button="@Button"
+          color="@Color"
+          detail="@Detail"
+          detail-icon="@DetailIcon"
+          disabled="@Disabled"
+          download="@Download"
+          href="@Href"
+          lines="@Lines"
+          mode="@Mode"
+          rel="@Rel"
+          target="@Target"
+          type="@Type">
+    <CascadingValue TValue="IIonComponent" Name="@nameof(Parent)" Value="@(this)">
+        @ChildContent
+    </CascadingValue>
+</ion-item>

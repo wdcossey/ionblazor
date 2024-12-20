@@ -71,11 +71,20 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Abstractions\" />
+      <AdditionalFiles Include="Components\IonAccordion\IonAccordionGroup.razor" />
+      <AdditionalFiles Include="Components\IonBreadcrumbs\IonBreadcrumb.razor" />
+      <AdditionalFiles Include="Components\IonInfiniteScroll\IonInfiniteScrollContent.razor" />
+      <AdditionalFiles Include="Components\IonSelect\IonSelect.razor" />
+      <AdditionalFiles Include="Components\IonSelect\IonSelectOption.razor" />
+      <AdditionalFiles Include="Components\IonSelect\IonSelectOptionOf.razor" />
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\IonBlazor.xml</DocumentationFile>
     </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="IonBlazor.UnitTests" />
+    </ItemGroup>
 
 </Project>

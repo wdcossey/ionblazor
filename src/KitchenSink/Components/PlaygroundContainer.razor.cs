@@ -3,16 +3,16 @@
 public partial class PlaygroundContainer : ComponentBase
 {
     [Parameter]
-    //[Obsolete("", true)]
+    [Obsolete("", true)]
     public string? Title { get; set; }
 
     [Parameter]
-    //[Obsolete("", true)]
+    [Obsolete("", true)]
     public string? SubTitle { get; set; }
 
     [Parameter]
     public RenderFragment? Header { get; set; }
 
     [Parameter, EditorRequired]
-    public RenderFragment ChildContent { get; set; } = null!;
+    public required RenderFragment ChildContent { get; init; } = null!;
 }

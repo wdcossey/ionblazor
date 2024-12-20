@@ -1,0 +1,24 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-modal @ref="_self"
+           @attributes="@Attributes"
+           class="@Class"
+           animated="@Animated"
+           backdrop-breakpoint="@BackdropBreakpoint"
+           backdrop-dismiss="@BackdropDismiss"
+           handle="@Handle"
+           handle-behavior="@HandleBehavior"
+           breakpoints="@Breakpoints"
+           initial-breakpoint="@InitialBreakpoint"
+           is-open="@IsOpen"
+           keep-contents-mounted="@KeepContentsMounted"
+           keyboard-close="@KeyboardClose"
+           mode="@Mode"
+           show-backdrop="@ShowBackdrop"
+           trigger="@Trigger"
+           is-modal="@_id">
+    @ChildContent
+</ion-modal>
+
+@((MarkupString)Script)

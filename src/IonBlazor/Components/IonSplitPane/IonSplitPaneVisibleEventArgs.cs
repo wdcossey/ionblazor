@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public class IonSplitPaneVisibleEventArgs
+public sealed record IonSplitPaneVisibleEventArgs
 {
     public IonSplitPane Sender { get; internal init; } = null!;
 }

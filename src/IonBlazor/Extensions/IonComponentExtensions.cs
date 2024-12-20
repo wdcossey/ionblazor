@@ -1,5 +1,7 @@
-﻿// ReSharper disable once CheckNamespace
+﻿
 
+using IonBlazor.Abstractions;
+// ReSharper disable once CheckNamespace
 using IonBlazor.Components;
 
 namespace IonBlazor.Extensions;

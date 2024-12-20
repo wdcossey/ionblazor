@@ -7,7 +7,7 @@
     Header="Example header"
     SubHeader="Example subheader"
     IonActionSheetDidDismiss="@(args => { Console.WriteLine(JsonSerializer.Serialize(new { data = args.Data, role = args.Role }, new JsonSerializerOptions(JsonSerializerDefaults.General) { WriteIndented = false })); })"
-    Buttons="@(() => { return new List<SimpleActionSheetButton>() {
+    Buttons="@(() => { return new List<BasicActionSheetButton>() {
                      new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } },
                      new() { Text = "Share", Data = new ActionSheetButtonData { Action = "share" } },
                      new() { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })"></IonActionSheet>

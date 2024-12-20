@@ -1,14 +1,16 @@
-﻿namespace IonicTest.Components;
+﻿using IonBlazor.Abstractions;
 
-public partial class DevicePreview : IIonContentComponent
+namespace IonicTest.Components;
+
+public partial class DevicePreview : IonContentComponent
 {
     private ElementReference _self;
 
     /// <inheritdoc/>
-    [Parameter, EditorRequired] public RenderFragment? ChildContent { get; set; }
+    public override ElementReference IonElement => _self;
 
-    [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object>? Attributes { get; set; }
+    /// <inheritdoc/>
+    [Parameter, EditorRequired] public override RenderFragment? ChildContent { get; init; }
 
     /// <summary>
     /// The mode from the parent (<see cref="IonApp"/>).
