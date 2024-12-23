@@ -5,6 +5,8 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
     private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionCollapsedClickReference;
 
+    protected override string JsImportName => nameof(IonBreadcrumbs);
+
     public override ElementReference IonElement => _self;
 
     /// <inheritdoc/>
@@ -17,7 +19,7 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
     /// the breadcrumbs will not be collapsed.
     /// </summary>
     [Parameter]
-    public int? ItemsAfterCollapse { get; set; }
+    public uint? ItemsAfterCollapse { get; init; }
 
     /// <summary>
     /// The number of breadcrumbs to show before the collapsed indicator.
@@ -25,13 +27,13 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
     /// the breadcrumbs will not be collapsed.
     /// </summary>
     [Parameter]
-    public int? ItemsBeforeCollapse { get; set; }
+    public uint? ItemsBeforeCollapse { get; init; }
 
     /// <summary>
     /// The maximum number of breadcrumbs to show before collapsing.
     /// </summary>
     [Parameter]
-    public int? MaxItems { get; set; }
+    public uint? MaxItems { get; init; }
 
     /// <inheritdoc/>
     [Parameter]
@@ -68,5 +70,10 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
     {
         _ionCollapsedClickReference.Dispose();
         await base.DisposeAsync();
+    }
+
+    public async ValueTask SetMaxItemsAsync(uint? value)
+    {
+        await JsComponent.InvokeVoidAsync("maxItems", _self, value);
     }
 }

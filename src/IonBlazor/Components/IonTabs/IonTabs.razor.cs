@@ -6,6 +6,8 @@ public sealed partial class IonTabs : IonContentComponent
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsDidChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsWillChangeReference;
 
+    protected override string JsImportName => nameof(IonTabs);
+
     /// <inheritdoc/>
     public override ElementReference IonElement => _self;
 

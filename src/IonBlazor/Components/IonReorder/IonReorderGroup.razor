@@ -3,8 +3,7 @@
 
 <ion-reorder-group @ref="@_self"
                    @attributes="@Attributes"
-                   disabled="@Disabled.ToString().ToLowerInvariant()"
-                   class="@Class">
+                   disabled="@Disabled.ToString().ToLowerInvariant()">
     <CascadingValue TValue="@IIonComponent" Name="@(nameof(IonReorder.Parent))" Value="@(this)" IsFixed="@true">
         @ChildContent
     </CascadingValue>

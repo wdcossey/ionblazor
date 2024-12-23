@@ -8,6 +8,8 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
+    protected override string JsImportName => nameof(IonTextarea);
+
     public override ElementReference IonElement => _self;
 
     /// <summary>

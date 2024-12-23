@@ -97,17 +97,6 @@ public class IonAccordionTests: BunitContext
     }
 
     [Fact]
-    public void WithClass_RendersCorrectly()
-    {
-        // Act
-        var cut = Render<IonAccordion>(parameters => parameters
-            .Add(p => p.Class, "class"));
-
-        // Assert
-        cut.MarkupMatches("<ion-accordion class=\"class\"></ion-accordion>");
-    }
-
-    [Fact]
     public void WithChildContent_RendersCorrectly()
     {
         // Act

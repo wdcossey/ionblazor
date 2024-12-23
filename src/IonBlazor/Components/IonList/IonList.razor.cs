@@ -5,6 +5,8 @@ public partial class IonList : IonContentComponent, IIonModeComponent
     protected ElementReference _self;
     private Func<ValueTask<bool>> _closeSlidingItemsWrapper = null!;
 
+    protected override string JsImportName => nameof(IonList);
+
     /// <inheritdoc/>
     public override ElementReference IonElement => _self;
 

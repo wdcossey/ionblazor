@@ -12,6 +12,8 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
 
+    protected override string JsImportName => nameof(IonPopover);
+
     public override ElementReference IonElement => _self;
 
     /// <summary>

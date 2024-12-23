@@ -4,6 +4,8 @@ public sealed partial class IonRippleEffect : IonContentComponent
 {
     private ElementReference _self;
 
+    protected override string JsImportName => nameof(IonRippleEffect);
+
     /// <inheritdoc/>
     public override ElementReference IonElement => _self;
 
@@ -21,5 +23,6 @@ public sealed partial class IonRippleEffect : IonContentComponent
     /// <summary>
     /// Adds the ripple effect to the parent element.
     /// </summary>
-    public async Task AddRippleAsync(int x, int y) => await JsComponent.InvokeVoidAsync("addRipple", _self, x, y);
+    public async Task AddRippleAsync(int x, int y) =>
+        await JsComponent.InvokeVoidAsync("addRipple", _self, x, y);
 }

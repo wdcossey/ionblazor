@@ -8,6 +8,8 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
+    protected override string JsImportName => nameof(IonToggle);
+
     /// <inheritdoc/>
     public override ElementReference IonElement => _self;
 

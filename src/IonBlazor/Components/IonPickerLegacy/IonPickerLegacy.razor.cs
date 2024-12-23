@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components;
 
 public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonComponent, IIonModeComponent
     where TColumn: class, IPickerColumn<TColumnOption>
@@ -18,6 +16,8 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
 
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
+
+    protected override string JsImportName => nameof(IonPickerLegacy<TColumn, TColumnOption, TButton>);
 
     public override ElementReference IonElement => _self;
 

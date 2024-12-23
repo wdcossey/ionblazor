@@ -5,6 +5,8 @@ public sealed partial class IonReorderGroup : IonContentComponent
     private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionItemReorderReference;
 
+    protected override string JsImportName => nameof(IonReorderGroup);
+
     /// <inheritdoc/>
     public override ElementReference IonElement => _self;
 

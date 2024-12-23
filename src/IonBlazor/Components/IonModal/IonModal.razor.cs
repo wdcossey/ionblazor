@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components;
 
 public sealed partial class IonModal : IonContentComponent, IIonModeComponent
 {
@@ -17,6 +15,8 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<bool>> _canDismissReference;
+
+    protected override string JsImportName => nameof(IonModal);
 
     /// <inheritdoc/>
     public override ElementReference IonElement => _self;
@@ -72,7 +72,8 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     [Parameter]
     public double[]? Breakpoints { get; set; } = null;
 
-    public async ValueTask SetBreakpointsAsync(params double[]? breakpoints) => await JsComponent.InvokeVoidAsync("breakpoints", _self, breakpoints);
+    public async ValueTask SetBreakpointsAsync(params double[]? breakpoints) =>
+        await JsComponent.InvokeVoidAsync("breakpoints", _self, breakpoints);
 
     /*/// <summary>
     /// Determines whether or not a modal can dismiss when calling the dismiss method.
@@ -87,7 +88,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     public async ValueTask SetCanDismissAsync(bool value)
     {
         _canDismissCallback = null!;
-        await JsComponent.InvokeVoidAsync("canDismiss", _self, value);
+        await JsComponent!.InvokeVoidAsync("canDismiss", _self, value);
     }
 
     public ValueTask SetCanDismissAsync(Func<Task<bool>> callback)
@@ -121,7 +122,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/components/splat-attributes-and-arbitrary-parameters?view=aspnetcore-8.0" >attribute splatting</a>
     /// </summary>
     [Obsolete("Not available in Blazor/Razor, use attribute splatting", true)]
-    [Parameter] public Dictionary<string, object> HtmlAttributes { get; set; }
+    [Parameter] public Dictionary<string, object> HtmlAttributes { get; set; } = null!;
 
     /// <summary>
     /// A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a
@@ -129,10 +130,8 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// </summary>
     [Parameter] public double? InitialBreakpoint { get; set; }
 
-    public async ValueTask SetInitialBreakpointAsync(double? value)
-    {
+    public async ValueTask SetInitialBreakpointAsync(double? value) =>
         await JsComponent.InvokeVoidAsync("initialBreakpoint", _self, value);
-    }
 
     /// <summary>
     /// If <b>true</b>, the modal will open. If false, the modal will close. Use this if you need finer grained control

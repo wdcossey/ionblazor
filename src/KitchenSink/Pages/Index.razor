@@ -87,7 +87,7 @@
                 <IonSearchbar Debounce="1000" Value="@_searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchbar>
             </IonToolbar>
         </IonHeader>
-        <IonContent Color="@IonColor.Light" Class="ion-padding">
+        <IonContent Color="@IonColor.Light" class="ion-padding">
             <IonList id="modal-list" Inset="@false">
                 @foreach (var item in renderList)
                 {
@@ -114,7 +114,7 @@
                 </IonButtons>
             </IonToolbar>
         </IonHeader>
-        <IonContent Class="ion-padding">
+        <IonContent class="ion-padding">
             <IonItem>
                 <IonLabel Position="@IonLabelPosition.Stacked">Enter your name</IonLabel>
                 <IonInput @ref="@_inputNameRef"
@@ -150,7 +150,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
     <IonButton id="click-trigger">Left-Click Me</IonButton>
     <IonPopover Trigger="click-trigger" TriggerAction="@IonPopoverTriggerAction.Click">
-      <IonContent Class="ion-padding">Hello World!</IonContent>
+      <IonContent class="ion-padding">Hello World!</IonContent>
     </IonPopover>
 
     <IonButton id="open-action-sheet">Open ActionSheet by Trigger</IonButton>

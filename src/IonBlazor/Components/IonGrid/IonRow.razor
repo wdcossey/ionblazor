@@ -2,8 +2,7 @@
 @inherits IonContentComponent
 
 <ion-row @ref="_self"
-         @attributes="@Attributes"
-         class="@Class">
+         @attributes="@Attributes">
     <CascadingValue TValue="IIonComponent" Name="@nameof(IonCol.Parent)" Value="@(this)">
         @ChildContent
     </CascadingValue>

@@ -10,6 +10,8 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
+    protected override string JsImportName => nameof(IonSearchbar);
+
     public override ElementReference IonElement => _self;
 
     /// <summary>
@@ -265,7 +267,8 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// Returns the native &lt;input&gt; element used under the hood.
     /// </summary>
     [Obsolete("Not available in Blazor (Razor) projects", true)]
-    public async ValueTask<ElementReference> GetInputElementAsync() => await JsComponent.InvokeAsync<ElementReference>("getInputElement", _self);
+    public async ValueTask<ElementReference> GetInputElementAsync() =>
+        await JsComponent.InvokeAsync<ElementReference>("getInputElement", _self);
 
     /// <summary>
     /// Sets focus on the native input in <see cref="IonSearchbar"/>. Use this method instead of the global
@@ -275,5 +278,6 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// Developers who wish to focus an input when an overlay is presented should call <see cref="SetFocusAsync"/> after
     /// <see cref="IonModal.DidPresent"/> has resolved.
     /// </summary>
-    public async ValueTask SetFocusAsync() => await JsComponent.InvokeAsync<string>("setFocus", _self);
+    public async ValueTask SetFocusAsync() =>
+        await JsComponent.InvokeAsync<string>("setFocus", _self);
 }

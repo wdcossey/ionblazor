@@ -4,7 +4,7 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
-    private static IJSObjectReference _ionComponent = null!;
+    private static IJSObjectReference _jsComponent = null!;
 
     public static ValueTask PresentAsync(
         string? header = null,
@@ -35,7 +35,7 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
                 });
         }
 
-        return _ionComponent.InvokeVoidAsync("presentToast", header, message, position, duration, icon, positionAnchor, buttons, buttonHandler, translucent, animated, htmlAttributes);
+        return _jsComponent.InvokeVoidAsync("presentToast", header, message, position, duration, icon, positionAnchor, buttons, buttonHandler, translucent, animated, htmlAttributes);
     }
 
     public static ValueTask PresentAsync(
@@ -66,7 +66,7 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
 
     public ValueTask DisposeAsync()
     {
-        return _ionComponent.DisposeAsync();
+        return _jsComponent.DisposeAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -76,6 +76,6 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
         if (!firstRender)
             return;
 
-        _ionComponent = await JsRuntime.ImportAsync("toastController");
+        _jsComponent = await JsRuntime.ImportAsync(nameof(IonToastController));
     }
 }

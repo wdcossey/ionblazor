@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components;
 
 public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonModeComponent
 {
@@ -15,6 +13,8 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
 
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
+
+    protected override string JsImportName => nameof(IonToast);
 
     public override ElementReference IonElement => _self;
 

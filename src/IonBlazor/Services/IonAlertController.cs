@@ -4,7 +4,7 @@ public sealed class IonAlertController: ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
-    private static IJSObjectReference? _ionComponent;
+    private static IJSObjectReference? _jsComponent;
 
     public static async ValueTask PresentAsync(
         string? header = null,
@@ -54,13 +54,13 @@ public sealed class IonAlertController: ComponentBase, IAsyncDisposable
         });
 
 
-        await (_ionComponent?.InvokeVoidAsync("presentAlert", header, subHeader, message, buttons, inputs, buttonHandler, didDismissHandler, htmlAttributes) ?? ValueTask.CompletedTask);
+        await (_jsComponent?.InvokeVoidAsync("presentAlert", header, subHeader, message, buttons, inputs, buttonHandler, didDismissHandler, htmlAttributes) ?? ValueTask.CompletedTask);
     }
 
     public async ValueTask DisposeAsync()
     {
-        await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
-        _ionComponent = null;
+        await (_jsComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
+        _jsComponent = null;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -70,6 +70,6 @@ public sealed class IonAlertController: ComponentBase, IAsyncDisposable
         if (!firstRender)
             return;
 
-        _ionComponent = await JsRuntime.ImportAsync("alertController");
+        _jsComponent = await JsRuntime.ImportAsync(nameof(IonAlertController));
     }
 }

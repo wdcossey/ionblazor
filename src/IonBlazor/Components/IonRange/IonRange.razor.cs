@@ -11,6 +11,8 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionKnobMoveStartReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<int, string?>> _pinFormatterReference;
 
+    protected override string JsImportName => nameof(IonRange);
+
     public override ElementReference IonElement => _self;
 
     /// <summary>
@@ -298,7 +300,7 @@ public sealed record RangeChangeEventArgs : IRangeChangeEventArgs
     /// <summary>
     /// The <see cref="IonRange" /> that this event occurred on.
     /// </summary>
-    public IonRange? Sender { get; init; }
+    public IonRange? Sender { get; internal init; }
 
     [JsonPropertyName("value"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public IRangeValue? Value { get; init; }

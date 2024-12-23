@@ -8,6 +8,8 @@ public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback> _ionWillCloseReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionWillOpenReference;
 
+    protected override string JsImportName => nameof(IonMenu);
+
     /// <inheritdoc/>
     public override ElementReference IonElement => _self;
 

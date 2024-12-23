@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components;
 
 public sealed partial class IonContent : IonContentComponent, IIonColorComponent
 {
@@ -9,6 +7,8 @@ public sealed partial class IonContent : IonContentComponent, IIonColorComponent
     private DotNetObjectReference<IonicEventCallback<__ionScrollEventArgs?>> _ionScrollReference;
     private DotNetObjectReference<IonicEventCallback<__ionScrollEndEventArgs?>> _ionScrollEndReference;
     private DotNetObjectReference<IonicEventCallback<__ionScrollStartEventArgs?>> _ionScrollStartReference;
+
+    protected override string JsImportName => nameof(IonContent);
 
     public override ElementReference IonElement => _self;
 

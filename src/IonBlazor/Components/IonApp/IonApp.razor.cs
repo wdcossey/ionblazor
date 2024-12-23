@@ -4,6 +4,8 @@ public sealed partial class IonApp: IonContentComponent, IIonModeComponent
 {
     private ElementReference _self;
 
+    protected override string JsImportName => nameof(IonApp);
+
     /// <inheritdoc />
     public override ElementReference IonElement => _self;
 

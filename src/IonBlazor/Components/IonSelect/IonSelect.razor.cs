@@ -1,7 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Text.Json.Serialization;
-
-namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components;
 
 public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent, IIonModeComponent
     where TValue : notnull

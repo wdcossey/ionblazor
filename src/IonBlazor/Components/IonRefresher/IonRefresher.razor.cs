@@ -7,6 +7,8 @@ public sealed partial class IonRefresher: IonContentComponent
     private readonly DotNetObjectReference<IonicEventCallback> _ionRefreshReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionStartReference;
 
+    protected override string JsImportName => nameof(IonRefresher);
+
     /// <inheritdoc/>
     public override ElementReference IonElement => _self;
 

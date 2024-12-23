@@ -14,7 +14,7 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// The type of button.
     /// </summary>
     [Parameter]
-    public string? ButtonType { get; set; } = "button";
+    public string? ButtonType { get; init; } = "button";
 
     /// <inheritdoc/>
     [Parameter]
@@ -24,7 +24,7 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// If true, the user cannot interact with the <see cref="IonButton"/>.
     /// </summary>
     [Parameter]
-    public bool? Disabled { get; set; }
+    public bool? Disabled { get; init; }
 
     /// <summary>
     /// This attribute instructs browsers to download a URL instead of navigating to it,
@@ -33,14 +33,14 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// (the user can still change the file name if they want).
     /// </summary>
     [Parameter]
-    public string? Download { get; set; }
+    public string? Download { get; init; }
 
     /// <summary>
     /// Set to <see cref="IonButtonExpand.Block"/> for a full-width button
     /// or to <see cref="IonButtonExpand.Full"/> for a full-width button with square corners and no left or right borders.
     /// </summary>
     [Parameter]
-    public string? Expand { get; set; } = IonButtonExpand.Default;
+    public string? Expand { get; init; } = IonButtonExpand.Default;
 
     /// <summary>
     /// Set to <see cref="IonButtonFill.Clear"/> for a transparent button that resembles a flat button,
@@ -50,25 +50,25 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// where the default is <see cref="IonButtonFill.Clear"/>.
     /// </summary>
     [Parameter]
-    public string? Fill { get; set; }
+    public string? Fill { get; init; } = IonButtonFill.Undefined;
 
     /// <summary>
     /// The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
     /// </summary>
     [Parameter]
-    public string? Form { get; set; }
+    public string? Form { get; init; } = string.Empty;
 
     /// <summary>
     /// Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     /// </summary>
     [Parameter]
-    public string? Href { get; set; }
+    public string? Href { get; init; }
 
     /// <summary>
     /// The mode from the parent (<see cref="IonApp"/>).
     /// </summary>
     [CascadingParameter(Name = "ion-app-mode")]
-    internal string? CascadingMode { get; set; }
+    internal string? CascadingMode { get; init; }
 
     /// <inheritdoc/>
     [Parameter]
@@ -79,7 +79,7 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types">link types</a>.
     /// </summary>
     [Parameter]
-    public string? Rel { get; set; }
+    public string? Rel { get; init; }
 
     //[Parameter] public string? RouterAnimation { get; set; }
     //[Parameter] public string? RouterDirection { get; set; }
@@ -88,7 +88,7 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// Set to <see cref="IonButtonShape.Round"/> for a button with more rounded corners.
     /// </summary>
     [Parameter]
-    public string? Shape { get; set; } = IonButtonShape.Default;
+    public string? Shape { get; init; } = IonButtonShape.Default;
 
     /// <summary>
     /// Set to <see cref="IonButtonSize.Small"/> for a button with less height and padding,
@@ -99,13 +99,13 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// Set the size to <see cref="IonButtonSize.Default"/> inside of an item to make it a standard size button.
     /// </summary>
     [Parameter]
-    public string? Size { get; set; }
+    public string? Size { get; init; } = IonButtonSize.Undefined;
 
     /// <summary>
     /// If true, activates a button with a heavier font weight.
     /// </summary>
     [Parameter]
-    public bool? Strong { get; set; }
+    public bool? Strong { get; init; }
 
     /// <summary>
     /// Specifies where to display the linked URL. <br/>
@@ -113,13 +113,13 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// Special keywords: "_blank", "_self", "_parent", "_top".
     /// </summary>
     [Parameter]
-    public string? Target { get; set; }
+    public string? Target { get; init; }
 
     /// <summary>
     /// The type of the button.
     /// </summary>
     [Parameter]
-    public string Type { get; set; } = IonButtonType.Button;
+    public string? Type { get; init; } = IonButtonType.Default;
 
     /// <summary>
     /// Emitted when the button loses focus.

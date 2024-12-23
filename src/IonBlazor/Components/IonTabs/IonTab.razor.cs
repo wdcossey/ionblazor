@@ -4,6 +4,8 @@ public sealed partial class IonTab : IonContentComponent
 {
     private ElementReference _self;
 
+    protected override string JsImportName => nameof(IonTab);
+
     /// <inheritdoc/>
     public override ElementReference IonElement => _self;
 

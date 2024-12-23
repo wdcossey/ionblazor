@@ -8,6 +8,8 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
+    protected override string JsImportName => nameof(IonInput);
+
     public override ElementReference IonElement => _self;
 
     /// <summary>
@@ -330,13 +332,13 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(_self, new IonEvent[]
-        {
-            IonEvent.Set("ionBlur"  , _ionBlurReference  ),
+        await this.AttachIonListenersAsync(
+            _self,
+            IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionChange", _ionChangeReference),
-            IonEvent.Set("ionFocus" , _ionFocusReference ),
-            IonEvent.Set("ionInput" , _ionInputReference )
-        });
+            IonEvent.Set("ionFocus", _ionFocusReference),
+            IonEvent.Set("ionInput", _ionInputReference)
+        );
 
         await JsComponent.InvokeVoidAsync("counterFormatter", _self, CounterFormatter);
     }

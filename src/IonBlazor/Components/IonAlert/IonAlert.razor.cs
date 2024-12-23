@@ -17,35 +17,37 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
     private AlertButton[]? _buttons;
     private AlertInput[]? _inputs;
 
+    protected override string JsImportName => nameof(IonAlert);
+
     public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the alert will animate.
     /// </summary>
     [Parameter]
-    public bool? Animated { get; set; }
+    public bool? Animated { get; init; }
 
     /// <summary>
     /// If <b>true</b>, the alert will be dismissed when the backdrop is clicked.
     /// </summary>
     [Parameter]
-    public bool? BackdropDismiss { get; set; }
+    public bool? BackdropDismiss { get; init; }
 
-    [Parameter] public Func<AlertButton[]>? Buttons { get; set; }
-    [Parameter] public Func<AlertInput[]>? Inputs { get; set; }
+    [Parameter] public Func<AlertButton[]>? Buttons { get; init; }
+    [Parameter] public Func<AlertInput[]>? Inputs { get; init; }
 
     /// <summary>
     /// Additional classes to apply for custom CSS.
     /// If multiple classes are provided they should be separated by spaces.
     /// </summary>
     [Parameter]
-    public string? CssClass { get; set; }
+    public string? CssClass { get; init; }
 
     /// <summary>
     /// The main title in the heading of the alert.
     /// </summary>
     [Parameter]
-    public string? Header { get; set; }
+    public string? Header { get; init; }
 
     /// <summary>
     /// If <b>true</b>, the alert will open. If <b>false</b>, the alert will close. Use this if you need finer
@@ -61,7 +63,7 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
     /// Default: <b>true</b>
     /// </summary>
     [Parameter]
-    public bool? KeyboardClose { get; set; }
+    public bool? KeyboardClose { get; init; }
 
     /// <summary>
     /// <p>The main message to be displayed in the alert. <b>message</b> can accept either plaintext or HTML as a
@@ -73,7 +75,7 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
     /// innerHTMLTemplatesEnabled must be set to true in the Ionic config before custom HTML can be used.</p>
     /// </summary>
     [Parameter]
-    public string? Message { get; set; }
+    public string? Message { get; init; }
 
     /// <inheritdoc/>
     [Parameter]
@@ -83,7 +85,7 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
     /// The subtitle in the heading of the alert. Displayed under the title.
     /// </summary>
     [Parameter]
-    public string? SubHeader { get; set; }
+    public string? SubHeader { get; init; }
 
     /// <summary>
     /// If <b>true</b>, the alert will be translucent. Only applies when the mode is <see cref="IonMode.iOS"/> and the
@@ -91,64 +93,64 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
     /// <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#browser_compatibility">backdrop-filter</a>.
     /// </summary>
     [Parameter]
-    public bool? Translucent { get; set; }
+    public bool? Translucent { get; init; }
 
     /// <summary>
     /// An ID corresponding to the trigger element that causes the alert to open when clicked.
     /// </summary>
     [Parameter]
-    public string? Trigger { get; set; }
+    public string? Trigger { get; init; }
 
     /// <summary>
     /// Emitted after the alert has dismissed. Shorthand for ionAlertDidDismiss.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertDismissEventArgs> DidDismiss { get; set; }
+    public EventCallback<IonAlertDismissEventArgs> DidDismiss { get; init; }
 
     /// <summary>
     /// Emitted after the alert has presented. Shorthand for ionAlertWillDismiss.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertDidPresentEventArgs> DidPresent { get; set; }
+    public EventCallback<IonAlertDidPresentEventArgs> DidPresent { get; init; }
 
     /// <summary>
     /// Emitted after the alert has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertDismissEventArgs> IonAlertDidDismiss { get; set; }
+    public EventCallback<IonAlertDismissEventArgs> IonAlertDidDismiss { get; init; }
 
     /// <summary>
     /// Emitted after the alert has presented.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertIonAlertDidPresentEventArgs> IonAlertDidPresent { get; set; }
+    public EventCallback<IonAlertIonAlertDidPresentEventArgs> IonAlertDidPresent { get; init; }
 
     /// <summary>
     /// Emitted before the alert has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertDismissEventArgs> IonAlertWillDismiss { get; set; }
+    public EventCallback<IonAlertDismissEventArgs> IonAlertWillDismiss { get; init; }
 
     /// <summary>
     /// Emitted before the alert has presented.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertIonAlertWillPresentEventArgs> IonAlertWillPresent { get; set; }
+    public EventCallback<IonAlertIonAlertWillPresentEventArgs> IonAlertWillPresent { get; init; }
 
     /// <summary>
     /// Emitted before the alert has dismissed. Shorthand for ionAlertWillDismiss.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertDismissEventArgs> WillDismiss { get; set; }
+    public EventCallback<IonAlertDismissEventArgs> WillDismiss { get; init; }
 
     /// <summary>
     /// Emitted before the alert has presented. Shorthand for ionAlertWillPresent.
     /// </summary>
     [Parameter]
-    public EventCallback<IonAlertWillPresentEventArgs> WillPresent { get; set; }
+    public EventCallback<IonAlertWillPresentEventArgs> WillPresent { get; init; }
 
     [Parameter]
-    public EventCallback<AlertButtonHandlerEventArgs> ButtonHandler { get; set; }
+    public EventCallback<AlertButtonHandlerEventArgs> ButtonHandler { get; init; }
 
     public IonAlert()
     {

@@ -4,11 +4,12 @@
 <ion-accordion-group @ref="@_self"
                      @attributes="@Attributes"
                      animated="@Animated"
-                     class="@Class"
                      disabled="@Disabled"
                      expand="@Expand"
                      mode="@Mode"
                      multiple="@Multiple"
                      readonly="@Readonly">
-    @ChildContent
+    <CascadingValue TValue="@IIonComponent" Name="@(nameof(IonAccordion.Parent))" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
 </ion-accordion-group>

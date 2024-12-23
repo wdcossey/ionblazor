@@ -4,7 +4,7 @@ public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
-    private static IJSObjectReference? _ionComponent;
+    private static IJSObjectReference? _jsComponent;
 
     public static async ValueTask PresentAsync<TButtonData>(
         string? header = null,
@@ -28,13 +28,13 @@ public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
                 });
         }
 
-        await (_ionComponent?.InvokeVoidAsync("presentActionSheet", header, buttons, buttonHandler) ?? ValueTask.CompletedTask);
+        await (_jsComponent?.InvokeVoidAsync("presentActionSheet", header, buttons, buttonHandler) ?? ValueTask.CompletedTask);
     }
 
     public async ValueTask DisposeAsync()
     {
-        await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
-        _ionComponent = null;
+        await (_jsComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
+        _jsComponent = null;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -44,6 +44,6 @@ public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
         if (!firstRender)
             return;
 
-        _ionComponent = await JsRuntime.ImportAsync("actionSheetController");
+        _jsComponent = await JsRuntime.ImportAsync(nameof(IonActionSheetController));
     }
 }

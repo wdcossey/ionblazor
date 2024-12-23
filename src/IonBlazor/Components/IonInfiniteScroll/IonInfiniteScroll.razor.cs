@@ -6,6 +6,8 @@ public sealed partial class IonInfiniteScroll : IonContentComponent
 
     private DotNetObjectReference<IonicEventCallback> _ionInfiniteReference;
 
+    protected override string JsImportName => nameof(IonInfiniteScroll);
+
     public override ElementReference IonElement => _self;
 
     /// <summary>

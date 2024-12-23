@@ -8,6 +8,8 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
+    protected override string JsImportName => nameof(IonDateTime);
+
     public override ElementReference IonElement => _self;
 
     /// <summary>

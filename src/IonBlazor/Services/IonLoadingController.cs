@@ -4,7 +4,7 @@ public sealed class IonLoadingController: ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
-    private static IJSObjectReference? _ionComponent;
+    private static IJSObjectReference? _jsComponent;
 
     public static async ValueTask PresentAsync(
         string? message = null,
@@ -41,15 +41,13 @@ public sealed class IonLoadingController: ComponentBase, IAsyncDisposable
             });
         }
 
-
-
-        await (_ionComponent?.InvokeVoidAsync("presentLoading", message, duration, htmlAttributes, didDismissHandler, didPresentHandler) ?? ValueTask.CompletedTask);
+        await (_jsComponent?.InvokeVoidAsync("presentLoading", message, duration, htmlAttributes, didDismissHandler, didPresentHandler) ?? ValueTask.CompletedTask);
     }
 
     public async ValueTask DisposeAsync()
     {
-        await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
-        _ionComponent = null;
+        await (_jsComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
+        _jsComponent = null;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -59,6 +57,6 @@ public sealed class IonLoadingController: ComponentBase, IAsyncDisposable
         if (!firstRender)
             return;
 
-        _ionComponent = await JsRuntime.ImportAsync("loadingController");
+        _jsComponent = await JsRuntime.ImportAsync(nameof(IonLoadingController));
     }
 }

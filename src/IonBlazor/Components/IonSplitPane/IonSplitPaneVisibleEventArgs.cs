@@ -2,5 +2,5 @@
 
 public sealed record IonSplitPaneVisibleEventArgs
 {
-    public IonSplitPane Sender { get; internal init; } = null!;
+    public IonSplitPane? Sender { get; internal init; } = null!;
 }
