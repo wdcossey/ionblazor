@@ -1,0 +1,14 @@
+﻿<IonButton @onclick="@(async () => { await _alertRef.PresentAsync(); })">Click Me</IonButton>
+<IonAlert @ref="_alertRef"
+          Header="A Short Title Is Best"
+          SubHeader="A Sub Header Is Optional"
+          Message="A message should be a short, complete sentence."
+          Buttons="@(() => new [] {
+                       new AlertButton() { Text = "Action" },
+                   })"
+></IonAlert>
+
+@code {
+    private IonAlert _alertRef = null!;
+
+}

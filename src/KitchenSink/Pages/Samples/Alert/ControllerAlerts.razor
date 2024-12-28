@@ -1,0 +1,16 @@
+﻿<IonButton @onclick="@PresentAlertAsync">
+    Click Me
+</IonButton>
+
+@code {
+
+    private async Task PresentAlertAsync()
+    {
+        await IonAlertController.PresentAsync(
+            header: "A Short Title Is Best",
+            subHeader: "A Sub Header Is Optional",
+            message: "A message should be a short, complete sentence.",
+            buttonsFunc: () => [ new AlertButton { Text = "Action", Role = "action", Handler = args => { Console.WriteLine($"{nameof(IonAlertController)}::{nameof(AlertButton)}(index: {args.Index}, role: {args.Button!.Role})"); return ValueTask.CompletedTask; } } ],
+            onDidDismiss: args => Console.WriteLine($"{nameof(IonAlertController)}::{nameof(IonAlert.IonAlertDidDismiss)}(role: {args.Role})"));
+    }
+}

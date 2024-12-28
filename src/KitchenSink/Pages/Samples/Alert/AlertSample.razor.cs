@@ -1,6 +1,3 @@
 ﻿namespace IonicTest.Pages.Samples.Alert;
 
-public partial class AlertSample
-{
-    private IonAlert _alertByMethodRef = null!;
-}
+public partial class AlertSample;

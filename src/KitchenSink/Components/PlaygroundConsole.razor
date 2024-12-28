@@ -3,16 +3,24 @@
         <code>Console</code>
     </div>
     <div class="playground__console-body">
-        <div class="playground__console-item playground__console-item--log">
-            <code>
-                {
-                "data": {
-                "action": "delete"
-                },
-                "role": "destructive"
-                }
-            </code>
-        </div>
+        @if (_itemsSource.Any() is not true)
+        {
+            <div class="playground__console-item playground__console-item--placeholder">
+                <code>Console messages will appear here when logged from the example above.</code>
+            </div>
+        }
+        else
+        {
+            @foreach (ConsoleItem item in _itemsSource)
+            {
+                <div class="playground__console-item playground__console-item--log">
+                    <code>
+                        @((MarkupString)item.Message)
+                    </code>
+                </div>
+            }
+        }
+
     </div>
 </div>
 

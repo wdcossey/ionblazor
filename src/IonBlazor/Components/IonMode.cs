@@ -1,4 +1,4 @@
-﻿namespace IonBlazor;
+﻿namespace IonBlazor.Components;
 
 public static class IonMode
 {
