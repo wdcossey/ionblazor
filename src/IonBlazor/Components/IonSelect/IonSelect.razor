@@ -2,20 +2,20 @@
 @inherits IonContentComponent
 @typeparam TValue where TValue: notnull
 
-<ion-select @ref="_self"
+<ion-select @ref="IonElement"
             @attributes="@Attributes"
             color="@Color"
             mode="@Mode"
             cancel-text="@CancelText"
             compare-with="@CompareWith"
-            disabled="@Disabled"
+            disabled="@Disabled.AsString()"
             expanded-icon="@ExpandedIcon"
             fill="@Fill"
             interface="@Interface"
             justify="@Justify"
             label="@Label"
             label-placement="@LabelPlacement"
-            multiple="@Multiple"
+            multiple="@Multiple.AsString()"
             name="@Name"
             ok-text="@OkText"
             placeholder="@Placeholder"

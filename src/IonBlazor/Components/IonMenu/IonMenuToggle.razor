@@ -1,9 +1,9 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-menu-toggle @ref="_self"
+<ion-menu-toggle @ref="IonElement"
                  @attributes="@Attributes"
-                 auto-hide="@AutoHide"
+                 auto-hide="@AutoHide.AsString()"
                  menu="@Menu">
     @ChildContent
 </ion-menu-toggle>

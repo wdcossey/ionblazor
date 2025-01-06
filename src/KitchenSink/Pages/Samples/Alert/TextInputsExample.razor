@@ -43,7 +43,7 @@
 @code{
 
     [CascadingParameter(Name = nameof(Console))]
-    public PlaygroundConsole? Console { get; init; }
+    private PlaygroundConsole? Console { get; init; }
 
     private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
     {

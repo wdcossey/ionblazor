@@ -12,6 +12,9 @@ public partial class PlaygroundContainer : ComponentBase
     [Obsolete("", true)]
     public string? SubTitle { get; set; }
 
+    [Parameter]
+    public bool? FillWidth { get; init; }
+
     private PlaygroundConsole? Console
     {
         get => _console;

@@ -2,7 +2,6 @@
 
 public sealed partial class IonLoading: IonContentComponent, IIonModeComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference ;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionLoadingDidDismissReference;
@@ -13,8 +12,6 @@ public sealed partial class IonLoading: IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
 
     protected override string JsImportName => nameof(IonLoading);
-
-    public override ElementReference IonElement => _self;
 
     /// <inheritdoc/>
     [Parameter]
@@ -227,7 +224,7 @@ public sealed partial class IonLoading: IonContentComponent, IIonModeComponent
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionLoadingDidDismiss", _ionLoadingDidDismissReference),
@@ -257,35 +254,35 @@ public sealed partial class IonLoading: IonContentComponent, IIonModeComponent
     /// </summary>
     /// <returns></returns>
     public ValueTask<bool> DismissAsync<TData>(TData? data = null, string? role = null) where TData : class =>
-        JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
+        JsComponent.InvokeAsync<bool>("dismiss", IonElement, data, role);
 
     /// <summary>
     /// Dismiss the loading overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
     public ValueTask<bool> DismissAsync(string? role = null) =>
-        JsComponent.InvokeAsync<bool>("dismiss", _self, role);
+        JsComponent.InvokeAsync<bool>("dismiss", IonElement, role);
 
     /// <summary>
     /// Present the loading overlay after it has been created.
     /// </summary>
     /// <returns></returns>
     public ValueTask PresentAsync() =>
-        JsComponent.InvokeVoidAsync("present", _self);
+        JsComponent.InvokeVoidAsync("present", IonElement);
 
     /// <summary>
     /// Sets the <see cref="Message"/>
     /// </summary>
     /// <returns></returns>
     public async ValueTask SetMessageAsync(string? message) =>
-        await JsComponent.InvokeVoidAsync("setMessage", _self, message);
+        await JsComponent.InvokeVoidAsync("setMessage", IonElement, message);
 
     /// <summary>
     /// Sets the <see cref="Message"/>
     /// </summary>
     /// <returns></returns>
     public async ValueTask PresentWithMessageAsync(string? message) =>
-        await JsComponent.InvokeVoidAsync("presentWithMessage", _self, message);
+        await JsComponent.InvokeVoidAsync("presentWithMessage", IonElement, message);
 
     private IonLoadingDismissEventArgs GetDismissArgs(JsonObject? args)
     {

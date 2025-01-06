@@ -31,9 +31,7 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
     /// <summary>
     /// Reference to the Ionic (Html) component
     /// </summary>
-    public abstract ElementReference IonElement { get; }
-
-
+    public ElementReference IonElement { get; protected set; }
 
     public virtual async ValueTask DisposeAsync()
     {

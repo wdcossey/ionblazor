@@ -1,9 +1,9 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-fab-list @ref="_self"
+<ion-fab-list @ref="IonElement"
               @attributes="@Attributes"
-              activated="@Activated"
+              activated="@Activated.AsString()"
               side="@Side">
     @ChildContent
 </ion-fab-list>

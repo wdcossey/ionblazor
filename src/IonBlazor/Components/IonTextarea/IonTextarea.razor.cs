@@ -2,15 +2,12 @@
 
 public sealed partial class IonTextarea : IonContentComponent, IIonColorComponent, IIonModeComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
     protected override string JsImportName => nameof(IonTextarea);
-
-    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the textarea container will grow and shrink based on the contents of the textarea.
@@ -272,7 +269,7 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
             if (inputArgs.Value?.Equals(value) is false)
             {
                 Value = inputArgs.Value;
-                await JsComponent.InvokeVoidAsync("setValue", _self, inputArgs.Value);
+                await JsComponent.InvokeVoidAsync("setValue", IonElement, inputArgs.Value);
             }
         });
     }
@@ -285,14 +282,14 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionChange", _ionChangeReference),
             IonEvent.Set("ionFocus", _ionFocusReference),
             IonEvent.Set("ionInput", _ionInputReference)
         );
 
-        await JsComponent.InvokeVoidAsync("counterFormat", _self, CounterFormat);
+        await JsComponent.InvokeVoidAsync("counterFormat", IonElement, CounterFormat);
     }
 
     public override async ValueTask DisposeAsync()
@@ -309,23 +306,23 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
     /// See <a href="https://ionicframework.com/docs/developing/managing-focus">managing focus</a> for more information.
     /// </summary>
     public async ValueTask SetFocusAsync() =>
-        await JsComponent.InvokeVoidAsync("setFocus", _self);
+        await JsComponent.InvokeVoidAsync("setFocus", IonElement);
 
     public async ValueTask SetValueAsync(string? value) =>
-        await JsComponent.InvokeVoidAsync("setValue", _self, value);
+        await JsComponent.InvokeVoidAsync("setValue", IonElement, value);
 
     public async ValueTask MarkTouchedAsync() =>
-        await JsComponent.InvokeVoidAsync("markTouched", _self);
+        await JsComponent.InvokeVoidAsync("markTouched", IonElement);
 
     public async ValueTask MarkUnTouchedAsync() =>
-        await JsComponent.InvokeVoidAsync("markUnTouched", _self);
+        await JsComponent.InvokeVoidAsync("markUnTouched", IonElement);
 
     public async ValueTask MarkInvalidAsync() =>
-        await JsComponent.InvokeVoidAsync("markInvalid", _self);
+        await JsComponent.InvokeVoidAsync("markInvalid", IonElement);
 
     public async ValueTask MarkValidAsync() =>
-        await JsComponent.InvokeVoidAsync("markValid", _self);
+        await JsComponent.InvokeVoidAsync("markValid", IonElement);
 
     public async ValueTask RemoveMarkingAsync() =>
-        await JsComponent.InvokeVoidAsync("removeMarking", _self);
+        await JsComponent.InvokeVoidAsync("removeMarking", IonElement);
 }

@@ -2,10 +2,6 @@
 
 public sealed partial class IonFab : IonContentComponent
 {
-    private ElementReference _self;
-
-    public override ElementReference IonElement => _self;
-
     /// <summary>
     /// If <b>true</b>, both the <see cref="IonFabButton"/> and all <see cref="IonFabList"/> inside
     /// <see cref="IonFab"/> will become active.

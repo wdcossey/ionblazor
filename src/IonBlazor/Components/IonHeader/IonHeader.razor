@@ -1,11 +1,11 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-header @ref="_self"
+<ion-header @ref="IonElement"
             @attributes="@Attributes"
             collapse="@Collapse"
             mode="@(Mode ?? CascadingMode)"
-            translucent="@Translucent">
+            translucent="@Translucent.AsString()">
     <CascadingValue TValue="@IIonComponent" Name="@nameof(IonToolbar.Parent)" Value="@(this)" IsFixed="@true">
         @ChildContent
     </CascadingValue>

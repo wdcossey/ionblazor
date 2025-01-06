@@ -2,10 +2,6 @@
 
 public sealed partial class IonIcon : IonComponent, IIonColorComponent
 {
-    private ElementReference _self;
-
-    public override ElementReference IonElement => _self;
-
     [Parameter]
     public string Name { get; set; } = null!;
 

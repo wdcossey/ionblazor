@@ -2,7 +2,6 @@
 
 public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonModeComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionToastDidDismissReference;
@@ -15,8 +14,6 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
     protected override string JsImportName => nameof(IonToast);
-
-    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the toast will animate.
@@ -182,7 +179,7 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
     /// Dismiss the toast overlay after it has been presented.
     /// </summary>
     public ValueTask DismissAsync() =>
-        JsComponent.InvokeVoidAsync("dismiss", _self);
+        JsComponent.InvokeVoidAsync("dismiss", IonElement);
 
     public IonToast()
     {
@@ -231,7 +228,7 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionToastDidDismiss", _ionToastDidDismissReference),
@@ -261,7 +258,7 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
                 await ButtonHandler.InvokeAsync(arguments);
             });
 
-        await JsComponent.InvokeVoidAsync("withButtons", _self, buttons, _buttonHandlerReference);
+        await JsComponent.InvokeVoidAsync("withButtons", IonElement, buttons, _buttonHandlerReference);
     }
 
     public override async ValueTask DisposeAsync()

@@ -3,9 +3,9 @@
 
 @typeparam TItem where TItem: notnull
 
-<ion-list @ref="@_self"
+<ion-list @ref="@IonElement"
           @attributes="@Attributes"
-          inset="@Inset"
+          inset="@Inset.AsString()"
           lines="@Lines"
           mode="@Mode">
     @foreach (TItem item in ItemsSource)

@@ -1,3 +1,3 @@
 ﻿export function complete(element, listOrReorder) {
-    element.complete(listOrReorder);
+    return element.complete(listOrReorder);
 }

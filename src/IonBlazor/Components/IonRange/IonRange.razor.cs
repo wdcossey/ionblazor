@@ -2,7 +2,6 @@
 
 public sealed partial class IonRange : IonContentComponent, IIonColorComponent, IIonModeComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
@@ -12,8 +11,6 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     private readonly DotNetObjectReference<IonicEventCallbackResult<int, string?>> _pinFormatterReference;
 
     protected override string JsImportName => nameof(IonRange);
-
-    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// The start position of the range active bar. This feature is only available with a single knob
@@ -129,13 +126,13 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     /// Set the value of the range.
     /// </summary>
     public ValueTask SetValueAsync(int value) =>
-        JsComponent.InvokeVoidAsync("setValue", _self, value);
+        JsComponent.InvokeVoidAsync("setValue", IonElement, value);
 
     /// <summary>
     /// Set the value of the range.
     /// </summary>
     public ValueTask SetValueAsync(int lower, int upper) =>
-        JsComponent.InvokeVoidAsync("setUpperLowerValue", _self, lower, upper);
+        JsComponent.InvokeVoidAsync("setUpperLowerValue", IonElement, lower, upper);
 
     /// <summary>
     /// Emitted when the <see cref="IonRange"/> loses focus.
@@ -229,7 +226,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(_self, new []
+        await this.AttachIonListenersAsync(IonElement, new []
         {
             IonEvent.Set("ionBlur"         , _ionBlurReference         ),
             IonEvent.Set("ionChange"       , _ionChangeReference       ),

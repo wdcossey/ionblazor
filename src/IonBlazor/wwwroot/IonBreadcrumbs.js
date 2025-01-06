@@ -9,7 +9,15 @@ export function attachIonCollapsedClickListener(element, ref) {
         ref.invokeMethodAsync(dotNetCallbackMethod, {
             tagName: ev.target.tagName,
             detail: ev.detail.collapsedBreadcrumbs.map(obj => {
-                return { href: obj.href, textContent: obj.textContent }
+                return {
+                    active: obj.active,
+                    collapsed: obj.collapsed,
+                    disabled: obj.disabled,
+                    download: obj.download,
+                    href: obj.href,
+                    last: obj.last,
+                    textContent: obj.textContent
+                }
             })
         });
     });

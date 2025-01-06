@@ -1,11 +1,7 @@
-﻿namespace IonBlazor.Components;
+namespace IonBlazor.Components;
 
 public sealed partial class IonAccordion : IonContentComponent, IIonModeComponent
 {
-    private ElementReference _self;
-
-    public override ElementReference IonElement => _self;
-
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
     /// <summary>

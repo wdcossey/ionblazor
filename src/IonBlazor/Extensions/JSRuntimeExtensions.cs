@@ -48,7 +48,7 @@ internal static class JSRuntimeExtensions
         return await jsModule.InvokeAsync<TValue>(identifier, args);
     }
 
-    internal static async ValueTask<TValue> InvokeAsync<TValue>(this Task<IJSObjectReference>? moduleTask, string identifier, params object?[]? args)
+    internal static async ValueTask<TValue?> InvokeAsync<TValue>(this Task<IJSObjectReference>? moduleTask, string identifier, params object?[]? args)
     {
         if (moduleTask is null)
             return default;

@@ -3,8 +3,6 @@
 public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonModeComponent
     where TButtonData : class, IActionSheetButtonData
 {
-    private ElementReference _self;
-
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference = null!;
     private DotNetObjectReference<IonicEventCallback> _didPresentReference = null!;
 
@@ -18,8 +16,6 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
     protected override string JsImportName => nameof(IonActionSheet<TButtonData>);
-
-    public override ElementReference IonElement => _self;
 
     [Parameter]
     public bool? Animated { get; init; }
@@ -192,7 +188,7 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
             });
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
 
             IonEvent.Set("didDismiss", _didDismissReference ),
             IonEvent.Set("didPresent", _didPresentReference ),
@@ -206,7 +202,7 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
             IonEvent.Set("willPresent", _willPresentReference )
         );
 
-        await JsComponent.InvokeVoidAsync("addButtons", _self, buttons, _buttonHandlerReference);
+        await JsComponent.InvokeVoidAsync("addButtons", IonElement, buttons, _buttonHandlerReference);
     }
 
     /// <summary>
@@ -216,12 +212,12 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
     /// <param name="role"></param>
     /// <returns></returns>
     public ValueTask<bool> DismissAsync(IEnumerable<ActionSheetButton<TButtonData>>? data, string? role) =>
-        JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
+        JsComponent.InvokeAsync<bool>("dismiss", IonElement, data, role);
 
     /// <summary>
     /// Present the action sheet overlay after it has been created.
     /// </summary>
-    public ValueTask PresentAsync() => JsComponent.InvokeVoidAsync("present", _self);
+    public ValueTask PresentAsync() => JsComponent.InvokeVoidAsync("present", IonElement);
 
     public override async ValueTask DisposeAsync()
     {

@@ -2,11 +2,8 @@
 
 public sealed partial class IonBreadcrumb : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private DotNetObjectReference<IonicEventCallback> _ionFocusReference;
-
-    public override ElementReference IonElement => _self;
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
@@ -83,7 +80,7 @@ public sealed partial class IonBreadcrumb : IonContentComponent, IIonModeCompone
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionFocus", _ionFocusReference));
     }

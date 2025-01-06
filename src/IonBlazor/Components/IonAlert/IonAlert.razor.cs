@@ -2,8 +2,6 @@
 
 public sealed partial class IonAlert : IonComponent, IIonModeComponent
 {
-    private ElementReference _self;
-
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionAlertDidDismissReference;
@@ -18,8 +16,6 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
     private AlertInput[]? _inputs;
 
     protected override string JsImportName => nameof(IonAlert);
-
-    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the alert will animate.
@@ -209,13 +205,13 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
     /// Dismiss the alert overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask<bool> DismissAsync() => await JsComponent.InvokeAsync<bool>("dismiss", _self);
+    public async ValueTask<bool> DismissAsync() => await JsComponent.InvokeAsync<bool>("dismiss", IonElement);
 
     /// <summary>
     /// Present the alert overlay after it has been created.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask PresentAsync() => await JsComponent.InvokeVoidAsync("present", _self);
+    public async ValueTask PresentAsync() => await JsComponent.InvokeVoidAsync("present", IonElement);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -228,7 +224,7 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
         _inputs = Inputs?.Invoke();
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionAlertDidDismiss", _ionAlertDidDismissReference),
@@ -240,10 +236,10 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
         );
 
         if (_buttons?.Length > 0)
-            await JsComponent.InvokeVoidAsync("addButtons", _self, _buttons, _buttonHandlerReference);
+            await JsComponent.InvokeVoidAsync("addButtons", IonElement, _buttons, _buttonHandlerReference);
 
         if (_inputs?.Length > 0)
-            await JsComponent.InvokeVoidAsync("addInputs", _self, _inputs);
+            await JsComponent.InvokeVoidAsync("addInputs", IonElement, _inputs);
     }
 
     private IonAlertDismissEventArgs AsDismissEventArgs(JsonObject? args)

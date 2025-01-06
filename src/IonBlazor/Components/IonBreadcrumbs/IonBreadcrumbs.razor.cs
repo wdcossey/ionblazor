@@ -2,12 +2,9 @@
 
 public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionCollapsedClickReference;
 
     protected override string JsImportName => nameof(IonBreadcrumbs);
-
-    public override ElementReference IonElement => _self;
 
     /// <inheritdoc/>
     [Parameter]
@@ -63,7 +60,7 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
         if (!firstRender)
             return;
 
-        await JsComponent.InvokeVoidAsync("attachIonCollapsedClickListener", _self, _ionCollapsedClickReference);
+        await JsComponent.InvokeVoidAsync("attachIonCollapsedClickListener", IonElement, _ionCollapsedClickReference);
     }
 
     public override async ValueTask DisposeAsync()
@@ -74,6 +71,6 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
 
     public async ValueTask SetMaxItemsAsync(uint? value)
     {
-        await JsComponent.InvokeVoidAsync("maxItems", _self, value);
+        await JsComponent.InvokeVoidAsync("maxItems", IonElement, value);
     }
 }

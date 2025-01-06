@@ -1,9 +1,4 @@
-﻿.playground__frame {
-    width: unset;
-    max-width: unset;
-}
-
-::deep .accordion-theming {
+﻿::deep .accordion-theming {
     --ion-color-rose: #fecdd3;
     --ion-color-rose-rgb: 254, 205, 211;
     --ion-color-rose-contrast: #000000;

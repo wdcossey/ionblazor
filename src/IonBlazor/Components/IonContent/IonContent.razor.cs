@@ -2,15 +2,11 @@
 
 public sealed partial class IonContent : IonContentComponent, IIonColorComponent
 {
-    private ElementReference _self;
-
     private DotNetObjectReference<IonicEventCallback<__ionScrollEventArgs?>> _ionScrollReference;
     private DotNetObjectReference<IonicEventCallback<__ionScrollEndEventArgs?>> _ionScrollEndReference;
     private DotNetObjectReference<IonicEventCallback<__ionScrollStartEventArgs?>> _ionScrollStartReference;
 
     protected override string JsImportName => nameof(IonContent);
-
-    public override ElementReference IonElement => _self;
 
     /// <inheritdoc/>
     [Parameter]
@@ -91,7 +87,7 @@ public sealed partial class IonContent : IonContentComponent, IIonColorComponent
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("ionScroll", _ionScrollReference),
             IonEvent.Set("ionScrollEnd", _ionScrollEndReference),
             IonEvent.Set("ionScrollStart", _ionScrollStartReference)
@@ -115,7 +111,7 @@ public sealed partial class IonContent : IonContentComponent, IIonColorComponent
     /// </summary>
     [Obsolete("Not available in Blazor (Razor) projects", true)]
     public async ValueTask GetScrollElementAsync() =>
-        await JsComponent.InvokeAsync<JsonElement?>("getScrollElement", _self);
+        await JsComponent.InvokeAsync<JsonElement?>("getScrollElement", IonElement);
 
     /// <summary>
     /// Scroll by a specified X/Y distance in the component.
@@ -124,14 +120,14 @@ public sealed partial class IonContent : IonContentComponent, IIonColorComponent
     /// <param name="y"></param>
     /// <param name="duration"></param>
     public async ValueTask ScrollByPointAsync(int x, int y, int duration) =>
-        await JsComponent.InvokeVoidAsync("scrollByPoint", _self, x, y, duration);
+        await JsComponent.InvokeVoidAsync("scrollByPoint", IonElement, x, y, duration);
 
     /// <summary>
     /// Scroll to the bottom of the component.
     /// </summary>
     /// <param name="duration"></param>
     public async ValueTask ScrollToBottomAsync(int duration) =>
-        await JsComponent.InvokeVoidAsync("scrollToBottom", _self, duration);
+        await JsComponent.InvokeVoidAsync("scrollToBottom", IonElement, duration);
 
     /// <summary>
     /// Scroll to a specified X/Y location in the component.
@@ -140,14 +136,14 @@ public sealed partial class IonContent : IonContentComponent, IIonColorComponent
     /// <param name="y"></param>
     /// <param name="duration"></param>
     public async ValueTask ScrollToPointAsync(int? x = null, int? y = null, int? duration = null) =>
-        await JsComponent.InvokeVoidAsync("scrollToPoint", _self, x, y, duration);
+        await JsComponent.InvokeVoidAsync("scrollToPoint", IonElement, x, y, duration);
 
     /// <summary>
     /// Scroll to the top of the component.
     /// </summary>
     /// <param name="duration"></param>
     public async ValueTask ScrollToTopAsync(int? duration) =>
-        await JsComponent.InvokeVoidAsync("scrollToTop", _self, duration);
+        await JsComponent.InvokeVoidAsync("scrollToTop", IonElement, duration);
 
     // ReSharper disable InconsistentNaming
     // ReSharper disable ClassNeverInstantiated.Global

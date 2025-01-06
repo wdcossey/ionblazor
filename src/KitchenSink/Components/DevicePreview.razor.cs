@@ -4,11 +4,6 @@ namespace IonicTest.Components;
 
 public partial class DevicePreview : IonContentComponent
 {
-    private ElementReference _self;
-
-    /// <inheritdoc/>
-    public override ElementReference IonElement => _self;
-
     /// <inheritdoc/>
     [Parameter, EditorRequired] public override RenderFragment? ChildContent { get; init; }
 

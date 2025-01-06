@@ -2,10 +2,6 @@
 
 public sealed partial class IonCard : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
-
-    public override ElementReference IonElement => _self;
-
     /// <summary>
     /// If <b>true</b>, a button tag will be rendered and the card will be tappable.
     /// </summary>

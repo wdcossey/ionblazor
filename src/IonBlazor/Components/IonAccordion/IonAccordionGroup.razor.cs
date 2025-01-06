@@ -4,7 +4,6 @@ namespace IonBlazor.Components;
 
 public sealed partial class IonAccordionGroup : IonContentComponent, IIonModeComponent
 {
-    private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeObjectReference = null!;
 
     protected override string JsImportName => nameof(IonAccordionGroup);
@@ -15,8 +14,6 @@ public sealed partial class IonAccordionGroup : IonContentComponent, IIonModeCom
 #else
     protected override string JsImportName => nameof(IonAccordionGroup);
 #endif*/
-
-    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If true, all accordions inside of the accordion group will animate when expanding or collapsing.
@@ -90,7 +87,7 @@ public sealed partial class IonAccordionGroup : IonContentComponent, IIonModeCom
         //Multiple is not true ? result?.FirstOrDefault() : result;
         //await SetValueAsync(Value);
 
-        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionChange", _ionChangeObjectReference));
+        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionChange", _ionChangeObjectReference));
     }
 
     public override async ValueTask DisposeAsync()
@@ -109,12 +106,12 @@ public sealed partial class IonAccordionGroup : IonContentComponent, IIonModeCom
         else
             actualValue = value;
 
-        await JsComponent.InvokeVoidAsync("setValue", _self, actualValue);
+        await JsComponent.InvokeVoidAsync("setValue", IonElement, actualValue);
     }
 
     internal async ValueTask<IEnumerable<string>> GetValueAsync()
     {
-        return await JsComponent.InvokeAsync<IEnumerable<string>>("getValue", _self);
+        return await JsComponent.InvokeAsync<IEnumerable<string>>("getValue", IonElement);
     }
 
 }

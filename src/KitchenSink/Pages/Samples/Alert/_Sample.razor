@@ -72,29 +72,32 @@
     </ChildContent>
 </PlaygroundContainer>
 
-<h3>Radio Example</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="playground__frame">
-            <RadioExample/>
-        </div>
-    </div>
-</div>
+<PlaygroundContainer EnableConsole="true">
+    <Header>
+        <h3>Radio Example</h3>
+    </Header>
+    <ChildContent>
+        <RadioExample/>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h3>Checkbox Example</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="playground__frame">
-            <CheckboxExample/>
-        </div>
-    </div>
-</div>
 
-<h2>Customization</h2>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="playground__frame">
-            <CustomizationExample/>
-        </div>
-    </div>
-</div>
+<PlaygroundContainer EnableConsole="true">
+    <Header>
+        <h3>Checkbox Example</h3>
+    </Header>
+    <ChildContent>
+        <CheckboxExample/>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Customization</h2>
+        <p>Alert uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity" target="_blank" rel="noopener noreferrer">higher specificity</a> selector.</p>
+        <p>We recommend passing a custom class to <code>cssClass</code> in the <code>create</code> method and using that to add custom styles to the host and inner elements. This property can also accept multiple classes separated by spaces.</p>
+    </Header>
+    <ChildContent>
+        <CustomizationExample/>
+    </ChildContent>
+</PlaygroundContainer>

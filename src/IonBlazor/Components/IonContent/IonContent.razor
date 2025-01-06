@@ -1,13 +1,13 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-content @ref="@_self"
+<ion-content @ref="@IonElement"
              @attributes="@Attributes"
              color="@Color"
-             force-overscroll="@ForceOverscroll"
-             fullscreen="@Fullscreen"
-             scroll-events="@ScrollEvents"
-             scroll-x="@ScrollX"
-             scroll-y="@ScrollY">
+             force-overscroll="@ForceOverscroll.AsString()"
+             fullscreen="@Fullscreen.AsString()"
+             scroll-events="@ScrollEvents.AsString()"
+             scroll-x="@ScrollX.AsString()"
+             scroll-y="@ScrollY.AsString()">
     @ChildContent
 </ion-content>

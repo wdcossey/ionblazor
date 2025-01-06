@@ -3,15 +3,12 @@
 public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent, IIonModeComponent
     where TValue : notnull
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionCancelReference;
     //private readonly DotNetObjectReference<IonicEventCallback<__ionSelectChangeEventArgs<TValue>>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
-
-    public override ElementReference IonElement => _self;
 
     /// <inheritdoc />
     [Parameter]
@@ -235,7 +232,7 @@ public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorCo
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionCancel", _ionCancelReference),
             IonEvent.Set("ionChange", _ionChangeReference),
