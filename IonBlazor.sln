@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor", "src\IonBlazor\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.UnitTests", "tests\IonBlazor.UnitTests\IonBlazor.UnitTests.csproj", "{EC6CED86-162D-4E7E-BEE9-640BF3D04FB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Barebones", "samples\IonBlazor.Barebones\IonBlazor.Barebones.csproj", "{A9A0D25B-9C3D-477C-A4DB-322B21291FF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{EC6CED86-162D-4E7E-BEE9-640BF3D04FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC6CED86-162D-4E7E-BEE9-640BF3D04FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC6CED86-162D-4E7E-BEE9-640BF3D04FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9A0D25B-9C3D-477C-A4DB-322B21291FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9A0D25B-9C3D-477C-A4DB-322B21291FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9A0D25B-9C3D-477C-A4DB-322B21291FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9A0D25B-9C3D-477C-A4DB-322B21291FF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
