@@ -28,7 +28,7 @@ public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
                 });
         }
 
-        await (_jsComponent?.InvokeVoidAsync("presentActionSheet", header, buttons, buttonHandler) ?? ValueTask.CompletedTask);
+        await (_jsComponent?.InvokeVoidAsync("present", header, buttons, buttonHandler) ?? ValueTask.CompletedTask);
     }
 
     public async ValueTask DisposeAsync()

@@ -6,9 +6,9 @@ public sealed class IonLoadingController: ComponentBase, IAsyncDisposable
 
     private static IJSObjectReference? _jsComponent;
 
-    public static async ValueTask PresentAsync(
+    public static async ValueTask<string?> PresentAsync(
         string? message = null,
-        int duration = 3000,
+        int? duration = 3000,
         IDictionary<string, string>? htmlAttributes = null,
         Action<IonLoadingDismissEventArgs>? onDidDismiss = null,
         Action? onDidPresent = null)
@@ -41,7 +41,17 @@ public sealed class IonLoadingController: ComponentBase, IAsyncDisposable
             });
         }
 
-        await (_jsComponent?.InvokeVoidAsync("presentLoading", message, duration, htmlAttributes, didDismissHandler, didPresentHandler) ?? ValueTask.CompletedTask);
+        var result = await (_jsComponent?.InvokeAsync<string?>("present", message, duration, htmlAttributes, didDismissHandler, didPresentHandler) ?? ValueTask.FromResult<string?>(null));
+        return result;
+    }
+
+    public static IonLoadingReference Create(Action<IonLoadingReferenceConfiguration> configure)
+    {
+        IonLoadingReferenceConfiguration configuration = new();
+        configure(configuration);
+
+        IonLoadingReference result = new(_jsComponent, configuration);
+        return result;
     }
 
     public async ValueTask DisposeAsync()

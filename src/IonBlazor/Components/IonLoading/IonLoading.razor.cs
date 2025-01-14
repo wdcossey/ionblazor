@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonLoading: IonContentComponent, IIonModeComponent
+public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonModeComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference ;
@@ -204,16 +204,6 @@ public sealed partial class IonLoading: IonContentComponent, IIonModeComponent
             IonLoadingPresentEventArgs presentArgs = GetPresentArgs();
             await WillPresent.InvokeAsync(presentArgs);
         });
-
-        /*
-         * {
-  "tagName": "ION-LOADING",
-  "detail": {
-    "data": null,
-    "role": "winner"
-  }
-}
-         */
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

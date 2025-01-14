@@ -1,37 +1,37 @@
 ﻿<IonItem>
-    <ion-input label="Default Input" placeholder="Enter text"></ion-input>
+    <IonInput Label="Default Input" Placeholder="Enter text"></IonInput>
 </IonItem>
 
 <IonItem>
-    <ion-input label="Fixed Input" label-placement="fixed" placeholder="Enter text"></ion-input>
+    <IonInput Label="Fixed Input" LabelPlacement="fixed" Placeholder="Enter text"></IonInput>
 </IonItem>
 
 <IonItem>
-    <ion-input label="Stacked Input" label-placement="stacked" placeholder="Enter text"></ion-input>
+    <IonInput Label="Stacked Input" LabelPlacement="stacked" Placeholder="Enter text"></IonInput>
 </IonItem>
 
 <IonItem>
-    <ion-input label="Floating Input" label-placement="floating" placeholder="Enter text"></ion-input>
+    <IonInput Label="Floating Input" LabelPlacement="floating" Placeholder="Enter text"></IonInput>
 </IonItem>
 
 <IonItem fill="outline">
-    <ion-input label="Floating Input: Outline (MD only)" label-placement="floating" placeholder="Enter text"></ion-input>
+    <IonInput Label="Floating Input: Outline (MD only)" LabelPlacement="floating" Placeholder="Enter text"></IonInput>
 </IonItem>
 
 <IonItem fill="solid">
-    <ion-input label="Floating Input: Solid (MD only)" label-placement="floating" placeholder="Enter text"></ion-input>
+    <IonInput Label="Floating Input: Solid (MD only)" LabelPlacement="floating" Placeholder="Enter text"></IonInput>
 </IonItem>
 
 <IonItem>
-    <ion-select label="Select" placeholder="Make a Selection">
-        <ion-select-option value="">No Game Console</ion-select-option>
-        <ion-select-option value="nes">NES</ion-select-option>
-        <ion-select-option value="n64">Nintendo64</ion-select-option>
-        <ion-select-option value="ps">PlayStation</ion-select-option>
-        <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-        <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-        <ion-select-option value="snes">SNES</ion-select-option>
-    </ion-select>
+    <IonSelect TValue="@string" Label="Select" Placeholder="Make a Selection">
+        <IonSelectOption Value="@((string?)null)">No Game Console</IonSelectOption>
+        <IonSelectOption Value="nes">NES</IonSelectOption>
+        <IonSelectOption Value="n64">Nintendo64</IonSelectOption>
+        <IonSelectOption Value="ps">PlayStation</IonSelectOption>
+        <IonSelectOption Value="genesis">Sega Genesis</IonSelectOption>
+        <IonSelectOption Value="saturn">Sega Saturn</IonSelectOption>
+        <IonSelectOption Value="snes">SNES</IonSelectOption>
+    </IonSelect>
 </IonItem>
 
 <IonItem>
@@ -47,7 +47,7 @@
 </IonItem>
 
 <IonItem>
-    <ion-range label-placement="start">
+    <IonRange LabelPlacement="@IonRangeLabelPlacement.Start">
         <div slot="label">Range</div>
-    </ion-range>
+    </IonRange>
 </IonItem>

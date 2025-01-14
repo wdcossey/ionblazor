@@ -1,23 +1,26 @@
 ﻿@page "/samples/loading"
 
-<h2>Basic Usage</h2>
-<h3>Inline (Recommended)</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
-            <BasicUsageInline/>
-        </div>
-    </div>
-</div>
+<PlaygroundContainer>
+    <Header>
+        <h2>Basic Usage</h2>
+        <p>Once presented, the loading indicator will display indefinitely by default. Developers can manually dismiss the loading indicator after creation by calling the <code>dismiss()</code> method on the component. The <code>onDidDismiss</code> function can be called to perform an action after the loading indicator is dismissed.</p>
+        <p>Alternatively, developers can configure the loading indicator to dismiss automatically after a specific amount of time by passing the number of milliseconds to display it in the <code>duration</code> of the loading options.</p>
+        <h3>Inline (Recommended)</h3>
+    </Header>
+    <ChildContent>
+        <BasicUsageInline/>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h3>Controller</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
-            <BasicUsageController/>
-        </div>
-    </div>
-</div>
+
+<PlaygroundContainer EnableConsole="true">
+    <Header>
+        <h3>Controller</h3>
+    </Header>
+    <ChildContent>
+        <BasicUsageController/>
+    </ChildContent>
+</PlaygroundContainer>
 
 <h2>Customization</h2>
 <h3>Spinners</h3>

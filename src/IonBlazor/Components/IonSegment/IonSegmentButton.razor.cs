@@ -5,6 +5,12 @@ public sealed partial class IonSegmentButton : IonContentComponent, IIonModeComp
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
     /// <summary>
+    /// The <b>id</b> of the segment content.
+    /// </summary>
+    [Parameter]
+    public string ContentId { get; init; } = null!;
+
+    /// <summary>
     /// If <b>true</b>, the user cannot interact with the segment button.
     /// </summary>
     [Parameter]

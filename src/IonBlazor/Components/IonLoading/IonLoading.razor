@@ -9,7 +9,7 @@
           duration="@Duration?.ToString()"
           is-open="@IsOpen.AsString()"
           keyboard-close="@KeyboardClose.AsString()"
-          message="@Message"
+          message="@((MarkupString)(Message ?? string.Empty))"
           mode="@Mode"
           show-backdrop="@ShowBackdrop.AsString()"
           spinner="@Spinner"

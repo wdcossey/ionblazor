@@ -1,6 +1,6 @@
 import { dotNetCallbackMethod } from './common.js';
 
-export async function presentActionSheet(header, buttons, buttonHandler) {
+export async function present(header, buttons, buttonHandler) {
     const actionSheet = document.createElement('ion-action-sheet');
     actionSheet.header = header;
 
@@ -18,4 +18,6 @@ export async function presentActionSheet(header, buttons, buttonHandler) {
     });
 
     await actionSheet.present();
+
+    return actionSheet.id;
 }
