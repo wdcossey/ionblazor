@@ -70,8 +70,8 @@ public sealed class IonLoadingReference : IIonLoading
     /// <returns></returns>
     public async ValueTask PresentAsync()
     {
-        MarkupString markupString = (MarkupString)(_message ?? string.Empty);
-        var result = await (_jsComponent?.InvokeAsync<string?>("present", markupString.ToString(), _duration, _htmlAttributes, _didDismissHandler, _didPresentHandler) ?? ValueTask.FromResult<string?>(null));
+        var markupString = RenderMessage(_message);
+        var result = await (_jsComponent?.InvokeAsync<string?>("present", markupString, _duration, _htmlAttributes, _didDismissHandler, _didPresentHandler) ?? ValueTask.FromResult<string?>(null));
         _componentId = result!;
     }
 
@@ -81,14 +81,20 @@ public sealed class IonLoadingReference : IIonLoading
     /// <returns></returns>
     public async ValueTask SetMessageAsync(string? message)
     {
-        MarkupString markupString = (MarkupString)(_message ?? string.Empty);
-        await (_jsComponent?.InvokeVoidAsync("setMessage", _componentId, markupString.ToString()) ?? ValueTask.CompletedTask);
+        var markupString = RenderMessage(message);
+        await (_jsComponent?.InvokeVoidAsync("setMessage", _componentId, markupString) ?? ValueTask.CompletedTask);
     }
 
+    /// <inheritdoc/>
     public ValueTask DisposeAsync()
     {
         _didDismissHandler?.Dispose();
         _didPresentHandler?.Dispose();
         return ValueTask.CompletedTask;
+    }
+
+    private static string RenderMessage(string? message)
+    {
+        return ((MarkupString)(message ?? string.Empty)).ToString();
     }
 }
