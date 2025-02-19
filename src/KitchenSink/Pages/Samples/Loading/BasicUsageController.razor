@@ -13,7 +13,7 @@
         //    htmlAttributes: new Dictionary<string, string> { { "data-ref-id", Guid.NewGuid().ToString("D") } });
 
 
-        IonLoadingReference ionLoading = IonLoadingController.Create(config =>
+        IonLoadingReference ionLoading = await IonLoadingController.CreateAsync(config =>
         {
             config.Message = "Dismissing after 10 seconds... <i>But we'll interrupt after 3 seconds...</i>";
             config.Duration = 10000;
