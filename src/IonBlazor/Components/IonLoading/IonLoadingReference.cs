@@ -1,10 +1,12 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Diagnostics;
+
+namespace IonBlazor.Components;
 
 public sealed class IonLoadingReference : IIonLoading
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didDismissHandler;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didPresentHandler;
-    private string _componentId = null!;
+    private readonly string _componentId = $"ibz-loading-{Stopwatch.GetTimestamp():x}";
 
     private readonly IJSObjectReference? _jsComponent;
 
@@ -45,7 +47,6 @@ public sealed class IonLoadingReference : IIonLoading
             config.OnDidPresent?.Invoke(obj);
             return Task.CompletedTask;
         });
-
     }
 
     /// <summary>
@@ -64,15 +65,19 @@ public sealed class IonLoadingReference : IIonLoading
     /// <returns></returns>
     public ValueTask<bool> DismissAsync(string? role = null) => DismissAsync<object>(null, role);
 
+    public async ValueTask CreateAsync()
+    {
+        var markupString = RenderMessage(_message);
+        var result = await (_jsComponent?.InvokeAsync<string?>("create", _componentId, markupString, _duration, _htmlAttributes, _didDismissHandler, _didPresentHandler) ?? ValueTask.FromResult<string?>(null));
+    }
+
     /// <summary>
     /// Present the loading overlay after it has been created.
     /// </summary>
     /// <returns></returns>
     public async ValueTask PresentAsync()
     {
-        var markupString = RenderMessage(_message);
-        var result = await (_jsComponent?.InvokeAsync<string?>("present", markupString, _duration, _htmlAttributes, _didDismissHandler, _didPresentHandler) ?? ValueTask.FromResult<string?>(null));
-        _componentId = result!;
+        await (_jsComponent?.InvokeVoidAsync("present", _componentId) ?? ValueTask.CompletedTask);
     }
 
     /// <summary>
@@ -86,11 +91,12 @@ public sealed class IonLoadingReference : IIonLoading
     }
 
     /// <inheritdoc/>
-    public ValueTask DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
+
+        await (_jsComponent?.InvokeVoidAsync("remove", _componentId) ?? ValueTask.CompletedTask);
         _didDismissHandler?.Dispose();
         _didPresentHandler?.Dispose();
-        return ValueTask.CompletedTask;
     }
 
     private static string RenderMessage(string? message)

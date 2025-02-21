@@ -1,7 +1,13 @@
 import { dotNetCallbackMethod } from './common.js';
 
-export async function present(message, duration, htmlAttributes, didDismissHandler, didPresentHandler) {
+export async function create(id, message, duration, htmlAttributes, didDismissHandler, didPresentHandler) {
+
     const loading = document.createElement('ion-loading');
+
+    if (id) {
+        loading.setAttribute("id", id);
+    }
+
     loading.message = message;
 
     if (duration) {
@@ -12,32 +18,37 @@ export async function present(message, duration, htmlAttributes, didDismissHandl
 
     document.body.appendChild(loading);
 
-    loading.addEventListener('didDismiss', (ev) => {
-        if (didDismissHandler) {
+    if (didDismissHandler) {
+        loading.addEventListener('didDismiss', (ev) => {
             didDismissHandler.invokeMethodAsync(dotNetCallbackMethod, {
                 tagName: ev.target.tagName,
                 detail: ev.detail,
                 htmlAttributes: ev.target.htmlAttributes,
                 id: ev.target.id
             });
-        }
 
-        setTimeout(function(){ loading.remove() }, 2000);
-    });
+        });
+    }
 
-    loading.addEventListener('didPresent', (ev) => {
-        if (didPresentHandler) {
+    if (didPresentHandler) {
+        loading.addEventListener('didPresent', (ev) => {
             didPresentHandler.invokeMethodAsync(dotNetCallbackMethod, {
                 tagName: ev.target.tagName,
                 detail: ev.detail,
                 htmlAttributes: ev.target.htmlAttributes,
                 id: ev.target.id
             });
-        }
-    });
+        });
+    }
 
-    await loading.present();
-    return loading.id;
+    return id ?? loading.id;
+}
+
+export async function present(id) {
+    const loading = getElement(id);
+    if (loading) {
+        await loading.present();
+    }
 }
 
 export function setMessage(id, message) {
@@ -57,6 +68,12 @@ export function updateDuration(id, duration) {
 export function dismiss(id, data, role) {
     const element = getElement(id);
     return element?.dismiss(data, role);
+}
+
+export function remove(id) {
+    const element = getElement(id);
+    element?.dismiss();
+    return element?.remove();
 }
 
 function getElement(id) {

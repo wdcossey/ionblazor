@@ -1,10 +1,11 @@
 ﻿namespace IonBlazor.Services;
 
-public sealed class IonLoadingController: ComponentBase, IAsyncDisposable
+public sealed class IonLoadingController: ComponentBase
 {
-    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
+    private static IJSRuntime _jsRuntime = null!;
 
-    private static TaskCompletionSource<IJSObjectReference> _jsComponentCompletionSource = null!;
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = null!;
 
     public static async ValueTask<string?> PresentAsync(
         string? message = null,
@@ -41,7 +42,7 @@ public sealed class IonLoadingController: ComponentBase, IAsyncDisposable
             });
         }
 
-        IJSObjectReference jsComponent = await _jsComponentCompletionSource.Task;
+        IJSObjectReference jsComponent = await _jsRuntime.ImportAsync(nameof(IonLoadingController));
         var result = await jsComponent.InvokeAsync<string?>("present", message, duration, htmlAttributes, didDismissHandler, didPresentHandler);
         return result;
     }
@@ -56,35 +57,15 @@ public sealed class IonLoadingController: ComponentBase, IAsyncDisposable
         IonLoadingReferenceConfiguration configuration = new();
         configure(configuration);
 
-        IJSObjectReference jsComponent = await _jsComponentCompletionSource.Task;
+        IJSObjectReference jsComponent = await _jsRuntime.ImportAsync(nameof(IonLoadingController));
         IonLoadingReference result = new(jsComponent, configuration);
+        await result.CreateAsync();
         return result;
     }
 
-    public async ValueTask DisposeAsync()
+    protected override void OnParametersSet()
     {
-        if (_jsComponentCompletionSource.Task.IsCompleted)
-        {
-            IJSObjectReference jsComponent = await _jsComponentCompletionSource.Task;
-            await jsComponent.DisposeAsync();
-        }
-    }
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        _jsComponentCompletionSource = new TaskCompletionSource<IJSObjectReference>();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        if (!firstRender)
-            return;
-
-        IJSObjectReference jsComponent = await JsRuntime.ImportAsync(nameof(IonLoadingController));
-
-        _jsComponentCompletionSource.SetResult(jsComponent);
+        base.OnParametersSet();
+        _jsRuntime = JsRuntime;
     }
 }
