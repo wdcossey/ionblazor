@@ -29,7 +29,7 @@
 
         await ionLoading.PresentAsync();
 
-        _ = Task.Delay(TimeSpan.FromSeconds(1.5)).ContinueWith(async _ => await ionLoading.SetMessageAsync("Updated message..."));
+        _ = Task.Delay(TimeSpan.FromSeconds(1.5)).ContinueWith(async _ => await ionLoading.UpdateMessageAsync("Updated message..."));
         _ = Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(_ => ionLoading.DismissAsync("interrupt"));
     }
 }

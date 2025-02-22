@@ -15,7 +15,7 @@ public sealed class IonLoadingReference : IIonLoading
     private readonly uint? _duration;
     private readonly IDictionary<string, string>? _htmlAttributes;
 
-    public IonLoadingReference(IJSObjectReference? jsComponent, IonLoadingReferenceConfiguration config)
+    internal IonLoadingReference(IJSObjectReference? jsComponent, IonLoadingReferenceConfiguration config)
     {
         _jsComponent = jsComponent;
         _message = config.Message;
@@ -81,10 +81,19 @@ public sealed class IonLoadingReference : IIonLoading
     }
 
     /// <summary>
+    /// Present the loading overlay after it has been created.
+    /// </summary>
+    /// <returns></returns>
+    public async ValueTask PresentWithMessageAsync(string? message)
+    {
+        await (_jsComponent?.InvokeVoidAsync("presentWithMessage", _componentId, message) ?? ValueTask.CompletedTask);
+    }
+
+    /// <summary>
     /// Set the message for the loading overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask SetMessageAsync(string? message)
+    public async ValueTask UpdateMessageAsync(string? message)
     {
         var markupString = RenderMessage(message);
         await (_jsComponent?.InvokeVoidAsync("setMessage", _componentId, markupString) ?? ValueTask.CompletedTask);

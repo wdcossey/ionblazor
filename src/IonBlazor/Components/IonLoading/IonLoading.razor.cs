@@ -261,18 +261,18 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
         JsComponent.InvokeVoidAsync("present", IonElement);
 
     /// <summary>
-    /// Sets the <see cref="Message"/>
+    /// Present the loading overlay after it has been created.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask SetMessageAsync(string? message) =>
-        await JsComponent.InvokeVoidAsync("setMessage", IonElement, message);
+    public ValueTask PresentWithMessageAsync(string? message) =>
+        JsComponent.InvokeVoidAsync("presentWithMessage", IonElement, message);
 
     /// <summary>
     /// Sets the <see cref="Message"/>
     /// </summary>
     /// <returns></returns>
-    public async ValueTask PresentWithMessageAsync(string? message) =>
-        await JsComponent.InvokeVoidAsync("presentWithMessage", IonElement, message);
+    public async ValueTask UpdateMessageAsync(string? message) =>
+        await JsComponent.InvokeVoidAsync("updateMessage", IonElement, message);
 
     private IonLoadingDismissEventArgs GetDismissArgs(JsonObject? args)
     {

@@ -51,29 +51,37 @@ export async function present(id) {
     }
 }
 
-export function setMessage(id, message) {
-    const element = getElement(id);
-    if (element) {
-        element.message = message;
+export async function presentWithMessage(id, message) {
+    const loading = getElement(id);
+    if (loading) {
+        loading.message = message;
+        await loading.present();
+    }
+}
+
+export function updateMessage(id, message) {
+    const loading = getElement(id);
+    if (loading) {
+        loading.message = message;
     }
 }
 
 export function updateDuration(id, duration) {
-    const element = getElement(id);
-    if (element) {
-        element.duration = duration;
+    const loading = getElement(id);
+    if (loading) {
+        loading.duration = duration;
     }
 }
 
 export function dismiss(id, data, role) {
-    const element = getElement(id);
-    return element?.dismiss(data, role);
+    const loading = getElement(id);
+    return loading?.dismiss(data, role);
 }
 
 export function remove(id) {
-    const element = getElement(id);
-    element?.dismiss();
-    return element?.remove();
+    const loading = getElement(id);
+    loading?.dismiss();
+    return loading?.remove();
 }
 
 function getElement(id) {
