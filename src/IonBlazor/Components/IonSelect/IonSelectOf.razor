@@ -27,7 +27,7 @@
     <CascadingValue Value="@(this)" Name="Parent">
         <CascadingValue Value="@Multiple" Name="IsMultiple">
             <CascadingValue Value="@(Multiple is true ? typeof(TItem[]) : typeof(TItem))" Name="@nameof(TItem)">
-                @foreach (TItem item in ItemsSource)
+                @foreach (var item in ItemsSource.Select((val, idx) => KeyValuePair.Create(idx, val)))
                 {
                     @ItemTemplate(item)
                 }

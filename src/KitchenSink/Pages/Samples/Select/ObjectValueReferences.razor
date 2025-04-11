@@ -1,8 +1,8 @@
 ﻿<IonList>
     <IonItem>
-        <IonSelectOf TItem="@Food" ItemsSource="@_foods" aria-label="Food" Placeholder="Select food" IonChange="OnIonChange">
+        <IonSelectOf TItem="@Food" Multiple="@true" ItemsSource="@_foods" aria-label="Food" Placeholder="Select food" IonChange="OnIonChange">
             <ItemTemplate>
-                <IonSelectOptionOf TValue="@int" Value="@context.Id">@context.Name</IonSelectOptionOf>
+                <IonSelectOptionOf TValue="@int" Value="@context.Key">@context.Value.Name</IonSelectOptionOf>
             </ItemTemplate>
         </IonSelectOf>
     </IonItem>
@@ -13,7 +13,7 @@
     [CascadingParameter(Name = nameof(Console))]
     private PlaygroundConsole? Console { get; init; }
 
-    private class Food
+    private record Food
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;

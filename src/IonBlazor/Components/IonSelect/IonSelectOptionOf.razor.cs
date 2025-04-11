@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public partial class IonSelectOptionOf<TValue>: IonSelectOptionBase<TValue>
+public partial class IonSelectOptionOf<TValue> : IonSelectOptionBase<TValue>
 {
     /*/// <summary>
     /// The text value of the option.

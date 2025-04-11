@@ -7,7 +7,7 @@ public partial class IonSelectOf<TItem> : IonSelect<TItem>
 {
     [Parameter, EditorRequired] public IEnumerable<TItem> ItemsSource { get; set; } = null!;
 
-    [Parameter, EditorRequired] public RenderFragment<TItem> ItemTemplate { get; set; } = null!;
+    [Parameter, EditorRequired] public RenderFragment<KeyValuePair<int, TItem>> ItemTemplate { get; set; } = null!;
 
     protected override async Task IonChangeCallback(JsonObject? args)
     {
