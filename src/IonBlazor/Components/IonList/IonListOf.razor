@@ -8,8 +8,15 @@
           inset="@Inset.AsString()"
           lines="@Lines"
           mode="@Mode">
-    @foreach (TItem item in ItemsSource)
+    @if (ItemsSource?.Any() is true)
     {
-        @ItemTemplate(item)
+        @foreach (TItem item in ItemsSource)
+        {
+            @ItemTemplate(item)
+        }
+    }
+    else if (EmptyTemplate is not null)
+    {
+        @EmptyTemplate
     }
 </ion-list>

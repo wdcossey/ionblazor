@@ -1,10 +1,27 @@
-﻿using Microsoft.JSInterop;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.JSInterop;
 using NSubstitute;
 
 namespace IonBlazor.UnitTests.Components;
 
 public class IonAccordionGroupTests: BunitContext
 {
+    public static class StaticSettingsUsage
+    {
+        [ModuleInitializer]
+        public static void Initialize() =>
+            VerifierSettings.ScrubLinesWithReplace(
+                replaceLine: line =>
+                {
+                    if (!line.Contains(" blazor:elementReference="))
+                    {
+                        return line;
+                    }
+
+                    var index = line.IndexOf(" blazor:elementReference=", StringComparison.Ordinal);
+                    return line.Remove(index, 25 + 2 + 36);
+                });
+    }
 
     public IonAccordionGroupTests()
     {
@@ -18,87 +35,88 @@ public class IonAccordionGroupTests: BunitContext
     }
 
     [Fact]
-    public void IonAccordionGroupRendersCorrectly()
+    public async Task IonAccordionGroupRendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordionGroup>();
 
         // Assert
-        cut.MarkupMatches("<ion-accordion-group></ion-accordion-group>");
+        await Verify(cut.Markup)
+            .IgnoreParameters("blazor:elementReference");
     }
 
     [Fact]
-    public void WhenAnimated_RendersCorrectly()
+    public async Task WhenAnimated_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordionGroup>(parameters => parameters
             .Add(p => p.Animated, true));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion-group animated></ion-accordion-group>");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WhenDisabled_RendersCorrectly()
+    public async Task WhenDisabled_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordionGroup>(parameters => parameters
             .Add(p => p.Disabled, true));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion-group disabled></ion-accordion-group>");
+        await Verify(cut.Markup);
     }
 
     [Theory]
     [InlineData(IonAccordionGroupExpand.Compact)]
     [InlineData(IonAccordionGroupExpand.Inset)]
-    public void WithExpand_RendersCorrectly(string expand)
+    public async Task WithExpand_RendersCorrectly(string expand)
     {
         // Act
         var cut = Render<IonAccordionGroup>(parameters => parameters
             .Add(p => p.Expand, expand));
 
         // Assert
-        cut.MarkupMatches($"<ion-accordion-group expand=\"{expand}\"></ion-accordion-group>");
+        await Verify(cut.Markup);
     }
 
     [Theory]
     [InlineData(IonMode.iOS)]
     [InlineData(IonMode.MaterialDesign)]
-    public void WithMode_RendersCorrectly(string mode)
+    public async Task WithMode_RendersCorrectly(string mode)
     {
         // Act
         var cut = Render<IonAccordionGroup>(parameters => parameters
             .Add(p => p.Mode, mode));
 
         // Assert
-        cut.MarkupMatches($"<ion-accordion-group  mode=\"{mode}\"></ion-accordion-group >");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WhenMultiple_RendersCorrectly()
+    public async Task WhenMultiple_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordionGroup>(parameters => parameters
             .Add(p => p.Multiple, true));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion-group multiple></ion-accordion-group>");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WhenReadonly_RendersCorrectly()
+    public async Task WhenReadonly_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordionGroup>(parameters => parameters
             .Add(p => p.Readonly, true));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion-group readonly></ion-accordion-group>");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WithChildContent_RendersCorrectly()
+    public async Task WithChildContent_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordionGroup>(parameters => parameters
@@ -111,14 +129,7 @@ public class IonAccordionGroupTests: BunitContext
             );
 
         // Assert
-        cut.MarkupMatches(
-            """
-            <ion-accordion-group>
-                <ion-accordion value="first"></ion-accordion>
-                <ion-accordion value="second"></ion-accordion>
-                <ion-accordion value="third"></ion-accordion>
-            </ion-accordion-group>
-            """);
+        await Verify(cut.Markup);
     }
 
     [Fact]

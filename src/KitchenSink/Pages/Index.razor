@@ -267,38 +267,6 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
         base.OnInitialized();
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        if (!firstRender)
-            return;
-
-        //modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal");
-        //var searchbar = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-searchbar");
-
-        //document.querySelector('ion-searchbar').addEventListener('ionInput', e => console.log(e.target.value));
-
-        //await searchbar.InvokeVoidAsync("addCustomEventListener", "ionInput", EventCallback.Factory.Create<string>(this, val => { throw new InvalidOperationException(); }));
-
-        /*InputNameObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
-        {
-            inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
-            return Task.CompletedTask;
-        }));*/
-
-
-        /*InputNameInputObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
-        {
-            inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
-            return Task.CompletedTask;
-        }));*/
-
-        //(ev) => {renderList(ev.target.value); }
-        //selectedFruitsText = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "#selected-fruits");
-
-    }
-
     public class CustomEventHelper<TArgs>
     {
         private readonly Func<TArgs, Task> _callback;

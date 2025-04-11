@@ -11,7 +11,7 @@ public partial class PlaygroundConsole : ComponentBase
 
     //[Parameter] public RenderFragment<ConsoleItem> ItemTemplate { get; set; } = null!;
 
-    public void Add(string message, string? type = null, string? icon = null)
+    public async Task Add(string message, string? type = null, string? icon = null)
     {
         _itemsSource.Add(new ConsoleItem
         {

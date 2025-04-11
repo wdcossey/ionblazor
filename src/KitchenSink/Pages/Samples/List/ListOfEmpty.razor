@@ -4,17 +4,15 @@
             <IonLabel>@context.Title</IonLabel>
         </IonItem>
     </ItemTemplate>
+    <EmptyTemplate>
+        <IonItem>
+            <IonIcon Name="warning" Size="@IonIconSize.Large" Color="@IonColor.Warning"></IonIcon>
+        </IonItem>
+    </EmptyTemplate>
 </IonListOf>
 
 @code {
-    private readonly IEnumerable<ListOfItem> _itemsSource =
-    [
-        new() { Title = "Pokémon Yellow" },
-        new() { Title = "Mega Man X" },
-        new() { Title = "The Legend of Zelda" },
-        new() { Title = "Pac-Man" },
-        new() { Title = "Super Mario World" }
-    ];
+    private readonly IEnumerable<ListOfItem> _itemsSource = [];
 
     internal sealed class ListOfItem
     {

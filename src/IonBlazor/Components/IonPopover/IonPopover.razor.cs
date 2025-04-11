@@ -54,7 +54,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     /// </summary>
     [Parameter] public bool? IsOpen { get; set; }
 
-    public void SetIsOpen(bool value)
+    public async Task SetIsOpen(bool value)
     {
         IsOpen = value;
         StateHasChanged();

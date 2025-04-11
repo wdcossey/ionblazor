@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent, IIonModeComponent
+public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent, IIonModeComponent
     where TValue : notnull
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
@@ -202,22 +202,7 @@ public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorCo
 
         _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync());
 
-        _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
-        {
-            var value = args?["detail"]?["value"];
-            var values = value switch
-            {
-                null => [],
-                JsonArray => value.Deserialize<TValue[]>(),
-                _ => [value.GetValue<TValue>()]
-            };
-
-            await IonChange.InvokeAsync(new IonSelectChangeEventArgs<TValue>
-            {
-                Sender = this,
-                Value = new IonSelectValue<TValue>(values ?? [])
-            });
-        });
+        _ionChangeReference = IonicEventCallback<JsonObject?>.Create(IonChangeCallback);
 
         _ionDismissReference = IonicEventCallback.Create(async () => await IonDismiss.InvokeAsync());
 
@@ -260,5 +245,22 @@ public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorCo
         _ionDismissReference.Dispose();
         _ionFocusReference.Dispose();
         await base.DisposeAsync();
+    }
+
+    protected virtual async Task IonChangeCallback(JsonObject? args)
+    {
+        JsonNode? value = args?["detail"]?["value"];
+        var values = value switch
+        {
+            null => [],
+            JsonArray => value.Deserialize<TValue[]>(),
+            _ => [value.GetValue<TValue>()]
+        };
+
+        await IonChange.InvokeAsync(new IonSelectChangeEventArgs<TValue>
+        {
+            Sender = this,
+            Value = new IonSelectValue<TValue>(values ?? [])
+        });
     }
 }

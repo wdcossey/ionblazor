@@ -90,7 +90,7 @@ public sealed class IonLoadingReference : IIonLoading
     }
 
     /// <summary>
-    /// Set the message for the loading overlay after it has been presented.
+    /// Updates the message for the loading overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
     public async ValueTask UpdateMessageAsync(string? message)

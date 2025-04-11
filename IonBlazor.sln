@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.UnitTests", "test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Barebones", "samples\IonBlazor.Barebones\IonBlazor.Barebones.csproj", "{A9A0D25B-9C3D-477C-A4DB-322B21291FF9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6B7F3AA8-DC76-4AD4-8DC9-BEBD08872AD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Wasm", "samples\IonBlazor.Wasm\IonBlazor.Wasm.csproj", "{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,10 @@ Global
 		{A9A0D25B-9C3D-477C-A4DB-322B21291FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9A0D25B-9C3D-477C-A4DB-322B21291FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9A0D25B-9C3D-477C-A4DB-322B21291FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,5 +49,9 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 										SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {02E114CD-9980-4CE0-8240-0A1E731FD693}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A9A0D25B-9C3D-477C-A4DB-322B21291FF9} = {6B7F3AA8-DC76-4AD4-8DC9-BEBD08872AD8}
+		{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F} = {6B7F3AA8-DC76-4AD4-8DC9-BEBD08872AD8}
 	EndGlobalSection
 EndGlobal

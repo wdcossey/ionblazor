@@ -1,89 +1,92 @@
-﻿namespace IonBlazor.UnitTests.Components;
+﻿using FluentAssertions;
+using IonBlazor.UnitTests.TestHelpers;
+
+namespace IonBlazor.UnitTests.Components;
 
 public class IonAccordionTests: BunitContext
 {
     [Fact]
-    public void IonAccordionRendersCorrectly()
+    public async Task IonAccordionRendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordion>();
 
         // Assert
-        cut.MarkupMatches("<ion-accordion></ion-accordion>");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WhenDisabled_RendersCorrectly()
+    public async Task WhenDisabled_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordion>(parameters => parameters
             .Add(p => p.Disabled, true));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion disabled=\"true\"></ion-accordion>");
+        await Verify(cut.Markup);
     }
 
     [Theory]
     [InlineData(IonMode.iOS)]
     [InlineData(IonMode.MaterialDesign)]
-    public void WithMode_RendersCorrectly(string mode)
+    public async Task WithMode_RendersCorrectly(string mode)
     {
         // Act
         var cut = Render<IonAccordion>(parameters => parameters
             .Add(p => p.Mode, mode));
 
         // Assert
-        cut.MarkupMatches($"<ion-accordion mode=\"{mode}\"></ion-accordion>");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WhenReadonly_RendersCorrectly()
+    public async Task WhenReadonly_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordion>(parameters => parameters
             .Add(p => p.Readonly, true));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion readonly=\"true\"></ion-accordion>");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WithToggleIcon_RendersCorrectly()
+    public async Task WithToggleIcon_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordion>(parameters => parameters
             .Add(p => p.ToggleIcon, "icon"));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion toggle-icon=\"icon\"></ion-accordion>");
+        await Verify(cut.Markup);
     }
 
     [Theory]
     [InlineData(IonAccordionToggleIconSlot.Start)]
     [InlineData(IonAccordionToggleIconSlot.End)]
-    public void WithToggleIconSlot_RendersCorrectly(string slot)
+    public async Task WithToggleIconSlot_RendersCorrectly(string slot)
     {
         // Act
         var cut = Render<IonAccordion>(parameters => parameters
             .Add(p => p.ToggleIconSlot, slot));
 
         // Assert
-        cut.MarkupMatches($"<ion-accordion toggle-icon-slot=\"{slot}\"></ion-accordion>");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WithValue_RendersCorrectly()
+    public async Task WithValue_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordion>(parameters => parameters
             .Add(p => p.Value, "value"));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion value=\"value\"></ion-accordion>");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WithAttributes_RendersCorrectly()
+    public async Task WithAttributes_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordion>(parameters => parameters
@@ -93,18 +96,31 @@ public class IonAccordionTests: BunitContext
             }));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion id=\"accordion\"></ion-accordion>");
+        await Verify(cut.Markup);
     }
 
     [Fact]
-    public void WithChildContent_RendersCorrectly()
+    public async Task WithChildContent_RendersCorrectly()
     {
         // Act
         var cut = Render<IonAccordion>(builder => builder.AddChildContent("<p>Child content</p>"));
 
         // Assert
-        cut.MarkupMatches("<ion-accordion><p>Child content</p></ion-accordion>");
+        await Verify(cut.Markup);
     }
 
+    [Fact]
+    public async Task WithParent_RendersCorrectly()
+    {
+        // Arrange
+        IonTestComponent testComponent = IonTestComponent.Create();
+
+        // Act
+        var cut = Render<IonAccordion>(parameters => parameters
+            .Add(p => p.Parent, testComponent));
+
+        // Assert
+        cut.Instance.Parent.Should().Be(testComponent);
+    }
 
 }

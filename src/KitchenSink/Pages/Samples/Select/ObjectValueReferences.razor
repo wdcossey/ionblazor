@@ -1,30 +1,37 @@
 ﻿<IonList>
     <IonItem>
-        <IonSelect TValue="@string" aria-label="Food" Placeholder="Select food" >
-            @foreach(var food in _foods)
-            {
-                <IonSelectOptionOf TValue="Food" Value="@food">@food.Name</IonSelectOptionOf>
-            }
-        </IonSelect>
+        <IonSelectOf TItem="@Food" ItemsSource="@_foods" aria-label="Food" Placeholder="Select food" IonChange="OnIonChange">
+            <ItemTemplate>
+                <IonSelectOptionOf TValue="@int" Value="@context.Id">@context.Name</IonSelectOptionOf>
+            </ItemTemplate>
+        </IonSelectOf>
     </IonItem>
 </IonList>
 
 
 @code {
-  
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
     private class Food
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Type { get; set; } = null!;
     }
-  
-    private readonly List<Food> _foods = new List<Food>
+
+    private readonly List<Food> _foods =
+    [
+        new() { Id = 1, Name = "Apples", Type = "fruit" },
+        new() { Id = 2, Name = "Carrots", Type = "vegetable" },
+        new() { Id = 3, Name = "Cupcakes", Type = "dessert" }
+    ];
+
+    private void OnIonChange(IonSelectChangeEventArgs<Food> args)
     {
-        new Food { Id = 1, Name = "Apples", Type = "fruit" },
-        new Food { Id = 2, Name = "Carrots", Type = "vegetable" },
-        new Food { Id = 3, Name = "Cupcakes", Type = "dessert" }
-    };
+        Console?.Add($"ionChange fired with value: {args.Value}");
+    }
+
 }
 
 @*
