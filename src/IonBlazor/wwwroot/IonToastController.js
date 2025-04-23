@@ -1,6 +1,9 @@
 ﻿import { dotNetCallbackMethod } from './common.js';
 
-export async function presentToast(header, message, position, duration = 1500, icon = null, positionAnchor= null, buttons= null, buttonHandler= null, translucent = null, animated = null, htmlAttributes= null) {
+export async function presentToast(header, message, position, duration = 1500,
+                                   icon = null, positionAnchor= null, buttons = null,
+                                   buttonHandler = null, translucent = null, animated = null,
+                                   htmlAttributes = null, didDismissHandler = null) {
     const toast = document.createElement('ion-toast');
     toast.duration = duration;
     toast.header = header;
@@ -23,7 +26,16 @@ export async function presentToast(header, message, position, duration = 1500, i
 
     document.body.appendChild(toast);
 
-    toast.addEventListener('didDismiss', () => {
+    toast.addEventListener('didDismiss', (ev) => {
+        if (didDismissHandler) {
+            didDismissHandler.invokeMethodAsync(dotNetCallbackMethod, {
+                tagName: ev.target.tagName,
+                detail: ev.detail,
+                htmlAttributes: ev.target.htmlAttributes,
+                id: ev.target.id
+            });
+        }
+
         toast.remove();
     });
 

@@ -16,7 +16,8 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
         bool? translucent = null,
         bool? animated = null,
         Func<IEnumerable<IIonToastButton>>? buttonsFunc = null,
-        IDictionary<string, string>? htmlAttributes = null)
+        IDictionary<string, string>? htmlAttributes = null,
+        Action<IonToastDismissEventArgs>? onDidDismiss = null)
     {
         IEnumerable<IIonToastButton>? buttons = null;
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
@@ -35,7 +36,18 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
                 });
         }
 
-        return _jsComponent.InvokeVoidAsync("presentToast", header, message, position, duration, icon, positionAnchor, buttons, buttonHandler, translucent, animated, htmlAttributes);
+        var didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
+        {
+            onDidDismiss?.Invoke(new IonToastDismissEventArgs
+            {
+                Sender = null,
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+            });
+
+            return Task.CompletedTask;
+        });
+
+        return _jsComponent.InvokeVoidAsync("presentToast", header, message, position, duration, icon, positionAnchor, buttons, buttonHandler, translucent, animated, htmlAttributes, didDismissHandler);
     }
 
     public static ValueTask PresentAsync(
@@ -48,7 +60,8 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
         bool? translucent = null,
         bool? animated = null,
         Func<IEnumerable<IIonToastButton>>? buttonsFunc = null,
-        IDictionary<string, string>? htmlAttributes = null)
+        IDictionary<string, string>? htmlAttributes = null,
+        Action<IonToastDismissEventArgs>? onDidDismiss = null)
     {
         var durationAsInt = (int?)duration?.TotalMilliseconds ?? 1500;
         return PresentAsync(
@@ -61,7 +74,8 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
             translucent: translucent,
             animated: animated,
             buttonsFunc: buttonsFunc,
-            htmlAttributes: htmlAttributes);
+            htmlAttributes: htmlAttributes,
+            onDidDismiss: onDidDismiss);
     }
 
     public ValueTask DisposeAsync()
