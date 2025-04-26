@@ -1,11 +1,22 @@
 import { dotNetCallbackMethod } from './common.js';
 
-export async function presentAlert(header, subHeader, message, buttons, inputs, buttonHandler, didDismissHandler, htmlAttributes) {
+export async function presentAlert(options, buttons, inputs, buttonHandler, didDismissHandler) {
     const alert = document.createElement('ion-alert');
-    alert.header = header;
-    alert.subHeader = subHeader;
-    alert.message = message;
-    alert.htmlAttributes = htmlAttributes;
+
+    alert.header = options.header;
+    alert.subHeader = options.subHeader;
+    alert.message = options.message;
+    alert.cssClass = options.cssClass;
+    alert.backdropDismiss = options.backdropDismiss;
+    alert.translucent = options.translucent;
+    alert.animated = options.animated;
+    alert.htmlAttributes = options.htmlAttributes;
+
+    alert.mode = options.mode;
+    alert.keyboardClose = options.keyboardClose;
+    if (options.id){
+        alert.id = options.id;
+    }
 
     if (buttons) {
         buttons.forEach(function (button, index) {
@@ -31,4 +42,6 @@ export async function presentAlert(header, subHeader, message, buttons, inputs, 
     });
 
     await alert.present();
+
+    return alert.id;
 }

@@ -1,19 +1,23 @@
 ﻿import { dotNetCallbackMethod } from './common.js';
 
-export async function presentToast(header, message, position, duration = 1500,
-                                   icon = null, positionAnchor= null, buttons = null,
-                                   buttonHandler = null, translucent = null, animated = null,
-                                   htmlAttributes = null, didDismissHandler = null) {
+export async function presentToast(options, buttons, buttonHandler = null, didDismissHandler = null) {
     const toast = document.createElement('ion-toast');
-    toast.duration = duration;
-    toast.header = header;
-    toast.message = message;
-    toast.position = position;
-    toast.icon = icon;
-    toast.translucent = translucent;
-    toast.animated = animated;
-    toast.positionAnchor = positionAnchor;
-    toast.htmlAttributes = htmlAttributes;
+    toast.duration = options.duration;
+    toast.header = options.header;
+    toast.message = options.message;
+    toast.position = options.position;
+    toast.icon = options.icon;
+    toast.translucent = options.translucent;
+    toast.animated = options.animated;
+    toast.positionAnchor = options.positionAnchor;
+    toast.htmlAttributes = options.htmlAttributes;
+
+    if (options.color) {
+        toast.color = options.color ?? undefined;
+    }
+    if (options.id){
+        toast.id = options.id;
+    }
 
     if (buttons) {
         buttons.forEach(function (button, index) {
@@ -36,8 +40,10 @@ export async function presentToast(header, message, position, duration = 1500,
             });
         }
 
-        toast.remove();
+        setTimeout(function(){ toast.remove() }, 2000);
     });
 
     await toast.present();
+
+    return toast.id;
 }

@@ -17,6 +17,9 @@ public class IonToastButton: IIonToastButton
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CssClass { get; set; }
 
+    [JsonPropertyName("htmlAttributes"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IDictionary<string, string>? HtmlAttributes { get; set; }
+
     [JsonIgnore]
     public Func<IonToastButtonEventArgs, ValueTask>? Handler { get; set; } = null!;
 }

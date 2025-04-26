@@ -1,25 +1,47 @@
-﻿<IonButton @onclick="@(async () => { await IonActionSheetController.PresentAsync(header: "Actions", ButtonsBuilder); })">
+﻿<IonButton @onclick="@(async () => { await IonActionSheetController.PresentAsync(ConfigureActionSheet); })">
     Open
 </IonButton>
 
 @code {
 
-    private IEnumerable<BasicActionSheetButton> ButtonsBuilder()
+    private async ValueTask ButtonHandler(ActionSheetButton<ActionSheetButtonData>? button, int? index)
     {
-        return new List<BasicActionSheetButton>()
+        await IonToastController.PresentAsync(options =>
         {
-            new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" }, Handler = ButtonHandler },
-            new() { Text = "Share", Data = new ActionSheetButtonData { Action = "share" }, Handler = ButtonHandler },
-            new() { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" }, Handler = ButtonHandler }
+            options.Message = $"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};";
+            options.Position = IonToastPosition.Bottom;
+            options.Duration = 3000;
+            options.Icon = "logo-ionic";
+        });
+    }
+
+    private void ConfigureActionSheet(ActionSheetControllerOptions options)
+    {
+        options.Header = "Actions";
+        options.ButtonsBuilder = builder =>
+        {
+            builder
+                .Add<BasicActionSheetButton>(button =>
+                {
+                    button.Text = "Delete";
+                    button.Role = "destructive";
+                    button.Data = new ActionSheetButtonData { Action = "delete" };
+                    button.Handler = ButtonHandler;
+                })
+                .Add<BasicActionSheetButton>(button =>
+                {
+                    button.Text = "Share";
+                    button.Data = new ActionSheetButtonData { Action = "share" };
+                    button.Handler = ButtonHandler;
+                })
+                .Add<BasicActionSheetButton>(button =>
+                {
+                    button.Text = "Cancel";
+                    button.Role = "cancel";
+                    button.Data = new ActionSheetButtonData { Action = "cancel" };
+                    button.Handler = ButtonHandler;
+                });
         };
     }
 
-    private async ValueTask ButtonHandler(ActionSheetButton<ActionSheetButtonData>? button, int? index)
-    {
-        await IonToastController.PresentAsync(
-            message: $"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};",
-            position: "bottom",
-            duration: 3000,
-            icon: "logo-ionic");
-    }
 }

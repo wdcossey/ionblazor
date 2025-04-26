@@ -1,8 +1,21 @@
 import { dotNetCallbackMethod } from './common.js';
 
-export async function present(header, buttons, buttonHandler) {
+export async function present(options, buttons, buttonHandler) {
     const actionSheet = document.createElement('ion-action-sheet');
-    actionSheet.header = header;
+
+    actionSheet.header = options.header;
+    actionSheet.subHeader = options.subHeader;
+    actionSheet.cssClass = options.cssClass;
+    actionSheet.backdropDismiss = options.backdropDismiss;
+    actionSheet.translucent = options.translucent;
+    actionSheet.animated = options.animated;
+    actionSheet.mode = options.mode;
+    actionSheet.keyboardClose = options.keyboardClose;
+    actionSheet.htmlAttributes = options.htmlAttributes;
+
+    if (options.id){
+        actionSheet.id = options.id;
+    }
 
     buttons.forEach(function (button, index) {
         button.handler = () => {
@@ -14,7 +27,7 @@ export async function present(header, buttons, buttonHandler) {
     document.body.appendChild(actionSheet);
 
     actionSheet.addEventListener('didDismiss', () => {
-        actionSheet.remove();
+        setTimeout(function(){ actionSheet.remove() }, 2000);
     });
 
     await actionSheet.present();

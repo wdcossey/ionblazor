@@ -1,43 +1,43 @@
-﻿namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components.Abstractions;
 
-public record AlertInput : IAlertInput
+public interface IAlertInput
 {
     [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public virtual string? Type { get; set; }
+    public string? Type { get; }
 
     [JsonPropertyName("name"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Name { get; set; }
+    public string? Name { get; }
 
     [JsonPropertyName("placeholder"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Placeholder { get; set; }
+    public string? Placeholder { get; }
 
     [JsonPropertyName("value"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public object? Value { get; set; }
+    public object? Value { get; }
 
     [JsonPropertyName("label"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Label { get; set; }
+    public string? Label { get; }
 
     [JsonPropertyName("checked"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public bool? Checked { get; set; }
+    public bool? Checked { get; }
 
     [JsonPropertyName("disabled"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public bool? Disabled { get; set; }
+    public bool? Disabled { get; }
 
     [JsonPropertyName("id"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public bool? Id { get; set; }
+    public bool? Id { get; }
 
     [JsonPropertyName("min"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public object? Min { get; set; }
+    public object? Min { get; }
 
     [JsonPropertyName("max"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public object? Max { get; set; }
+    public object? Max { get; }
 
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? CssClass { get; set; }
+    public string? CssClass { get; }
 
     [JsonPropertyName("attributes"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Dictionary<string, object>? Attributes { get; set; }
+    public Dictionary<string, object>? Attributes { get; }
 
     [JsonPropertyName("tabindex"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public int? TabIndex { get; set; }
+    public int? TabIndex { get; }
 }

@@ -6,17 +6,20 @@ public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
 
     private static IJSObjectReference? _jsComponent;
 
-    public static async ValueTask PresentAsync<TButtonData>(
-        string? header = null,
-        Func<IEnumerable<ActionSheetButton<TButtonData>>>? buttonsFunc = null)
-        where TButtonData : class, IActionSheetButtonData
+    public static async ValueTask PresentAsync(Action<ActionSheetControllerOptions> configure)
     {
-        IEnumerable<ActionSheetButton<TButtonData>>? buttons = null;
+        ActionSheetControllerOptions options = new();
+        configure(options);
+
+        IEnumerable<IActionSheetButton>? buttons = null;
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
 
-        if (buttonsFunc is not null)
+        if (options.ButtonsBuilder is not null)
         {
-            buttons = buttonsFunc?.Invoke();
+            ActionSheetButtonBuilder buttonBuilder = new();
+            options.ButtonsBuilder.Invoke(buttonBuilder);
+            buttons = buttonBuilder.Build();
+
             buttonHandler = IonicEventCallback<JsonObject?>.Create(
                 async args =>
                 {
@@ -28,7 +31,7 @@ public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
                 });
         }
 
-        await (_jsComponent?.InvokeVoidAsync("present", header, buttons, buttonHandler) ?? ValueTask.CompletedTask);
+        await (_jsComponent?.InvokeVoidAsync("present", options, buttons, buttonHandler) ?? ValueTask.CompletedTask);
     }
 
     public async ValueTask DisposeAsync()

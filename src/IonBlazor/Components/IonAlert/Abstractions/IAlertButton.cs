@@ -11,6 +11,12 @@ public interface IAlertButton
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? CssClass { get; }
 
+    [JsonPropertyName("id"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    string? Id { get; }
+
+    [JsonPropertyName("htmlAttributes"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    IDictionary<string, string> HtmlAttributes { get; set; }
+
     [JsonIgnore]
     Func<AlertButtonEventArgs, ValueTask>? Handler { get; }
 }
