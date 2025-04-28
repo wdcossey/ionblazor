@@ -7,6 +7,7 @@
         <Nullable>enable</Nullable>
         <WindowsPackageType>None</WindowsPackageType>
         <LangVersion>13</LangVersion>
+        <EnableDefaultContentItems>true</EnableDefaultContentItems>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <PackageId>IonBlazor</PackageId>
         <Description>Ionic components for Blazor / ASP.NET Core Razor</Description>
@@ -19,10 +20,13 @@
         <PackageTags>blazor, ionic, webcomponents, razor, aspnetcore</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>logo-ionic.png</PackageIcon>
+        <PackagePath>wwwroot\</PackagePath>
         <RootNamespace>IonBlazor</RootNamespace>
         <RazorClassLibrary>true</RazorClassLibrary>
         <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
         <StaticWebAssetBasePath>_content/IonBlazor</StaticWebAssetBasePath>
+        <StaticWebAssetItemPatterns>wwwroot\**\*.*</StaticWebAssetItemPatterns>
+        <PublishSingleFile>false</PublishSingleFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -54,33 +58,28 @@
         <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Remove Remove="..\..\node_modules\@ionic\core\dist\ionic\**\*.*" />
-      <Content Include="..\..\node_modules\@ionic\core\dist\ionic\**\*.*">
-          <Link>wwwroot\@ionic\core\dist\ionic\%(RecursiveDir)%(Filename)%(Extension)</Link>
-          <Pack>true</Pack>
-          <PackagePath>wwwroot\</PackagePath>
-          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </Content>
+    <Target Name="PrepareNpmAssets" BeforeTargets="Build">
+        <!--
+        <RemoveDir Directories="wwwroot\@ionic" />
+        -->
 
-      <Remove Remove="..\..\node_modules\@ionic\core\css\**\*.*" />
-      <Content Include="..\..\node_modules\@ionic\core\css\*.css">
-          <Link>wwwroot\@ionic\core\css\%(RecursiveDir)%(Filename)%(Extension)</Link>
-          <Pack>true</Pack>
-          <PackagePath>wwwroot\</PackagePath>
-          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </Content>
+        <ItemGroup>
+            <IonicDistAssets Include="$(SolutionDir)node_modules\@ionic\core\dist\ionic\**\*.*" />
+            <IonicCssAssets Include="$(SolutionDir)node_modules\@ionic\core\css\**\*.css" />
+        </ItemGroup>
 
-      <Content Include="..\..\node_modules\@ionic\core\css\palettes\*.css">
-          <Link>wwwroot\@ionic\core\css\palettes\%(RecursiveDir)%(Filename)%(Extension)</Link>
-          <Pack>true</Pack>
-          <PackagePath>wwwroot\</PackagePath>
-          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
+        <Copy
+                SourceFiles="@(IonicDistAssets)"
+                DestinationFiles="@(IonicDistAssets->'wwwroot\@ionic\core\dist\ionic\%(RecursiveDir)%(Filename)%(Extension)')"
+                SkipUnchangedFiles="true" />
+        <Copy
+                SourceFiles="@(IonicCssAssets)"
+                DestinationFiles="@(IonicCssAssets->'wwwroot\@ionic\core\css\%(RecursiveDir)%(Filename)%(Extension)')"
+                SkipUnchangedFiles="true" />
+    </Target>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\IonBlazor.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\IonBlazor.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
