@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IonBlazor.Wasm</title>
+    <base href="/" />
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+
+<!--
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/core.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/palettes/dark.class.css" />
+-->
+
+
+    <!-- Import Ionic JS-->
+    <script type="module" src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.esm.js"></script>
+
+    <!-- Add @ionic helpers [if needed] -->
+    <script type="module">
+        import { createAnimation, createGesture } from './_content/IonBlazor/@ionic/core/dist/ionic/index.esm.js';
+        window.createAnimation = createAnimation;
+    </script>
+
+    <!-- Import Ionic CSS -->
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/core.css" />
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/palettes/dark.class.css" />
+
+
+    <link href="IonBlazor.Wasm.styles.css" rel="stylesheet" />
+
+    <!-- Configure Ionic -->
+    <script>
+        window.Ionic = {
+            config: {
+                //rippleEffect: false,
+                mode: 'md',
+                innerHTMLTemplatesEnabled: true,
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+
+    <script>
+        // Use matchMedia to check the user preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Initialize the dark palette based on the initial
+        // value of the prefers-color-scheme media query
+        toggleDarkPalette(prefersDark.matches);
+
+        // Listen for changes to the prefers-color-scheme media query
+        prefersDark.addEventListener('change', (mediaQuery) => toggleDarkPalette(mediaQuery.matches));
+
+        // Add or remove the "ion-palette-dark" class on the html element
+        function toggleDarkPalette(shouldAdd) {
+            document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
+        }
+
+        window.prefersDarkColorScheme = function () { return window.matchMedia('(prefers-color-scheme: dark)').matches };
+
+    </script>
+    <script src="_framework/blazor.webassembly.js"></script>
+</body>
+
+</html>
