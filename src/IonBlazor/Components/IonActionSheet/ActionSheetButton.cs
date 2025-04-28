@@ -50,15 +50,45 @@ public abstract class ActionSheetButton : IActionSheetButton
     public object? Data { get; set; }
 }
 
-public class ActionSheetButton<TData> : ActionSheetButton
+public class ActionSheetButton<TData> : IActionSheetButton
     where TData: class, IActionSheetButtonData
 {
-    public delegate ValueTask HandlerDelegate<TButtonData>(ActionSheetButton<TButtonData>? button, int? index)
-        where TButtonData : class, IActionSheetButtonData;
+    public delegate ValueTask HandlerDelegate(ActionSheetButton<TData> button, int? index);
+
+    [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Text { get; set; }
+
+    [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Role { get; set; }
+
+    [JsonPropertyName("icon"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Icon { get; set; }
+
+    [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? CssClass { get; set; }
+
+    [JsonPropertyName("htmlAttributes"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IDictionary<string, string> HtmlAttributes { get; set; } = new Dictionary<string, string>();
 
     [JsonIgnore]
-    public new HandlerDelegate<TData>? Handler { get; set; }
+    public HandlerDelegate? Handler { get; set; }
+
+    [JsonIgnore]
+    IActionSheetButton.HandlerDelegate? IActionSheetButton.Handler =>
+        this.Handler is null
+            ? null
+            : (IActionSheetButton.HandlerDelegate)((button, index) =>
+            {
+                if (button is ActionSheetButton<TData> typedButton)
+                {
+                    return Handler.Invoke(typedButton, index);
+                }
+                return ValueTask.CompletedTask;
+            });
 
     [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public new TData? Data { get; set; }
+    public TData? Data { get; set; }
+
+    [JsonIgnore]
+    object? IActionSheetButton.Data => this.Data;
 }
