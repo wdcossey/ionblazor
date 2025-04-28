@@ -13,7 +13,7 @@
         <Description>Ionic components for Blazor / ASP.NET Core Razor</Description>
         <PackageProjectUrl>https://github.com/wdcossey/ionblazor</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageVersion>0.843.0-alpha.5</PackageVersion>
+        <PackageVersion>0.843.0-alpha.6</PackageVersion>
         <Authors>wdcossey</Authors>
         <RepositoryUrl>https://github.com/wdcossey/ionblazor</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
