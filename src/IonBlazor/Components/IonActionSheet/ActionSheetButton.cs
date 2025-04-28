@@ -75,16 +75,9 @@ public class ActionSheetButton<TData> : IActionSheetButton
 
     [JsonIgnore]
     IActionSheetButton.HandlerDelegate? IActionSheetButton.Handler =>
-        this.Handler is null
-            ? null
-            : (IActionSheetButton.HandlerDelegate)((button, index) =>
-            {
-                if (button is ActionSheetButton<TData> typedButton)
-                {
-                    return Handler.Invoke(typedButton, index);
-                }
-                return ValueTask.CompletedTask;
-            });
+        Handler is not null
+            ? (button, index) => button is ActionSheetButton<TData> data ? Handler(data, index) : ValueTask.CompletedTask
+            : null;
 
     [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public TData? Data { get; set; }
