@@ -11,7 +11,7 @@
             <IonLabel>Favorite Fruits</IonLabel>
             <div slot="end" id="#selected-fruits">@($"{workingSelectedFruits.Count} Items")</div>
         </IonItem>
-        <IonButton Expand="ButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => PresentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
+        <IonButton Expand="@IonButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => PresentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
 
     </IonList>
 
