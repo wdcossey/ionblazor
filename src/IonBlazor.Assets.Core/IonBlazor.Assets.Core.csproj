@@ -7,10 +7,10 @@
         <Nullable>enable</Nullable>
         <WindowsPackageType>None</WindowsPackageType>
         <LangVersion>13</LangVersion>
-        <EnableDefaultContentItems>true</EnableDefaultContentItems>
-        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-        <PackageId>IonBlazor.Assets.Ionic.Svg</PackageId>
-        <Description>Ionic SVG assets for IonBlazor</Description>
+        <EnableDefaultContentItems>false</EnableDefaultContentItems>
+        <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+        <PackageId>IonBlazor.Assets.Core</PackageId>
+        <Description>IonBlazor Core Assets</Description>
         <PackageProjectUrl>https://github.com/wdcossey/ionblazor</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageVersion>0.843.0-alpha.6</PackageVersion>
@@ -32,7 +32,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <SupportedPlatform Include="browser"/>
+        <SupportedPlatform Include="browser" />
     </ItemGroup>
 
     <ItemGroup>
@@ -40,17 +40,8 @@
         <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
     </ItemGroup>
 
-    <Target Name="PrepareNpmAssets" BeforeTargets="Build">
-        <!--<RemoveDir Directories="wwwroot\@ionic\core\dist\ionic" />-->
-
-        <ItemGroup>
-            <IonicDistAssets Include="$(SolutionDir)node_modules\@ionic\core\dist\ionic\svg\*.*" />
-        </ItemGroup>
-
-        <Copy
-                SourceFiles="@(IonicDistAssets)"
-                DestinationFiles="@(IonicDistAssets->'wwwroot\@ionic\core\dist\ionic\svg\%(RecursiveDir)%(Filename)%(Extension)')"
-                SkipUnchangedFiles="true" />
-    </Target>
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
 
 </Project>

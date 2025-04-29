@@ -9,8 +9,8 @@
         <LangVersion>13</LangVersion>
         <EnableDefaultContentItems>true</EnableDefaultContentItems>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-        <PackageId>IonBlazor.Assets.Ionic.Svg</PackageId>
-        <Description>Ionic SVG assets for IonBlazor</Description>
+        <PackageId>IonBlazor.Assets.Ionic</PackageId>
+        <Description>Ionic assets for IonBlazor</Description>
         <PackageProjectUrl>https://github.com/wdcossey/ionblazor</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageVersion>0.843.0-alpha.6</PackageVersion>
@@ -40,17 +40,27 @@
         <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
     <Target Name="PrepareNpmAssets" BeforeTargets="Build">
-        <!--<RemoveDir Directories="wwwroot\@ionic\core\dist\ionic" />-->
+        <!--
+        <RemoveDir Directories="wwwroot\@ionic" />
+        -->
 
         <ItemGroup>
-            <IonicDistAssets Include="$(SolutionDir)node_modules\@ionic\core\dist\ionic\svg\*.*" />
+            <IonicDistAssets Include="$(SolutionDir)node_modules\@ionic\core\dist\ionic\*.*" />
+            <IonicCssAssets Include="$(SolutionDir)node_modules\@ionic\core\css\**\*.css" />
         </ItemGroup>
 
         <Copy
                 SourceFiles="@(IonicDistAssets)"
-                DestinationFiles="@(IonicDistAssets->'wwwroot\@ionic\core\dist\ionic\svg\%(RecursiveDir)%(Filename)%(Extension)')"
+                DestinationFiles="@(IonicDistAssets->'wwwroot\@ionic\core\dist\ionic\%(RecursiveDir)%(Filename)%(Extension)')"
+                SkipUnchangedFiles="true" />
+        <Copy
+                SourceFiles="@(IonicCssAssets)"
+                DestinationFiles="@(IonicCssAssets->'wwwroot\@ionic\core\css\%(RecursiveDir)%(Filename)%(Extension)')"
                 SkipUnchangedFiles="true" />
     </Target>
-
 </Project>
