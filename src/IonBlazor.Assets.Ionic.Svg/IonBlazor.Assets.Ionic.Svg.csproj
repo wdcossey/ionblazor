@@ -1,18 +1,56 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
+        <EnableDefaultCssItems>false</EnableDefaultCssItems>
+        <Nullable>enable</Nullable>
+        <WindowsPackageType>None</WindowsPackageType>
+        <LangVersion>13</LangVersion>
+        <EnableDefaultContentItems>true</EnableDefaultContentItems>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <PackageId>IonBlazor.Assets.Ionic.Svg</PackageId>
+        <Description>Ionic components for Blazor / ASP.NET Core Razor</Description>
+        <PackageProjectUrl>https://github.com/wdcossey/ionblazor</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageVersion>0.843.0-alpha.6</PackageVersion>
+        <Authors>wdcossey</Authors>
+        <RepositoryUrl>https://github.com/wdcossey/ionblazor</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>blazor, ionic, webcomponents, razor, aspnetcore</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>logo-ionic.png</PackageIcon>
+        <PackagePath>wwwroot\</PackagePath>
+        <RootNamespace>IonBlazor</RootNamespace>
+        <RazorClassLibrary>true</RazorClassLibrary>
+        <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+        <StaticWebAssetBasePath>_content/IonBlazor</StaticWebAssetBasePath>
+        <StaticWebAssetItemPatterns>wwwroot\**\*.*</StaticWebAssetItemPatterns>
+        <PublishSingleFile>false</PublishSingleFile>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     </PropertyGroup>
-
 
     <ItemGroup>
         <SupportedPlatform Include="browser"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.15"/>
+        <None Include="..\..\docs\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
     </ItemGroup>
+
+    <Target Name="PrepareNpmAssets" BeforeTargets="Build">
+        <!--<RemoveDir Directories="wwwroot\@ionic\core\dist\ionic" />-->
+
+        <ItemGroup>
+            <IonicDistAssets Include="$(SolutionDir)node_modules\@ionic\core\dist\ionic\svg\*.*" />
+        </ItemGroup>
+
+        <Copy
+                SourceFiles="@(IonicDistAssets)"
+                DestinationFiles="@(IonicDistAssets->'wwwroot\@ionic\core\dist\ionic\svg\%(RecursiveDir)%(Filename)%(Extension)')"
+                SkipUnchangedFiles="true" />
+    </Target>
 
 </Project>
