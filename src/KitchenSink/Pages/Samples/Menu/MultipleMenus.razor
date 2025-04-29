@@ -4,7 +4,7 @@
       <IonTitle>First Menu</IonTitle>
     </IonToolbar>
   </IonHeader>
-  <IonContent Class="ion-padding">This is the first menu content.</IonContent>
+  <IonContent class="ion-padding">This is the first menu content.</IonContent>
 </IonMenu>
 
 <IonMenu @ref="_secondMenu" MenuId="second-menu" ContentId="main-content">
@@ -13,7 +13,7 @@
       <IonTitle>Second Menu</IonTitle>
     </IonToolbar>
   </IonHeader>
-  <IonContent Class="ion-padding">This is the second menu content.</IonContent>
+  <IonContent class="ion-padding">This is the second menu content.</IonContent>
 </IonMenu>
 
 <IonMenu @ref="_endMenu" Side="@IonMenuSide.End" ContentId="main-content">
@@ -22,7 +22,7 @@
       <IonTitle>End Menu</IonTitle>
     </IonToolbar>
   </IonHeader>
-  <IonContent Class="ion-padding">This is the end menu content.</IonContent>
+  <IonContent class="ion-padding">This is the end menu content.</IonContent>
 </IonMenu>
 
 <div class="ion-page" id="multiple-menus-content">
@@ -31,7 +31,7 @@
       <IonTitle>Menu</IonTitle>
     </IonToolbar>
   </IonHeader>
-  <IonContent Class="ion-padding">
+  <IonContent class="ion-padding">
     <p>Tap a button below to open a specific menu.</p>
 
     <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await _firstMenu.OpenAsync(true))">Open First Menu</IonButton>
@@ -44,5 +44,5 @@
   private IonMenu _firstMenu = null!;
   private IonMenu _secondMenu = null!;
   private IonMenu _endMenu = null!;
-  
+
 }

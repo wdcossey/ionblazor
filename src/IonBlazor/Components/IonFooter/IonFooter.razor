@@ -1,0 +1,12 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-footer @ref="IonElement"
+            @attributes="@Attributes"
+            collapse="@Collapse"
+            mode="@Mode"
+            translucent="@Translucent.AsString()">
+    <CascadingValue TValue="@IIonComponent" Name="@nameof(IonToolbar.Parent)" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-footer>

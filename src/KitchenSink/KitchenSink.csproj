@@ -15,16 +15,16 @@
         <Nullable>enable</Nullable>
 
         <!-- Display name -->
-        <ApplicationTitle>IonicTest</ApplicationTitle>
+        <ApplicationTitle>IonBlazor KitchenSink</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.ionictest</ApplicationId>
+        <ApplicationId>app.ionblazor.kitchensink</ApplicationId>
         <ApplicationIdGuid>050C294C-9CBF-44E0-9B5A-4122C884BCD3</ApplicationIdGuid>
 
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1</ApplicationVersion>
-        <WindowsPackageType>MSIX</WindowsPackageType>
+        <WindowsPackageType>None</WindowsPackageType>
         <EnableMsixTooling>true</EnableMsixTooling>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -62,8 +62,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.4" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
-        <!--<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.9.5">
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.12" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.12" />
+        <!--<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.7.1">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>-->

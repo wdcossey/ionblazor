@@ -1,0 +1,14 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-breadcrumbs @ref="@IonElement"
+                 @attributes="@Attributes"
+                 color="@Color"
+                 items-after-collapse="@ItemsAfterCollapse"
+                 items-before-collapse="@ItemsBeforeCollapse"
+                 max-items="@MaxItems"
+                 mode="@Mode">
+    <CascadingValue TValue="@IIonComponent" Name="@nameof(IonBreadcrumb.Parent)" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-breadcrumbs>

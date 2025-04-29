@@ -1,4 +1,6 @@
-﻿export function isOpen(element, value) {
+﻿import { dotNetCallbackMethod } from './common.js';
+
+export function isOpen(element, value) {
     return element.isOpen = value;
 }
 
@@ -30,10 +32,10 @@ export function present(element) {
     element.present();
 }
 
-export function setCurrentBreakpoint(element, value) {
-    element.setCurrentBreakpoint(value);
+export async function setCurrentBreakpoint(element, value) {
+    await element.setCurrentBreakpoint(value);
 }
 
 export function enterAnimation(element, value) {
-    //element.enterAnimation = eval(value);
+    element.enterAnimation = eval(value);
 }

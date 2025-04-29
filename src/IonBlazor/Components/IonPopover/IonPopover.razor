@@ -1,0 +1,23 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-popover @ref="IonElement"
+             @attributes="@Attributes"
+             alignment="@Alignment"
+             animated="@Animated.AsString()"
+             arrow="@Arrow.AsString()"
+             backdrop-dismiss="@BackdropDismiss.AsString()"
+             dismiss-on-select="@DismissOnSelect.AsString()"
+             is-open="@IsOpen.AsString()"
+             keep-contents-mounted="@KeepContentsMounted.AsString()"
+             keyboard-close="@KeyboardClose.AsString()"
+             mode="@Mode"
+             reference="@Reference"
+             show-backdrop="@ShowBackdrop.AsString()"
+             side="@Side"
+             size="@Size"
+             translucent="@Translucent.AsString()"
+             trigger="@Trigger"
+             trigger-action="@TriggerAction">
+    @ChildContent
+</ion-popover>

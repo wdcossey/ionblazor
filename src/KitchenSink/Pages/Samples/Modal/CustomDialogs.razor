@@ -6,6 +6,10 @@
 <IonContent class="ion-padding">
     <IonButton id="open-custom-dialog" Expand="@IonButtonExpand.Block">Open Custom Dialog</IonButton>
 
+    <p>
+        *** This demo is hosted in a <b>&lt;ion-app&gt;</b>, the modal will <b>not</b> be bound to this preview pane!
+    </p>
+
     <style>
       ion-modal#example-modal {
         --width: fit-content;
@@ -14,27 +18,27 @@
         --border-radius: 6px;
         --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
       }
-    
+
       ion-modal#example-modal h1 {
         margin: 20px 20px 10px 20px;
       }
-    
+
       ion-modal#example-modal ion-icon {
         margin-right: 6px;
-    
+
         width: 48px;
         height: 48px;
-    
+
         padding: 4px 0;
-    
+
         color: #aaaaaa;
       }
-    
+
       ion-modal#example-modal .wrapper {
         margin-bottom: 10px;
       }
     </style>
-    
+
     <IonModal @ref="_modal" id="example-modal" trigger="open-custom-dialog">
         <div class="wrapper">
             <h1>Dialog header</h1>
@@ -58,9 +62,9 @@
 </IonContent>
 
 @code {
-    private IonModal _modal;
-    
-    private async void Dismiss()
+    private IonModal _modal = null!;
+
+    private async Task Dismiss()
     {
         await _modal.DismissAsync();
     }

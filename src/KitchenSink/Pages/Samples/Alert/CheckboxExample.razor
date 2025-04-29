@@ -1,17 +1,17 @@
 ﻿<IonButton id="present-alert-checkbox-example">Click Me</IonButton>
-<IonAlert Trigger="present-alert-checkbox-example" 
+<IonAlert Trigger="present-alert-checkbox-example"
           Header="Select your favorite color"
           IonAlertDidDismiss="IonAlertDidDismiss"
-          Buttons="@(() => 
-                   { 
-                       return new[] 
+          Buttons="@(() =>
+                   {
+                       return new[]
                        {
                            new AlertButton { Text = "OK", Role = "ok" },
                        };
                    })"
-          Inputs="@(() => 
+          Inputs="@(() =>
                   {
-                      return new AlertInput[] 
+                      return new AlertInput[]
                       {
                           new AlertInputCheckbox()
                           {
@@ -33,15 +33,18 @@
                   })"
 />
 
-<p>@((MarkupString)_output)</p>
-
 @code{
-    private string _output = null!;
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
 
     private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
     {
-        var values = string.Join(",", (args.Values as AlertValuesArray)?.Values ?? Array.Empty<string>());
-        _output = $$"""Dismissed with role: <b>{{args.Role}}</b><p>{{values}}</p>""";
-    }
+        Console?.Add($"Dismissed with role: {args.Role}");
 
+        if (args.Role != "ok")
+            return;
+
+        var values = string.Join(",", (args.Values as AlertValuesArray)?.Values ?? []);
+        Console?.Add($"{values}");
+    }
 }

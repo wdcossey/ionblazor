@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>IonBlazor.Barebones</title>
+    <base href="/" />
+    <link rel="icon" href="data:,">
+
+    <!-- Import Ionic JS -->
+    <script type="module" src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <!-- Only need the ESM module (above), no need for the nomodule script -->
+    <!--<script nomodule src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.js"></script>-->
+
+    <!-- Add required @ionic helpers [if needed for `eval()`] -->
+    <script type="module">
+        import { createAnimation, createGesture } from './_content/IonBlazor/@ionic/core/dist/ionic/index.esm.js';
+        window.createAnimation = createAnimation;
+    </script>
+
+    <!-- Import Ionic CSS -->
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/core.css" />
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/palettes/dark.class.css" />
+
+    <!-- App css comes after [any] others (so we can override styles) -->
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="IonBlazor.Barebones.styles.css" />
+
+    <!-- Configure Ionic -->
+    <script>
+        window.Ionic = {
+            config: {
+                //rippleEffect: false,
+                mode: 'md',
+                innerHTMLTemplatesEnabled: true,
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="status-bar-safe-area"></div>
+
+    <div id="app">Loading...</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.webview.js" autostart="false"></script>
+
+</body>
+
+</html>

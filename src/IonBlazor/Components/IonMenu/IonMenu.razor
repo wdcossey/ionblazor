@@ -1,0 +1,14 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-menu @ref="IonElement"
+          @attributes="@Attributes"
+          content-id="@ContentId"
+          disabled="@Disabled.AsString()"
+          max-edge-start="@MaxEdgeStart.ToString()"
+          menu-id="@MenuId"
+          side="@Side"
+          swipe-gesture="@SwipeGesture.AsString()"
+          type="@Type">
+    @ChildContent
+</ion-menu>

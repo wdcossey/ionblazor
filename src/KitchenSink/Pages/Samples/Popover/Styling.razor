@@ -1,5 +1,5 @@
 ﻿<div>
-    
+
     <style>
         ion-popover.popup-styling {
             --background: rgba(40, 173, 218, 0.6);
@@ -8,19 +8,19 @@
             --color: white;
             --width: 300px;
         }
-        
+
         ion-popover.popup-styling ion-content {
             --background: rgba(40, 173, 218, 0.6);
         }
-        
+
         ion-popover.popup-styling::part(backdrop) {
             background-color: rgb(6, 14, 106);
         }
     </style>
 
     <IonButton id="trigger-button">Click Me</IonButton>
-    <IonPopover Class="popup-styling" Trigger="trigger-button" Reference="@IonPopoverReference.Default" TriggerAction="@IonPopoverTriggerAction.Default">
-        <IonContent Class="ion-padding">Hello Styled World!</IonContent>
+    <IonPopover class="popup-styling" Trigger="trigger-button" Reference="@IonPopoverReference.Default" TriggerAction="@IonPopoverTriggerAction.Default">
+        <IonContent class="ion-padding">Hello Styled World!</IonContent>
     </IonPopover>
 
 </div>

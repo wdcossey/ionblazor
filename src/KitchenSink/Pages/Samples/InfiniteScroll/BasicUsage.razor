@@ -1,5 +1,4 @@
-﻿@using System.Collections
-<IonContent>
+﻿<IonContent>
     <IonList @ref="_list">
         @for (var i = 1; i < ItemCount; i++)
         {
@@ -19,7 +18,7 @@
 
 @code {
     IonList _list = null!;
-    
+
     int ItemCount { get; set; } = 0;
 
     protected override void OnInitialized()
@@ -28,14 +27,13 @@
         GenerateItems();
     }
 
-    private async Task IonInfiniteCallback(IonInfiniteScroll.IonInfiniteEventArgs args)
+    private async Task IonInfiniteCallback(IonInfiniteEventArgs args)
     {
-        await Task.Delay(1500);
+        await Task.Delay(500);
         GenerateItems();
         await args.Sender.CompleteAsync();
         await InvokeAsync(StateHasChanged);
     }
 
     private void GenerateItems() => ItemCount += 50;
-
 }

@@ -1,0 +1,1 @@
+﻿<ion-accordion-group animated="true"></ion-accordion-group>

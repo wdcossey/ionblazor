@@ -1,0 +1,10 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-card-header @ref="IonElement"
+                 @attributes="@Attributes"
+                 color="@Color"
+                 mode="@Mode"
+                 translucent="@Translucent">
+    @ChildContent
+</ion-card-header>

@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public class IonicEventCallback
+internal sealed class IonicEventCallback
 {
     private readonly Func<Task> _callback;
 
@@ -13,7 +13,7 @@ public class IonicEventCallback
     public Task OnCallbackEvent() => _callback();
 }
 
-public class IonicEventCallback<TArgs>
+internal sealed class IonicEventCallback<TArgs>
 {
     private readonly Func<TArgs, Task> _callback;
 
@@ -26,7 +26,7 @@ public class IonicEventCallback<TArgs>
     public Task OnCallbackEvent(TArgs args) => _callback(args);
 }
 
-public class IonicEventCallbackResult<TResult>
+internal sealed class IonicEventCallbackResult<TResult>
 {
     private readonly Func<Task<TResult>> _callback;
 
@@ -39,7 +39,7 @@ public class IonicEventCallbackResult<TResult>
     public Task<TResult> OnCallbackEvent() => _callback();
 }
 
-public class IonicEventCallbackResult<TArgs, TResult>
+internal sealed class IonicEventCallbackResult<TArgs, TResult>
 {
     private readonly Func<TArgs, Task<TResult>> _callback;
 

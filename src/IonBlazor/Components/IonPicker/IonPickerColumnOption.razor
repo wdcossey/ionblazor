@@ -1,0 +1,10 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-picker-column-option
+    @ref="IonElement"
+    color="@Color"
+    disabled="@Disabled.AsString()"
+    value="@Value">
+    @ChildContent
+</ion-picker-column-option>

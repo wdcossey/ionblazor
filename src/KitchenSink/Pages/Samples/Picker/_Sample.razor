@@ -1,28 +1,50 @@
-﻿@page "/samples/picker"
+﻿@namespace IonicTest.Pages.Samples.Picker
 
-<h2>Inline Pickers (Recommended)</h2>
+@page "/samples/picker"
+
+<header>
+    <h1>ion-picker</h1>
+</header>
+
+<p>A Picker displays one or more columns with options for users to choose from.</p>
 <div class="playground__container">
     <div class="playground__preview">
         <div class="playground__frame">
-            <InlinePickers/>
+            <IonicTest.Pages.Samples.Picker.InlinePickers/>
         </div>
     </div>
 </div>
 
-<h2>Using <code>isOpen</code></h2>
+<h2>Prefix & Suffix Content</h2>
+<p>Use the <code>prefix</code> and <code>suffix</code> slots to add additional content to the picker.</p>
 <div class="playground__container">
     <div class="playground__preview">
         <div class="playground__frame">
-            <UsingIsOpen/>
+            <PrefixAndSuffixContent/>
         </div>
     </div>
 </div>
 
-<h2>Multiple Columns</h2>
+<h2>Theming</h2>
+<h3>CSS Variables</h3>
+<p>
+    The picker highlight and fade can be customized using CSS variables on <code>ion-picker</code>.
+    Developers can customize the individual appearance of <code>ion-picker-column-options</code> by targeting them directly and using host level styling.
+</p>
 <div class="playground__container">
     <div class="playground__preview">
         <div class="playground__frame">
-            <MultipleColumns/>
+            <Theming/>
+        </div>
+    </div>
+</div>
+
+<h2>Picker in Modal</h2>
+<p>Pickers can be displayed inside of overlays, such as <code>ion-modal</code> to create a picker experience with confirmation or cancellation buttons.</p>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <PickerInModal/>
         </div>
     </div>
 </div>

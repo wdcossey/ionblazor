@@ -1,0 +1,34 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-datetime @ref="@IonElement"
+              @attributes="@Attributes"
+              cancel-text="@CancelText"
+              clear-text="@ClearText"
+              color="@Color"
+              day-values="@DayValues"
+              disabled="@Disabled.AsString()"
+              done-text="@DoneText"
+              first-day-of-week="@FirstDayOfWeek?.ToString()"
+              hour-cycle="@HourCycle"
+              hour-values="@HourValues"
+              locale="@Locale"
+              max="@Max"
+              min="@Min"
+              minute-values="@MinuteValues"
+              mode="@Mode"
+              month-values="@MonthValues"
+              multiple="@Multiple.AsString()"
+              name="@Name"
+              prefer-wheel="@PreferWheel.AsString()"
+              presentation="@Presentation"
+              readonly="@Readonly.AsString()"
+              show-clear-button="@ShowClearButton.AsString()"
+              show-default-buttons="@ShowDefaultButtons.AsString()"
+              show-default-time-label="@ShowDefaultTimeLabel.AsString()"
+              show-default-title="@ShowDefaultTitle.AsString()"
+              size="@Size"
+              value="@Value"
+              year-values="@YearValues">
+    @ChildContent
+</ion-datetime>

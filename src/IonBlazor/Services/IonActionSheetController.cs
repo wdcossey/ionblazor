@@ -1,22 +1,25 @@
 ﻿namespace IonBlazor.Services;
 
-public class IonActionSheetController : ComponentBase, IAsyncDisposable
+public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
-    
-    private static IJSObjectReference? _ionComponent;
-    
-    public static async ValueTask PresentAsync<TButtonData>(
-        string? header = null, 
-        Func<IEnumerable<ActionSheetButton<TButtonData>>>? buttonsFunc = null)
-        where TButtonData : class, IActionSheetButtonData
+
+    private static IJSObjectReference? _jsComponent;
+
+    public static async ValueTask PresentAsync(Action<ActionSheetControllerOptions> configure)
     {
-        IEnumerable<ActionSheetButton<TButtonData>>? buttons = null;
+        ActionSheetControllerOptions options = new();
+        configure(options);
+
+        IEnumerable<IActionSheetButton>? buttons = null;
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
-        
-        if (buttonsFunc is not null)
+
+        if (options.ButtonsBuilder is not null)
         {
-            buttons = buttonsFunc?.Invoke();
+            ActionSheetButtonBuilder buttonBuilder = new();
+            options.ButtonsBuilder.Invoke(buttonBuilder);
+            buttons = buttonBuilder.Build();
+
             buttonHandler = IonicEventCallback<JsonObject?>.Create(
                 async args =>
                 {
@@ -28,16 +31,15 @@ public class IonActionSheetController : ComponentBase, IAsyncDisposable
                 });
         }
 
-        await (_ionComponent?.InvokeVoidAsync("presentActionSheet", header, buttons, buttonHandler) ?? ValueTask.CompletedTask);
+        await (_jsComponent?.InvokeVoidAsync("present", options, buttons, buttonHandler) ?? ValueTask.CompletedTask);
     }
 
     public async ValueTask DisposeAsync()
     {
-        GC.SuppressFinalize(this);
-        await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
-        _ionComponent = null;
+        await (_jsComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
+        _jsComponent = null;
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -45,6 +47,6 @@ public class IonActionSheetController : ComponentBase, IAsyncDisposable
         if (!firstRender)
             return;
 
-        _ionComponent = await JsRuntime.ImportAsync("actionSheetController");
+        _jsComponent = await JsRuntime.ImportAsync(nameof(IonActionSheetController));
     }
 }

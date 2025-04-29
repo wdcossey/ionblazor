@@ -1,0 +1,12 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-infinite-scroll @ref="IonElement"
+                     @attributes="@Attributes"
+                     disabled="@Disabled.AsString()"
+                     position="@Position"
+                     threshold="@Threshold">
+    <CascadingValue TValue="@IIonComponent" Name="@(nameof(IonInfiniteScrollContent.Parent))" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-infinite-scroll>

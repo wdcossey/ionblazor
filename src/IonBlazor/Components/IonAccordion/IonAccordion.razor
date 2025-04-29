@@ -1,0 +1,13 @@
+@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-accordion @ref="IonElement"
+               @attributes="@Attributes"
+               disabled="@Disabled.AsString()"
+               mode="@Mode"
+               readonly="@Readonly.AsString()"
+               toggle-icon="@ToggleIcon"
+               toggle-icon-slot="@ToggleIconSlot"
+               value="@Value">
+    @ChildContent
+</ion-accordion>

@@ -1,0 +1,41 @@
+﻿<style>
+    ion-backdrop.ib-styling {
+        opacity: 0.9;
+        background: var(--ion-color-primary);
+    }
+
+    #box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--ion-background-color, #fff);
+        width: 90%;
+        height: 100px;
+        border-radius: 10px;
+    }
+</style>
+
+<IonBackdrop class="ib-styling" Visible="@true"></IonBackdrop>
+<div class="ion-page">
+    <IonHeader>
+        <IonToolbar>
+            <IonTitle>Backdrop</IonTitle>
+        </IonToolbar>
+    </IonHeader>
+    <IonContent class="ion-padding">
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, cum aspernatur cupiditate nesciunt totam
+            perspiciatis delectus soluta laboriosam, ullam impedit porro eaque laborum optio natus sed nostrum, provident
+            expedita vero!
+        </p>
+    </IonContent>
+</div>
+<div id="box">
+    <IonCheckbox color="light"></IonCheckbox>
+    <IonButton class="ion-margin-start" Color="@IonColor.Light">Clickable</IonButton>
+</div>

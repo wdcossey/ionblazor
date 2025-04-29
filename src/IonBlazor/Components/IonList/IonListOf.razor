@@ -1,0 +1,22 @@
+﻿@namespace IonBlazor.Components
+@inherits IonList
+
+@typeparam TItem where TItem: notnull
+
+<ion-list @ref="@IonElement"
+          @attributes="@Attributes"
+          inset="@Inset.AsString()"
+          lines="@Lines"
+          mode="@Mode">
+    @if (ItemsSource?.Any() is true)
+    {
+        @foreach (TItem item in ItemsSource)
+        {
+            @ItemTemplate(item)
+        }
+    }
+    else if (EmptyTemplate is not null)
+    {
+        @EmptyTemplate
+    }
+</ion-list>

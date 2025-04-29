@@ -1,0 +1,66 @@
+﻿@page "/samples/reorder"
+
+<PlaygroundContainer EnableConsole="true" FillWidth="@true">
+    <Header>
+        <h2>Basic Usage</h2>
+        <p>The most basic example of a reorder is slotting it inside of an item. By default, the reorder functionality is disabled for a reorder group. It can be enabled by setting the <code>disabled</code> property on the reorder group to <code>false</code>. The reorder icon can then be used to drag and drop the items and reorder them.</p>
+    </Header>
+    <ChildContent>
+        <BasicUsage/>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer EnableConsole="true" FillWidth="@true">
+    <Header>
+        <h2>Toggling Reorder</h2>
+        <p>In some cases, it may be desired to have the option to toggle the reorder functionality. This can be done by making the <code>disabled</code> property reactive, based on a function or variable.</p>
+    </Header>
+    <ChildContent>
+        <TogglingReorder/>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer EnableConsole="true" FillWidth="@true">
+    <Header>
+        <h2>Custom Reorder Icon</h2>
+        <p>The reorder component uses a reorder icon with three lines on iOS and two lines on Material Design. This can be customized by adding an <a href="https://ionic.io/ionicons" target="_blank" rel="noopener noreferrer">Icon</a> component inside of the reorder with any of the available Ionicons.</p>
+    </Header>
+    <ChildContent>
+        <CustomReorderIcon/>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer EnableConsole="true" FillWidth="@true">
+    <Header>
+        <h2>Reorder Wrapper</h2>
+        <p>Reorder can also be used as a wrapper around an item, making the item itself the anchor. Click anywhere on an item below and drag it to reorder the list.</p>
+    </Header>
+    <ChildContent>
+        <ReorderWrapper/>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer EnableConsole="true" FillWidth="@true">
+    <Header>
+        <h2>Updating Data</h2>
+        <p>When the <code>complete</code> method is called on the reorder group with no parameters, the DOM nodes will be reordered. If the items are rendered from an array of data that needs to be sorted, this can result in the data and DOM being out of sync.</p>
+        <p>In order to sort the array upon completion of the reorder, the array should be passed as a parameter to the <code>complete</code> method. The <code>complete</code> method will sort the array and return it so it can be reassigned. Note that passing the array will prevent Ionic from reordering the DOM nodes.</p>
+        <p>In some cases, it may be necessary for an app to reorder both the array and the DOM nodes on its own. If this is required, <code>false</code> should be passed as a parameter to the <code>complete</code> method. This will prevent Ionic from reordering any DOM nodes inside of the reorder group.</p>
+        <p>Regardless of the approach taken, a stable identity should be provided to reorder items if provided in a loop. This means using <code>&amp;key</code> for Blazor.</p>
+    </Header>
+    <ChildContent>
+        <UpdatingData/>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer EnableConsole="true" FillWidth="@true">
+    <Header>
+        <h2>Usage with Virtual Scroll</h2>
+        <p>Reorder requires a scroll container to work properly. When using a virtual scrolling solution, a custom scroll target needs to be provided. Scrolling on the content needs to be disabled and the <code>.ion-content-scroll-host</code> class needs to be added to the element responsible for scrolling.</p>
+    </Header>
+    <ChildContent>
+        <div style="height: 256px">
+            <UsageWithVirtualScroll/>
+        </div>
+    </ChildContent>
+</PlaygroundContainer>

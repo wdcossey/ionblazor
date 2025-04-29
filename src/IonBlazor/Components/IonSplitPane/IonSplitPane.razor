@@ -1,0 +1,10 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-split-pane
+    @ref="IonElement"
+    content-id="@ContentId"
+    disabled="@Disabled.AsString()"
+    when="@When">
+    @ChildContent
+</ion-split-pane>

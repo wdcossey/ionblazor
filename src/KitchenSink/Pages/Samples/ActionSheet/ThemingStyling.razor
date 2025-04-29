@@ -1,0 +1,38 @@
+﻿<style>
+    ion-action-sheet.my-custom-class .action-sheet-group {
+        background: #f58840;
+    }
+
+    ion-action-sheet.my-custom-class .action-sheet-title {
+        color: #fff;
+    }
+
+    ion-action-sheet.my-custom-class .action-sheet-cancel::after {
+        background: #e97223;
+    }
+
+    ion-action-sheet.my-custom-class .action-sheet-button,
+    ion-action-sheet.my-custom-class .action-sheet-button.ion-focused {
+        color: #000000;
+    }
+
+    @@media (any-hover: hover) {
+        ion-action-sheet.my-custom-class .action-sheet-button:hover {
+            color: #000000;
+        }
+    }
+
+    ion-action-sheet.my-custom-class ion-backdrop {
+        opacity: 0.6;
+    }
+</style>
+<IonButton id="open-action-sheet-styling">Open</IonButton>
+
+<IonActionSheet
+    TButtonData="ActionSheetButtonData"
+    CssClass="my-custom-class"
+    Trigger="open-action-sheet-styling"
+    Header="Example header"
+    SubHeader="Example subheader"
+    Buttons="@(() => { return new List<BasicActionSheetButton>() { new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } }, new() { Text = "Share" }, new() { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })">
+</IonActionSheet>

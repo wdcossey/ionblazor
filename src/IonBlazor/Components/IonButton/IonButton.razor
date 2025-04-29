@@ -1,0 +1,22 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-button @ref="@IonElement"
+            @attributes="@Attributes"
+            button-type="@ButtonType"
+            color="@Color"
+            disabled="@Disabled.AsString()"
+            download="@Download"
+            expand="@Expand"
+            fill="@Fill"
+            form="@Form"
+            href="@Href"
+            mode="@(Mode ?? CascadingMode)"
+            rel="@Rel"
+            shape="@Shape"
+            size="@Size"
+            strong="@Strong.AsString()"
+            target="@Target"
+            type="@Type">
+    @ChildContent
+</ion-button>
