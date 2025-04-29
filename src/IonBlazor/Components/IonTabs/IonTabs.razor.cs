@@ -2,12 +2,10 @@
 
 public sealed partial class IonTabs : IonContentComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsDidChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsWillChangeReference;
 
-    /// <inheritdoc/>
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonTabs);
 
     /// <summary>
     /// Emitted when the navigation has finished transitioning to a new component.
@@ -41,7 +39,7 @@ public sealed partial class IonTabs : IonContentComponent
     /// </summary>
     /// <returns></returns>
     public ValueTask<string> GetSelectedAsync() =>
-        JsComponent.InvokeAsync<string>("getSelected", _self);
+        JsComponent.InvokeAsync<string>("getSelected", IonElement);
 
     /// <summary>
     /// Get a specific tab by the value of its tab property or an element reference.
@@ -49,7 +47,7 @@ public sealed partial class IonTabs : IonContentComponent
     /// <returns></returns>
     public async ValueTask GetTabAsync(string tab)
     {
-        var obj = await JsComponent.InvokeAsync<JsonObject>("getTab", _self, tab);
+        var obj = await JsComponent.InvokeAsync<JsonObject>("getTab", IonElement, tab);
     }
 
     /// <summary>
@@ -57,7 +55,7 @@ public sealed partial class IonTabs : IonContentComponent
     /// </summary>
     /// <returns></returns>
     public ValueTask<bool> SelectAsync(string tab) =>
-        JsComponent.InvokeAsync<bool>("select", _self, tab);
+        JsComponent.InvokeAsync<bool>("select", IonElement, tab);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -67,7 +65,7 @@ public sealed partial class IonTabs : IonContentComponent
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("ionTabsDidChange", _ionTabsDidChangeReference),
             IonEvent.Set("ionTabsWillChange", _ionTabsWillChangeReference)
         );

@@ -1,9 +1,8 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonComponent
 
-<ion-refresher-content @ref="_self"
+<ion-refresher-content @ref="IonElement"
                        @attributes="@Attributes"
-                       class="@Class"
                        pulling-icon="@PullingIcon"
                        pulling-text="@((MarkupString)(PullingText ?? string.Empty))"
                        refreshing-spinner="@RefreshingSpinner"

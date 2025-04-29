@@ -1,12 +1,9 @@
-﻿using System.Text.Json.Serialization;
-
-namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components;
 
 public sealed partial class IonModal : IonContentComponent, IIonModeComponent
 {
     private readonly string _id = $"{Guid.NewGuid():N}";
 
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionBreakpointDidChangeReference;
@@ -18,15 +15,12 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<bool>> _canDismissReference;
 
-    /// <inheritdoc/>
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonModal);
 
     private string Script => Breakpoints?.Length > 0 ?
                               $$"""
                               <script>
-                                //console.log("running script: {{_id}}");
                                 var modal = document.querySelector(`[is-modal="{{_id}}"]`);
-                                //console.log(`modal: ${modal}`);
                                 if (modal) {
                                     modal.initialBreakpoint = {{InitialBreakpoint}};
                                     modal.breakpoints = [{{string.Join(",", Breakpoints)}}];
@@ -72,7 +66,8 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     [Parameter]
     public double[]? Breakpoints { get; set; } = null;
 
-    public async ValueTask SetBreakpointsAsync(params double[]? breakpoints) => await JsComponent.InvokeVoidAsync("breakpoints", _self, breakpoints);
+    public async ValueTask SetBreakpointsAsync(params double[]? breakpoints) =>
+        await JsComponent.InvokeVoidAsync("breakpoints", IonElement, breakpoints);
 
     /*/// <summary>
     /// Determines whether or not a modal can dismiss when calling the dismiss method.
@@ -87,7 +82,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     public async ValueTask SetCanDismissAsync(bool value)
     {
         _canDismissCallback = null!;
-        await JsComponent.InvokeVoidAsync("canDismiss", _self, value);
+        await JsComponent!.InvokeVoidAsync("canDismiss", _self, value);
     }
 
     public ValueTask SetCanDismissAsync(Func<Task<bool>> callback)
@@ -121,7 +116,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/components/splat-attributes-and-arbitrary-parameters?view=aspnetcore-8.0" >attribute splatting</a>
     /// </summary>
     [Obsolete("Not available in Blazor/Razor, use attribute splatting", true)]
-    [Parameter] public Dictionary<string, object> HtmlAttributes { get; set; }
+    [Parameter] public Dictionary<string, object> HtmlAttributes { get; set; } = null!;
 
     /// <summary>
     /// A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a
@@ -129,10 +124,8 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// </summary>
     [Parameter] public double? InitialBreakpoint { get; set; }
 
-    public async ValueTask SetInitialBreakpointAsync(double? value)
-    {
-        await JsComponent.InvokeVoidAsync("initialBreakpoint", _self, value);
-    }
+    public async ValueTask SetInitialBreakpointAsync(double? value) =>
+        await JsComponent.InvokeVoidAsync("initialBreakpoint", IonElement, value);
 
     /// <summary>
     /// If <b>true</b>, the modal will open. If false, the modal will close. Use this if you need finer grained control
@@ -145,7 +138,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
 
     public async ValueTask<bool> SetIsOpenAsync(bool value)
     {
-        var result = await JsComponent.InvokeAsync<bool>("isOpen", _self, value);
+        var result = await JsComponent.InvokeAsync<bool>("isOpen", IonElement, value);
         //IsOpen = result;
         return result;
     }
@@ -260,15 +253,6 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     {
         _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            /*
-{
-  "tagName": "ION-MODAL",
-  "detail": {
-    "role": "backdrop"
-  }
-}
-             */
-
             //IsOpen = false;
             var dismissArgs = GetDismissArgs(args);
             await DidDismiss.InvokeAsync(dismissArgs);
@@ -282,29 +266,12 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
 
         _ionBreakpointDidChangeReference = IonicEventCallback<JsonObject?>.Create(async _ =>
         {
-            /*
-{
-  "tagName": "ION-MODAL",
-  "detail": {
-    "breakpoint": 0.5
-  }
-}
-             */
             await IonBreakpointDidChange.InvokeAsync(this);
         });
 
         _ionModalDidDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            /*
-{
-  "tagName": "ION-MODAL",
-  "detail": {
-    "role": "backdrop"
-  }
-}
-             */
-
-            var dismissArgs = GetDismissArgs(args);
+            IonModalDismissEventArgs dismissArgs = GetDismissArgs(args);
             await IonModalDidDismiss.InvokeAsync(dismissArgs);
         });
 
@@ -315,15 +282,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
 
         _ionModalWillDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            /*
-{
-  "tagName": "ION-MODAL",
-  "detail": {
-    "role": "backdrop"
-  }
-}
-             */
-            var dismissArgs = GetDismissArgs(args);
+            IonModalDismissEventArgs dismissArgs = GetDismissArgs(args);
             await IonModalWillDismiss.InvokeAsync(dismissArgs);
         });
 
@@ -334,17 +293,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
 
         _willDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            /*
-{
-  "tagName": "ION-MODAL",
-  "detail": {
-    "role": "backdrop"
-  }
-}
-             */
-
-
-            var dismissArgs = GetDismissArgs(args);
+            IonModalDismissEventArgs dismissArgs = GetDismissArgs(args);
             await WillDismiss.InvokeAsync(dismissArgs);
         });
 
@@ -366,19 +315,19 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// Dismiss the modal overlay after it has been presented.
     /// </summary>
     public async ValueTask<bool> DismissAsync(object? data = null, string? role = null) =>
-        await JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
+        await JsComponent.InvokeAsync<bool>("dismiss", IonElement, data, role);
 
     /// <summary>
     /// Returns the current breakpoint of a sheet style modal
     /// </summary>
     public async ValueTask<int> GetCurrentBreakpointAsync() =>
-        await JsComponent.InvokeAsync<int>("getCurrentBreakpoint", _self);
+        await JsComponent.InvokeAsync<int>("getCurrentBreakpoint", IonElement);
 
     /// <summary>
     /// Present the modal overlay after it has been created.
     /// </summary>
     public async ValueTask PresentAsync() =>
-        await JsComponent.InvokeVoidAsync("present", _self);
+        await JsComponent.InvokeVoidAsync("present", IonElement);
 
     /// <summary>
     /// Move a sheet style modal to a specific breakpoint.
@@ -386,7 +335,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// </summary>
     /// <param name="value"></param>
     public async ValueTask SetCurrentBreakpointAsync(double value) =>
-        await JsComponent.InvokeVoidAsync("setCurrentBreakpoint", _self, value);
+        await JsComponent.InvokeVoidAsync("setCurrentBreakpoint", IonElement, value);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -395,7 +344,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(_self,
+        await this.AttachIonListenersAsync(IonElement,
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionBreakpointDidChange", _ionBreakpointDidChangeReference),
@@ -407,7 +356,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
             IonEvent.Set("willPresent", _willPresentReference)
         );
 
-        await JsComponent.InvokeVoidAsync("canDismissCallback", _self, _canDismissReference);
+        await JsComponent.InvokeVoidAsync("canDismissCallback", IonElement, _canDismissReference);
 
         if (Breakpoints?.Length > 0)
         {
@@ -416,7 +365,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
         }
 
         if (string.IsNullOrWhiteSpace(EnterAnimation) is false)
-            await JsComponent.InvokeVoidAsync("enterAnimation", _self, EnterAnimation);
+            await JsComponent.InvokeVoidAsync("enterAnimation", IonElement, EnterAnimation);
     }
 
     public override async ValueTask DisposeAsync()

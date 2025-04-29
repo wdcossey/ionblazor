@@ -1,10 +1,9 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-item-sliding @ref="_self"
+<ion-item-sliding @ref="IonElement"
                   @attributes="@Attributes"
-                  class="@Class"
-                  disabled="@Disabled">
+                  disabled="@Disabled.AsString()">
     <CascadingValue TValue="IIonComponent" Name="@nameof(Parent)" Value="@(this)">
         @ChildContent
     </CascadingValue>

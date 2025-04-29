@@ -2,11 +2,9 @@
 
 public partial class IonList : IonContentComponent, IIonModeComponent
 {
-    protected ElementReference _self;
     private Func<ValueTask<bool>> _closeSlidingItemsWrapper = null!;
 
-    /// <inheritdoc/>
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonList);
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
@@ -40,7 +38,7 @@ public partial class IonList : IonContentComponent, IIonModeComponent
         if (!firstRender)
             return;
 
-        _closeSlidingItemsWrapper = () => JsComponent.InvokeAsync<bool>("closeSlidingItems", _self);
+        _closeSlidingItemsWrapper = () => JsComponent.InvokeAsync<bool>("closeSlidingItems", IonElement);
     }
 
     public override async ValueTask DisposeAsync()

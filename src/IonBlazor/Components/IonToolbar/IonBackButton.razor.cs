@@ -2,10 +2,6 @@
 
 public sealed partial class IonBackButton : IonComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
-
-    public override ElementReference IonElement => _self;
-
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
     /// <inheritdoc/>

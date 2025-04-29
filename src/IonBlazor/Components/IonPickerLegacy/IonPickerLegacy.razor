@@ -5,15 +5,15 @@
 @typeparam TButton
 
 <ion-picker-legacy
-    @ref="_self"
+    @ref="@IonElement"
     @attributes="@Attributes"
-    animated="@Animated"
-    backdrop-dismiss="@BackdropDismiss"
+    animated="@Animated.AsString()"
+    backdrop-dismiss="@BackdropDismiss.AsString()"
     css-class="@CssClass"
-    duration="@Duration"
-    is-open="@IsOpen"
-    keyboard-close="@KeyboardClose"
+    duration="@Duration?.ToString()"
+    is-open="@IsOpen.AsString()"
+    keyboard-close="@KeyboardClose.AsString()"
     mode="@Mode"
-    show-backdrop="@ShowBackdrop"
+    show-backdrop="@ShowBackdrop.AsString()"
     trigger="@Trigger">
 </ion-picker-legacy>

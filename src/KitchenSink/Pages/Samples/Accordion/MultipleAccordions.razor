@@ -1,0 +1,35 @@
+﻿<IonAccordionGroup @ref="@_multipleAccordionGroup" Multiple="true">
+    <IonAccordion Value="first">
+        <IonItem slot="header" Color="@IonColor.Light">
+            <IonLabel>First Accordion</IonLabel>
+        </IonItem>
+        <div class="ion-padding" slot="content">First Content</div>
+    </IonAccordion>
+    <IonAccordion Value="second">
+        <IonItem slot="header" Color="@IonColor.Light">
+            <IonLabel>Second Accordion</IonLabel>
+        </IonItem>
+        <div class="ion-padding" slot="content">Second Content</div>
+    </IonAccordion>
+    <IonAccordion Value="third">
+        <IonItem slot="header" Color="@IonColor.Light">
+            <IonLabel>Third Accordion</IonLabel>
+        </IonItem>
+        <div class="ion-padding" slot="content">Third Content</div>
+    </IonAccordion>
+</IonAccordionGroup>
+
+@code {
+    IonAccordionGroup _multipleAccordionGroup = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+
+        await _multipleAccordionGroup.SetValueAsync("first", "third");
+    }
+
+}

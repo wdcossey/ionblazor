@@ -2,11 +2,7 @@
 
 public sealed partial class IonSegment : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
-
-    /// <inheritdoc/>
-    public override ElementReference IonElement => _self;
 
     /// <inheritdoc/>
     [Parameter]
@@ -72,7 +68,7 @@ public sealed partial class IonSegment : IonContentComponent, IIonModeComponent,
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionChange", _ionChangeReference ));
+        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionChange", _ionChangeReference ));
     }
 
     public override async ValueTask DisposeAsync()

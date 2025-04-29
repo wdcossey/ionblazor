@@ -2,13 +2,9 @@
 
 public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
-
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
-
-    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the <see cref="IonCheckbox"/> is selected.
@@ -129,7 +125,7 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
 
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionChange", _ionChangeReference),
             IonEvent.Set("ionFocus", _ionFocusReference)

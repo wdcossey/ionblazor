@@ -1,10 +1,9 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonComponent
 
-<ion-spinner @ref="_self"
+<ion-spinner @ref="IonElement"
              @attributes="@Attributes"
-             class="@Class"
              color="@Color"
              name="@Name"
-             paused="@Paused">
+             paused="@Paused.AsString()">
 </ion-spinner>

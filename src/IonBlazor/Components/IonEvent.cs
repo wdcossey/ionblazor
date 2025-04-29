@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components;
 
 internal sealed class IonEvent
 {

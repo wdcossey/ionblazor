@@ -2,14 +2,11 @@
 
 public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
-
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
-    /// <inheritdoc/>
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonToggle);
 
     /// <summary>
     /// If true, the toggle is selected.
@@ -121,7 +118,7 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(_self, new []
+        await this.AttachIonListenersAsync(IonElement, new []
         {
             IonEvent.Set("ionBlur"  , _ionBlurReference  ),
             IonEvent.Set("ionChange", _ionChangeReference),
@@ -138,5 +135,5 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
     }
 
     public ValueTask SetChecked(bool value)
-        => JsComponent.InvokeVoidAsync("setChecked", _self, value);
+        => JsComponent.InvokeVoidAsync("setChecked", IonElement, value);
 }

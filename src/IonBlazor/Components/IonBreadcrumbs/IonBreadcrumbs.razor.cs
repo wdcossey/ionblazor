@@ -2,10 +2,9 @@
 
 public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionCollapsedClickReference;
 
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonBreadcrumbs);
 
     /// <inheritdoc/>
     [Parameter]
@@ -17,7 +16,7 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
     /// the breadcrumbs will not be collapsed.
     /// </summary>
     [Parameter]
-    public int? ItemsAfterCollapse { get; set; }
+    public uint? ItemsAfterCollapse { get; init; }
 
     /// <summary>
     /// The number of breadcrumbs to show before the collapsed indicator.
@@ -25,13 +24,13 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
     /// the breadcrumbs will not be collapsed.
     /// </summary>
     [Parameter]
-    public int? ItemsBeforeCollapse { get; set; }
+    public uint? ItemsBeforeCollapse { get; init; }
 
     /// <summary>
     /// The maximum number of breadcrumbs to show before collapsing.
     /// </summary>
     [Parameter]
-    public int? MaxItems { get; set; }
+    public uint? MaxItems { get; init; }
 
     /// <inheritdoc/>
     [Parameter]
@@ -61,12 +60,17 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
         if (!firstRender)
             return;
 
-        await JsComponent.InvokeVoidAsync("attachIonCollapsedClickListener", _self, _ionCollapsedClickReference);
+        await JsComponent.InvokeVoidAsync("attachIonCollapsedClickListener", IonElement, _ionCollapsedClickReference);
     }
 
     public override async ValueTask DisposeAsync()
     {
         _ionCollapsedClickReference.Dispose();
         await base.DisposeAsync();
+    }
+
+    public async ValueTask SetMaxItemsAsync(uint? value)
+    {
+        await JsComponent.InvokeVoidAsync("maxItems", IonElement, value);
     }
 }

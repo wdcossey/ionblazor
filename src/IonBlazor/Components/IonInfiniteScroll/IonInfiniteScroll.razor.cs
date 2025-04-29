@@ -2,11 +2,9 @@
 
 public sealed partial class IonInfiniteScroll : IonContentComponent
 {
-    private ElementReference _self;
-
     private DotNetObjectReference<IonicEventCallback> _ionInfiniteReference;
 
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonInfiniteScroll);
 
     /// <summary>
     /// If <b>true</b>, the infinite scroll will be hidden and scroll event listeners will be removed.
@@ -53,7 +51,7 @@ public sealed partial class IonInfiniteScroll : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionInfinite", _ionInfiniteReference));
+        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionInfinite", _ionInfiniteReference));
     }
 
     public override async ValueTask DisposeAsync()
@@ -72,6 +70,6 @@ public sealed partial class IonInfiniteScroll : IonContentComponent
     /// <returns></returns>
     public async ValueTask CompleteAsync()
     {
-        await JsComponent.InvokeVoidAsync("complete", _self);
+        await JsComponent.InvokeVoidAsync("complete", IonElement);
     }
 }

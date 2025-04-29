@@ -3,9 +3,9 @@ namespace IonBlazor.Components;
 public sealed record IonLoadingDismissEventArgs
 {
     /// <summary>
-    /// The <see cref="IonLoading"/> that triggered the event. This will be null if created by <see cref="IonLoadingController"/>
+    /// The <see cref="IIonLoading"/> that triggered the event.
     /// </summary>
-    public IonLoading? Sender { get; internal init; } = null!;
+    public IIonLoading? Sender { get; internal init; } = null!;
 
     public string? Role { get; internal init; }
 

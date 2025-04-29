@@ -1,9 +1,8 @@
-﻿@using System.Collections.Concurrent
-<IonList>
+﻿<IonList>
     <IonItem>
         <IonSelect TValue="@string"
-                   aria-label="Fruit" 
-                   Placeholder="Select fruit" 
+                   aria-label="Fruit"
+                   Placeholder="Select fruit"
                    IonChange="OnIonChange"
                    IonCancel="OnIonCancel"
                    IonDismiss="OnIonDismiss">
@@ -14,38 +13,23 @@
     </IonItem>
 </IonList>
 
-<div>
-    @foreach(var message in _log)
-    {
-        <div>
-            <code>@message</code>
-        </div>
-    }
-</div>
-
 @code {
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
 
-    private List<string> _log = new();
-    
     private void OnIonChange(IonSelectChangeEventArgs<string> args)
     {
-        var message = $"ionChange fired with value: {args.Value}";
-        _log.Add(message);
-        Console.WriteLine(message);
+        Console?.Add($"ionChange fired with value: {args.Value}");
     }
 
     private void OnIonCancel()
     {
-        var message = "ionCancel fired";
-        _log.Add(message);
-        Console.WriteLine(message);
+        Console?.Add("ionCancel fired");
     }
 
     private void OnIonDismiss()
     {
-        var message = "ionDismiss fired";
-        _log.Add(message);
-        Console.WriteLine(message);
+        Console?.Add("ionDismiss fired");
     }
 
 }

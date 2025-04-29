@@ -1,11 +1,10 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-item-divider @ref="_self"
+<ion-item-divider @ref="IonElement"
                   @attributes="@Attributes"
-                  class="@Class"
                   color="@Color"
                   mode="@Mode"
-                  sticky="@Sticky">
+                  sticky="@Sticky.AsString()">
     @ChildContent
 </ion-item-divider>

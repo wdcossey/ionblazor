@@ -2,10 +2,6 @@
 
 public sealed partial class IonSkeletonText : IonComponent
 {
-    private ElementReference _self;
-
-    public override ElementReference IonElement => _self;
-
     /// <summary>
     ///
     /// </summary>

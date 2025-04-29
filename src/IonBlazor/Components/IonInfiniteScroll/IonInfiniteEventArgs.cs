@@ -2,5 +2,5 @@
 
 public sealed record IonInfiniteEventArgs
 {
-    public IonInfiniteScroll? Sender { get; internal set; }
+    public IonInfiniteScroll? Sender { get; internal init; }
 }

@@ -2,7 +2,6 @@
 
 public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionPopoverDidDismissReference;
@@ -12,7 +11,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
 
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonPopover);
 
     /// <summary>
     /// Describes how to align the popover content with the <b>reference</b> point.
@@ -55,7 +54,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     /// </summary>
     [Parameter] public bool? IsOpen { get; set; }
 
-    public void SetIsOpen(bool value)
+    public async Task SetIsOpen(bool value)
     {
         IsOpen = value;
         StateHasChanged();
@@ -174,7 +173,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionPopoverDidDismiss", _ionPopoverDidDismissReference),
@@ -207,11 +206,11 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     /// <param name="dismissParentPopover"></param>
     /// <returns></returns>
     public async ValueTask<bool> DismissAsync(object? data = null, string? role = null, bool? dismissParentPopover = null)
-        => await JsComponent.InvokeAsync<bool>("dismiss", _self, data, role, dismissParentPopover);
+        => await JsComponent.InvokeAsync<bool>("dismiss", IonElement, data, role, dismissParentPopover);
 
     /// <summary>
     /// Present the popover overlay after it has been created.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask PresentAsync() => await JsComponent.InvokeVoidAsync("present", _self);
+    public async ValueTask PresentAsync() => await JsComponent.InvokeVoidAsync("present", IonElement);
 }

@@ -2,11 +2,6 @@
 
 public sealed partial class IonProgressBar : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
-
-    /// <inheritdoc/>
-    public override ElementReference IonElement => _self;
-
     /// <summary>
     /// If the buffer and value are smaller than 1, the buffer circles will show.
     /// The buffer should be between [0.0, 1.0].

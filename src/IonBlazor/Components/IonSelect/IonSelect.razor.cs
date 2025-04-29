@@ -1,20 +1,14 @@
-﻿using System.Collections.ObjectModel;
-using System.Text.Json.Serialization;
+﻿namespace IonBlazor.Components;
 
-namespace IonBlazor.Components;
-
-public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent, IIonModeComponent
+public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent, IIonModeComponent
     where TValue : notnull
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionCancelReference;
     //private readonly DotNetObjectReference<IonicEventCallback<__ionSelectChangeEventArgs<TValue>>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
-
-    public override ElementReference IonElement => _self;
 
     /// <inheritdoc />
     [Parameter]
@@ -208,22 +202,7 @@ public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorCo
 
         _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync());
 
-        _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
-        {
-            var value = args?["detail"]?["value"];
-            var values = value switch
-            {
-                null => [],
-                JsonArray => value.Deserialize<TValue[]>(),
-                _ => [value.GetValue<TValue>()]
-            };
-
-            await IonChange.InvokeAsync(new IonSelectChangeEventArgs<TValue>
-            {
-                Sender = this,
-                Value = new IonSelectValue<TValue>(values ?? [])
-            });
-        });
+        _ionChangeReference = IonicEventCallback<JsonObject?>.Create(IonChangeCallback);
 
         _ionDismissReference = IonicEventCallback.Create(async () => await IonDismiss.InvokeAsync());
 
@@ -238,7 +217,7 @@ public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorCo
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionCancel", _ionCancelReference),
             IonEvent.Set("ionChange", _ionChangeReference),
@@ -266,5 +245,22 @@ public sealed partial class IonSelect<TValue> : IonContentComponent, IIonColorCo
         _ionDismissReference.Dispose();
         _ionFocusReference.Dispose();
         await base.DisposeAsync();
+    }
+
+    protected virtual async Task IonChangeCallback(JsonObject? args)
+    {
+        JsonNode? value = args?["detail"]?["value"];
+        var values = value switch
+        {
+            null => [],
+            JsonArray => value.Deserialize<TValue[]>(),
+            _ => [value.GetValue<TValue>()]
+        };
+
+        await IonChange.InvokeAsync(new IonSelectChangeEventArgs<TValue>
+        {
+            Sender = this,
+            Value = new IonSelectValue<TValue>(values ?? [])
+        });
     }
 }

@@ -1,0 +1,51 @@
+﻿<IonList>
+    <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+    <IonReorderGroup Disabled="@false" IonItemReorder="@OnIonItemReorderAsync">
+        <IonReorder>
+            <IonItem>
+                <IonLabel> Item 1 </IonLabel>
+            </IonItem>
+        </IonReorder>
+
+        <IonReorder>
+            <IonItem>
+                <IonLabel> Item 2 </IonLabel>
+            </IonItem>
+        </IonReorder>
+
+        <IonReorder>
+            <IonItem>
+                <IonLabel> Item 3 </IonLabel>
+            </IonItem>
+        </IonReorder>
+
+        <IonReorder>
+            <IonItem>
+                <IonLabel> Item 4 </IonLabel>
+            </IonItem>
+        </IonReorder>
+
+        <IonReorder>
+            <IonItem>
+                <IonLabel> Item 5 </IonLabel>
+            </IonItem>
+        </IonReorder>
+    </IonReorderGroup>
+</IonList>
+
+@code {
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private async Task OnIonItemReorderAsync(IonReorderGroupIonItemReorderEventArgs args)
+    {
+        // The `from` and `to` properties contain the index of the item
+        // when the drag started and ended, respectively
+        Console?.Add($"Dragged from index {args.From} to {args.To}");
+
+        // Finish the reorder and position the item in the DOM based on
+        // where the gesture ended. This method can also be called directly
+        // by the reorder group
+        await args.Sender!.CompleteAsync();
+    }
+}

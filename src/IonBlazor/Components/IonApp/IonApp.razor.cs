@@ -2,10 +2,7 @@
 
 public sealed partial class IonApp: IonContentComponent, IIonModeComponent
 {
-    private ElementReference _self;
-
-    /// <inheritdoc />
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonApp);
 
     /// <inheritdoc />
     [Parameter] public string? Mode { get; set; }
@@ -15,5 +12,5 @@ public sealed partial class IonApp: IonContentComponent, IIonModeComponent
     /// </summary>
     /// <returns></returns>
     public async ValueTask SetFocusAsync(params ElementReference[] elements)
-        => await JsComponent.InvokeVoidAsync("setFocus", _self, elements);
+        => await JsComponent.InvokeVoidAsync("setFocus", IonElement, elements);
 }

@@ -2,10 +2,7 @@
 
 public sealed partial class IonRadioGroup : IonContentComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<__ionChangeEventArgs>> _ionChangeReference;
-
-    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the radios can be deselected.
@@ -47,7 +44,7 @@ public sealed partial class IonRadioGroup : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionChange", _ionChangeReference));
+        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionChange", _ionChangeReference));
     }
 
     public override async ValueTask DisposeAsync()
