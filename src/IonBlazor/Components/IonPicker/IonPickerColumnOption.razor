@@ -2,9 +2,10 @@
 @inherits IonContentComponent
 
 <ion-picker-column-option
-    @ref="IonElement"
+    @ref="_self"
+    class="@Class"
     color="@Color"
-    disabled="@Disabled.AsString()"
+    disabled="@Disabled"
     value="@Value">
     @ChildContent
 </ion-picker-column-option>

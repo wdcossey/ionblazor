@@ -2,6 +2,10 @@
 
 public sealed partial class IonSpinner : IonComponent, IIonColorComponent
 {
+    private ElementReference _self;
+
+    public override ElementReference IonElement => _self;
+
     /// <inheritdoc/>
     [Parameter]
     public string? Color { get; set; }

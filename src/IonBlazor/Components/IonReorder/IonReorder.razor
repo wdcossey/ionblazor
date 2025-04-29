@@ -1,7 +1,8 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-reorder @ref="IonElement"
-             @attributes="@Attributes">
+<ion-reorder @ref="_self"
+             @attributes="@Attributes"
+             class="@Class">
     @ChildContent
 </ion-reorder>

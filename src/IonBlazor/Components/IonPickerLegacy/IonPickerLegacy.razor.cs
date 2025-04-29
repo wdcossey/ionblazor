@@ -1,10 +1,13 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Text.Json.Serialization;
+
+namespace IonBlazor.Components;
 
 public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonComponent, IIonModeComponent
     where TColumn: class, IPickerColumn<TColumnOption>
     where TColumnOption: class, IPickerColumnOption
     where TButton: class, IPickerButton
 {
+    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionPickerDidDismissReference;
@@ -16,7 +19,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
 
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
-    protected override string JsImportName => nameof(IonPickerLegacy<TColumn, TColumnOption, TButton>);
+    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the picker will animate.
@@ -204,19 +207,19 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
     /// Dismiss the picker overlay after it has been presented.
     /// </summary>
     public async Task DismissAsync(object[]? data = null, string? role = null) =>
-        await JsComponent.InvokeVoidAsync("dismiss", IonElement, data, role);
+        await JsComponent.InvokeVoidAsync("dismiss", _self, data, role);
 
     /// <summary>
     /// Get the column that matches the specified name.
     /// </summary>
     public async Task<object> GetColumnAsync(string name) =>
-        await JsComponent.InvokeAsync<JsonObject>("getColumn", IonElement, name);
+        await JsComponent.InvokeAsync<JsonObject>("getColumn", _self, name);
 
     /// <summary>
     /// Present the picker overlay after it has been created.
     /// </summary>
     public async Task PresentAsync() =>
-        await JsComponent.InvokeVoidAsync("present", IonElement);
+        await JsComponent.InvokeVoidAsync("present", _self);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -226,7 +229,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
             return;
 
         await this.AttachIonListenersAsync(
-            IonElement,
+            _self,
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionPickerDidDismiss", _ionPickerDidDismissReference),
@@ -258,8 +261,8 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
                     });
             });
 
-        await JsComponent.InvokeVoidAsync("withColumns", IonElement, columns);
-        await JsComponent.InvokeVoidAsync("withButtons", IonElement, buttons, _buttonHandlerReference);
+        await JsComponent.InvokeVoidAsync("withColumns", _self, columns);
+        await JsComponent.InvokeVoidAsync("withButtons", _self, buttons, _buttonHandlerReference);
     }
 
     public override async ValueTask DisposeAsync()

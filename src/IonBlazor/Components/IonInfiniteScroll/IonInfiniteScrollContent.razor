@@ -1,8 +1,9 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonComponent
 
-<ion-infinite-scroll-content @ref="IonElement"
+<ion-infinite-scroll-content @ref="_self"
                              @attributes="@Attributes"
+                             class="@Class"
                              loading-spinner="@LoadingSpinner"
                              loading-text="@LoadingText">
 </ion-infinite-scroll-content>

@@ -2,9 +2,10 @@
 @inherits IonContentComponent
 
 <ion-split-pane
-    @ref="IonElement"
+    @ref="_self"
+    class="@Class"
     content-id="@ContentId"
-    disabled="@Disabled.AsString()"
+    disabled="@Disabled"
     when="@When">
     @ChildContent
 </ion-split-pane>

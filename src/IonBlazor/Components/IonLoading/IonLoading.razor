@@ -1,19 +1,20 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-loading @ref="IonElement"
+<ion-loading @ref="_self"
           @attributes="@Attributes"
-          animated="@Animated.AsString()"
-          backdrop-dismiss="@BackdropDismiss.AsString()"
+          class="@Class"
+          animated="@Animated"
+          backdrop-dismiss="@BackdropDismiss"
           css-class="@CssClass"
-          duration="@Duration?.ToString()"
-          is-open="@IsOpen.AsString()"
-          keyboard-close="@KeyboardClose.AsString()"
-          message="@((MarkupString)(Message ?? string.Empty))"
+          duration="@Duration"
+          is-open="@IsOpen"
+          keyboard-close="@KeyboardClose"
+          message="@Message"
           mode="@Mode"
-          show-backdrop="@ShowBackdrop.AsString()"
+          show-backdrop="@ShowBackdrop"
           spinner="@Spinner"
-          translucent="@Translucent.AsString()"
+          translucent="@Translucent"
           trigger="@Trigger">
     @ChildContent
 </ion-loading>

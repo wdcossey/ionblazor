@@ -1,9 +1,10 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-radio-group @ref="@IonElement"
+<ion-radio-group @ref="@_self"
                  @attributes="@Attributes"
-                 allow-empty-selection="@AllowEmptySelection.AsString()"
+                 class="@Class"
+                 allow-empty-selection="@AllowEmptySelection"
                  name="@Name"
                  value="@Value">
     @ChildContent

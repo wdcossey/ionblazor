@@ -1,7 +1,8 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonModeComponent
+public sealed partial class IonLoading: IonContentComponent, IIonModeComponent
 {
+    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference ;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionLoadingDidDismissReference;
@@ -11,7 +12,7 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
 
-    protected override string JsImportName => nameof(IonLoading);
+    public override ElementReference IonElement => _self;
 
     /// <inheritdoc/>
     [Parameter]
@@ -54,7 +55,7 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
     /// <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/components/splat-attributes-and-arbitrary-parameters?view=aspnetcore-8.0" >attribute splatting</a>
     /// </summary>
     [Obsolete("Not available in Blazor/Razor, use attribute splatting", true)]
-    public IDictionary<string, string?> HtmlAttributes { get; set; } = null!;
+    public IDictionary<string, string?> HtmlAttributes { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the loading indicator will open.
@@ -204,6 +205,16 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
             IonLoadingPresentEventArgs presentArgs = GetPresentArgs();
             await WillPresent.InvokeAsync(presentArgs);
         });
+
+        /*
+         * {
+  "tagName": "ION-LOADING",
+  "detail": {
+    "data": null,
+    "role": "winner"
+  }
+}
+         */
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -214,7 +225,7 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
             return;
 
         await this.AttachIonListenersAsync(
-            IonElement,
+            _self,
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionLoadingDidDismiss", _ionLoadingDidDismissReference),
@@ -244,28 +255,59 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
     /// </summary>
     /// <returns></returns>
     public ValueTask<bool> DismissAsync<TData>(TData? data = null, string? role = null) where TData : class =>
-        JsComponent.InvokeAsync<bool>("dismiss", IonElement, data, role);
+        JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
 
     /// <summary>
     /// Dismiss the loading overlay after it has been presented.
     /// </summary>
     /// <returns></returns>
     public ValueTask<bool> DismissAsync(string? role = null) =>
-        JsComponent.InvokeAsync<bool>("dismiss", IonElement, role);
+        JsComponent.InvokeAsync<bool>("dismiss", _self, role);
+
+    /// <summary>
+    /// Returns a promise that resolves when the loading did dismiss.
+    /// </summary>
+    /// <returns></returns>
+    [Obsolete("Not available in Blazor (Razor) projects", true)]
+    public ValueTask OnDidDismissAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Returns a promise that resolves when the loading will dismiss.
+    /// </summary>
+    /// <returns></returns>
+    [Obsolete("Not available in Blazor (Razor) projects", true)]
+    public ValueTask OnWillDismissAsync()
+    {
+        throw new NotImplementedException();
+    }
 
     /// <summary>
     /// Present the loading overlay after it has been created.
     /// </summary>
     /// <returns></returns>
-    public ValueTask PresentAsync() =>
-        JsComponent.InvokeVoidAsync("present", IonElement);
+    public ValueTask PresentAsync() => JsComponent.InvokeVoidAsync("present", _self);
 
     /// <summary>
-    /// Updates the message for the loading overlay after it has been presented.
+    /// Sets the <see cref="Message"/>
     /// </summary>
     /// <returns></returns>
-    public async ValueTask UpdateMessageAsync(string? message) =>
-        await JsComponent.InvokeVoidAsync("updateMessage", IonElement, message);
+    public async ValueTask SetMessageAsync(string? message)
+    {
+        await JsComponent.InvokeVoidAsync("setMessage", _self, message);
+        //this.Message = message;
+    }
+
+    /// <summary>
+    /// Sets the <see cref="Message"/>
+    /// </summary>
+    /// <returns></returns>
+    public async ValueTask PresentWithMessageAsync(string? message)
+    {
+        await JsComponent.InvokeVoidAsync("presentWithMessage", _self, message);
+    }
 
     private IonLoadingDismissEventArgs GetDismissArgs(JsonObject? args)
     {

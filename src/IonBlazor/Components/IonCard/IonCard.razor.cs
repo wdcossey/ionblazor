@@ -2,11 +2,15 @@
 
 public sealed partial class IonCard : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
+    private ElementReference _self;
+
+    public override ElementReference IonElement => _self;
+
     /// <summary>
     /// If <b>true</b>, a button tag will be rendered and the card will be tappable.
     /// </summary>
     [Parameter]
-    public bool? Button { get; init; }
+    public bool? Button { get; set; }
 
     /// <inheritdoc/>
     [Parameter]
@@ -16,7 +20,7 @@ public sealed partial class IonCard : IonContentComponent, IIonModeComponent, II
     /// If true, the user cannot interact with the <see cref="IonCard"/>.
     /// </summary>
     [Parameter]
-    public bool? Disabled { get; init; }
+    public bool? Disabled { get; set; }
 
     /// <summary>
     /// This attribute instructs browsers to download a URL instead of navigating to it,
@@ -25,13 +29,13 @@ public sealed partial class IonCard : IonContentComponent, IIonModeComponent, II
     /// (the user can still change the file name if they want).
     /// </summary>
     [Parameter]
-    public string? Download { get; init; }
+    public string? Download { get; set; }
 
     /// <summary>
     /// Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     /// </summary>
     [Parameter]
-    public string? Href { get; init; }
+    public string? Href { get; set; }
 
     /// <inheritdoc/>
     [Parameter]
@@ -42,7 +46,7 @@ public sealed partial class IonCard : IonContentComponent, IIonModeComponent, II
     /// <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types">link types</a>.
     /// </summary>
     [Parameter]
-    public string? Rel { get; init; }
+    public string? Rel { get; set; }
 
     //[Parameter] public string? RouterAnimation { get; set; }
     //[Parameter] public string? RouterDirection { get; set; }
@@ -53,11 +57,11 @@ public sealed partial class IonCard : IonContentComponent, IIonModeComponent, II
     /// Special keywords: "_blank", "_self", "_parent", "_top".
     /// </summary>
     [Parameter]
-    public string? Target { get; init; }
+    public string? Target { get; set; }
 
     /// <summary>
-    /// The type of the button. Only used when an <b>@onclick</b> or <see cref="IonButton"/> property is present.
+    /// The type of the button. Only used when an <b>onclick</b> or <see cref="IonButton"/> property is present.
     /// </summary>
     [Parameter]
-    public string? Type { get; init; } = IonCardButtonType.Default;
+    public string? Type { get; set; } = IonCardButtonType.Default;
 }

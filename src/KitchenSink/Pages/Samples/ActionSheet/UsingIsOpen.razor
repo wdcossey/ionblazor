@@ -28,13 +28,7 @@
 
     private async ValueTask ButtonHandler(ActionSheetButton<ActionSheetButtonData>? button, int? index)
     {
-        await IonToastController.PresentAsync(options =>
-        {
-            options.Message = $"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};";
-            options.Position = "bottom";
-            options.Duration = 3000;
-            options.Icon = "logo-ionic";
-        });
+        await IonToastController.PresentAsync(message: $"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};", position: "bottom", duration: 3000, icon: "logo-ionic");
     }
 
 }

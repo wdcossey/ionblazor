@@ -58,8 +58,7 @@
 
     private async Task<bool> CanDismiss(IonModalCanDismissEventArgs args)
     {
-        if (_canDismissOverride)
-        {
+        if (_canDismissOverride) {
             // Checks for the override flag to return early if we can dismiss the overlay immediately
             args.CanDismiss = true;
             return true;
@@ -67,34 +66,31 @@
 
         TaskCompletionSource<bool> completionSource = new TaskCompletionSource<bool>();
 
-        await IonActionSheetController.PresentAsync(options =>
-        {
-            options.Header = "Are you sure?";
-            options.ButtonsBuilder = builder =>
+        await IonActionSheetController.PresentAsync(
+            header: "Are you sure?",
+            buttonsFunc: () => new[]
             {
-                builder
-                    .Add<BasicActionSheetButton>(button =>
+                new BasicActionSheetButton
+                {
+                    Text = "Yes",
+                    Role = "confirm",
+                    Handler = (button, index) =>
                     {
-                        button.Text = "Yes";
-                        button.Role = "confirm";
-                        button.Handler = (btn, index) =>
-                        {
-                            completionSource.SetResult(true);
-                            return ValueTask.CompletedTask;
-                        };
-                    })
-                    .Add<BasicActionSheetButton>(button =>
+                        completionSource.SetResult(true);
+                        return ValueTask.CompletedTask;
+                    }
+                },
+                new BasicActionSheetButton
+                {
+                    Text = "No",
+                    Role = "cancel",
+                    Handler = (button, index) =>
                     {
-                        button.Text = "No";
-                        button.Role = "cancel";
-                        button.Handler = (btn, index) =>
-                        {
-                            completionSource.SetResult(false);
-                            return ValueTask.CompletedTask;
-                        };
-                    });
-            };
-        });
+                        completionSource.SetResult(false);
+                        return ValueTask.CompletedTask;
+                    }
+                }
+            });
 
         return args.CanDismiss = await completionSource.Task;
     }

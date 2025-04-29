@@ -2,8 +2,12 @@
 
 public sealed partial class IonFabButton : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
+    private ElementReference _self;
+
     private DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private DotNetObjectReference<IonicEventCallback> _ionFocusReference;
+
+    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the <see cref="IonFabButton"/> will be show a close icon.<br/>
@@ -133,7 +137,7 @@ public sealed partial class IonFabButton : IonContentComponent, IIonModeComponen
             return;
 
         await this.AttachIonListenersAsync(
-            IonElement,
+            _self,
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionFocus", _ionFocusReference)
         );

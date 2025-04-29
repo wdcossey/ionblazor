@@ -2,6 +2,11 @@
 
 public sealed partial class IonInputPasswordToggle : IonComponent, IIonModeComponent, IIonColorComponent
 {
+    private ElementReference _self;
+
+    /// <inheritdoc />
+    public override ElementReference IonElement => _self;
+
     /// <inheritdoc />
     [Parameter] public string? Mode { get; set; }
 

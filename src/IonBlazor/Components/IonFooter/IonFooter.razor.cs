@@ -2,6 +2,10 @@
 
 public sealed partial class IonFooter : IonContentComponent, IIonModeComponent
 {
+    private ElementReference _self;
+
+    public override ElementReference IonElement => _self;
+
     /// <summary>
     /// Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
     /// </summary>

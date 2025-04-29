@@ -2,6 +2,7 @@
 
 public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIonColorComponent
 {
+    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionCancelReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
@@ -9,7 +10,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
-    protected override string JsImportName => nameof(IonSearchbar);
+    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If true, enable searchbar animation.
@@ -28,7 +29,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// Defaults to <b>off</b>.
     /// </summary>
     [Parameter]
-    public bool AutoCorrect { get; set; } = false;
+    public bool? AutoCorrect { get; set; } = false;
 
     /// <summary>
     /// Set the cancel button icon. Only applies to md mode. <p/>
@@ -232,7 +233,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
             return;
 
         await this.AttachIonListenersAsync(
-            IonElement,
+            _self,
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionCancel", _ionCancelReference),
             IonEvent.Set("ionChange", _ionChangeReference),
@@ -255,7 +256,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
 
     public async Task<IonSearchbar> SetValueAsync(string? value = null)
     {
-        await JsComponent.InvokeVoidAsync("setValue", IonElement, value);
+        await JsComponent.InvokeVoidAsync("setValue", _self, value);
         Value = value;
         return this;
     }
@@ -264,8 +265,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// Returns the native &lt;input&gt; element used under the hood.
     /// </summary>
     [Obsolete("Not available in Blazor (Razor) projects", true)]
-    public async ValueTask<ElementReference> GetInputElementAsync() =>
-        await JsComponent.InvokeAsync<ElementReference>("getInputElement", IonElement);
+    public async ValueTask<ElementReference> GetInputElementAsync() => await JsComponent.InvokeAsync<ElementReference>("getInputElement", _self);
 
     /// <summary>
     /// Sets focus on the native input in <see cref="IonSearchbar"/>. Use this method instead of the global
@@ -275,6 +275,5 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// Developers who wish to focus an input when an overlay is presented should call <see cref="SetFocusAsync"/> after
     /// <see cref="IonModal.DidPresent"/> has resolved.
     /// </summary>
-    public async ValueTask SetFocusAsync() =>
-        await JsComponent.InvokeAsync<string>("setFocus", IonElement);
+    public async ValueTask SetFocusAsync() => await JsComponent.InvokeAsync<string>("setFocus", _self);
 }

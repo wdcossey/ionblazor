@@ -5,7 +5,7 @@ public sealed record IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TBu
     where TColumnOption: class, IPickerColumnOption
     where TButton: class, IPickerButton
 {
-    public IonPickerLegacy<TColumn, TColumnOption, TButton>? Sender { get; internal set; } = null!;
+    public IonPickerLegacy<TColumn, TColumnOption, TButton> Sender { get; internal set; } = null!;
 
     public string? Role { get; internal set; }
 

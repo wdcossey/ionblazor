@@ -113,7 +113,7 @@
 <div class="playground__container">
     <div class="playground__preview">
         <div class="container">
-            <IonBreadcrumbs @ref="_breadcrumbs" MaxItems="4" IonCollapsedClick="IonCollapsedClick">
+            <IonBreadcrumbs @ref="_breadcrumbs" MaxItems="_maxItems" IonCollapsedClick="IonCollapsedClick">
                 <IonBreadcrumb Href="#home">Home</IonBreadcrumb>
                 <IonBreadcrumb Href="#electronics">Electronics</IonBreadcrumb>
                 <IonBreadcrumb Href="#photography">Photography</IonBreadcrumb>
@@ -167,9 +167,12 @@
 
 @code {
     IonBreadcrumbs _breadcrumbs = null!;
+    int? _maxItems = 4;
 
-    private async Task IonCollapsedClick()
+    private void IonCollapsedClick()
     {
-        await _breadcrumbs.SetMaxItemsAsync(null);
+        _breadcrumbs.MaxItems = _maxItems = null;
     }
+
+
 }

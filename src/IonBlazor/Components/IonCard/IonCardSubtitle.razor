@@ -1,8 +1,9 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-card-subtitle @ref="IonElement"
+<ion-card-subtitle @ref="_self"
                    @attributes="@Attributes"
+                   class="@Class"
                    color="@Color"
                    mode="@Mode">
     @ChildContent

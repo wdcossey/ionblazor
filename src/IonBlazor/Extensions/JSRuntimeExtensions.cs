@@ -1,5 +1,7 @@
 ﻿// ReSharper disable once CheckNamespace
 
+using IonBlazor.Components;
+
 namespace IonBlazor.Extensions;
 
 // ReSharper disable once InconsistentNaming
@@ -11,62 +13,44 @@ internal static class JSRuntimeExtensions
 
     internal static async ValueTask AttachIonListenersAsync(this IJSRuntime jsRuntime, ElementReference reference, params IonEvent[]? args)
     {
-        await using IJSObjectReference jsModule = await jsRuntime.ImportAsync("common");
-        await jsModule.InvokeVoidAsync("attachListeners", args, reference).AsTask();
+        await using var ionCommonJs = await jsRuntime.ImportAsync("common");
+        await ionCommonJs.InvokeVoidAsync("attachListeners", args, reference).AsTask();
     }
 
     internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, params object?[]? args)
     {
-        IJSObjectReference jsModule = await lazyRef.Value;
-        await jsModule.InvokeVoidAsync(identifier, args);
-    }
-
-    internal static async ValueTask InvokeVoidAsync(this Task<IJSObjectReference>? moduleTask, string identifier, params object?[]? args)
-    {
-        if (moduleTask is null)
-            return;
-
-        IJSObjectReference jsModule = await moduleTask;
-        await jsModule.InvokeVoidAsync(identifier, args);
+        var ionCommonJs = await lazyRef.Value;
+        await ionCommonJs.InvokeVoidAsync(identifier, args);
     }
 
     internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, CancellationToken cancellationToken, params object?[]? args)
     {
-        IJSObjectReference jsModule = await lazyRef.Value;
-        await jsModule.InvokeVoidAsync(identifier, cancellationToken, args);
+        var ionCommonJs = await lazyRef.Value;
+        await ionCommonJs.InvokeVoidAsync(identifier, cancellationToken, args);
     }
 
     internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, TimeSpan timeout, params object?[]? args)
     {
-        IJSObjectReference jsModule = await lazyRef.Value;
-        await jsModule.InvokeVoidAsync(identifier, timeout, args);
+        var ionCommonJs = await lazyRef.Value;
+        await ionCommonJs.InvokeVoidAsync(identifier, timeout, args);
     }
 
     internal static async ValueTask<TValue> InvokeAsync<TValue>(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, params object?[]? args)
     {
-        IJSObjectReference jsModule = await lazyRef.Value;
-        return await jsModule.InvokeAsync<TValue>(identifier, args);
-    }
-
-    internal static async ValueTask<TValue?> InvokeAsync<TValue>(this Task<IJSObjectReference>? moduleTask, string identifier, params object?[]? args)
-    {
-        if (moduleTask is null)
-            return default;
-
-        IJSObjectReference jsModule = await moduleTask;
-        return await jsModule.InvokeAsync<TValue>(identifier, args);
+        var ionCommonJs = await lazyRef.Value;
+        return await ionCommonJs.InvokeAsync<TValue>(identifier, args);
     }
 
     internal static async ValueTask<TValue> InvokeAsync<TValue>(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, CancellationToken cancellationToken, params object?[]? args)
     {
-        IJSObjectReference jsModule = await lazyRef.Value;
-        return await jsModule.InvokeAsync<TValue>(identifier, cancellationToken, args);
+        var ionCommonJs = await lazyRef.Value;
+        return await ionCommonJs.InvokeAsync<TValue>(identifier, cancellationToken, args);
     }
 
     internal static async ValueTask<TValue> InvokeAsync<TValue>(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, TimeSpan timeout, params object?[]? args)
     {
-        IJSObjectReference jsModule = await lazyRef.Value;
-        return await jsModule.InvokeAsync<TValue>(identifier, timeout, args);
+        var ionCommonJs = await lazyRef.Value;
+        return await ionCommonJs.InvokeAsync<TValue>(identifier, timeout, args);
     }
 
 

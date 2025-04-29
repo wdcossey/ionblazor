@@ -4,7 +4,7 @@
             <IonTitle>App</IonTitle>
         </IonToolbar>
     </IonHeader>
-    <IonContent class="ion-padding">
+    <IonContent Class="ion-padding">
         <IonButton id="open-modal-callback" expand="block">Open</IonButton>
         <p>
             *** This demo is hosted in a <b>&lt;ion-app&gt;</b>, the modal will <b>not</b> be bound to this preview pane!
@@ -18,17 +18,17 @@
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
-            <IonContent class="ion-padding">
+            <IonContent Class="ion-padding">
                 <p>You will be prompted when closing this modal.</p>
             </IonContent>
         </IonModal>
-
+        
         <IonActionSheet @ref="_actionSheet" Header="Are you sure?" TButtonData="ActionSheetButtonData"
                         DidDismiss="DidDismissCallback"
-                        Buttons="@(() => { return new List<ActionSheetButton<ActionSheetButtonData>>() {
-                                     new () { Text = "Yes", Role = "confirm" },
+                        Buttons="@(() => { return new List<ActionSheetButton<ActionSheetButtonData>>() { 
+                                     new () { Text = "Yes", Role = "confirm" }, 
                                      new () { Text = "No", Role = "cancel" } }; })">
-
+            
         </IonActionSheet>
     </IonContent>
 </div>
@@ -49,7 +49,7 @@
     private async Task CanDismissCallback(IonModalCanDismissEventArgs args)
     {
         _completionSource = new ();
-
+        
         await _actionSheet.PresentAsync();
 
         args.CanDismiss = await _completionSource.Task;

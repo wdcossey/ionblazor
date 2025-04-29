@@ -2,7 +2,11 @@
 
 public sealed partial class IonItemOptions : IonContentComponent
 {
+    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionSwipeReference;
+
+    /// <inheritdoc/>
+    public override ElementReference IonElement => _self;
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
@@ -41,7 +45,7 @@ public sealed partial class IonItemOptions : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionSwipe", _ionSwipeReference));
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionSwipe", _ionSwipeReference));
     }
 
     public override async ValueTask DisposeAsync()

@@ -1,13 +1,14 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-item @ref="IonElement"
+<ion-item @ref="_self"
           @attributes="@Attributes"
-          button="@Button.AsString()"
+          class="@Class"
+          button="@Button"
           color="@Color"
-          detail="@Detail.AsString()"
+          detail="@Detail"
           detail-icon="@DetailIcon"
-          disabled="@Disabled.AsString()"
+          disabled="@Disabled"
           download="@Download"
           href="@Href"
           lines="@Lines"

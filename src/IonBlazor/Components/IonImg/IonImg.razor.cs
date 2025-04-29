@@ -2,6 +2,10 @@
 
 public sealed partial class IonImg : IonComponent
 {
+    private ElementReference _self;
+
+    public override ElementReference IonElement => _self;
+
     /// <summary>
     /// This attribute defines the alternative text describing the image.
     /// Users will see this text displayed if the image URL is wrong,

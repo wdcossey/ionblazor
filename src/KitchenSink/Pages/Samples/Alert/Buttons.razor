@@ -1,35 +1,35 @@
-﻿@using System.Collections.ObjectModel
-<IonButton id="present-alert-buttons">Click Me</IonButton>
-<IonAlert @ref="_alert"
+﻿<IonButton id="present-alert-buttons">Click Me</IonButton>
+<IonAlert @ref="_alert" 
           Trigger="present-alert-buttons"
           Header="Alert!"
-          Buttons="@(() => { return new[]
+          Buttons="@(() => { return new[] 
                    {
                        new AlertButton { Text = "Cancel", Role = "cancel", Handler = CancelHandler },
                        new AlertButton { Text = "OK", Role = "confirm", Handler = ConfirmHandler }
                    }; })"
           IonAlertDidDismiss="IonAlertDidDismiss"/>
+<p>@((MarkupString)_handlerOutput)</p>
+<p>@((MarkupString)_roleOutput)</p>
 
 @code {
     private IonAlert _alert = null!;
-
-    [CascadingParameter(Name = nameof(Console))]
-    public PlaygroundConsole? Console { get; init; }
+    private string _roleOutput = null!;
+    private string _handlerOutput = null!;
 
     private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
     {
-        Console?.Add($"Dismissed with role: {args.Role}");
+        _roleOutput = $"Dismissed with role: <b>{args.Role}</b>";
     }
 
     private ValueTask CancelHandler(AlertButtonEventArgs args)
     {
-        Console?.Add("Alert canceled");
+        _handlerOutput = "Alert <b>canceled</b>";
         return ValueTask.CompletedTask;
     }
 
     private ValueTask ConfirmHandler(AlertButtonEventArgs args)
     {
-        Console?.Add("Alert confirmed");
+        _handlerOutput = "Alert <b>confirmed</b>";
         return ValueTask.CompletedTask;
     }
 

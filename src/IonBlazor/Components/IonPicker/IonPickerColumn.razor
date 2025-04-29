@@ -3,9 +3,10 @@
 
 
 <ion-picker-column
-    @ref="IonElement"
+    @ref="_self"
+    class="@Class"
     color="@Color"
-    disabled="@Disabled.AsString()"
+    disabled="@Disabled"
     mode="@Mode"
     value="@Value">
     <CascadingValue TValue="@IIonComponent" Name="@nameof(Parent)" Value="@(this)" IsFixed="@true">

@@ -1,8 +1,9 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-tabs @ref="@IonElement"
-          @attributes="@Attributes">
+<ion-tabs @ref="@_self"
+          @attributes="@Attributes"
+          class="@Class">
     <CascadingValue TValue="@IIonComponent" Name="@nameof(IonTab.Parent)" Value="@(this)" IsFixed="@true">
         @ChildContent
     </CascadingValue>

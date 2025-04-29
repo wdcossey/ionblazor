@@ -2,6 +2,11 @@
 
 public sealed partial class IonItemOption : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
+    private ElementReference _self;
+
+    /// <inheritdoc/>
+    public override ElementReference IonElement => _self;
+
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
     /// <inheritdoc/>

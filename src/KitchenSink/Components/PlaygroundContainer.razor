@@ -6,15 +6,8 @@
 
 <div class="playground__container">
     <div class="playground__preview">
-        <div class="container @(FillWidth is true ? "fill-width" : "")">
-            <CascadingValue TValue="@(PlaygroundConsole?)" Value="@Console" Name="Console">
-                @ChildContent
-            </CascadingValue>
+        <div class="container">
+            @ChildContent
         </div>
     </div>
 </div>
-
-@if (EnableConsole)
-{
-    <PlaygroundConsole @ref="Console" />
-}

@@ -1,10 +1,10 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-segment-button @ref="IonElement"
+<ion-segment-button @ref="_self"
                     @attributes="@Attributes"
-                    content-id="@ContentId"
-                    disabled="@Disabled.AsString()"
+                    class="@Class"
+                    disabled="@Disabled"
                     layout="@Layout"
                     mode="@Mode"
                     type="@Type"

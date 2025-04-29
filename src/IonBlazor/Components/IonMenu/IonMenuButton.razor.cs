@@ -2,6 +2,10 @@
 
 public sealed partial class IonMenuButton : IonComponent, IIonColorComponent, IIonModeComponent
 {
+    private ElementReference _self;
+
+    public override ElementReference IonElement => _self;
+
     /// <inheritdoc/>
     [Parameter]
     public string? Color { get; set; }

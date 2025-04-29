@@ -2,7 +2,11 @@
 
 public sealed partial class IonSplitPane : IonContentComponent
 {
+    private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionSplitPaneVisibleReference;
+
+    /// <inheritdoc />
+    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// The <b>id</b> of the main content. When using a router this is typically <b>ion-router-outlet</b>.
@@ -44,7 +48,7 @@ public sealed partial class IonSplitPane : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionSplitPaneVisible", _ionSplitPaneVisibleReference));
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionSplitPaneVisible", _ionSplitPaneVisibleReference));
     }
 
     public override async ValueTask DisposeAsync()

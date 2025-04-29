@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public record AlertInput : IAlertInput
+public record AlertInput
 {
     [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public virtual string? Type { get; set; }
@@ -40,4 +40,21 @@ public record AlertInput : IAlertInput
 
     [JsonPropertyName("tabindex"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? TabIndex { get; set; }
+
+    /*
+type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
+  name?: string;
+  placeholder?: string;
+  value?: any;
+    label?: string;
+    checked?: boolean;
+    disabled?: boolean;
+    id?: string;
+    handler?: (input: AlertInput) => void;
+    min?: string | number;
+    max?: string | number;
+    cssClass?: string | string[];
+    attributes?: { [key: string]: any };
+tabindex?: number;
+     */
 }

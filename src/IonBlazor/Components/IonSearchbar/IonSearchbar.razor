@@ -1,17 +1,18 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonComponent
 
-<ion-searchbar @ref="IonElement"
+<ion-searchbar @ref="_self"
                @attributes="@Attributes"
-               animated="@Animated.AsString()"
+               animated="@Animated"
                autocomplete="@(AutoComplete ?? SearchbarAutoComplete.Off)"
-               autocorrect="@(AutoCorrect.AsString(BooleanExtensions.On, BooleanExtensions.Off))"
+               autocorrect="@(AutoCorrect is true ? "on" : "off")"
                cancel-button-icon="@CancelButtonIcon"
                cancel-button-text="@CancelButtonText"
+               class="@Class"
                clear-icon="@ClearIcon"
                color="@Color"
-               debounce="@Debounce?.ToString()"
-               disabled="@Disabled.AsString()"
+               debounce="@Debounce"
+               disabled="@Disabled"
                enterkeyhint="@EnterKeyHint"
                inputmode="@InputMode"
                mode="@Mode"
@@ -19,7 +20,7 @@
                search-icon="@SearchIcon"
                show-cancel-button="@ShowCancelButton"
                show-clear-button="@ShowClearButton"
-               spellcheck="@SpellCheck.AsString()"
+               spellcheck="@SpellCheck"
                type="@Type"
                value="@Value">
 </ion-searchbar>

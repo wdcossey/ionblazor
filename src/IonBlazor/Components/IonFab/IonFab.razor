@@ -1,10 +1,11 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-fab @ref="IonElement"
+<ion-fab @ref="_self"
          @attributes="@Attributes"
-         activated="@Activated.AsString()"
-         edge="@Edge.AsString()"
+         class="@Class"
+         activated="@Activated"
+         edge="@Edge"
          horizontal="@Horizontal"
          vertical="@Vertical">
     @ChildContent

@@ -2,13 +2,11 @@
 
 public sealed partial class IonSegmentButton : IonContentComponent, IIonModeComponent
 {
-    [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
+    private ElementReference _self;
 
-    /// <summary>
-    /// The <b>id</b> of the segment content.
-    /// </summary>
-    [Parameter]
-    public string ContentId { get; init; } = null!;
+    public override ElementReference IonElement => _self;
+
+    [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the segment button.

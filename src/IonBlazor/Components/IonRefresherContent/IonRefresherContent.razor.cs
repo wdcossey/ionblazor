@@ -2,6 +2,10 @@
 
 public sealed partial class IonRefresherContent: IonComponent
 {
+    private ElementReference _self;
+
+    public override ElementReference IonElement => _self;
+
     /// <summary>
     /// A static icon or a spinner to display when you begin to pull down.
     /// A spinner name can be provided to gradually show tick marks when pulling down on iOS devices.

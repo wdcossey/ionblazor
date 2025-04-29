@@ -1,11 +1,12 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-chip @ref="IonElement"
+<ion-chip @ref="_self"
           @attributes="@Attributes"
+          class="@Class"
           color="@Color"
-          disabled="@Disabled.AsString()"
+          disabled="@Disabled"
           mode="@Mode"
-          outline="@Outline.AsString()">
+          outline="@Outline">
     @ChildContent
 </ion-chip>

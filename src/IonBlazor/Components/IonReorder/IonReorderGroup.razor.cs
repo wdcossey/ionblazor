@@ -2,9 +2,11 @@
 
 public sealed partial class IonReorderGroup : IonContentComponent
 {
+    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionItemReorderReference;
 
-    protected override string JsImportName => nameof(IonReorderGroup);
+    /// <inheritdoc/>
+    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If true, the reorder will be hidden.
@@ -37,9 +39,9 @@ public sealed partial class IonReorderGroup : IonContentComponent
     /// If <b>true</b>, the reorder will complete and the item will remain in the position it was dragged to.<br/>
     /// If <b>false</b> is passed, the reorder will complete and the item will bounce back to its original position.<br/>
     /// </summary>
-    public async Task CompleteAsync(bool reorder = true)
+    public async Task CompleteAsync(bool reorder)
     {
-        await JsComponent.InvokeVoidAsync("complete", IonElement, reorder);
+        await JsComponent.InvokeVoidAsync("complete", _self, reorder);
     }
 
     /// <summary>
@@ -47,15 +49,9 @@ public sealed partial class IonReorderGroup : IonContentComponent
     /// <br/><br/>
     /// If null, the reorder will complete and the item will remain in the position it was dragged to.
     /// </summary>
-    public async Task<IEnumerable<T>?> CompleteAsync<T>(IEnumerable<T>? list)
+    public async Task CompleteAsync(object[]? list)
     {
-        JsonElement items = await JsComponent.InvokeAsync<JsonElement>("complete", IonElement, list);
-        if (items.ValueKind != JsonValueKind.Array || items.GetArrayLength() == 0)
-        {
-            return null;
-        }
-
-        return items.Deserialize<IEnumerable<T>>();
+        await JsComponent.InvokeVoidAsync("complete", _self, list);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -65,7 +61,7 @@ public sealed partial class IonReorderGroup : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionItemReorder", _ionItemReorderReference ));
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionItemReorder", _ionItemReorderReference ));
     }
 
     public override async ValueTask DisposeAsync()

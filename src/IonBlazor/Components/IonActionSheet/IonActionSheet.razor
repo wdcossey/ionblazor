@@ -2,16 +2,16 @@
 @inherits IonComponent
 @typeparam TButtonData
 
-<ion-action-sheet @ref="@IonElement"
+<ion-action-sheet @ref="@_self"
                   @attributes="@Attributes"
-                  animated="@Animated.AsString()"
-                  backdrop-dismiss="@BackdropDismiss.AsString()"
+                  animated="@Animated"
+                  backdrop-dismiss="@BackdropDismiss"
                   css-class="@CssClass"
                   header="@Header"
-                  is-open="@IsOpen.AsString()"
-                  keyboard-close="@KeyboardClose.AsString()"
+                  is-open="@IsOpen"
+                  keyboard-close="@KeyboardClose"
                   mode="@Mode"
                   sub-header="@SubHeader"
-                  translucent="@Translucent.AsString()"
+                  translucent="@Translucent"
                   trigger="@Trigger">
 </ion-action-sheet>

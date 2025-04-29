@@ -1,5 +1,5 @@
 ﻿<IonButton  @onclick="@(() => _alert.IsOpen = true)">Click Me</IonButton>
-<IonAlert @ref="_alert"
+<IonAlert @ref="_alert" 
           Header="A Short Title Is Best"
           SubHeader="A Sub Header Is Optional"
           Message="A message should be a short, complete sentence."
@@ -13,4 +13,5 @@
     {
         _alert.IsOpen = false;
     }
+
 }

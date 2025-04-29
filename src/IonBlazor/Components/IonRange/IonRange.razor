@@ -1,23 +1,24 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-range @ref="IonElement"
+<ion-range @ref="_self"
            @attributes="@Attributes"
-           active-bar-start="@ActiveBarStart?.ToString()"
+           class="@Class"
+           active-bar-start="@ActiveBarStart"
            color="@Color"
            debounce="@Debounce"
-           disabled="@Disabled.AsString()"
-           dual-knobs="@DualKnobs.AsString()"
+           disabled="@Disabled"
+           dual-knobs="@DualKnobs"
            label="@Label"
            label-placement="@LabelPlacement"
-           max="@Max?.ToString()"
-           min="@Min?.ToString()"
+           max="@Max"
+           min="@Min"
            mode="@Mode"
            name="@Name"
-           pin="@Pin.AsString()"
-           snaps="@Snaps.AsString()"
-           step="@Step?.ToString()"
-           ticks="@Ticks.AsString()"
+           pin="@Pin"
+           snaps="@Snaps"
+           step="@Step"
+           ticks="@Ticks"
            value="@Value">
     @ChildContent
 </ion-range>

@@ -2,6 +2,10 @@
 
 public sealed partial class IonBadge : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
+    private ElementReference _self;
+
+    public override ElementReference IonElement => _self;
+
     /// <inheritdoc/>
     [Parameter]
     public string? Color { get; set; }

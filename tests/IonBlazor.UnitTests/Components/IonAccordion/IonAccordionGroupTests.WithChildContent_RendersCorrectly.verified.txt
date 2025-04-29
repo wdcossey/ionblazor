@@ -1,3 +1,0 @@
-﻿<ion-accordion-group><ion-accordion value="first"></ion-accordion>
-<ion-accordion value="second"></ion-accordion>
-<ion-accordion value="third"></ion-accordion></ion-accordion-group>

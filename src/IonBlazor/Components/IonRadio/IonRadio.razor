@@ -1,10 +1,11 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-radio @ref="IonElement"
+<ion-radio @ref="_self"
            @attributes="@Attributes"
+           class="@Class"
            color="@Color"
-           disabled="@Disabled.AsString()"
+           disabled="@Disabled"
            justify="@Justify"
            label-placement="@LabelPlacement"
            mode="@Mode"

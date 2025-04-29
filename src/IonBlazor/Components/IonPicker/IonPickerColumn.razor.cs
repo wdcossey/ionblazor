@@ -2,9 +2,10 @@
 
 public sealed partial class IonPickerColumn : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
+    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
 
-    protected override string JsImportName => nameof(IonPickerColumn);
+    public override ElementReference IonElement => _self;
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
@@ -34,8 +35,7 @@ public sealed partial class IonPickerColumn : IonContentComponent, IIonModeCompo
     /// Sets focus on the scrollable container within the picker column.
     /// Use this method instead of the global pickerColumn.focus().
     /// </summary>
-    public async ValueTask SetFocusAsync() =>
-        await JsComponent.InvokeAsync<string>("setFocus", IonElement);
+    public async ValueTask SetFocusAsync() => await JsComponent.InvokeAsync<string>("setFocus", _self);
 
     public IonPickerColumn()
     {
@@ -60,7 +60,7 @@ public sealed partial class IonPickerColumn : IonContentComponent, IIonModeCompo
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionChange", _ionChangeReference));
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionChange", _ionChangeReference));
     }
 
     public override async ValueTask DisposeAsync()

@@ -1,13 +1,14 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-refresher @ref="@IonElement"
+<ion-refresher @ref="@_self"
                @attributes="@Attributes"
+               class="@Class"
                close-duration="@CloseDuration"
-               disabled="@Disabled.AsString()"
+               disabled="@Disabled"
                pull-factor="@PullFactor?.ToString("#.#")"
-               pull-max="@PullMax?.ToString()"
-               pull-min="@PullMin?.ToString()"
+               pull-max="@PullMax"
+               pull-min="@PullMin"
                snapback-duration="@SnapbackDuration">
     @ChildContent
 </ion-refresher>

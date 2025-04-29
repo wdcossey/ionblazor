@@ -1,8 +1,9 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-ripple-effect @ref="IonElement"
+<ion-ripple-effect @ref="_self"
                    @attributes="@Attributes"
+                   class="@Class"
                    type="@Type">
     @ChildContent
 </ion-ripple-effect>

@@ -3,20 +3,14 @@
 
 @typeparam TItem where TItem: notnull
 
-<ion-list @ref="@IonElement"
+<ion-list @ref="@_self"
           @attributes="@Attributes"
-          inset="@Inset.AsString()"
+          class="@Class"
+          inset="@Inset"
           lines="@Lines"
           mode="@Mode">
-    @if (ItemsSource?.Any() is true)
+    @foreach (TItem item in ItemsSource)
     {
-        @foreach (TItem item in ItemsSource)
-        {
-            @ItemTemplate(item)
-        }
-    }
-    else if (EmptyTemplate is not null)
-    {
-        @EmptyTemplate
+        @ItemTemplate(item)
     }
 </ion-list>

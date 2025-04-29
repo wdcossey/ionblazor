@@ -1,11 +1,12 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonComponent
 
-<ion-back-button @ref="IonElement"
+<ion-back-button @ref="_self"
                  @attributes="@Attributes"
+                 class="@Class"
                  color="@Color"
                  default-href="@DefaultHref"
-                 disabled="@Disabled.AsString()"
+                 disabled="@Disabled"
                  icon="@Icon"
                  mode="@Mode"
                  text="@Text"

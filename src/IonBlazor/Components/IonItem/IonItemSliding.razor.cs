@@ -2,7 +2,11 @@
 
 public sealed partial class IonItemSliding : IonContentComponent
 {
+    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionDragReference;
+
+    /// <inheritdoc/>
+    public override ElementReference IonElement => _self;
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
@@ -87,7 +91,7 @@ public sealed partial class IonItemSliding : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionDrag", _ionDragReference));
+        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionDrag", _ionDragReference));
     }
 
     public override async ValueTask DisposeAsync()

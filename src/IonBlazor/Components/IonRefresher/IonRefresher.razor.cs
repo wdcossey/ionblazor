@@ -2,11 +2,13 @@
 
 public sealed partial class IonRefresher: IonContentComponent
 {
+    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionPullReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionRefreshReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionStartReference;
 
-    protected override string JsImportName => nameof(IonRefresher);
+    /// <inheritdoc/>
+    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// Time it takes to close the refresher.
@@ -84,7 +86,7 @@ public sealed partial class IonRefresher: IonContentComponent
     /// </summary>
     public async ValueTask CancelAsync()
     {
-        await JsComponent.InvokeVoidAsync("cancel", IonElement);
+        await JsComponent.InvokeVoidAsync("cancel", _self);
     }
 
     /// <summary>
@@ -96,7 +98,7 @@ public sealed partial class IonRefresher: IonContentComponent
     /// </summary>
     public async ValueTask CompleteAsync()
     {
-        await JsComponent.InvokeVoidAsync("complete", IonElement);
+        await JsComponent.InvokeVoidAsync("complete", _self);
     }
 
     /// <summary>
@@ -110,7 +112,7 @@ public sealed partial class IonRefresher: IonContentComponent
     /// <returns></returns>
     public async ValueTask<int> GetProgressAsync()
     {
-        return await JsComponent.InvokeAsync<int>("getProgress", IonElement);
+        return await JsComponent.InvokeAsync<int>("getProgress", _self);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -121,7 +123,7 @@ public sealed partial class IonRefresher: IonContentComponent
             return;
 
         await this.AttachIonListenersAsync(
-            IonElement,
+            _self,
             IonEvent.Set("ionPull", _ionPullReference),
             IonEvent.Set("ionRefresh", _ionRefreshReference),
             IonEvent.Set("ionStart", _ionStartReference)

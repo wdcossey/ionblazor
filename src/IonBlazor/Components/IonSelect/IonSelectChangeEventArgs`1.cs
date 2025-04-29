@@ -8,7 +8,7 @@ public sealed record IonSelectChangeEventArgs<TValue> where TValue : notnull
     public IonSelect<TValue>? Sender { get; internal init; }
 
     [JsonPropertyName("value")]
-    public IonSelectValue<TValue> Value { get; internal init; } = null!;
+    public IonSelectValue<TValue> Value { get; internal init; }
 }
 
 public sealed class IonSelectValue<TValue> : ReadOnlyCollection<TValue> where TValue : notnull

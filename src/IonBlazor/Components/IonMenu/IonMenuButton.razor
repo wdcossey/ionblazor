@@ -1,11 +1,12 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonComponent
 
-<ion-menu-button @ref="IonElement"
+<ion-menu-button @ref="_self"
                  @attributes="@Attributes"
-                 autoHide="@AutoHide.AsString()"
+                 class="@Class"
+                 autoHide="@AutoHide"
                  color="@Color"
-                 disabled="@Disabled.AsString()"
+                 disabled="@Disabled"
                  menu="@Menu"
                  mode="@Mode"
                  type="@Type">

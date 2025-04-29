@@ -1,7 +1,8 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-thumbnail @ref="IonElement"
-               @attributes="@Attributes">
+<ion-thumbnail @ref="_self"
+               @attributes="@Attributes"
+               class="@Class">
     @ChildContent
 </ion-thumbnail>

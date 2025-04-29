@@ -2,6 +2,10 @@
 
 public sealed partial class IonFabList : IonContentComponent
 {
+    private ElementReference _self;
+
+    public override ElementReference IonElement => _self;
+
     /// <summary>
     /// If <b>true</b>, the fab list will show all fab buttons in the list.
     /// Default: <b>false</b>

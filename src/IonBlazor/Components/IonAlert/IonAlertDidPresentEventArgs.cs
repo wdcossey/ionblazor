@@ -2,5 +2,5 @@
 
 public sealed record IonAlertDidPresentEventArgs
 {
-    public IonAlert? Sender { get; internal init; }
+    public IonAlert? Sender { get; internal init; } = null!;
 }

@@ -1,12 +1,13 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-checkbox @ref="IonElement"
+<ion-checkbox @ref="_self"
               @attributes="@Attributes"
-              checked="@Checked.AsString()"
+              checked="@Checked"
+              class="@Class"
               color="@Color"
-              disabled="@Disabled.AsString()"
-              indeterminate="@Indeterminate.AsString()"
+              disabled="@Disabled"
+              indeterminate="@Indeterminate"
               justify="@Justify"
               label-placement="@LabelPlacement"
               mode="@Mode"

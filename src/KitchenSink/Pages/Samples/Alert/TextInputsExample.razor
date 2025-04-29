@@ -1,18 +1,18 @@
 ﻿@using System.Collections
 <IonButton id="present-alert-text-inputs-example">Click Me</IonButton>
-<IonAlert Trigger="present-alert-text-inputs-example"
+<IonAlert Trigger="present-alert-text-inputs-example" 
           Header="Please enter your info"
           IonAlertDidDismiss="IonAlertDidDismiss"
-          Buttons="@(() =>
-                   {
-                       return new[]
+          Buttons="@(() => 
+                   { 
+                       return new[] 
                        {
                            new AlertButton { Text = "OK", Role = "confirm" },
                        };
                    })"
-          Inputs="@(() =>
+          Inputs="@(() => 
                   {
-                      return new[]
+                      return new[] 
                       {
                           new AlertInput
                           {
@@ -21,14 +21,14 @@
                           },
                           new AlertInput
                           {
-                              Placeholder = "Nickname (max 8 characters)",
+                              Placeholder = "Nickname (max 8 characters)", 
                               Attributes = new Dictionary<string, object>() { { "maxlength", 8 } },
                               Name = "nickname"
                           },
                           new AlertInputNumber
                           {
-                              Placeholder = "Age",
-                              Min = "1",
+                              Placeholder = "Age", 
+                              Min = "1", 
                               Max = "100",
                               Name = "age"
                           },
@@ -40,16 +40,16 @@
                       };
                   })"
           />
-@code{
 
-    [CascadingParameter(Name = nameof(Console))]
-    private PlaygroundConsole? Console { get; init; }
+<p>@((MarkupString)_output)</p>
+
+@code{
+    private string _output = null!;
 
     private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
     {
-        var values = string.Join(",", (args.Values as AlertValuesDictionary)?.Values?.Select(s => $"{{\"{s.Key}\":\"{s.Value}\"}}") ?? []);
-        Console?.Add($"Dismissed with role: {args.Role}");
-        Console?.Add($"{{{values}}}");
+        var values = string.Join("<br/>", (args.Values as AlertValuesDictionary)?.Values?.Select(s => $"<b>{s.Key}</b>&nbsp;:&nbsp;{s.Value}") ?? Enumerable.Empty<string>());
+        _output = $$"""Dismissed with role: <b>{{args.Role}}</b><p>{{values}}</p>""";
     }
 
 }

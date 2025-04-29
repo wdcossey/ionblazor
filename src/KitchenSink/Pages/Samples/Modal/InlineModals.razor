@@ -3,7 +3,7 @@
         <IonTitle>Inline Modal</IonTitle>
     </IonToolbar>
 </IonHeader>
-<IonContent class="ion-padding">
+<IonContent Class="ion-padding">
     <IonButton id="open-modal-inline" Expand="@IonButtonExpand.Block">Open</IonButton>
     <p id="message">@((MarkupString)_message)</p>
     <IonModal @ref="_modalRef" Trigger="open-modal-inline" WillDismiss="WillDismissCallback">
@@ -21,7 +21,7 @@
         <IonContent class="ion-padding">
             <IonItem>
                 <IonLabel Position="@IonLabelPosition.Stacked">Enter your name</IonLabel>
-                <IonInput aria-label="Your name" @bind-value="_inputValue" @bind-value:event="oninput" type="text" placeholder="Your name"></IonInput>
+                <ion-input aria-label="Your name" @bind-value="_inputValue" @bind-value:event="oninput" type="text" placeholder="Your name"></ion-input>
             </IonItem>
         </IonContent>
     </IonModal>
@@ -30,9 +30,9 @@
 @code {
     private IonModal _modalRef = null!;
 
-    private string _message = "This modal example uses triggers to automatically open a modal when the button is clicked.<p/>" +
+    private string _message = "This modal example uses triggers to automatically open a modal when the button is clicked.<p/>" + 
                               "*** This demo is hosted in a <b>&lt;ion-app&gt;</b>, the modal will <b>not</b> be bound to this preview pane!";
-
+    
     private string _inputValue = null!;
 
     private async Task CancelAsync() => await _modalRef.DismissAsync(null, "cancel");
@@ -46,5 +46,5 @@
             _message = $"Hello {args.Data}!";
         }
     }
-
+    
 }

@@ -2,6 +2,11 @@
 
 public sealed partial class IonMenuToggle : IonContentComponent
 {
+    private ElementReference _self;
+
+    /// <inheritdoc/>
+    public override ElementReference IonElement => _self;
+
     /// <summary>
     /// Automatically hides the content when the corresponding menu is not active.
     /// <br/><br/>

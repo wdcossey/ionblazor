@@ -1,14 +1,14 @@
 ﻿@namespace IonBlazor.Components
-@using System.Globalization
 @inherits IonContentComponent
 
-<ion-progress-bar @ref="IonElement"
+<ion-progress-bar @ref="_self"
                   @attributes="@Attributes"
-                  buffer="@Buffer.ToString(CultureInfo.InvariantCulture)"
+                  buffer="@Buffer"
+                  class="@Class"
                   color="@Color"
                   mode="@Mode"
-                  reversed="@Reversed.AsString()"
+                  reversed="@Reversed"
                   type="@Type"
-                  value="@Value.ToString(CultureInfo.InvariantCulture)">
+                  value="@Value">
 
 </ion-progress-bar>

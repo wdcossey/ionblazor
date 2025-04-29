@@ -1,7 +1,7 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-app @ref="IonElement">
+<ion-app @ref="_self">
     <CascadingValue TValue="@IonApp" Name="ion-app" Value="@(this)">
         <CascadingValue TValue="@string" Name="ion-app-mode" Value="Mode">
             @ChildContent

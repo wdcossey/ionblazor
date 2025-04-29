@@ -1,37 +1,39 @@
-﻿namespace IonBlazor.Abstractions;
+﻿using System.Text;
+
+namespace IonBlazor.Abstractions;
 
 public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposable
 {
-    private readonly IJSRuntime _jsRuntime = null!;
-
     [Inject]
-    internal IJSRuntime JsRuntime
-    {
-        get => _jsRuntime;
-        init
-        {
-            _jsRuntime = value;
-            ConfigureJsComponent();
-        }
-    }
+    internal IJSRuntime JsRuntime { get; init; } = null!;
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object>? Attributes { get; init; }
+    public Dictionary<string, object>? Attributes { get; set; }
 
-    protected virtual string? JsImportName => null;
-
-/*#if NET8_0_OR_GREATER
-    internal virtual Task<IJSObjectReference>? JsComponent { get; init; }
-#else
-    internal Lazy<Task<IJSObjectReference>> JsComponent { get; private set; } = null!;
-#endif*/
-
-    internal Lazy<Task<IJSObjectReference>> JsComponent { get; set; } = null!;
+    [Parameter]
+    public virtual string? Class { get; set; }
 
     /// <summary>
     /// Reference to the Ionic (Html) component
     /// </summary>
-    public ElementReference IonElement { get; protected set; }
+    public abstract ElementReference IonElement { get; }
+
+    internal readonly Lazy<Task<IJSObjectReference>> JsComponent;
+
+    protected IonComponent()
+    {
+        JsComponent = new Lazy<Task<IJSObjectReference>>(() =>
+        {
+            Type type = GetType();
+
+            StringBuilder nameBuilder = type.IsGenericType ? new StringBuilder(type.Name[..^2]) : new StringBuilder(type.Name);
+
+            if (!char.IsLower(nameBuilder[0]))
+                nameBuilder[0] = char.ToLowerInvariant(nameBuilder[0]);
+
+            return JsRuntime.ImportAsync(nameBuilder.ToString());
+        });
+    }
 
     public virtual async ValueTask DisposeAsync()
     {
@@ -44,11 +46,5 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
         {
             GC.SuppressFinalize(this);
         }
-    }
-
-    private void ConfigureJsComponent()
-    {
-        JsComponent = new Lazy<Task<IJSObjectReference>>(() =>
-            _jsRuntime.ImportAsync(JsImportName!));
     }
 }

@@ -2,7 +2,12 @@
 
 public sealed partial class IonInfiniteScrollContent : IonComponent
 {
-    [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
+    private ElementReference _self;
+
+    public override ElementReference IonElement => _self;
+
+    [CascadingParameter(Name = nameof(Parent))]
+    public IIonComponent? Parent { get; init; }
 
     /// <summary>
     /// An animated SVG spinner that shows while loading.

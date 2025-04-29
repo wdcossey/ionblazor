@@ -15,7 +15,7 @@
     }
 </style>
 
-<IonModal @ref="_modal" class="picker-modal" Trigger="open-modal" IsOpen="@false" DidDismiss="OnDidDismiss">
+<IonModal @ref="_modal" Class="picker-modal" Trigger="open-modal" IsOpen="@false" DidDismiss="OnDidDismiss">
     <IonToolbar>
         <IonButtons slot="start">
             <IonButton onclick="@(() => { _ = _modal.DismissAsync(null, "cancel"); } )">Cancel</IonButton>
@@ -24,7 +24,7 @@
             <IonButton @onclick="@(() => { _ = _modal.DismissAsync(_currentValue, "confirm"); } )">Done</IonButton>
         </IonButtons>
     </IonToolbar>
-    <IonPicker class="picker-modal-picker">
+    <IonPicker Class="picker-modal-picker">
         <IonPickerColumn Value="@_currentValue" IonChange="OnChange">
             <IonPickerColumnOption Value="" Disabled="@true">--</IonPickerColumnOption>
             <IonPickerColumnOption Value="javascript">Javascript</IonPickerColumnOption>

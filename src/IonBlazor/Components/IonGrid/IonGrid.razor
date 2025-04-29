@@ -1,9 +1,10 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-grid @ref="IonElement"
+<ion-grid @ref="_self"
           @attributes="@Attributes"
-          fixed="@Fixed.AsString()">
+          class="@Class"
+          fixed="@Fixed">
     <CascadingValue TValue="IIonComponent" Name="@nameof(IonRow.Parent)" Value="@(this)">
         @ChildContent
     </CascadingValue>
