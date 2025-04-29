@@ -58,32 +58,17 @@
         <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
     </ItemGroup>
 
-    <Target Name="PrepareNpmAssets" BeforeTargets="Build">
-        <!--
-        <RemoveDir Directories="wwwroot\@ionic" />
-        -->
-
-        <ItemGroup>
-            <IonicDistAssets Include="$(SolutionDir)node_modules\@ionic\core\dist\ionic\**\*.*" />
-            <IonicCssAssets Include="$(SolutionDir)node_modules\@ionic\core\css\**\*.css" />
-        </ItemGroup>
-
-        <Copy
-                SourceFiles="@(IonicDistAssets)"
-                DestinationFiles="@(IonicDistAssets->'wwwroot\@ionic\core\dist\ionic\%(RecursiveDir)%(Filename)%(Extension)')"
-                SkipUnchangedFiles="true" />
-        <Copy
-                SourceFiles="@(IonicCssAssets)"
-                DestinationFiles="@(IonicCssAssets->'wwwroot\@ionic\core\css\%(RecursiveDir)%(Filename)%(Extension)')"
-                SkipUnchangedFiles="true" />
-    </Target>
-
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <DocumentationFile>bin\Release\IonBlazor.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
         <InternalsVisibleTo Include="IonBlazor.UnitTests" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <ProjectReference Include="..\IonBlazor.Assets.Ionic.Svg\IonBlazor.Assets.Ionic.Svg.csproj" />
+      <ProjectReference Include="..\IonBlazor.Assets.Ionic\IonBlazor.Assets.Ionic.csproj" />
     </ItemGroup>
 
 </Project>
