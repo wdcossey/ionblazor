@@ -39,20 +39,23 @@
       }
     </style>
 
-    <IonModal @ref="_modal" id="example-modal" trigger="open-custom-dialog">
+    <IonModal @ref="_modal"
+              id="example-modal"
+              Trigger="open-custom-dialog"
+              BackdropDismiss="@false">
         <div class="wrapper">
             <h1>Dialog header</h1>
 
             <IonList lines="none">
-                <IonItem Button="@true" Detail="@false" @onclick="Dismiss">
+                <IonItem Button="@true" Detail="@false" @onclick="@(() => Dismiss("Item 1"))">
                     <IonIcon Name="person-circle"></IonIcon>
                     <IonLabel>Item 1</IonLabel>
                 </IonItem>
-                <IonItem Button="@true" Detail="@false" @onclick="Dismiss">
+                <IonItem Button="@true" Detail="@false" @onclick="@(() => Dismiss("Item 2"))">
                     <IonIcon Name="person-circle"></IonIcon>
                     <IonLabel>Item 2</IonLabel>
                 </IonItem>
-                <IonItem Button="@true" Detail="@false" @onclick="Dismiss">
+                <IonItem Button="@true" Detail="@false" @onclick="@(() => Dismiss("Item 3"))">
                     <IonIcon Name="person-circle"></IonIcon>
                     <IonLabel>Item 3</IonLabel>
                 </IonItem>
@@ -62,10 +65,14 @@
 </IonContent>
 
 @code {
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
     private IonModal _modal = null!;
 
-    private async Task Dismiss()
+    private async Task Dismiss(string value)
     {
+        _ = Console?.Add($"Selected: {value}");
         await _modal.DismissAsync();
     }
 

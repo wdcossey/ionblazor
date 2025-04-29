@@ -1,4 +1,6 @@
-﻿namespace IonBlazor.Services;
+﻿using System.Collections.Immutable;
+
+namespace IonBlazor.Services;
 
 public sealed class IonToastController: ComponentBase, IAsyncDisposable
 {
@@ -11,7 +13,7 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
         ToastControllerOptions options = new();
         configure(options);
 
-        IEnumerable<IIonToastButton>? buttons = null;
+        IImmutableList<IIonToastButton>? buttons = null;
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
 
         if (options.ButtonsBuilder is not null)

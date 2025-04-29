@@ -1,25 +1,27 @@
 ﻿namespace IonBlazor.Components;
 
-public class ActionSheetButton : IActionSheetButton
+public interface IActionSheetButton
 {
+    public delegate ValueTask HandlerDelegate(IActionSheetButton? button, int? index);
+
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Text { get; set; }
+    string? Text { get; }
 
     [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Role { get; set; }
+    string? Role { get; }
 
     [JsonPropertyName("icon"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Icon { get; set; }
+    string? Icon { get; }
 
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? CssClass { get; set; }
+    string? CssClass { get; }
 
     [JsonPropertyName("htmlAttributes"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public IDictionary<string, string> HtmlAttributes { get; set; } = null!;
+    IDictionary<string, string> HtmlAttributes { get; }
 
     [JsonIgnore]
-    public IActionSheetButton.HandlerDelegate? Handler { get; set; }
+    HandlerDelegate? Handler { get; }
 
     [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public object? Data { get; set; }
+    object? Data { get; }
 }

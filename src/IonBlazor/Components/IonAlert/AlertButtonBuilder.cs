@@ -1,13 +1,15 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Collections.Immutable;
+
+namespace IonBlazor.Components;
 
 public sealed class AlertButtonBuilder
 {
-    private readonly IList<IAlertButton> _buttons = new List<IAlertButton>();
+    private readonly List<IAlertButton> _buttons = [];
     internal AlertButtonBuilder() { }
 
-    public IReadOnlyList<IAlertButton> Build()
+    public IImmutableList<IAlertButton> Build()
     {
-        return _buttons.ToArray();
+        return _buttons.ToImmutableList();
     }
 
     public AlertButtonBuilder Add<TButton>(Action<TButton> configure) where TButton : class, IAlertButton, new()

@@ -1,4 +1,6 @@
-﻿namespace IonBlazor.Services;
+﻿using System.Collections.Immutable;
+
+namespace IonBlazor.Services;
 
 public sealed class IonAlertController: ComponentBase, IAsyncDisposable
 {
@@ -6,14 +8,12 @@ public sealed class IonAlertController: ComponentBase, IAsyncDisposable
 
     private static IJSObjectReference? _jsComponent;
 
-    //public static ValueTask PresentAsync(Action<ToastControllerOptions> configure)
-
     public static async ValueTask PresentAsync(Action<AlertControllerOptions> configure)
     {
         AlertControllerOptions options = new();
         configure(options);
 
-        IEnumerable<IAlertButton>? buttons = null;
+        IImmutableList<IAlertButton>? buttons = null;
 
         AlertInputBuilder alertInputBuilder = new();
         options.InputsBuilder?.Invoke(alertInputBuilder);

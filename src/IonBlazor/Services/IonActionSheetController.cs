@@ -1,4 +1,6 @@
-﻿namespace IonBlazor.Services;
+﻿using System.Collections.Immutable;
+
+namespace IonBlazor.Services;
 
 public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
 {
@@ -11,7 +13,7 @@ public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
         ActionSheetControllerOptions options = new();
         configure(options);
 
-        IEnumerable<IActionSheetButton>? buttons = null;
+        IImmutableList<IActionSheetButton>? buttons = null;
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
 
         if (options.ButtonsBuilder is not null)

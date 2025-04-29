@@ -1,13 +1,15 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Collections.Immutable;
+
+namespace IonBlazor.Components;
 
 public sealed class ActionSheetButtonBuilder
 {
-    private readonly IList<IActionSheetButton> _buttons = new List<IActionSheetButton>();
+    private readonly List<IActionSheetButton> _buttons = [];
     internal ActionSheetButtonBuilder() { }
 
-    public IReadOnlyList<IActionSheetButton> Build()
+    public IImmutableList<IActionSheetButton> Build()
     {
-        return _buttons.ToArray();
+        return _buttons.ToImmutableList();
     }
 
     public ActionSheetButtonBuilder Add<TButton>(Action<TButton> configure)

@@ -1,13 +1,16 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Collections.Immutable;
+
+namespace IonBlazor.Components;
 
 public sealed class ToastButtonBuilder
 {
-    private readonly IList<IIonToastButton> _buttons = new List<IIonToastButton>();
+    private readonly List<IIonToastButton> _buttons = [];
+
     internal ToastButtonBuilder() { }
 
-    public IReadOnlyList<IIonToastButton> Build()
+    public IImmutableList<IIonToastButton> Build()
     {
-        return _buttons.ToArray();
+        return _buttons.ToImmutableList();
     }
 
     public ToastButtonBuilder Add<TButton>(Action<TButton> configure) where TButton : class, IIonToastButton, new()
