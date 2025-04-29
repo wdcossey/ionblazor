@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6B7F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Wasm", "samples\IonBlazor.Wasm\IonBlazor.Wasm.csproj", "{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Assets.Ionic.Core", "src\IonBlazor.Assets.Ionic.Core\IonBlazor.Assets.Ionic.Core.csproj", "{D7FA0205-74C0-42F0-8CD9-B1B8E99184E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Assets.Ionic.Svg", "src\IonBlazor.Assets.Ionic.Svg\IonBlazor.Assets.Ionic.Svg.csproj", "{86018B1F-5D90-44E9-B9F4-4565F86FE53D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,14 @@ Global
 		{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7FA0205-74C0-42F0-8CD9-B1B8E99184E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7FA0205-74C0-42F0-8CD9-B1B8E99184E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7FA0205-74C0-42F0-8CD9-B1B8E99184E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7FA0205-74C0-42F0-8CD9-B1B8E99184E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86018B1F-5D90-44E9-B9F4-4565F86FE53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86018B1F-5D90-44E9-B9F4-4565F86FE53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86018B1F-5D90-44E9-B9F4-4565F86FE53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86018B1F-5D90-44E9-B9F4-4565F86FE53D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
