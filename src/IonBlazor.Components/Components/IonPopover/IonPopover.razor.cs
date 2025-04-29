@@ -56,6 +56,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
 
     public async Task SetIsOpen(bool value)
     {
+        //TODO: Fix this, remove `StateHasChanged`
         IsOpen = value;
         StateHasChanged();
     }
@@ -185,6 +186,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
         );
     }
 
+    /// <inheritdoc />
     public override async ValueTask DisposeAsync()
     {
         _didDismissReference.Dispose();
@@ -199,7 +201,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     }
 
     /// <summary>
-    /// Description	Dismiss the popover overlay after it has been presented.
+    /// Dismiss the popover overlay after it has been presented.
     /// </summary>
     /// <param name="data"></param>
     /// <param name="role"></param>
