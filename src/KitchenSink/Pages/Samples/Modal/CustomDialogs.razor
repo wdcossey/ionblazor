@@ -42,20 +42,21 @@
     <IonModal @ref="_modal"
               id="example-modal"
               Trigger="open-custom-dialog"
+              DidDismiss="IonModalDidDismiss"
               BackdropDismiss="@false">
         <div class="wrapper">
             <h1>Dialog header</h1>
 
             <IonList lines="none">
-                <IonItem Button="@true" Detail="@false" @onclick="@(() => Dismiss("Item 1"))">
+                <IonItem Button="@true" Detail="@false" @onclick="@(() => Dismiss("item1"))">
                     <IonIcon Name="person-circle"></IonIcon>
                     <IonLabel>Item 1</IonLabel>
                 </IonItem>
-                <IonItem Button="@true" Detail="@false" @onclick="@(() => Dismiss("Item 2"))">
+                <IonItem Button="@true" Detail="@false" @onclick="@(() => Dismiss("item2"))">
                     <IonIcon Name="person-circle"></IonIcon>
                     <IonLabel>Item 2</IonLabel>
                 </IonItem>
-                <IonItem Button="@true" Detail="@false" @onclick="@(() => Dismiss("Item 3"))">
+                <IonItem Button="@true" Detail="@false" @onclick="@(() => Dismiss("item3"))">
                     <IonIcon Name="person-circle"></IonIcon>
                     <IonLabel>Item 3</IonLabel>
                 </IonItem>
@@ -70,10 +71,15 @@
 
     private IonModal _modal = null!;
 
-    private async Task Dismiss(string value)
+    private async Task Dismiss(string role)
     {
-        _ = Console?.Add($"Selected: {value}");
-        await _modal.DismissAsync();
+        _ = Console?.Add($"Selected: {role}");
+        await _modal.DismissAsync(role: role);
+    }
+
+    private void IonModalDidDismiss(IonModalDismissEventArgs args)
+    {
+        Console?.Add($"Dismissed with role: {args.Role}");
     }
 
 }
