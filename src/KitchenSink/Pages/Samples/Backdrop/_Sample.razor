@@ -1,0 +1,28 @@
+﻿@page "/samples/backdrop"
+
+@inherits Sample
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Basic Usage</h2>
+        <p>The backdrop prevents clicking or tapping on the content behind it. It is transparent by default, so the below demo includes CSS to make it visible.</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <BasicUsage/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Styling</h2>
+        <p>The backdrop can be customized by assigning CSS properties directly to the backdrop element. Common properties include <code>background-color</code>, <code>background</code> and <code>opacity</code>.</p>
+        <p>Content can be displayed above the backdrop by setting a <code>z-index</code> on the content, higher than the backdrop (defaults to <code>2</code>).</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <Styling/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>

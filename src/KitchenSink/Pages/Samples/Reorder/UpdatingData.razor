@@ -1,0 +1,40 @@
+﻿<IonList>
+    <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+    <IonReorderGroup Disabled="@false" IonItemReorder="@OnIonItemReorderAsync">
+        @foreach (var item in _items)
+        {
+            <IonItem @key="@item">
+                <IonLabel>
+                     Item @item
+                </IonLabel>
+                <IonReorder slot="end"></IonReorder>
+            </IonItem>
+        }
+    </IonReorderGroup>
+</IonList>
+
+@code {
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private List<int> _items = [1, 2, 3, 4, 5];
+
+    //reorderItems(items);
+    private async Task OnIonItemReorderAsync(IonReorderGroupIonItemReorderEventArgs args)
+    {
+        // Before complete is called with the items they will remain in the
+        // order before the drag
+        Console?.Add($"Before complete {string.Join(",", _items)}");
+
+        // Finish the reorder and position the item in the DOM based on
+        // where the gesture ended. Update the items variable to the
+        // new order of items
+        _items = (await args.Sender!.CompleteAsync(list: _items))!.ToList();
+
+        // Reorder the items in the DOM
+        //reorderItems(items);
+
+        // After complete is called the items will be in the new order
+        Console?.Add($"After complete {string.Join(",", _items)}");
+    }
+}

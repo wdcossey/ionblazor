@@ -1,6 +1,3 @@
 ﻿namespace IonBlazor.Extensions;
 
-public static class MauiAppBuilderExtensions
-{
-    
-}
+public static class MauiAppBuilderExtensions;

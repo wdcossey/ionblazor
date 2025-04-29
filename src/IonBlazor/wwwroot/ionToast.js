@@ -1,9 +1,11 @@
-﻿export function dismiss(element) {
+﻿import { dotNetCallbackMethod } from './common.js';
+
+export function dismiss(element) {
     element.dismiss();
 }
 
 export function withButtons(element, buttons, callback) {
-    
+
     if (buttons == null)
         return;
 
@@ -12,6 +14,6 @@ export function withButtons(element, buttons, callback) {
             callback.invokeMethodAsync(dotNetCallbackMethod, {value, index});
         }
     });
-    
+
     element.buttons = buttons;
 }

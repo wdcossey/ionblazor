@@ -1,7 +1,4 @@
-﻿
-const dotNetCallbackMethod = 'OnCallbackEvent';
-
-export function attachListener(type, element, ref) {
+﻿export function attachListener(type, element, ref) {
     element.addEventListener(type, (ev) => {
         ref.invokeMethodAsync(dotNetCallbackMethod, { tagName: ev.target.tagName, detail: ev.detail });
     });
@@ -12,3 +9,5 @@ export function attachListeners(configs, element) {
         attachListener(config.event, element, config.ref)
     });
 }
+
+export const dotNetCallbackMethod = 'OnCallbackEvent';

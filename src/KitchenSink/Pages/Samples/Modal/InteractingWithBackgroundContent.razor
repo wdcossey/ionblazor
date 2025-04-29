@@ -1,0 +1,84 @@
+﻿<IonHeader>
+    <IonToolbar>
+        <IonTitle>App</IonTitle>
+    </IonToolbar>
+</IonHeader>
+<IonContent class="ion-padding">
+    <p>You can interact with the +/- buttons until the sheet is fully expanded.</p>
+
+    <div class="counter__section">
+        <IonButton id="decrement" @onclick="@Decrement">-</IonButton>
+        <p id="counter">@_counter</p>
+        <IonButton id="increment" @onclick="@Increment">+</IonButton>
+    </div>
+
+
+    <IonModal @ref="_modal" IsOpen="@true" InitialBreakpoint="@(0.25d)" BackdropDismiss="@false" BackdropBreakpoint="@(0.5d)"  >
+        <IonContent>
+            <IonSearchbar @ref="_searchbar" @onclick="@(async () => await _modal.SetCurrentBreakpointAsync(0.75))" Placeholder="Search" ></IonSearchbar>
+            <IonList>
+                <IonItem>
+                    <IonAvatar slot="start">
+                        <IonImg Src="https://i.pravatar.cc/300?u=b" />
+                    </IonAvatar>
+                    <IonLabel>
+                        <h2>Connor Smith</h2>
+                        <p>Sales Rep</p>
+                    </IonLabel>
+                </IonItem>
+                <IonItem>
+                    <IonAvatar slot="start">
+                        <IonImg Src="https://i.pravatar.cc/300?u=a" />
+                    </IonAvatar>
+                    <IonLabel>
+                        <h2>Daniel Smith</h2>
+                        <p>Product Designer</p>
+                    </IonLabel>
+                </IonItem>
+                <IonItem>
+                    <IonAvatar slot="start">
+                        <IonImg Src="https://i.pravatar.cc/300?u=d" />
+                    </IonAvatar>
+                    <IonLabel>
+                        <h2>Greg Smith</h2>
+                        <p>Director of Operations</p>
+                    </IonLabel>
+                </IonItem>
+                <IonItem>
+                    <IonAvatar slot="start">
+                        <IonImg Src="https://i.pravatar.cc/300?u=e" />
+                    </IonAvatar>
+                    <IonLabel>
+                        <h2>Zoey Smith</h2>
+                        <p>CEO</p>
+                    </IonLabel>
+                </IonItem>
+            </IonList>
+        </IonContent>
+    </IonModal>
+</IonContent>
+
+@code {
+
+    int _counter = 0;
+    IonModal _modal = null!;
+    IonSearchbar _searchbar = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+    }
+
+    private void Increment()
+    {
+        _counter++;
+    }
+
+    private void Decrement()
+    {
+        _counter--;
+    }
+}

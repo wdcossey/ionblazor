@@ -1,17 +1,7 @@
-export function counterFormatter(element, callback) {
-    element.counterFormatter = async (inputLength, maxLength)=> {
-        return await callback.invokeMethodAsync('OnCallbackEvent', {inputLength, maxLength});
-    };
-}
+import { dotNetCallbackMethod } from './common.js';
 
-export function counterFormat(element, format) {
-
-    if (format == null)
-        return;
-
-    element.counterFormatter = (inputLength, maxLength) => {
-        return eval(format);
-    };
+export function counterFormatter(element, expression) {
+    element.counterFormatter = eval(expression);
 }
 
 export function setValue(element, value) {
@@ -21,7 +11,7 @@ export function setValue(element, value) {
 
 export async function getInputElement(element, callback) {
     let result = await element.getInputElement();
-    return await callback.invokeMethodAsync('OnCallbackEvent', {result});
+    return await callback.invokeMethodAsync(dotNetCallbackMethod, {result});
 }
 
 export function setFocus(element) {

@@ -1,5 +1,5 @@
 export function close(element, animated) {
-    return element.close(animated);
+    return element?.close(animated) ?? false;
 }
 
 export function isActive(element) {

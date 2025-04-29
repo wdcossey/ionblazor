@@ -1,4 +1,6 @@
-﻿export function setValue(element, value) {
+﻿import { dotNetCallbackMethod } from './common.js';
+
+export function setValue(element, value) {
     element.value = value;
 }
 

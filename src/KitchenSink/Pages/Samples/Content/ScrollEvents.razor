@@ -1,13 +1,13 @@
 ﻿@using System.Text.Json
-<IonContent class="ion-padding" 
-            ScrollEvents="@true" 
-            IonScrollStart="OnIonScrollStart" 
-            IonScroll="OnIonScroll" 
+<IonContent class="ion-padding"
+            ScrollEvents="@true"
+            IonScrollStart="OnIonScrollStart"
+            IonScroll="OnIonScroll"
             IonScrollEnd="OnIonScrollEnd" >
     <h1>Scroll to fire the scroll events and view them in the console.</h1>
 
     <__content/>
-    
+
 </IonContent>
 
 @code {
@@ -16,13 +16,13 @@
     {
         WriteIndented = false
     };
-    
+
     private void OnIonScrollStart()
     {
         Console.WriteLine("scroll start");
     }
 
-    private void OnIonScroll(IonContent.IonScrollEventArgs? args)
+    private void OnIonScroll(IonContentScrollEventArgs? args)
     {
         Console.WriteLine($"scroll {JsonSerializer.Serialize(args, _serializerOptions)}");
     }

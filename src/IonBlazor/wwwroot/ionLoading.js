@@ -6,11 +6,6 @@ export async function present(element) {
     await element.present();
 }
 
-export function setMessage(element, message) {
+export function updateMessage(element, message) {
     element.message = message;
-}
-
-export async function presentWithMessage(element, message) {
-    element.message = message;
-    await present(element);
 }

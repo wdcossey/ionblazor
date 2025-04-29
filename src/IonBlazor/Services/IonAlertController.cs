@@ -1,67 +1,67 @@
 ﻿namespace IonBlazor.Services;
 
-public class IonAlertController: ComponentBase, IAsyncDisposable
+public sealed class IonAlertController: ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
-    
-    private static IJSObjectReference? _ionComponent;
-    
-    public static async ValueTask PresentAsync(
-        string? header = null, 
-        string? subHeader = null, 
-        string? message = null,
-        Func<IEnumerable<AlertButton>>? buttonsFunc = null,
-        Func<IEnumerable<AlertInput>>? inputsFunc = null,
-        IDictionary<string, string>? htmlAttributes = null,
-        Action<IonAlertDismissEventArgs>? onDidDismiss = null!)
+
+    private static IJSObjectReference? _jsComponent;
+
+    //public static ValueTask PresentAsync(Action<ToastControllerOptions> configure)
+
+    public static async ValueTask PresentAsync(Action<AlertControllerOptions> configure)
     {
-        //AlertInput[]?
-        //[Parameter] public Func<AlertInput[]>? Inputs { get; set; }
-        //      if (_inputs?.Length > 0)
-        //await JsComponent.InvokeVoidAsync("addInputs", _self, _inputs);
-        
-        IEnumerable<AlertButton>? buttons = null;
-        IEnumerable<AlertInput>? inputs = inputsFunc?.Invoke() ?? Array.Empty<AlertInput>();
-        
+        AlertControllerOptions options = new();
+        configure(options);
+
+        IEnumerable<IAlertButton>? buttons = null;
+
+        AlertInputBuilder alertInputBuilder = new();
+        options.InputsBuilder?.Invoke(alertInputBuilder);
+        IEnumerable<IAlertInput> inputs = alertInputBuilder.Build();
+
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
-        
-        if (buttonsFunc is not null)
+
+        if (options.ButtonsBuilder is not null)
         {
-            buttons = buttonsFunc?.Invoke();
+            AlertButtonBuilder toastButtonBuilder = new();
+            options.ButtonsBuilder.Invoke(toastButtonBuilder);
+            buttons = toastButtonBuilder.Build();
+
             buttonHandler = IonicEventCallback<JsonObject?>.Create(
                 async args =>
                 {
                     var index = args?["index"]?.GetValue<int?>();
-                    var button = buttons?.ElementAtOrDefault(index ?? -1);
+                    IAlertButton? button = buttons?.ElementAtOrDefault(index ?? -1);
                     await (button?.Handler?.Invoke(new AlertButtonEventArgs() { Sender = null, Button = button, Index = index}) ?? ValueTask.CompletedTask);
                     // ReSharper disable once AccessToModifiedClosure
                     buttonHandler?.Dispose();
                 });
         }
-        
-        var didDismissHandler = IonicEventCallback<JsonObject?>.Create(async args =>
+
+        var didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
         {
-            var values = IonAlert.GetValues(args);
-            
-            onDidDismiss?.Invoke(new IonAlertDismissEventArgs
+            IAlertValues values = IonAlert.GetValues(args);
+
+            options.OnDidDismiss?.Invoke(new IonAlertDismissEventArgs
             {
                 Sender = null,
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
                 Values = values
             });
+
+            return Task.CompletedTask;
         });
-        
-        
-        await (_ionComponent?.InvokeVoidAsync("presentAlert", header, subHeader, message, buttons, inputs, buttonHandler, didDismissHandler, htmlAttributes) ?? ValueTask.CompletedTask);
+
+
+        await (_jsComponent?.InvokeVoidAsync("presentAlert", options, buttons, inputs, buttonHandler, didDismissHandler) ?? ValueTask.CompletedTask);
     }
 
     public async ValueTask DisposeAsync()
     {
-        GC.SuppressFinalize(this);
-        await (_ionComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
-        _ionComponent = null;
+        await (_jsComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
+        _jsComponent = null;
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -69,6 +69,6 @@ public class IonAlertController: ComponentBase, IAsyncDisposable
         if (!firstRender)
             return;
 
-        _ionComponent = await JsRuntime.ImportAsync("alertController");
+        _jsComponent = await JsRuntime.ImportAsync(nameof(IonAlertController));
     }
 }

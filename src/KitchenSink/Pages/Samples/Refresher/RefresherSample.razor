@@ -1,100 +1,125 @@
 ﻿@page "/samples/refresher"
 
-<PreviewContainer Title="Basic Usage">
-    <DevicePreview Mode="@IonMode.MaterialDesign">
-        <IonHeader>
-            <IonToolbar>
-                <IonTitle>Pull to Refresh</IonTitle>
-            </IonToolbar>
-        </IonHeader>
+<PlaygroundContainer>
+    <Header>
+        <h2>Basic Usage</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Pull to Refresh</IonTitle>
+                </IonToolbar>
+            </IonHeader>
 
-        <IonContent Class="ion-padding">
-            <IonRefresher slot="fixed" IonRefresh="BasicIonRefreshCallback">
-                <IonRefresherContent></IonRefresherContent>
-            </IonRefresher>
+            <IonContent class="ion-padding">
+                <IonRefresher slot="fixed" IonRefresh="BasicIonRefreshCallback">
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
 
-            <p>Pull this content down to trigger the refresh.</p>
-        </IonContent>
-    </DevicePreview>
-</PreviewContainer>
-
-<PreviewContainer Title="Pull Properties">
-    <DevicePreview Mode="@IonMode.MaterialDesign">
-        <IonHeader>
-            <IonToolbar>
-                <IonTitle>Pull to Refresh</IonTitle>
-            </IonToolbar>
-        </IonHeader>
-
-        <IonContent Class="ion-padding">
-            <IonRefresher slot="fixed" PullFactor="0.5" PullMin="100" PullMax="200" IonRefresh="PullPropertiesIonRefreshCallback">
-                <IonRefresherContent></IonRefresherContent>
-            </IonRefresher>
-
-            <p>Pull this content down to trigger the refresh.</p>
-        </IonContent>
-    </DevicePreview>
-</PreviewContainer>
-
-<PreviewContainer Title="Custom Refresher Content">
-    <DevicePreview Mode="@IonMode.MaterialDesign">
-        <IonHeader>
-            <IonToolbar>
-                <IonTitle>Pull to Refresh</IonTitle>
-            </IonToolbar>
-        </IonHeader>
-
-        <IonContent Class="ion-padding">
-            <IonRefresher slot="fixed" IonRefresh="CustomContentIonRefreshCallback">
-                <IonRefresherContent
-                    PullingIcon="chevron-down-circle-outline"
-                    PullingText="Pull to refresh"
-                    RefreshingSpinner="@IonSpinnerName.Circles"
-                    RefreshingText="Refreshing...">
-                </IonRefresherContent>
-            </IonRefresher>
-
-            <p>Pull this content down to trigger the refresh.</p>
-        </IonContent>
-    </DevicePreview>
-</PreviewContainer>
-
-<PreviewContainer Title="Usage with Virtual Scroll">
-    <DevicePreview Mode="@IonMode.MaterialDesign">
-        <IonHeader>
-            <IonToolbar>
-                <IonTitle>Pull to Refresh</IonTitle>
-            </IonToolbar>
-        </IonHeader>
-
-        <IonContent ScrollY="false">
-            <IonRefresher slot="fixed" IonRefresh="VirtualScrollIonRefreshCallback">
-                <IonRefresherContent></IonRefresherContent>
-            </IonRefresher>
-
-            <div class="ion-content-scroll-host ion-padding">
                 <p>Pull this content down to trigger the refresh.</p>
-            </div>
-        </IonContent>
-    </DevicePreview>
-</PreviewContainer>
+            </IonContent>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer Title="Advanced Usage">
-    <DevicePreview Mode="@IonMode.MaterialDesign">
-        <IonHeader>
-            <IonToolbar>
-                <IonTitle>Pull to Refresh</IonTitle>
-            </IonToolbar>
-        </IonHeader>
+<PlaygroundContainer>
+    <Header>
+        <h2>Pull Properties</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Pull to Refresh</IonTitle>
+                </IonToolbar>
+            </IonHeader>
 
-        <IonContent>
-            <IonRefresher slot="fixed" IonRefresh="AdvancedIonRefreshCallback">
-                <IonRefresherContent></IonRefresherContent>
-            </IonRefresher>
+            <IonContent class="ion-padding">
+                <IonRefresher slot="fixed" PullFactor="0.5" PullMin="100" PullMax="200" IonRefresh="PullPropertiesIonRefreshCallback">
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
 
-            <IonList id="list">
-                @foreach (var (name, unread) in _list)
-                {
+                <p>Pull this content down to trigger the refresh.</p>
+            </IonContent>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Custom Refresher Content</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Pull to Refresh</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+
+            <IonContent class="ion-padding">
+                <IonRefresher slot="fixed" IonRefresh="CustomContentIonRefreshCallback">
+                    <IonRefresherContent
+                        PullingIcon="chevron-down-circle-outline"
+                        PullingText="Pull to refresh"
+                        RefreshingSpinner="@IonSpinnerName.Circles"
+                        RefreshingText="Refreshing...">
+                    </IonRefresherContent>
+                </IonRefresher>
+
+                <p>Pull this content down to trigger the refresh.</p>
+            </IonContent>
+        </DevicePreview>
+    </ChildContent>
+
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Usage with Virtual Scroll</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Pull to Refresh</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+
+            <IonContent ScrollY="false">
+                <IonRefresher slot="fixed" IonRefresh="VirtualScrollIonRefreshCallback">
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
+
+                <div class="ion-content-scroll-host ion-padding">
+                    <p>Pull this content down to trigger the refresh.</p>
+                </div>
+            </IonContent>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Advanced Usage</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Pull to Refresh</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+
+            <IonContent>
+                <IonRefresher slot="fixed" IonRefresh="AdvancedIonRefreshCallback">
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
+
+                <IonList id="list">
+                    @foreach (var (name, unread) in _list)
+                    {
                     <IonItem Button="@true">
                         <IonIcon Color="@IonColor.Primary" Name="@(unread ? "ellipse" : string.Empty)" slot="start"></IonIcon>
                         <IonLabel>
@@ -102,9 +127,12 @@
                             <p>New message from @name</p>
                         </IonLabel>
                     </IonItem>
-                }
-            </IonList>
-        </IonContent>
+                    }
+                </IonList>
+            </IonContent>
 
-    </DevicePreview>
-</PreviewContainer>
+        </DevicePreview>
+    </ChildContent>
+
+
+</PlaygroundContainer>

@@ -1,72 +1,151 @@
 ﻿@page "/samples/modal"
 
-<h2>Inline Modals (Recommended)</h2>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
-            <DevicePreview Mode="@IonMode.MaterialDesign">
-                <InlineModals/>
-            </DevicePreview>
-        </div>
-    </div>
-</div>
+<PlaygroundContainer>
+    <Header>
+        <h2>Inline Modals (Recommended)</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <InlineModals/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h3>Using <code>isOpen</code></h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
-            <DevicePreview Mode="@IonMode.MaterialDesign">
-                <UsingIsOpen/>
-            </DevicePreview>
-        </div>
-    </div>
-</div>
-
+<PlaygroundContainer>
+    <Header>
+        <h3>Using <code>isOpen</code></h3>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <UsingIsOpen/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
 <h2>Preventing a Modal from Dismissing</h2>
 
-<h3>Setting a boolean value</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
-            <DevicePreview Mode="@IonMode.MaterialDesign">
-                <SettingABooleanValue/>
-            </DevicePreview>
-        </div>
-    </div>
-</div>
+<PlaygroundContainer>
+    <Header>
+        <h3>Setting a boolean value</h3>
+        <p>
+            Developers can set
+            <code>canDismiss</code>
+            to a boolean value. If
+            <code>canDismiss</code>
+            is
+            <code>true</code>
+            , then the modal will close when users attempt to dismiss the modal. If
+            <code>canDismiss</code>
+            is
+            <code>false</code>
+            , then the modal will not close when users attempt to dismiss the modal.
+        </p>
+
+        <p>
+            Setting a boolean value should be used when you need to require a particular action to be taken prior to a modal being dismissed. For example, if developers want to require that a "Terms of Use" checkbox is checked prior to closing the modal, they could set
+            <code>canDismiss</code>
+            to
+            <code>false</code>
+            initially and update it to
+            <code>true</code>
+            when the checkbox is checked.
+        </p>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <SettingABooleanValue/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
 
 <h3>Setting a callback function</h3>
 <div class="playground__container">
     <div class="playground__preview">
         <div class="container">
-            <DevicePreview Mode="@IonMode.MaterialDesign">
+            <DevicePreview>
                 <SettingACallbackFunction/>
             </DevicePreview>
         </div>
     </div>
 </div>
 
-<PreviewContainer Title="Sheet Modal">
-    <DevicePreview Mode="@IonMode.MaterialDesign">
-        <SheetModal/>
-    </DevicePreview>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h3>Modifying dismiss behavior in child components</h3>
+        <p>In certain scenarios, developers may need to customize the behavior of the <code>canDismiss</code> callback based on the state of a presented modal. This customization can be particularly useful, for instance, when developers want to prevent the modal from being dismissed if a form within it is invalid.</p>
+        <p>To achieve this customization, child components can employ various techniques such as function callbacks, event emission, or other reactivity mechanisms to communicate with the parent component and update the conditions governing the <code>canDismiss</code> callback.</p>
+        <p>Here's a simplified example illustrating how a child component can interact with a parent component to modify the <code>canDismiss</code> callback:</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <ModifyingDismissBehavior/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer Title="Styling" >
-    <DevicePreview Mode="@IonMode.MaterialDesign">
-        <Styling/>
-    </DevicePreview>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h2>Sheet Modal</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <SheetModal/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer SubTitle="Animations">
-    <DevicePreview Mode="@IonMode.MaterialDesign">
-        <StylingAnimations/>
-    </DevicePreview>
-</PreviewContainer>
+@*<PlaygroundContainer>
+    <Header>
+        <h3>Interacting with background content</h3>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <InteractingWithBackgroundContent/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>*@
 
-<PreviewContainer SubTitle="Custom Dialogs">
-    <DevicePreview Mode="@IonMode.MaterialDesign">
-        <CustomDialogs/>
-    </DevicePreview>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h2>Styling</h2>
+        <p>Modals are presented at the root of your application so they overlay your entire app. This behavior applies to both inline modals and modals presented from a controller. As a result, custom modal styles can not be scoped to a particular component as they will not apply to the modal. Instead, styles must be applied globally. For most developers, placing the custom styles in <code>global.css</code> is sufficient.</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <Styling/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h3>Animations</h3>
+        <p>The enter and leave animations can be customized by using our animation builder and assigning animations to <code>enterAnimation</code> and <code>leaveAnimation</code>.</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview>
+            <StylingAnimations/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Custom Dialogs</h2>
+        <p>
+            While
+            <code>ion-modal</code>
+            is most often used for full-page views, cards, or sheets, it is also possible to use it for custom dialogs. This is useful if developers need an interface that is more complex than what components such as
+            <a href="https://ionicframework.com/docs/api/alert">ion-alert</a>
+            or
+            <a href="https://ionicframework.com/docs/api/loading">ion-loading</a>
+            provide.
+        </p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <CustomDialogs/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>

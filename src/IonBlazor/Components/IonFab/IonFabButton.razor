@@ -1,0 +1,21 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-fab-button @ref="IonElement"
+                @attributes="@Attributes"
+                activated="@Activated.AsString()"
+                close-icon="@CloseIcon"
+                color="@Color"
+                disabled="@Disabled.AsString()"
+                download="@Download"
+                href="@Href"
+                mode="@Mode"
+                rel="@Rel"
+                router-direction="@RouterDirection"
+                show="@Show.AsString()"
+                size="@Size"
+                target="@Target"
+                translucent="@Translucent"
+                type="@Type">
+    @ChildContent
+</ion-fab-button>

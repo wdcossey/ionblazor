@@ -1,0 +1,10 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-app @ref="IonElement">
+    <CascadingValue TValue="@IonApp" Name="ion-app" Value="@(this)">
+        <CascadingValue TValue="@string" Name="ion-app-mode" Value="Mode">
+            @ChildContent
+        </CascadingValue>
+    </CascadingValue>
+</ion-app>

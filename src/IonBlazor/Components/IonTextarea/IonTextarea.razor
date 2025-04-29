@@ -1,0 +1,35 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-textarea @ref="@IonElement"
+              @attributes="@Attributes"
+              auto-grow="@AutoGrow.AsString()"
+              autocapitalize="@Autocapitalize"
+              autofocus="@Autofocus.AsString()"
+              clear-on-edit="@ClearOnEdit.AsString()"
+              color="@Color"
+              cols="@Cols?.ToString()"
+              counter="@Counter.AsString()"
+              debounce="@Debounce?.ToString()"
+              disabled="@Disabled.AsString()"
+              enterkeyhint="@Enterkeyhint"
+              error-text="@ErrorText"
+              fill="@Fill"
+              helper-text="@HelperText"
+              inputmode="@InputMode"
+              label="@Label"
+              label-placement="@LabelPlacement"
+              maxlength="@Maxlength?.ToString()"
+              minlength="@Minlength?.ToString()"
+              mode="@Mode"
+              name="@Name"
+              placeholder="@Placeholder"
+              readonly="@Readonly.AsString()"
+              required="@Required.AsString()"
+              rows="@Rows?.ToString()"
+              shape="@Shape"
+              spellcheck="@Spellcheck.AsString()"
+              value="@Value"
+              wrap="@Wrap.AsString()">
+    @ChildContent
+</ion-textarea>

@@ -10,7 +10,7 @@
 
  /* CSS Shadow Parts */
 ::deep .css-shadow-parts ion-segment-button::part(indicator-background) {
-    background: #08a391;
+    background: #9780e5;
 }
 
 /* Material Design styles */
@@ -19,7 +19,7 @@
 }
 
 ::deep .css-shadow-parts .segment-button-checked.md::part(native) {
-    color: #08a391;
+    color: #9780e5;
 }
 
 ::deep .css-shadow-parts ion-segment-button.md::part(indicator-background) {
@@ -28,7 +28,7 @@
 
 /* iOS styles */
 ::deep .css-shadow-parts ion-segment-button.ios::part(native) {
-    color: #08a391;
+    color: #9780e5;
 }
 
 ::deep .css-shadow-parts .segment-button-checked.ios::part(native) {
@@ -41,19 +41,19 @@
 
 /* CSS Custom Properties */
 ::deep ion-segment.css-custom-properties ion-segment-button {
-    --indicator-color: #08a391;
+    --indicator-color: #9780e5;
 }
 
 /* Material Design styles */
 ::deep ion-segment.css-custom-properties ion-segment-button.md {
     --color: #000;
-    --color-checked: #08a391;
+    --color-checked: #9780e5;
     --indicator-height: 4px;
 }
 
 /* iOS styles */
 ::deep ion-segment.css-custom-properties ion-segment-button.ios {
-    --color: #08a391;
+    --color: #9780e5;
     --color-checked: #fff;
     --border-radius: 20px;
 }

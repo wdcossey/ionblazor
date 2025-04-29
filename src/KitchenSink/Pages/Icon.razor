@@ -1,14 +1,39 @@
 ﻿@page "/icon"
 
-<div class="ion-page" id="main-content">
-    <IonContent Class="container">
-        <PreviewContainer Title="Basic Usage">
-            <IonIcon Name="logo-ionic"></IonIcon>
-            <IonIcon Name="logo-ionic" Size="@IconSize.Large"></IonIcon>
-            <IonIcon Name="logo-ionic" Color="@IconColor.Primary"></IonIcon>
-            <IonIcon Name="logo-ionic" Size="@IconSize.Large" color="@IconColor.Primary"></IonIcon>
-            <IonIcon src="/img/blazor.svg" Size="@IconSize.Large"></IonIcon>            
-        </PreviewContainer>
-    </IonContent>
-</div>
+<PlaygroundContainer>
+    <Header>
+        <h2>Basic Usage</h2>
+    </Header>
+    <ChildContent>
+        <IonIcon Name="logo-ionic"></IonIcon>
+        <IonIcon Name="logo-ionic" Size="@IonIconSize.Large"></IonIcon>
+        <IonIcon Name="logo-ionic" Color="@IonColor.Primary"></IonIcon>
+        <IonIcon Name="logo-ionic" Size="@IonIconSize.Large" color="@IonColor.Primary"></IonIcon>
+        <IonIcon src="/img/blazor.svg" Size="@IonIconSize.Large"></IonIcon>
+        <IonIcon @ref="_test" Name="logo-ionic" Size="@IonIconSize.Large" color="@IonColor.Primary"></IonIcon>
+    </ChildContent>
+</PlaygroundContainer>
 
+@code {
+    IonIcon _test = null!;
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _ = Task
+                .Delay(3000)
+                .ContinueWith(_ =>
+                {
+                    _test.Configure(icon =>
+                    {
+                        icon.Name = "cloud-outline";
+                        icon.Color = IonColor.Danger;
+                        icon.Size = IonIconSize.Small;
+                    });
+                });
+        }
+
+        return Task.CompletedTask;
+    }
+}

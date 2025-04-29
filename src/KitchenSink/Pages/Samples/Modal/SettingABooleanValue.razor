@@ -21,8 +21,9 @@
             <IonContent>
                 <p class="ion-padding-horizontal">You must accept the terms and conditions to close this modal.</p>
                 <IonItem>
-                    <IonLabel class="ion-text-wrap" for="terms">Do you accept the terms and conditions?</IonLabel>
-                    <IonCheckbox @ref="_termsCheckbox" id="terms" IonChange="TermsChangeCallback"></IonCheckbox>
+                    <IonCheckbox @ref="_termsCheckbox" id="terms" IonChange="TermsChangeCallback">
+                        <div class="ion-text-wrap">Do you accept the terms and conditions?</div>
+                    </IonCheckbox>
                 </IonItem>
             </IonContent>
         </IonModal>
@@ -33,11 +34,11 @@
     IonModal _modal = null!;
     IonCheckbox _termsCheckbox = null!;
     bool _canDismiss = false;
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
-        
+
         if (!firstRender)
             return;
 

@@ -1,0 +1,9 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-item-group @ref="IonElement"
+                @attributes="@Attributes">
+    <CascadingValue TValue="IIonComponent" Name="@nameof(IonItem.Parent)" Value="@(this)">
+        @ChildContent
+    </CascadingValue>
+</ion-item-group>

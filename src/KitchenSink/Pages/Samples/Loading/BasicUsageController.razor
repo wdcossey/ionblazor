@@ -2,10 +2,34 @@
 
 @code
 {
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
     private async Task Present()
     {
-        await IonLoadingController.PresentAsync(
-            message: "Dismissing after 3 seconds...",
-            htmlAttributes: new Dictionary<string, string> { { "data-ref-id", Guid.NewGuid().ToString("D") } });
+
+        //await IonLoadingController.PresentAsync(
+        //    message: "Dismissing after 3 seconds...",
+        //    htmlAttributes: new Dictionary<string, string> { { "data-ref-id", Guid.NewGuid().ToString("D") } });
+
+
+        IonLoadingReference ionLoading = await IonLoadingController.CreateAsync(config =>
+        {
+            config.Message = "Dismissing after 10 seconds... <i>But we'll interrupt after 3 seconds...</i>";
+            config.Duration = 10000;
+            config.OnDidPresent += _ => { Console?.Add("Loading OnDidPresent"); };
+            config.OnDidDismiss += args =>
+            {
+                //TestData? data = (args.Data as JsonObject)?.Deserialize<TestData>();
+                Console?.Add($"Loading OnDidDismiss(Role:{args.Role})");
+                _ = args.Sender?.DisposeAsync(); //Cleanup the loading reference
+            };
+
+        });
+
+        await ionLoading.PresentAsync();
+
+        _ = Task.Delay(TimeSpan.FromSeconds(1.5)).ContinueWith(async _ => await ionLoading.UpdateMessageAsync("Updated message..."));
+        _ = Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(_ => ionLoading.DismissAsync("interrupt"));
     }
 }

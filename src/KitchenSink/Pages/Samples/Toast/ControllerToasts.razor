@@ -5,14 +5,47 @@
   </IonToolbar>
 </IonHeader>
 <IonContent class="ion-padding">
+    <IonSelect TValue="@(string)" Value="@("null")" Interface="@IonSelectInterface.Popover" IonChange="IonSelectChange">
+        <IonSelectOption Value="@("null")">Default</IonSelectOption>
+        <IonSelectOption Value="@IonColor.Primary">Primary</IonSelectOption>
+        <IonSelectOption Value="@IonColor.Danger">Danger</IonSelectOption>
+        <IonSelectOption Value="@IonColor.Success">Success</IonSelectOption>
+        <IonSelectOption Value="@IonColor.Warning">Warning</IonSelectOption>
+    </IonSelect>
     <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await PresentToastAsync(IonToastPosition.Top))">Present Toast At the Top</IonButton>
     <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await PresentToastAsync(IonToastPosition.Middle))">Present Toast At the Middle</IonButton>
     <IonButton Expand="@IonButtonExpand.Block" @onclick="@(async () => await PresentToastAsync(IonToastPosition.Bottom))">Present Toast At the Bottom</IonButton>
 </IonContent>
 
 @code {
-    private async ValueTask PresentToastAsync(string position) 
+    private string? _color;
+
+    private async ValueTask PresentToastAsync(string position)
     {
-        await IonToastController.PresentAsync(message: "Hello World!", duration: 1500, position: position);
+        await IonToastController.PresentAsync(options =>
+        {
+            options.Message = "Hello World!";
+            options.Position = position;
+            options.Color = _color;
+            options.ButtonsBuilder = builder =>
+                builder
+                    .Add<IonToastButton>(button =>
+                    {
+                        button.Role = "cancel";
+                        button.Text = "hello";
+                    });
+        });
     }
+
+    private void IonSelectChange(IonSelectChangeEventArgs<string> args)
+    {
+        var value = args.Value.FirstOrDefault();
+        if (value?.Equals("null") is true)
+        {
+            value = null;
+        }
+
+        _color = value;
+    }
+
 }
