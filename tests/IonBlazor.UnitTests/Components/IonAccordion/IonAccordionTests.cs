@@ -31,12 +31,15 @@ public class IonAccordionTests: BunitContext
     [InlineData(IonMode.MaterialDesign)]
     public async Task WithMode_RendersCorrectly(string mode)
     {
+        VerifySettings settings = new ();
+        settings.UseTextForParameters($"mode={mode}");
+
         // Act
         var cut = Render<IonAccordion>(parameters => parameters
             .Add(p => p.Mode, mode));
 
         // Assert
-        await Verify(cut.Markup);
+        await Verify(cut.Markup, settings);
     }
 
     [Fact]
@@ -66,12 +69,15 @@ public class IonAccordionTests: BunitContext
     [InlineData(IonAccordionToggleIconSlot.End)]
     public async Task WithToggleIconSlot_RendersCorrectly(string slot)
     {
+        VerifySettings settings = new ();
+        settings.UseTextForParameters($"slot={slot}");
+
         // Act
         var cut = Render<IonAccordion>(parameters => parameters
             .Add(p => p.ToggleIconSlot, slot));
 
         // Assert
-        await Verify(cut.Markup);
+        await Verify(cut.Markup, settings);
     }
 
     [Fact]

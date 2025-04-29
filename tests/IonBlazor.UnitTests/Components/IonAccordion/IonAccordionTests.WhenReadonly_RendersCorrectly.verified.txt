@@ -1,0 +1,1 @@
+﻿<ion-accordion readonly="true"></ion-accordion>

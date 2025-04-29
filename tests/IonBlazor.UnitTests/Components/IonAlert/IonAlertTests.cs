@@ -28,12 +28,15 @@ public class IonAlertTests: BunitContext
     [InlineData(IonMode.MaterialDesign)]
     public async Task WithMode_RendersCorrectly(string mode)
     {
+        VerifySettings settings = new ();
+        settings.UseTextForParameters($"mode={mode}");
+
         // Act
         var cut = Render<IonAlert>(parameters => parameters
             .Add(p => p.Mode, mode));
 
         // Assert
-        await Verify(cut.Markup);
+        await Verify(cut.Markup, settings);
     }
 
     [Theory]
@@ -41,12 +44,15 @@ public class IonAlertTests: BunitContext
     [InlineData(false, "false")]
     public async Task WithAnimated_RendersCorrectly(bool isAnimated, string expected)
     {
+        VerifySettings settings = new ();
+        settings.UseTextForParameters($"isAnimated={isAnimated}_expected={expected}");
+
         // Act
         var cut = Render<IonAlert>(parameters => parameters
             .Add(p => p.Animated, isAnimated));
 
         // Assert
-        await Verify(cut.Markup);
+        await Verify(cut.Markup, settings);
     }
 
     [Fact]
