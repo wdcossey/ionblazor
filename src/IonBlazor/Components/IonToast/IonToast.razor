@@ -1,21 +1,20 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonComponent
 
-<ion-toast @ref="_self"
+<ion-toast @ref="IonElement"
            @attributes="@Attributes"
-           class="@Class"
-           animated="@Animated"
+           animated="@Animated.AsString()"
            color="@Color"
-           duration="@Duration"
+           duration="@Duration?.ToString()"
            header="@Header"
            icon="@Icon"
-           is-open="@IsOpen"
-           keyboard-close="@KeyboardClose"
+           is-open="@IsOpen.AsString()"
+           keyboard-close="@KeyboardClose.AsString()"
            layout = "@Layout"
-           message="@(string.IsNullOrWhiteSpace(Message) ? Message : (MarkupString)Message)"
+           message="@(Message is null ? null : (MarkupString)Message)"
            mode="@Mode"
            position="@Position"
            position-anchor="@PositionAnchor"
-           translucent="@Translucent"
+           translucent="@Translucent.AsString()"
            trigger="@Trigger">
 </ion-toast>

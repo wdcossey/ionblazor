@@ -2,10 +2,7 @@
 
 public sealed partial class IonTab : IonContentComponent
 {
-    private ElementReference _self;
-
-    /// <inheritdoc/>
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonTab);
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
@@ -24,5 +21,5 @@ public sealed partial class IonTab : IonContentComponent
     /// Set the active component for the tab
     /// </summary>
     public async Task SetActiveAsync() =>
-        await JsComponent.InvokeVoidAsync("setActive", _self);
+        await JsComponent.InvokeVoidAsync("setActive", IonElement);
 }

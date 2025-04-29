@@ -32,8 +32,8 @@ export function present(element) {
     element.present();
 }
 
-export function setCurrentBreakpoint(element, value) {
-    element.setCurrentBreakpoint(value);
+export async function setCurrentBreakpoint(element, value) {
+    await element.setCurrentBreakpoint(value);
 }
 
 export function enterAnimation(element, value) {

@@ -2,13 +2,12 @@
 
 public sealed partial class IonInput : IonContentComponent, IIonColorComponent, IIonModeComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonInput);
 
     /// <summary>
     /// Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
@@ -318,7 +317,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
             if (inputArgs.Value?.Equals(value) is false)
             {
                 Value = inputArgs.Value;
-                await JsComponent.InvokeVoidAsync("setValue", _self, inputArgs.Value);
+                await JsComponent.InvokeVoidAsync("setValue", IonElement, inputArgs.Value);
             }
         });
     }
@@ -330,15 +329,15 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(_self, new IonEvent[]
-        {
-            IonEvent.Set("ionBlur"  , _ionBlurReference  ),
+        await this.AttachIonListenersAsync(
+            IonElement,
+            IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionChange", _ionChangeReference),
-            IonEvent.Set("ionFocus" , _ionFocusReference ),
-            IonEvent.Set("ionInput" , _ionInputReference )
-        });
+            IonEvent.Set("ionFocus", _ionFocusReference),
+            IonEvent.Set("ionInput", _ionInputReference)
+        );
 
-        await JsComponent.InvokeVoidAsync("counterFormatter", _self, CounterFormatter);
+        await JsComponent.InvokeVoidAsync("counterFormatter", IonElement, CounterFormatter);
     }
 
     public override async ValueTask DisposeAsync()
@@ -366,23 +365,23 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     /// <see cref="IonModal.DidPresent"/> has resolved.
     /// </summary>
     public async ValueTask SetFocusAsync() =>
-        await JsComponent.InvokeVoidAsync("setFocus", _self);
+        await JsComponent.InvokeVoidAsync("setFocus", IonElement);
 
     public async ValueTask SetValueAsync(string? value) =>
-        await JsComponent.InvokeVoidAsync("setValue", _self, value);
+        await JsComponent.InvokeVoidAsync("setValue", IonElement, value);
 
     public async ValueTask MarkTouchedAsync() =>
-        await JsComponent.InvokeVoidAsync("markTouched", _self);
+        await JsComponent.InvokeVoidAsync("markTouched", IonElement);
 
     public async ValueTask MarkUnTouchedAsync() =>
-        await JsComponent.InvokeVoidAsync("markUnTouched", _self);
+        await JsComponent.InvokeVoidAsync("markUnTouched", IonElement);
 
     public async ValueTask MarkInvalidAsync() =>
-        await JsComponent.InvokeVoidAsync("markInvalid", _self);
+        await JsComponent.InvokeVoidAsync("markInvalid", IonElement);
 
     public async ValueTask MarkValidAsync() =>
-        await JsComponent.InvokeVoidAsync("markValid", _self);
+        await JsComponent.InvokeVoidAsync("markValid", IonElement);
 
     public async ValueTask RemoveMarkingAsync() =>
-        await JsComponent.InvokeVoidAsync("removeMarking", _self);
+        await JsComponent.InvokeVoidAsync("removeMarking", IonElement);
 }

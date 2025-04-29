@@ -1,0 +1,40 @@
+﻿
+<div>
+    <style>
+        ion-segment-view {
+            height: 150px;
+        }
+
+        ion-segment-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        ion-segment-content:nth-of-type(1) {
+            background: lightpink;
+        }
+        ion-segment-content:nth-of-type(2) {
+            background: lightblue;
+        }
+        ion-segment-content:nth-of-type(3) {
+            background: lightgreen;
+        }
+    </style>
+
+    <IonSegment>
+        <IonSegmentButton Value="first" ContentId="first">
+            <IonLabel>First</IonLabel>
+        </IonSegmentButton>
+        <IonSegmentButton Value="second" ContentId="second">
+            <IonLabel>Second</IonLabel>
+        </IonSegmentButton>
+        <IonSegmentButton Value="third" ContentId="third">
+            <IonLabel>Third</IonLabel>
+        </IonSegmentButton>
+    </IonSegment>
+    <IonSegmentView>
+        <IonSegmentContent id="first">First</IonSegmentContent>
+        <IonSegmentContent id="second">Second</IonSegmentContent>
+        <IonSegmentContent id="third">Third</IonSegmentContent>
+    </IonSegmentView>
+</div>

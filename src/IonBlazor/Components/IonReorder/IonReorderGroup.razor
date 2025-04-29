@@ -1,10 +1,9 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-reorder-group @ref="@_self"
+<ion-reorder-group @ref="@IonElement"
                    @attributes="@Attributes"
-                   disabled="@Disabled.ToString().ToLowerInvariant()"
-                   class="@Class">
+                   disabled="@Disabled.AsString()">
     <CascadingValue TValue="@IIonComponent" Name="@(nameof(IonReorder.Parent))" Value="@(this)" IsFixed="@true">
         @ChildContent
     </CascadingValue>

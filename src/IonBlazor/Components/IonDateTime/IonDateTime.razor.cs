@@ -2,13 +2,12 @@
 
 public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionCancelReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonDateTime);
 
     /// <summary>
     /// The text to display on the picker's cancel button.
@@ -236,7 +235,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
 
     public async Task<IonDateTime> SetValue(params string[]? value)
     {
-        await JsComponent.InvokeVoidAsync("setValue", _self, value ?? Array.Empty<string>());
+        await JsComponent.InvokeVoidAsync("setValue", IonElement, value ?? Array.Empty<string>());
         Value = value?.Any() is true ? string.Join(',', value) : null;
         return this;
     }
@@ -308,14 +307,14 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     /// Emits the ionCancel event and optionally closes the popover or modal that the datetime was presented in.
     /// </summary>
     public ValueTask CancelAsync(bool? closeOverlay = null) =>
-        JsComponent.InvokeVoidAsync("cancel", _self, closeOverlay);
+        JsComponent.InvokeVoidAsync("cancel", IonElement, closeOverlay);
 
     /// <summary>
     /// Confirms the selected datetime value, updates the value property, and optionally closes the popover or modal
     /// that the datetime was presented in.
     /// </summary>
     public ValueTask ConfirmAsync(bool? closeOverlay = null) =>
-        JsComponent.InvokeVoidAsync("confirm", _self, closeOverlay);
+        JsComponent.InvokeVoidAsync("confirm", IonElement, closeOverlay);
 
     /// <summary>
     /// Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string
@@ -323,7 +322,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     /// will be reset to the clamped value of the min, max and today.
     /// </summary>
     public ValueTask ResetAsync(string? startDate = null) =>
-        JsComponent.InvokeVoidAsync("reset", _self, startDate);
+        JsComponent.InvokeVoidAsync("reset", IonElement, startDate);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -333,7 +332,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionCancel", _ionCancelReference),
             IonEvent.Set("ionChange", _ionChangeReference),
@@ -341,7 +340,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
         );
 
         if (IsDateEnabled is not null)
-            await JsComponent.InvokeVoidAsync("isDateEnabled", _self, IsDateEnabled?.Invoke());
+            await JsComponent.InvokeVoidAsync("isDateEnabled", IonElement, IsDateEnabled?.Invoke());
     }
 
     public override async ValueTask DisposeAsync()

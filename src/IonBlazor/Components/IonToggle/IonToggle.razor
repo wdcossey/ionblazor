@@ -1,13 +1,12 @@
 ﻿@namespace IonBlazor.Components
 @inherits IonContentComponent
 
-<ion-toggle @ref="_self"
+<ion-toggle @ref="IonElement"
             @attributes="@Attributes"
-            checked="@Checked"
-            class="@Class"
+            checked="@Checked.AsString()"
             color="@Color"
-            disabled="@Disabled"
-            enable-on-off-labels="@EnableOnOffLabels"
+            disabled="@Disabled.AsString()"
+            enable-on-off-labels="@EnableOnOffLabels.AsString()"
             justify="@Justify"
             label-placement="@LabelPlacement"
             mode="@Mode"

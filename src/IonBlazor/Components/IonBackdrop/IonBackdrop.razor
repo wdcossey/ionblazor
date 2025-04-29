@@ -2,10 +2,9 @@
 @inherits IonComponent
 
 <ion-backdrop
-    @ref="@_self"
+    @ref="@IonElement"
     @attributes="@Attributes"
-    class="@Class"
-    stop-propagation="@StopPropagation"
-    tappable="@Tappable"
-    visible="@Visible">
+    stop-propagation="@StopPropagation.AsString()"
+    tappable="@Tappable.AsString()"
+    visible="@Visible.AsString()">
 </ion-backdrop>

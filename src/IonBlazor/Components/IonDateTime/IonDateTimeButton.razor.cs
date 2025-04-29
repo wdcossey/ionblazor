@@ -2,10 +2,6 @@
 
 public sealed partial class IonDateTimeButton : IonComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
-
-    public override ElementReference IonElement => _self;
-
     /// <inheritdoc/>
     [Parameter]
     public string? Color { get; set; }
@@ -14,7 +10,7 @@ public sealed partial class IonDateTimeButton : IonComponent, IIonModeComponent,
     /// The ID of the ion-datetime instance associated with the datetime button.
     /// </summary>
     [Parameter, EditorRequired]
-    public string? DateTime { get; set; }
+    public string DateTime { get; init; } = null!;
 
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the button.

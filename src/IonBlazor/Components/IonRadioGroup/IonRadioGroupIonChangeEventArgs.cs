@@ -2,7 +2,7 @@
 
 public sealed record IonRadioGroupIonChangeEventArgs
 {
-    public IonRadioGroup? Sender { get; init; }
+    public IonRadioGroup? Sender { get; internal init; }
 
     [JsonPropertyName("value")]
     public string? Value { get; init; }

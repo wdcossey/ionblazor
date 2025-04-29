@@ -3,8 +3,6 @@
 public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonModeComponent
     where TButtonData : class, IActionSheetButtonData
 {
-    private ElementReference _self;
-
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference = null!;
     private DotNetObjectReference<IonicEventCallback> _didPresentReference = null!;
 
@@ -17,94 +15,91 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
     private DotNetObjectReference<IonicEventCallback> _willPresentReference = null!;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
-    public override ElementReference IonElement => _self;
+    protected override string JsImportName => nameof(IonActionSheet<TButtonData>);
 
     [Parameter]
-    public bool? Animated { get; set; }
+    public bool? Animated { get; init; }
 
     [Parameter]
-    public bool? BackdropDismiss { get; set; }
+    public bool? BackdropDismiss { get; init; }
 
     [Parameter]
-    public Func<IEnumerable<ActionSheetButton<TButtonData>>>? Buttons { get; set; }
-
-    [Parameter, Obsolete("Ignored, use `CssClass`", true)]
-    public override string? Class { get; set; }
+    public Func<IEnumerable<ActionSheetButton<TButtonData>>>? Buttons { get; init; }
 
     [Parameter]
-    public string? CssClass { get; set; }
+    public string? CssClass { get; init; }
 
     [Parameter]
-    public string? Header { get; set; }
+    public string? Header { get; init; }
 
     [Parameter]
     public bool? IsOpen { get; set; }
 
     [Parameter]
-    public bool? KeyboardClose { get; set; }
+    public bool? KeyboardClose { get; init; }
 
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
 
     [Parameter]
-    public string? SubHeader { get; set; }
+    public string? SubHeader { get; init; }
 
     [Parameter]
-    public bool? Translucent { get; set; }
+    public bool? Translucent { get; init; }
 
     [Parameter]
-    public string? Trigger { get; set; }
+    public string? Trigger { get; init; }
 
     /// <summary>
     /// Emitted after the action sheet has dismissed. Shorthand for <see cref="IonActionSheetDidDismiss"/>.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> DidDismiss { get; set; }
+    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> DidDismiss { get; init; }
 
     /// <summary>
     /// Emitted after the action sheet has presented. Shorthand for <see cref="IonActionSheetWillDismiss"/>.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetEventArgs<TButtonData>> DidPresent { get; set; }
+    public EventCallback<ActionSheetEventArgs<TButtonData>> DidPresent { get; init; }
 
     /// <summary>
     /// Emitted after the action sheet has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> IonActionSheetDidDismiss { get; set; }
+    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> IonActionSheetDidDismiss { get; init; }
 
     /// <summary>
     /// Emitted after the action sheet has presented.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetEventArgs<TButtonData>> IonActionSheetDidPresent { get; set; }
+    public EventCallback<ActionSheetEventArgs<TButtonData>> IonActionSheetDidPresent { get; init; }
 
     /// <summary>
     /// Emitted before the action sheet has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> IonActionSheetWillDismiss { get; set; }
+    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> IonActionSheetWillDismiss { get; init; }
 
     /// <summary>
     /// Emitted before the action sheet has presented.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetEventArgs<TButtonData>> IonActionSheetWillPresent { get; set; }
+    public EventCallback<ActionSheetEventArgs<TButtonData>> IonActionSheetWillPresent { get; init; }
 
     /// <summary>
     /// Emitted before the action sheet has dismissed. Shorthand for <see cref="IonActionSheetWillDismiss"/>.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> WillDismiss { get; set; }
+    public EventCallback<ActionSheetDismissEventArgs<TButtonData>> WillDismiss { get; init; }
 
     /// <summary>
     /// Emitted before the action sheet has presented. Shorthand for <see cref="IonActionSheetWillPresent"/>.
     /// </summary>
     [Parameter]
-    public EventCallback<ActionSheetEventArgs<TButtonData>> WillPresent { get; set; }
+    public EventCallback<ActionSheetEventArgs<TButtonData>> WillPresent { get; init; }
 
     [Parameter]
-    public EventCallback<ActionSheetButtonHandlerEventArgs<TButtonData>> ButtonHandler { get; set; }
+    public EventCallback<ActionSheetButtonHandlerEventArgs<TButtonData>> ButtonHandler { get; init; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -193,7 +188,7 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
             });
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
 
             IonEvent.Set("didDismiss", _didDismissReference ),
             IonEvent.Set("didPresent", _didPresentReference ),
@@ -207,7 +202,7 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
             IonEvent.Set("willPresent", _willPresentReference )
         );
 
-        await JsComponent.InvokeVoidAsync("addButtons", _self, buttons, _buttonHandlerReference);
+        await JsComponent.InvokeVoidAsync("addButtons", IonElement, buttons, _buttonHandlerReference);
     }
 
     /// <summary>
@@ -217,24 +212,12 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
     /// <param name="role"></param>
     /// <returns></returns>
     public ValueTask<bool> DismissAsync(IEnumerable<ActionSheetButton<TButtonData>>? data, string? role) =>
-        JsComponent.InvokeAsync<bool>("dismiss", _self, data, role);
-
-    /// <summary>
-    /// Returns a promise that resolves when the action sheet did dismiss.
-    /// </summary>
-    [Obsolete("Not available in Blazor (Razor) projects", true)]
-    public ValueTask OnDidDismissAsync() => ValueTask.CompletedTask;
-
-    /// <summary>
-    /// Returns a promise that resolves when the action sheet will dismiss.
-    /// </summary>
-    [Obsolete("Not available in Blazor (Razor) projects", true)]
-    public ValueTask OnWillDismissAsync() => ValueTask.CompletedTask;
+        JsComponent.InvokeAsync<bool>("dismiss", IonElement, data, role);
 
     /// <summary>
     /// Present the action sheet overlay after it has been created.
     /// </summary>
-    public ValueTask PresentAsync() => JsComponent.InvokeVoidAsync("present", _self);
+    public ValueTask PresentAsync() => JsComponent.InvokeVoidAsync("present", IonElement);
 
     public override async ValueTask DisposeAsync()
     {

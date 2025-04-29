@@ -2,12 +2,8 @@
 
 public sealed partial class IonRadio : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private ElementReference _self;
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
-
-    /// <inheritdoc/>
-    public override ElementReference IonElement => _self;
 
     /// <inheritdoc/>
     [Parameter]
@@ -87,7 +83,7 @@ public sealed partial class IonRadio : IonContentComponent, IIonModeComponent, I
             return;
 
         await this.AttachIonListenersAsync(
-            _self,
+            IonElement,
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionFocus", _ionFocusReference)
         );

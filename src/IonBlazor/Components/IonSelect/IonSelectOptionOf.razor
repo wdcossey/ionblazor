@@ -3,10 +3,9 @@
 
 @inherits IonSelectOptionBase<TValue>
 
-<ion-select-option @ref="_self"
+<ion-select-option @ref="IonElement"
                    @attributes="@Attributes"
-                   class="@Class"
-                   disabled="@Disabled"
+                   disabled="@Disabled.AsString()"
                    value="@Value">
     @ChildContent
 </ion-select-option>

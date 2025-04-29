@@ -2,29 +2,25 @@
 
 public sealed partial class IonBackdrop : IonComponent, IIonComponent
 {
-    private ElementReference _self;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionBackdropTapReference;
-
-    /// <inheritdoc />
-    public override ElementReference IonElement => _self;
 
     /// <summary>
     /// If <b>true</b>, the backdrop will stop propagation on tap.
     /// </summary>
     [Parameter]
-    public bool StopPropagation { get; set; } = true;
+    public bool StopPropagation { get; init; } = true;
 
     /// <summary>
     /// If <b>true</b>, the backdrop can be clicked and will emit the ionBackdropTap event.
     /// </summary>
     [Parameter]
-    public bool Tappable { get; set; } = true;
+    public bool Tappable { get; init; } = true;
 
     /// <summary>
     /// If <b>true</b>, the backdrop will be visible.
     /// </summary>
     [Parameter]
-    public bool Visible { get; set; } = true;
+    public bool Visible { get; init; } = true;
 
     /// <summary>
     /// Emitted when the backdrop is tapped.
@@ -45,7 +41,7 @@ public sealed partial class IonBackdrop : IonComponent, IIonComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(_self, IonEvent.Set("ionBackdropTap", _ionBackdropTapReference));
+        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionBackdropTap", _ionBackdropTapReference));
     }
 
     public override async ValueTask DisposeAsync()

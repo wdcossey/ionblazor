@@ -2,6 +2,8 @@
 
 public partial class PlaygroundContainer : ComponentBase
 {
+    private PlaygroundConsole? _console;
+
     [Parameter]
     [Obsolete("", true)]
     public string? Title { get; set; }
@@ -11,8 +13,23 @@ public partial class PlaygroundContainer : ComponentBase
     public string? SubTitle { get; set; }
 
     [Parameter]
+    public bool? FillWidth { get; init; }
+
+    private PlaygroundConsole? Console
+    {
+        get => _console;
+        set
+        {
+            _console = value;
+            StateHasChanged();
+        }
+    }
+
+    [Parameter]
     public RenderFragment? Header { get; set; }
 
     [Parameter, EditorRequired]
     public required RenderFragment ChildContent { get; init; } = null!;
+
+    [Parameter] public bool EnableConsole { get; init; } = false;
 }

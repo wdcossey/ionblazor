@@ -11,7 +11,7 @@
             <IonLabel>Favorite Fruits</IonLabel>
             <div slot="end" id="#selected-fruits">@($"{workingSelectedFruits.Count} Items")</div>
         </IonItem>
-        <IonButton Expand="ButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => PresentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
+        <IonButton Expand="@IonButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => PresentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
 
     </IonList>
 
@@ -87,7 +87,7 @@
                 <IonSearchbar Debounce="1000" Value="@_searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchbar>
             </IonToolbar>
         </IonHeader>
-        <IonContent Color="@IonColor.Light" Class="ion-padding">
+        <IonContent Color="@IonColor.Light" class="ion-padding">
             <IonList id="modal-list" Inset="@false">
                 @foreach (var item in renderList)
                 {
@@ -114,7 +114,7 @@
                 </IonButtons>
             </IonToolbar>
         </IonHeader>
-        <IonContent Class="ion-padding">
+        <IonContent class="ion-padding">
             <IonItem>
                 <IonLabel Position="@IonLabelPosition.Stacked">Enter your name</IonLabel>
                 <IonInput @ref="@_inputNameRef"
@@ -150,7 +150,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
     <IonButton id="click-trigger">Left-Click Me</IonButton>
     <IonPopover Trigger="click-trigger" TriggerAction="@IonPopoverTriggerAction.Click">
-      <IonContent Class="ion-padding">Hello World!</IonContent>
+      <IonContent class="ion-padding">Hello World!</IonContent>
     </IonPopover>
 
     <IonButton id="open-action-sheet">Open ActionSheet by Trigger</IonButton>
@@ -265,38 +265,6 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
     {
         renderList = filterList(null);
         base.OnInitialized();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        if (!firstRender)
-            return;
-
-        //modal = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal");
-        //var searchbar = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-searchbar");
-
-        //document.querySelector('ion-searchbar').addEventListener('ionInput', e => console.log(e.target.value));
-
-        //await searchbar.InvokeVoidAsync("addCustomEventListener", "ionInput", EventCallback.Factory.Create<string>(this, val => { throw new InvalidOperationException(); }));
-
-        /*InputNameObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
-        {
-            inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
-            return Task.CompletedTask;
-        }));*/
-
-
-        /*InputNameInputObjectReference = DotNetObjectReference.Create(new CustomEventHelper<JsonObject?>(args =>
-        {
-            inputNameValue = args?["detail"]?["value"]?.GetValue<string>();
-            return Task.CompletedTask;
-        }));*/
-
-        //(ev) => {renderList(ev.target.value); }
-        //selectedFruitsText = await jsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "#selected-fruits");
-
     }
 
     public class CustomEventHelper<TArgs>

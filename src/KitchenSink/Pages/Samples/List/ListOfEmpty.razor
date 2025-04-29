@@ -1,0 +1,21 @@
+﻿<IonListOf TItem="ListOfItem" ItemsSource="@_itemsSource">
+    <ItemTemplate>
+        <IonItem>
+            <IonLabel>@context.Title</IonLabel>
+        </IonItem>
+    </ItemTemplate>
+    <EmptyTemplate>
+        <IonItem>
+            <IonIcon Name="warning" Size="@IonIconSize.Large" Color="@IonColor.Warning"></IonIcon>
+        </IonItem>
+    </EmptyTemplate>
+</IonListOf>
+
+@code {
+    private readonly IEnumerable<ListOfItem> _itemsSource = [];
+
+    internal sealed class ListOfItem
+    {
+        public required string Title { get; init; }
+    }
+}
