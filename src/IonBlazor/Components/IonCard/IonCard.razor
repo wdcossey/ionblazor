@@ -1,0 +1,16 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-card @ref="IonElement"
+          @attributes="@Attributes"
+          button="@Button.AsString()"
+          color="@Color"
+          disabled="@Disabled.AsString()"
+          download="@Download"
+          href="@Href"
+          mode="@Mode"
+          rel="@Rel"
+          target="@Target"
+          type="@Type">
+    @ChildContent
+</ion-card>

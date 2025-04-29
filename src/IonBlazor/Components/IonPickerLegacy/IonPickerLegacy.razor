@@ -1,0 +1,19 @@
+﻿@namespace IonBlazor.Components
+@inherits IonComponent
+@typeparam TColumn
+@typeparam TColumnOption
+@typeparam TButton
+
+<ion-picker-legacy
+    @ref="@IonElement"
+    @attributes="@Attributes"
+    animated="@Animated.AsString()"
+    backdrop-dismiss="@BackdropDismiss.AsString()"
+    css-class="@CssClass"
+    duration="@Duration?.ToString()"
+    is-open="@IsOpen.AsString()"
+    keyboard-close="@KeyboardClose.AsString()"
+    mode="@Mode"
+    show-backdrop="@ShowBackdrop.AsString()"
+    trigger="@Trigger">
+</ion-picker-legacy>

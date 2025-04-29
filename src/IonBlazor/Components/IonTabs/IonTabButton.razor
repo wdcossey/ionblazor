@@ -1,0 +1,18 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-tab-button @ref="IonElement"
+                @attributes="@Attributes"
+                disabled="@Disabled.AsString()"
+                download="@Download"
+                href="@Href"
+                layout="@Layout"
+                mode="@Mode"
+                rel="@Rel"
+                selected="@Selected.AsString()"
+                tab="@Tab"
+                target="@Target">
+    <CascadingValue TValue="@IIonComponent" Name="@nameof(Parent)" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-tab-button>

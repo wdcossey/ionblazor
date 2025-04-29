@@ -8,11 +8,6 @@
           Label="Custom Counter Format"
           LabelPlacement="@IonInputLabelPlacement.Floating"
           Counter="@true"
-          CounterFormat="`${maxLength - inputLength} characters remaining`"
+          CounterFormatter="(inputLength, maxLength) => `${maxLength - inputLength} characters remaining`"
           Maxlength="20">
 </IonInput>
-
-@*<script>
-  const customInput = document.querySelector('#custom-input');
-  customInput.counterFormatter = (inputLength, maxLength) => `${maxLength - inputLength} characters remaining`;
-</script>*@

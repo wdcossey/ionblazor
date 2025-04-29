@@ -1,0 +1,18 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-breadcrumb @ref="@IonElement"
+                @attributes="@Attributes"
+                active="@Active.AsString()"
+                color="@Color"
+                disabled="@Disabled.AsString()"
+                download="@Download"
+                href="@Href"
+                mode="@Mode"
+                rel="@Rel"
+                separator="@Separator.AsString()"
+                target="@Target">
+    <CascadingValue TValue="@IIonComponent" Name="@nameof(Parent)" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-breadcrumb>

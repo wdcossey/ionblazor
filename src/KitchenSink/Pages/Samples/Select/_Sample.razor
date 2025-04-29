@@ -1,41 +1,94 @@
 ﻿@page "/samples/select"
 
-<PreviewContainer Title="Label Placement">
-    <LabelPlacement/>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h2>Label Placement</h2>
+    </Header>
+    <ChildContent>
+        <LabelPlacement/>
+    </ChildContent>
 
-<PreviewContainer Title="Label Slot">
-    <LabelSlot/>
-</PreviewContainer>
+</PlaygroundContainer>
 
-<PreviewContainer Title="No Visible Label">
-    <NoVisibleLabel/>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h2>Label Slot</h2>
+    </Header>
+    <ChildContent>
+        <LabelSlot/>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer Title="Single Selection">
-    <SingleSelection/>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h2>No Visible Label</h2>
+    </Header>
+    <ChildContent>
+        <NoVisibleLabel/>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer Title="Multiple Selection">
-    <MultipleSelection/>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h2>Single Selection</h2>
+    </Header>
+    <ChildContent>
+        <SingleSelection/>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer Title="Interfaces" SubTitle="Alert">
-    <InterfacesAlert/>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h2>Multiple Selection</h2>
+    </Header>
+    <ChildContent>
+        <MultipleSelection/>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer SubTitle="Action Sheet">
-    <InterfacesActionSheet/>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h2>Interfaces</h2>
+        <h3>Alert</h3>
+    </Header>
+    <ChildContent>
+        <InterfacesAlert/>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer SubTitle="Popover">
-    <InterfacesPopover/>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h3>Action Sheet</h3>
+    </Header>
+    <ChildContent>
+        <InterfacesActionSheet/>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer Title="Responding to Interaction">
-    <RespondingToInteraction/>
-</PreviewContainer>
+<PlaygroundContainer>
+    <Header>
+        <h3>Popover</h3>
+    </Header>
+    <ChildContent>
+        <InterfacesPopover/>
+    </ChildContent>
+</PlaygroundContainer>
 
-<PreviewContainer Title="Object Value References" SubTitle="Using compareWith">
-    @*<ObjectValueReferences/>*@
-</PreviewContainer>
+<PlaygroundContainer EnableConsole="true">
+    <Header>
+        <h3>Responding to Interaction</h3>
+    </Header>
+    <ChildContent>
+        <RespondingToInteraction/>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer EnableConsole="true">
+    <Header>
+        <h2>Object Value References</h2>
+        <h3>Using compareWith</h3>
+    </Header>
+    <ChildContent>
+        <ObjectValueReferences/>
+    </ChildContent>
+</PlaygroundContainer>

@@ -1,0 +1,109 @@
+﻿<IonHeader>
+    <IonToolbar>
+        <IonTitle>App</IonTitle>
+    </IonToolbar>
+</IonHeader>
+<IonContent class="ion-padding">
+    <IonButton id="open-modal-dismiss-behavior" expand="block">
+        Open
+    </IonButton>
+
+    <p>
+        *** This demo is hosted in a <b>&lt;ion-app&gt;</b>, the modal will <b>not</b> be bound to this preview pane!
+    </p>
+
+    <IonModal
+        @ref="@_modal"
+        Trigger="open-modal-dismiss-behavior"
+        CanDismiss="@CanDismiss"
+        WillPresent="@WillPresent">
+        <IonHeader>
+            <IonToolbar>
+                <IonTitle>Modal</IonTitle>
+                <IonButtons slot="end">
+                    <IonButton @onclick="@Dismiss">Close</IonButton>
+                </IonButtons>
+            </IonToolbar>
+        </IonHeader>
+        <IonContent>
+            <IonList>
+                <IonItem>
+                    <IonCheckbox Checked="@_canDismissOverride" IonChange="@CheckboxChanged">
+                        Override Dismiss
+                        <br />
+                        <IonNote className="ion-text-wrap">
+                            Toggle the checkbox to allow immediately dismissing the modal without a prompt.
+                        </IonNote>
+                    </IonCheckbox>
+                </IonItem>
+            </IonList>
+        </IonContent>
+    </IonModal>
+</IonContent>
+
+@code {
+
+    bool _canDismissOverride = false;
+    IonModal _modal = null!;
+
+    private async Task Dismiss() {
+        await _modal.DismissAsync();
+    }
+
+    private void WillPresent()
+    {
+        // Resets the override when the modal is presented
+        _canDismissOverride = false;
+    }
+
+    private async Task<bool> CanDismiss(IonModalCanDismissEventArgs args)
+    {
+        if (_canDismissOverride)
+        {
+            // Checks for the override flag to return early if we can dismiss the overlay immediately
+            args.CanDismiss = true;
+            return true;
+        }
+
+        TaskCompletionSource<bool> completionSource = new TaskCompletionSource<bool>();
+
+        await IonActionSheetController.PresentAsync(options =>
+        {
+            options.Header = "Are you sure?";
+            options.ButtonsBuilder = builder =>
+            {
+                builder
+                    .Add<BasicActionSheetButton>(button =>
+                    {
+                        button.Text = "Yes";
+                        button.Role = "confirm";
+                        button.Handler = (btn, index) =>
+                        {
+                            completionSource.SetResult(true);
+                            return ValueTask.CompletedTask;
+                        };
+                    })
+                    .Add<BasicActionSheetButton>(button =>
+                    {
+                        button.Text = "No";
+                        button.Role = "cancel";
+                        button.Handler = (btn, index) =>
+                        {
+                            completionSource.SetResult(false);
+                            return ValueTask.CompletedTask;
+                        };
+                    });
+            };
+        });
+
+        return args.CanDismiss = await completionSource.Task;
+    }
+
+
+    private void CheckboxChanged(IonCheckboxChangeEventArgs args)
+    {
+        var @checked = args.Checked;
+        _canDismissOverride = @checked is true;
+    }
+
+}

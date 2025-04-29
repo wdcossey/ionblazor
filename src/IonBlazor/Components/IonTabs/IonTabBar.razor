@@ -1,0 +1,13 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-tab-bar @ref="IonElement"
+             @attributes="@Attributes"
+             color="@Color"
+             mode="@Mode"
+             selected-tab="@SelectedTab"
+             translucent="@Translucent.AsString()">
+    <CascadingValue TValue="@IIonComponent" Name="@nameof(IonTabButton.Parent)" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-tab-bar>

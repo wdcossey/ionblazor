@@ -67,7 +67,7 @@
 
 @code {
     IonList _list = null!;
-    
+
     int ItemCount { get; set; } = 0;
 
     protected override void OnInitialized()
@@ -76,12 +76,10 @@
         GenerateItems();
     }
 
-    private async Task IonInfiniteCallback(IonInfiniteScroll.IonInfiniteEventArgs args)
+    private Task IonInfiniteCallback(IonInfiniteEventArgs args)
     {
-        await Task.Delay(1500);
-        GenerateItems();
-        await args.Sender.CompleteAsync();
-        await InvokeAsync(StateHasChanged);
+        //This example does not call `CompleteAsync()`, the spinner will show indefinitely
+        return Task.CompletedTask;
     }
 
     private void GenerateItems() => ItemCount += 50;

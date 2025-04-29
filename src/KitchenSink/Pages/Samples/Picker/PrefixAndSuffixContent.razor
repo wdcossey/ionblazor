@@ -1,0 +1,28 @@
+﻿@namespace IonicTest.Pages.Samples.Picker
+
+<IonPicker>
+    <IonPickerColumn @ref="@_pickerColumn" Value="1" IonChange="OnChange">
+        <div slot="prefix">$</div>
+        <IonPickerColumnOption Value="" Disabled="@true">--</IonPickerColumnOption>
+        <IonPickerColumnOption Value="1">1</IonPickerColumnOption>
+        <IonPickerColumnOption Value="2">2</IonPickerColumnOption>
+        <IonPickerColumnOption Value="3">3</IonPickerColumnOption>
+        <IonPickerColumnOption Value="4">4</IonPickerColumnOption>
+        <IonPickerColumnOption Value="5">5</IonPickerColumnOption>
+        <div slot="suffix">USD</div>
+    </IonPickerColumn>
+</IonPicker>
+
+<p>@((MarkupString)_message)</p>
+
+@code {
+    IonPickerColumn _pickerColumn = null!;
+    string _message = string.Empty;
+
+    private void OnChange(IonPickerColumnIonChangeEventArgs args)
+    {
+        _message = $"You selected: <b>${args.Value}</b>";
+        StateHasChanged();
+    }
+
+}

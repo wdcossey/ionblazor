@@ -1,25 +1,26 @@
-﻿<div>
+﻿@using IonBlazor.Components.Abstractions
+<div>
     <style>
         ion-toast.custom-toast {
             --background: #f4f4fa;
             --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
             --color: #4b4a50;
         }
-        
+
         ion-toast.custom-toast::part(message) {
             font-style: italic;
         }
-        
+
         ion-toast.custom-toast::part(button) {
             border-left: 1px solid #d2d2d2;
             color: #030207;
             font-size: 15px;
         }
     </style>
-    
+
     <IonButton id="open-theming-toast">Open Toast</IonButton>
-    <IonToast Trigger="open-theming-toast" Duration="3000" Message="Hello Styled World!" Class="custom-toast" Buttons="@WithButtons"/>
-    
+    <IonToast Trigger="open-theming-toast" Duration="3000" Message="Hello Styled World!" class="custom-toast" Buttons="@WithButtons"/>
+
 </div>
 
 @code {

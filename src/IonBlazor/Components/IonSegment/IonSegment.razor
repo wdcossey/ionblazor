@@ -1,0 +1,16 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-segment @ref="@IonElement"
+             @attributes="@Attributes"
+             color="@Color"
+             disabled="@Disabled.AsString()"
+             mode="@Mode"
+             scrollable="@Scrollable.AsString()"
+             select-on-focus="@SelectOnFocus.AsString()"
+             swipe-gesture="@SwipeGesture.AsString()"
+             value="@Value">
+    <CascadingValue TValue="@IIonComponent" Name="@(nameof(IonSegmentButton.Parent))" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-segment>

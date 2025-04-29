@@ -1,0 +1,16 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-item-option @ref="IonElement"
+                 @attributes="@Attributes"
+                 color="@Color"
+                 disabled="@Disabled.AsString()"
+                 download="@Download"
+                 expandable="@Expandable.AsString()"
+                 href="@Href"
+                 mode="@Mode"
+                 rel="@Rel"
+                 target="@Target"
+                 type="@Type">
+    @ChildContent
+</ion-item-option>

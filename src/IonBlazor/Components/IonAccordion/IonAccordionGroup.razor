@@ -1,0 +1,15 @@
+﻿@namespace IonBlazor.Components
+@inherits IonContentComponent
+
+<ion-accordion-group @ref="@IonElement"
+                     @attributes="@Attributes"
+                     animated="@Animated.AsString()"
+                     disabled="@Disabled.AsString()"
+                     expand="@Expand"
+                     mode="@Mode"
+                     multiple="@Multiple.AsString()"
+                     readonly="@Readonly.AsString()">
+    <CascadingValue TValue="@IIonComponent" Name="@(nameof(IonAccordion.Parent))" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-accordion-group>

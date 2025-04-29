@@ -1,0 +1,10 @@
+﻿@namespace IonBlazor.Components
+@inherits IonComponent
+
+<ion-refresher-content @ref="IonElement"
+                       @attributes="@Attributes"
+                       pulling-icon="@PullingIcon"
+                       pulling-text="@((MarkupString)(PullingText ?? string.Empty))"
+                       refreshing-spinner="@RefreshingSpinner"
+                       refreshing-text="@((MarkupString)(RefreshingText ?? string.Empty))">
+</ion-refresher-content>
