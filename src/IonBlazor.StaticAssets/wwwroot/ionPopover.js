@@ -5,3 +5,7 @@
 export function present(element, event) {
     return element.present(event)
 }
+
+export function setIsOpen(element, value) {
+    element.isOpen = value;
+}
