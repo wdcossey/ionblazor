@@ -1,11 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Microsoft.AspNetCore.Components;
 
 namespace IonicTest.Components;
 
-public partial class PlaygroundConsole : ComponentBase
+public sealed partial class PlaygroundConsole : ComponentBase
 {
     private readonly ObservableCollection<ConsoleItem> _itemsSource = [];
 
@@ -36,7 +33,7 @@ public partial class PlaygroundConsole : ComponentBase
 }
 
 
-public sealed class ConsoleItem
+internal sealed record ConsoleItem
 {
     public required string Message { get; init; }
     public string? Type { get; init; }

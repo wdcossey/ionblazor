@@ -52,6 +52,6 @@ public partial class BreadcrumbsSample
 
     private void PopoverDidDismiss()
     {
-        _popover.SetIsOpen(false);
+        _popover.IsOpen = true;// SetIsOpen(false);
     }
 }
