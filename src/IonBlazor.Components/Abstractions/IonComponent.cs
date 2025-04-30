@@ -20,12 +20,6 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
 
     protected virtual string? JsImportName => null;
 
-/*#if NET8_0_OR_GREATER
-    internal virtual Task<IJSObjectReference>? JsComponent { get; init; }
-#else
-    internal Lazy<Task<IJSObjectReference>> JsComponent { get; private set; } = null!;
-#endif*/
-
     internal Lazy<Task<IJSObjectReference>> JsComponent { get; set; } = null!;
 
     /// <summary>

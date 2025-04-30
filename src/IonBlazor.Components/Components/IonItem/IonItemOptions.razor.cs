@@ -11,7 +11,7 @@ public sealed partial class IonItemOptions : IonContentComponent
     /// <see cref="IonItemOptionsSide.End"/>.
     /// If you have multiple <see cref="IonItemOptions"/>, a side must be provided for each.
     /// </summary>
-    [Parameter, EditorRequired]
+    [Parameter]
 #if NET7_0_OR_GREATER
     public required string Side { get; init; } = IonItemOptionsSide.End;
 #else
