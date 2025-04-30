@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <Import Project="..\..\CommonNuget.props" />
+
+    <PropertyGroup>
+        <PackageId>IonBlazor.StaticAssets.Ionic.Svg</PackageId>
+        <Description>Ionic SVG assets for IonBlazor</Description>
+
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\docs\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
+    </ItemGroup>
+
+    <Target Name="PrepareNpmAssets" BeforeTargets="Build">
+        <!--<RemoveDir Directories="wwwroot\@ionic\core\dist\ionic" />-->
+
+        <ItemGroup>
+            <IonicDistAssets Include="$(SolutionDir)node_modules\@ionic\core\dist\ionic\svg\*.*" />
+        </ItemGroup>
+
+        <Copy
+                SourceFiles="@(IonicDistAssets)"
+                DestinationFiles="@(IonicDistAssets->'wwwroot\@ionic\core\dist\ionic\svg\%(RecursiveDir)%(Filename)%(Extension)')"
+                SkipUnchangedFiles="true" />
+    </Target>
+
+</Project>

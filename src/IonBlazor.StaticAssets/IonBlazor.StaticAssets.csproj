@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <Import Project="..\..\CommonNuget.props" />
+
+    <PropertyGroup>
+        <PackageId>IonBlazor.StaticAssets</PackageId>
+        <Description>IonBlazor Core Assets</Description>
+        
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\docs\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
+    </ItemGroup>
+
+</Project>

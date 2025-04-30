@@ -14,13 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6B7F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Wasm", "samples\IonBlazor.Wasm\IonBlazor.Wasm.csproj", "{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Assets.Ionic", "src\IonBlazor.Assets.Ionic\IonBlazor.Assets.Ionic.csproj", "{D7FA0205-74C0-42F0-8CD9-B1B8E99184E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.StaticAssets.Ionic", "src\IonBlazor.StaticAssets.Ionic\IonBlazor.StaticAssets.Ionic.csproj", "{D7FA0205-74C0-42F0-8CD9-B1B8E99184E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Assets.Ionic.Svg", "src\IonBlazor.Assets.Ionic.Svg\IonBlazor.Assets.Ionic.Svg.csproj", "{86018B1F-5D90-44E9-B9F4-4565F86FE53D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.StaticAssets.Ionic.Svg", "src\IonBlazor.StaticAssets.Ionic.Svg\IonBlazor.StaticAssets.Ionic.Svg.csproj", "{86018B1F-5D90-44E9-B9F4-4565F86FE53D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Components", "src\IonBlazor.Components\IonBlazor.Components.csproj", "{5B118B15-81A5-4818-8769-7B78B67064D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.Assets.Core", "src\IonBlazor.Assets.Core\IonBlazor.Assets.Core.csproj", "{E7C6DD41-8B19-4C10-83A2-DCFCA649AA88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor.StaticAssets", "src\IonBlazor.StaticAssets\IonBlazor.StaticAssets.csproj", "{E7C6DD41-8B19-4C10-83A2-DCFCA649AA88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

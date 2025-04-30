@@ -1,0 +1,13 @@
+<Project>
+    <PropertyGroup>
+        <LangVersion>13</LangVersion>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <Nullable>enable</Nullable>
+        <WarningsAsErrors>CS8602;CS8603</WarningsAsErrors>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Shared analyzers or packages can be added here -->
+    </ItemGroup>
+</Project>
