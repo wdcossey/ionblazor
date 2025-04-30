@@ -67,6 +67,7 @@
     </ItemGroup>
 
     <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <ProjectReference Include="..\IonBlazor.Components\IonBlazor.Components.csproj" />
       <ProjectReference Include="..\IonBlazor.StaticAssets\IonBlazor.StaticAssets.csproj" />
       <ProjectReference Include="..\IonBlazor.StaticAssets.Ionic.Svg\IonBlazor.StaticAssets.Ionic.Svg.csproj" />
       <ProjectReference Include="..\IonBlazor.StaticAssets.Ionic\IonBlazor.StaticAssets.Ionic.csproj" />
