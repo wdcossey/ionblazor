@@ -73,7 +73,7 @@
 
     private async Task Dismiss(string role)
     {
-        _ = Console?.Add($"Selected: {role}");
+        Console?.Add($"Selected: {role}");
         await _modal.DismissAsync(role: role);
     }
 

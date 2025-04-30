@@ -116,9 +116,9 @@
         <div class="playground__container">
             <div class="playground__preview">
                 <div class="playground__frame">
-                    <IonSearchbar @ref="_ionSearchbarSetFocusRef" IonBlur="@(() => focusMessage = "Lost focus")" IonFocus="@(() => focusMessage = "Has focus")"></IonSearchbar>
+                    <IonSearchbar @ref="_ionSearchbarSetFocusRef" IonBlur="@(() => _focusMessage = "Lost focus")" IonFocus="@(() => _focusMessage = "Has focus")"></IonSearchbar>
                     <p>
-                        <code>@focusMessage</code>
+                        <code>@_focusMessage</code>
                     </p>
                     <IonButton @onclick="@SetFocusAsync">Set Focus</IonButton>
                 </div>

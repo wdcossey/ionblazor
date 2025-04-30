@@ -2,53 +2,67 @@
 
 public partial class RefresherSample
 {
-    
+
     /* Yes some of the methods below are identical, they are purely for demonstration purposes */
-    
+
     private async Task BasicIonRefreshCallback(IonRefresherIonRefreshEventArgs args)
     {
         await Task.Delay(2000);
-        await args.Sender.CompleteAsync();
+        await args.Sender!.CompleteAsync();
     }
-    
+
     private async Task PullPropertiesIonRefreshCallback(IonRefresherIonRefreshEventArgs args)
     {
         await Task.Delay(2000);
-        await args.Sender.CompleteAsync();
+        await args.Sender!.CompleteAsync();
     }
-    
+
     private async Task CustomContentIonRefreshCallback(IonRefresherIonRefreshEventArgs args)
     {
         await Task.Delay(2000);
-        await args.Sender.CompleteAsync();
+        await args.Sender!.CompleteAsync();
     }
-    
+
     private async Task VirtualScrollIonRefreshCallback(IonRefresherIonRefreshEventArgs args)
     {
         await Task.Delay(2000);
-        await args.Sender.CompleteAsync();
+        await args.Sender!.CompleteAsync();
     }
-    
+
     #region Advanced Usage
 
-    private static readonly string[] Names = { "Burt Bear", "Charlie Cheetah", "Donald Duck", "Eva Eagle", "Ellie Elephant", "Gino Giraffe", "Isabella Iguana", "Karl Kitten", "Lionel Lion", "Molly Mouse", "Paul Puppy", "Rachel Rabbit", "Ted Turtle"};
+    private static readonly string[] Names = [
+        "Burt Bear",
+        "Charlie Cheetah",
+        "Donald Duck",
+        "Eva Eagle",
+        "Ellie Elephant",
+        "Gino Giraffe",
+        "Isabella Iguana",
+        "Karl Kitten",
+        "Lionel Lion",
+        "Molly Mouse",
+        "Paul Puppy",
+        "Rachel Rabbit",
+        "Ted Turtle"
+    ];
 
     //private IList<RenderFragment> _list = new List<RenderFragment>();
-    private readonly IList<(string Name, bool Unread)> _list = new List<(string Name, bool Unread)>();
-    
+    private readonly IList<(string Name, bool Unread)> _list = [];
+
     private async Task AdvancedIonRefreshCallback(IonRefresherIonRefreshEventArgs args)
     {
         await Task.Delay(2000);
         AddItems(3, true);
-        await args.Sender.CompleteAsync();
+        await args.Sender!.CompleteAsync();
     }
-    
+
     private string ChooseRandomName()
     {
         var rdm = new Random().Next(0, 100) / 100d;
         return Names[(int)Math.Floor(rdm * Names.Length)];
     }
-    
+
     private void AddItems(int count, bool unread)
     {
         for (var i = 0; i < count; i++) {
@@ -61,7 +75,7 @@ public partial class RefresherSample
         var name = ChooseRandomName();
         return (name, unread);
     }
-    
+
     //private RenderFragment CreateItem(bool unread = false)
     //{
     //    var name = ChooseRandomName();
@@ -78,7 +92,7 @@ public partial class RefresherSample
     //        });
     //        builder.CloseComponent();
     //        builder.CloseComponent();
-    //        
+    //
     //    };
     //}
 
@@ -99,5 +113,5 @@ public partial class RefresherSample
     //}
 
     #endregion
-    
+
 }

@@ -31,7 +31,7 @@
     {
         await Task.Delay(500);
         GenerateItems();
-        await args.Sender.CompleteAsync();
+        await args.Sender!.CompleteAsync();
         await InvokeAsync(StateHasChanged);
     }
 

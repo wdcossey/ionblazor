@@ -76,11 +76,11 @@
         <IonHeader>
             <IonToolbar>
                 <IonButtons slot="start">
-                    <IonButton @onclick="@cancelChanges">Cancel</IonButton>
+                    <IonButton @onclick="@CancelChanges">Cancel</IonButton>
                 </IonButtons>
                 <IonTitle>Favorite Fruits</IonTitle>
                 <IonButtons slot="end">
-                    <IonButton @onclick="@confirmChanges">Done</IonButton>
+                    <IonButton @onclick="@ConfirmChanges">Done</IonButton>
                 </IonButtons>
             </IonToolbar>
             <IonToolbar>
@@ -89,7 +89,7 @@
         </IonHeader>
         <IonContent Color="@IonColor.Light" class="ion-padding">
             <IonList id="modal-list" Inset="@false">
-                @foreach (var item in renderList)
+                @foreach (var item in RenderList)
                 {
                     var isChecked = workingSelectedFruits.Contains(item.value);
                     <IonItem>
@@ -106,11 +106,11 @@
         <IonHeader>
             <IonToolbar>
                 <IonButtons slot="start">
-                    <IonButton @onclick="@cancel">Cancel</IonButton>
+                    <IonButton @onclick="@Cancel">Cancel</IonButton>
                 </IonButtons>
                 <IonTitle>Welcome</IonTitle>
                 <IonButtons slot="end">
-                    <IonButton @onclick="@confirm" Strong="@true">Confirm</IonButton>
+                    <IonButton @onclick="@Confirm" Strong="@true">Confirm</IonButton>
                 </IonButtons>
             </IonToolbar>
         </IonHeader>
@@ -138,8 +138,8 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
         <IonItem>
             <IonSelect TValue="@(string)" Label="Default label"  Multiple="@true" Placeholder="Favorite Fruit" IonChange="@(args =>
                                                                                                                                 {
-                                                                                                                                    Console.WriteLine(args.Value.ToString());
-                                                                                                                                    Console.WriteLine(string.Join("|", (args.Sender.Value as string[]) ?? new [] { (string?)args.Sender.Value }));
+                                                                                                                                    Console.WriteLine(args.Value!.ToString());
+                                                                                                                                    Console.WriteLine(string.Join("|", (args.Sender!.Value as string[]) ?? new [] { (string?)args.Sender.Value }));
                                                                                                                                 })">
                 <IonSelectOption Value="apple">Apple</IonSelectOption>
                 <IonSelectOption Value="banana">Banana</IonSelectOption>
@@ -201,15 +201,12 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
     private IonModal _selectFruitsModalRef = null!;     //document.querySelector('ion-modal');
     private IonInput _inputNameRef = null!;             //ion-input#input-name
-    private IonInput _focusInputRef = null!;
     private IonButton _buttonRef = null!;
     private IonModal _inputModalRef = null!;
 
-    IonActionSheet<ActionSheetButtonData> _actionSheet;
+    IonActionSheet<ActionSheetButtonData> _actionSheet = null!;
 
     //IJSObjectReference selectedFruitsText;// = document.querySelector('#selected-fruits');
-    private DotNetObjectReference<CustomEventHelper<JsonObject?>> InputNameObjectReference;
-    private DotNetObjectReference<CustomEventHelper<JsonObject?>> InputNameInputObjectReference;
 
     private readonly List<dynamic> cards = new();
     private string? Title;
@@ -249,9 +246,9 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
     private List<string> selectedFruits = new List<string>();
     private HashSet<string> workingSelectedFruits = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
-    private (string text, string value)[] renderList { get; set; }
+    private (string text, string value)[] RenderList { get; set; } = [];
 
-    private (string text, string value)[] filterList(string? searchQuery)
+    private (string text, string value)[] FilterList(string? searchQuery)
     {
         if (string.IsNullOrWhiteSpace(searchQuery))
             return fruits;
@@ -263,7 +260,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
     protected override void OnInitialized()
     {
-        renderList = filterList(null);
+        RenderList = FilterList(null);
         base.OnInitialized();
     }
 
@@ -281,7 +278,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
    * Reset any working changes
    * and dismiss the modal.
    */
-    private async void cancelChanges() {
+    private async void CancelChanges() {
         workingSelectedFruits = selectedFruits.ToHashSet();
         await _selectFruitsModalRef.DismissAsync(role: "cancel");
         //1var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
@@ -293,20 +290,25 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
    * Return the selected
    * fruits to the parent page.
    */
-    private async void confirmChanges() {
+    private void ConfirmChanges() {
         selectedFruits = workingSelectedFruits.ToList();
         //var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
         //await modal.InvokeVoidAsync("dismiss", selectedFruits); //modal.dismiss(selectedFruits)
-        await _selectFruitsModalRef.DismissAsync(data: selectedFruits);
-        StateHasChanged();
+        _ = _selectFruitsModalRef
+            .DismissAsync(data: selectedFruits)
+            .AsTask()
+            .ContinueWith(_ =>
+            {
+                InvokeAsync(StateHasChanged);
+            });
     }
 
-    private async Task cancel()
+    private async Task Cancel()
     {
         await _inputModalRef.DismissAsync(role: "cancel");
     }
 
-    private async Task confirm()
+    private async Task Confirm()
     {
         await _inputModalRef.DismissAsync(_inputNameValue, "confirm");
     }
@@ -348,7 +350,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
     private void SearchbarCallback(IonSearchbarInputEventArgs args)
     {
-        renderList = filterList(args.Value);
+        RenderList = FilterList(args.Value);
         StateHasChanged();
     }
 

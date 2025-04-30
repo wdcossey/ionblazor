@@ -26,7 +26,7 @@ public partial class MainLayout
         };
 #endif
 
-        NavigationManager.LocationChanged += async (object? sender, LocationChangedEventArgs e) =>
+        NavigationManager.LocationChanged += (object? sender, LocationChangedEventArgs e) =>
         {
 
         };

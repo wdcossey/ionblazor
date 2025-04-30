@@ -65,6 +65,6 @@
 
     private void IonPickerDidDismiss(IonPickerLegacyDismissEventArgs<PickerColumn, PickerColumnOption, PickerButton> args)
     {
-        args.Sender.IsOpen = false; //or _picker.IsOpen = false;
+        args.Sender!.IsOpen = false; //or _picker.IsOpen = false;
     }
 }
