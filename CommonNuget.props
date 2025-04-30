@@ -24,6 +24,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- Shared analyzers or packages can be added here -->
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\" />
     </ItemGroup>
 </Project>

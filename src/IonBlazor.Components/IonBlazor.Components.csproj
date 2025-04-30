@@ -7,10 +7,6 @@
         <Description>Ionic Components for Blazor / ASP.NET Core Razor</Description>
     </PropertyGroup>
 
-    <ItemGroup>
-        <SupportedPlatform Include="browser" />
-    </ItemGroup>
-
     <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
         <PackageReference Include="Microsoft.AspNetCore.Components" Version="[6.0.25,7.0.0)" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="[6.0.25,7.0.0)" />
@@ -33,7 +29,6 @@
 
     <ItemGroup>
         <None Include="..\..\docs\README.md" Pack="true" PackagePath="\"/>
-        <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -42,12 +37,6 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="IonBlazor.UnitTests" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Update="_Imports.razor">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </Content>
     </ItemGroup>
 
 </Project>

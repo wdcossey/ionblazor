@@ -11,16 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <SupportedPlatform Include="browser"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <None Include="..\..\docs\README.md" Pack="true" PackagePath="\"/>
-        <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="wwwroot\" />
     </ItemGroup>
 
     <Target Name="PrepareNpmAssets" BeforeTargets="Build">
