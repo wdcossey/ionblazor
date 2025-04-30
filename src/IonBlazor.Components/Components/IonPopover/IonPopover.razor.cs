@@ -52,14 +52,17 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     /// <b>trigger</b> property. Note: <see cref="IsOpen"/> will not automatically be set back to <b>false</b> when the
     /// popover dismisses. You will need to do that in your code.
     /// </summary>
-    [Parameter] public bool? IsOpen { get; set; }
+    [Parameter] public bool? IsOpen { get; init; }
 
-    public Task SetIsOpen(bool value)
+    /// <summary>
+    /// If <b>true</b>, the popover will open. If <b>false</b>, the popover will close.
+    /// Use this if you need finer grained control over presentation, otherwise just use the popoverController or the
+    /// <b>trigger</b> property. Note: <see cref="IsOpen"/> will not automatically be set back to <b>false</b> when the
+    /// popover dismisses. You will need to do that in your code.
+    /// </summary>
+    public ValueTask SetIsOpen(bool value)
     {
-        //TODO: Fix this, remove `StateHasChanged`
-        IsOpen = value;
-        StateHasChanged();
-        return Task.CompletedTask;
+        return JsComponent.InvokeVoidAsync("setIsOpen", IonElement, value);
     }
 
     /// <summary>
@@ -165,6 +168,11 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
         _willDismissReference = IonicEventCallback.Create(async () => await WillDismiss.InvokeAsync(this));
 
         _willPresentReference = IonicEventCallback.Create(async () => await WillPresent.InvokeAsync(this));
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        return base.OnParametersSetAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
