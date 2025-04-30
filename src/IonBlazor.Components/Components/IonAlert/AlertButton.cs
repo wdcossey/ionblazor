@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public record AlertButton : IAlertButton
+public sealed record AlertButton : IAlertButton
 {
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Text { get; set; }

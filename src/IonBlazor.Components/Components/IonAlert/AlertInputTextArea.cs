@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public record AlertInputTextArea : AlertInput
+public sealed record AlertInputTextArea : AlertInput
 {
     [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public override string Type => "textarea";
