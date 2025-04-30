@@ -116,7 +116,7 @@ public class IonAccordionTests: BunitContext
     }
 
     [Fact]
-    public async Task WithParent_RendersCorrectly()
+    public void WithParent_RendersCorrectly()
     {
         // Arrange
         IonTestComponent testComponent = IonTestComponent.Create();
