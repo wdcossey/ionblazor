@@ -75,7 +75,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\IonBlazor.Components\IonBlazor.Components.csproj" />
       <ProjectReference Include="..\IonBlazor\IonBlazor.csproj" />
     </ItemGroup>
 

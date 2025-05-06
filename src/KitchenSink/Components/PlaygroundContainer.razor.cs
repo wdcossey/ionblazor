@@ -2,25 +2,15 @@
 
 public partial class PlaygroundContainer : ComponentBase
 {
-    private PlaygroundConsole? _console;
-
-    [Parameter]
-    [Obsolete("", true)]
-    public string? Title { get; set; }
-
-    [Parameter]
-    [Obsolete("", true)]
-    public string? SubTitle { get; set; }
-
     [Parameter]
     public bool? FillWidth { get; init; }
 
     private PlaygroundConsole? Console
     {
-        get => _console;
+        get;
         set
         {
-            _console = value;
+            field = value;
             StateHasChanged();
         }
     }

@@ -15,6 +15,4 @@ public partial class DevicePreview : IonContentComponent
 
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
-
-
 }
