@@ -1,5 +1,6 @@
 <Project>
     <PropertyGroup>
+        <PackageVersion>0.843.1-alpha.1</PackageVersion>
         <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
         <WindowsPackageType>None</WindowsPackageType>
@@ -7,11 +8,10 @@
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <PackageProjectUrl>https://github.com/wdcossey/ionblazor</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageVersion>0.843.0-alpha.6</PackageVersion>
         <Authors>wdcossey</Authors>
         <RepositoryUrl>https://github.com/wdcossey/ionblazor</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>blazor, ionic, webcomponents, razor, aspnetcore</PackageTags>
+        <PackageTags>ionblazor, ionic, blazor, maui, hybrid, webcomponents, razor, aspnetcore</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>logo-ionic.png</PackageIcon>
         <PackagePath>wwwroot\</PackagePath>

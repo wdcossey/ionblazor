@@ -401,3 +401,4 @@ FodyWeavers.xsd
 
 # Ionic Assets
 **/wwwroot/@ionic/
+**/IonBlazor/wwwroot/
