@@ -7,12 +7,6 @@
 
     private async Task Present()
     {
-
-        //await IonLoadingController.PresentAsync(
-        //    message: "Dismissing after 3 seconds...",
-        //    htmlAttributes: new Dictionary<string, string> { { "data-ref-id", Guid.NewGuid().ToString("D") } });
-
-
         IonLoadingReference ionLoading = await IonLoadingController.CreateAsync(config =>
         {
             config.Message = "Dismissing after 10 seconds... <i>But we'll interrupt after 3 seconds...</i>";
@@ -23,9 +17,8 @@
             };
             config.OnDidDismiss += args =>
             {
-                //TestData? data = (args.Data as JsonObject)?.Deserialize<TestData>();
                 Console?.Add($"{nameof(IonLoading)}::OnDidDismiss(Role:{args.Role})");
-                _ = args.Sender?.DisposeAsync(); //Cleanup the loading reference
+                _ = args.Sender?.DisposeAsync(); //Clean up the loading reference
             };
 
         });
