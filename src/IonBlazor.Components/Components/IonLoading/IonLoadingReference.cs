@@ -6,25 +6,23 @@ public sealed class IonLoadingReference : IIonLoading
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didDismissHandler;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>>? _didPresentHandler;
-    private readonly string _componentId = $"ibz-loading-{Stopwatch.GetTimestamp():x}";
 
-    private readonly IJSObjectReference? _jsComponent;
+    private readonly Lazy<Task<IJSObjectReference>> _lazyJsComponent;
+    private readonly IonLoadingControllerOptions _options;
 
-    private readonly string? _message;
-
-    private readonly uint? _duration;
-    private readonly IDictionary<string, string>? _htmlAttributes;
-
-    internal IonLoadingReference(IJSObjectReference? jsComponent, IonLoadingControllerOptions options)
+    internal IonLoadingReference(IJSRuntime jsRuntime, IonLoadingControllerOptions options)
     {
-        _jsComponent = jsComponent;
-        _message = options.Message;
-        _duration = options.Duration;
-        _htmlAttributes = options.HtmlAttributes;
+        _lazyJsComponent = new Lazy<Task<IJSObjectReference>>(() => CreateComponentAsync(jsRuntime));
+
+        _options = options;
+        if (string.IsNullOrWhiteSpace(_options.Id))
+        {
+            _options.Id = $"ibz-loading-{Stopwatch.GetTimestamp():x}";
+        }
 
         _didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
         {
-            IonLoadingDismissEventArgs obj = new()
+            IonLoadingDismissEventArgs eventArgs = new()
             {
                 Sender = this,
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
@@ -32,19 +30,19 @@ public sealed class IonLoadingReference : IIonLoading
                 HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
             };
 
-            options.OnDidDismiss?.Invoke(obj);
+            options.OnDidDismiss?.Invoke(eventArgs);
 
             return Task.CompletedTask;
         });
 
         _didPresentHandler = IonicEventCallback<JsonObject?>.Create(args =>
         {
-            IonLoadingPresentEventArgs obj = new()
+            IonLoadingPresentEventArgs eventArgs = new()
             {
                 Sender = this,
                 HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
             };
-            options.OnDidPresent?.Invoke(obj);
+            options.OnDidPresent?.Invoke(eventArgs);
             return Task.CompletedTask;
         });
     }
@@ -55,7 +53,7 @@ public sealed class IonLoadingReference : IIonLoading
     /// <returns></returns>
     public async ValueTask<bool> DismissAsync<TData>(TData? data = null, string? role = null) where TData : class
     {
-        var result = await (_jsComponent?.InvokeAsync<bool>("dismiss", _componentId, data, role) ?? ValueTask.FromResult(false));
+        var result = await _lazyJsComponent.InvokeAsync<bool>("dismiss", _options.Id, data, role);
         return result;
     }
 
@@ -65,10 +63,10 @@ public sealed class IonLoadingReference : IIonLoading
     /// <returns></returns>
     public ValueTask<bool> DismissAsync(string? role = null) => DismissAsync<object>(null, role);
 
-    public async ValueTask CreateAsync()
+    public async ValueTask<string?> CreateAsync()
     {
-        var markupString = RenderMessage(_message);
-        var result = await (_jsComponent?.InvokeAsync<string?>("create", _componentId, markupString, _duration, _htmlAttributes, _didDismissHandler, _didPresentHandler) ?? ValueTask.FromResult<string?>(null));
+        var result = await _lazyJsComponent.InvokeAsync<string?>("create", _options, _didDismissHandler, _didPresentHandler);
+        return result;
     }
 
     /// <summary>
@@ -77,7 +75,7 @@ public sealed class IonLoadingReference : IIonLoading
     /// <returns></returns>
     public async ValueTask PresentAsync()
     {
-        await (_jsComponent?.InvokeVoidAsync("present", _componentId) ?? ValueTask.CompletedTask);
+        await _lazyJsComponent.InvokeVoidAsync("present", _options.Id);
     }
 
     /// <summary>
@@ -86,7 +84,7 @@ public sealed class IonLoadingReference : IIonLoading
     /// <returns></returns>
     public async ValueTask PresentWithMessageAsync(string? message)
     {
-        await (_jsComponent?.InvokeVoidAsync("presentWithMessage", _componentId, message) ?? ValueTask.CompletedTask);
+        await _lazyJsComponent.InvokeVoidAsync("presentWithMessage", _options.Id, message);
     }
 
     /// <summary>
@@ -95,14 +93,14 @@ public sealed class IonLoadingReference : IIonLoading
     /// <returns></returns>
     public async ValueTask UpdateMessageAsync(string? message)
     {
-        var markupString = RenderMessage(message);
-        await (_jsComponent?.InvokeVoidAsync("setMessage", _componentId, markupString) ?? ValueTask.CompletedTask);
+        await _lazyJsComponent.InvokeVoidAsync("updateMessage", _options.Id, message);
     }
 
     /// <inheritdoc/>
     public async ValueTask DisposeAsync()
     {
-        await (_jsComponent?.InvokeVoidAsync("remove", _componentId) ?? ValueTask.CompletedTask);
+        await _lazyJsComponent.InvokeVoidAsync("remove", _options.Id);
+        await _lazyJsComponent.DisposeAsync();
         _didDismissHandler?.Dispose();
         _didPresentHandler?.Dispose();
     }
@@ -110,5 +108,17 @@ public sealed class IonLoadingReference : IIonLoading
     private static string RenderMessage(string? message)
     {
         return ((MarkupString)(message ?? string.Empty)).ToString();
+    }
+
+    internal static async Task<IJSObjectReference> CreateComponentAsync(IJSRuntime jsRuntime)
+    {
+        IJSObjectReference result = await jsRuntime.ImportAsync(nameof(IonLoadingController));
+
+        if (result is null)
+        {
+            throw new InvalidOperationException($"{nameof(IonLoadingController)} is not initialized");
+        }
+
+        return result;
     }
 }

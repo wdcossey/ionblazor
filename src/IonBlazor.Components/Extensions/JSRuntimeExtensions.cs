@@ -69,5 +69,11 @@ internal static class JSRuntimeExtensions
         return await jsModule.InvokeAsync<TValue>(identifier, timeout, args);
     }
 
+    internal static async ValueTask DisposeAsync(this Lazy<Task<IJSObjectReference>> lazyRef)
+    {
+        IJSObjectReference jsModule = await lazyRef.Value;
+        await jsModule.DisposeAsync();
+    }
+
 
 }

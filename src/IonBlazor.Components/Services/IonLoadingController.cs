@@ -44,7 +44,7 @@ public sealed class IonLoadingController: ComponentBase
             });
         }
 
-        IJSObjectReference jsComponent = await CreateComponentAsync();
+        IJSObjectReference jsComponent = await IonLoadingReference.CreateComponentAsync(_jsRuntime);
         var result = await jsComponent.InvokeAsync<string?>("present", options, didDismissHandler, didPresentHandler);
         return result;
     }
@@ -84,7 +84,7 @@ public sealed class IonLoadingController: ComponentBase
             });
         }
 
-        IJSObjectReference jsComponent = await CreateComponentAsync();
+        IJSObjectReference jsComponent = await IonLoadingReference.CreateComponentAsync(_jsRuntime);
         var result = await jsComponent.InvokeAsync<string?>("present", message, duration, htmlAttributes, didDismissHandler, didPresentHandler);
         return result;
     }
@@ -99,8 +99,7 @@ public sealed class IonLoadingController: ComponentBase
         IonLoadingControllerOptions configuration = new();
         configure(configuration);
 
-        IJSObjectReference jsComponent = await CreateComponentAsync();
-        IonLoadingReference result = new(jsComponent, configuration);
+        IonLoadingReference result = new(_jsRuntime, configuration);
         await result.CreateAsync();
         return result;
     }
@@ -109,17 +108,5 @@ public sealed class IonLoadingController: ComponentBase
     {
         await base.OnParametersSetAsync();
         _jsRuntime = JsRuntime;
-    }
-
-    private static async Task<IJSObjectReference> CreateComponentAsync()
-    {
-        IJSObjectReference result = await _jsRuntime.ImportAsync(nameof(IonLoadingController));
-
-        if (result is null)
-        {
-            throw new InvalidOperationException($"{nameof(IonLoadingController)} is not initialized");
-        }
-
-        return result;
     }
 }
