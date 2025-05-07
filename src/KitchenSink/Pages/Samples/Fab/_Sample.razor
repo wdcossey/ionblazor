@@ -1,82 +1,109 @@
 ﻿@page "/samples/fab"
 
-<h2>Basic Usage</h2>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h2>Basic Usage</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <BasicUsage/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h2>List Side</h2>
-<p>
-    The <code>side</code> property of the <a href="https://ionicframework.com/docs/api/fab-list">fab list</a> component controls where it
-    appears relative to the main fab button. A single fab can have multiple fab lists as long as they
-    all have different values for <code>side</code>.
-</p>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h2>List Side</h2>
+        <p>
+            The <code>side</code> property of the <a href="https://ionicframework.com/docs/api/fab-list">fab list</a> component controls where it
+            appears relative to the main fab button. A single fab can have multiple fab lists as long as they
+            all have different values for <code>side</code>.
+        </p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <ListSide/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h2>Positioning</h2>
-<p>
-    In order to place the fab in a fixed position, it should be assigned to the <code>fixed</code>
-    slot of the outer <a href="https://ionicframework.com/docs/api/content">content</a> component.
-    Use the <code>vertical</code> and <code>horizontal</code> props to control the alignment
-    of the fab in the viewport.
-    The <code>edge</code> prop will cause the fab button to overlap with the app's header or footer.
-</p>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h2>Positioning</h2>
+        <p>
+            In order to place the fab in a fixed position, it should be assigned to the <code>fixed</code>
+            slot of the outer <a href="https://ionicframework.com/docs/api/content">content</a> component.
+            Use the <code>vertical</code> and <code>horizontal</code> props to control the alignment
+            of the fab in the viewport.
+            The <code>edge</code> prop will cause the fab button to overlap with the app's header or footer.
+        </p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <Positioning/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h2>Button Sizing</h2>
-<p>
-    Setting the <code>size</code> property of the main fab button to <code>"small"</code>
-    will render it at a mini size. Note that this property will not have an effect when used with
-    the inner fab buttons.
-</p>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h3>Safe Area</h3>
+        <p>If there is no <code>ion-header</code> or <code>ion-footer</code> component, the fab may be covered by a device's notch, status bar, or other device UI. In these cases, the <a href="/docs/theming/advanced#safe-area-padding">safe area</a> on the top and bottom is not taken into account. This can be adjusted by using the <a href="/docs/theming/advanced#application-variables"><code>--ion-safe-area-(dir)</code> variables</a>.</p>
+        <p>When using a fab with <code>vertical</code> set to <code>"top"</code> without an <code>ion-header</code>, the top margin needs to be set:</p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <SafeArea/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Button Sizing</h2>
+        <p>
+            Setting the <code>size</code> property of the main fab button to <code>"small"</code>
+            will render it at a mini size. Note that this property will not have an effect when used with
+            the inner fab buttons.
+        </p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <ButtonSizing/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h2>Theming</h2>
-<h3>Colors</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h2>Theming</h2>
+        <h3>Colors</h3>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <Colors/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h3>CSS Custom Properties</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h3>CSS Custom Properties</h3>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <CssCustomProperties/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h3>CSS Shadow Parts</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h3>CSS Shadow Parts</h3>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <CssShadowParts/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>

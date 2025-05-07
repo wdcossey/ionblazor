@@ -2,6 +2,8 @@
 
 @code
 {
+    private Timer _timer;
+
     [CascadingParameter(Name = nameof(Console))]
     private PlaygroundConsole? Console { get; init; }
 
@@ -9,7 +11,8 @@
     {
         IonLoadingReference ionLoading = await IonLoadingController.CreateAsync(config =>
         {
-            config.Message = "Dismissing after 10 seconds... <i>But we'll interrupt after 3 seconds...</i>";
+            config.Spinner = IonSpinnerName.LinesSmall;
+            config.Message = "Dismissing after <strong>10</strong> seconds... Interrupting in <i>5</i> seconds...";
             config.Duration = 10000;
             config.OnDidPresent += _ =>
             {
@@ -18,14 +21,26 @@
             config.OnDidDismiss += args =>
             {
                 Console?.Add($"{nameof(IonLoading)}::OnDidDismiss(Role:{args.Role})");
-                _ = args.Sender?.DisposeAsync(); //Clean up the loading reference
+                _ = args.Sender?.DisposeAsync(); //Clean up the reference
             };
 
         });
 
         await ionLoading.PresentAsync();
 
-        _ = Task.Delay(TimeSpan.FromSeconds(1.5)).ContinueWith(async _ => await ionLoading.UpdateMessageAsync("Updated message..."));
-        _ = Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(_ => ionLoading.DismissAsync("interrupt"));
+        var counter = 5;
+        _timer = new Timer(state =>
+        {
+            counter--;
+            if (counter == 0)
+            {
+                _ = ionLoading.DismissAsync("interrupt");
+                _ = _timer.DisposeAsync();
+                return;
+            }
+
+            _ = ionLoading.UpdateMessageAsync($"Dismissing after <strong>10</strong> seconds... Interrupting in <i>{counter}</i> seconds...");
+
+        }, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
     }
 }

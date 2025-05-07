@@ -13,21 +13,26 @@
     Trigger="open-loading"
     Message="Dismissing after 3 seconds..."
     Duration="3000"
-    DidPresent="@(() => Logger.LogInformation("Loading {State}", nameof(IonLoading.DidPresent)))"
-    DidDismiss="@(_ => Logger.LogInformation("Loading {State}", nameof(IonLoading.DidDismiss)))"
-    WillDismiss="@(_ => Logger.LogInformation("Loading {State}", nameof(IonLoading.WillDismiss)))"
-    WillPresent="@(() => Logger.LogInformation("Loading {State}", nameof(IonLoading.WillPresent)))">
+    DidPresent="@(() => Console?.Add($"{nameof(IonLoading)}::{nameof(IonLoading.DidPresent)}"))"
+    DidDismiss="@(_ => Console?.Add($"{nameof(IonLoading)}::{nameof(IonLoading.DidDismiss)}"))"
+    WillDismiss="@(_ => Console?.Add($"{nameof(IonLoading)}::{nameof(IonLoading.WillDismiss)}"))"
+    WillPresent="@(() => Console?.Add($"{nameof(IonLoading)}::{nameof(IonLoading.WillPresent)}"))">
 </IonLoading>
 
 <IonLoading @ref="_loading" Message="Dismissing after 30 seconds... We'll manually cancel it after 3 seconds..." Duration="30000" DidPresent="OnDidPresent" DidDismiss="OnDidDismiss"></IonLoading>
 
 @code {
+
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
     private readonly string _id = Guid.NewGuid().ToString("D");
 
     private IonLoading _loading = null!;
 
     private async Task OnDidPresent()
     {
+        Console?.Add($"{nameof(IonLoading)}::{nameof(IonLoading.DidPresent)}");
         await Task.Delay(TimeSpan.FromSeconds(3));
         await _loading.DismissAsync(data: new TestData(){ Hello = "world"} , role: "winner");
     }
@@ -35,7 +40,7 @@
     private void OnDidDismiss(IonLoadingDismissEventArgs args)
     {
         TestData? data = args.Data?.Deserialize<TestData>();
-        Console.WriteLine($"Dismissed with data: {data}");
+        Console?.Add($"{nameof(IonLoading)}::{nameof(IonLoading.DidDismiss)}(Data: {data})");
     }
 
     private record TestData
