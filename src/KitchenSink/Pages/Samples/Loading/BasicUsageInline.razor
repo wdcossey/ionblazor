@@ -34,7 +34,7 @@
 
     private void OnDidDismiss(IonLoadingDismissEventArgs args)
     {
-        TestData? data = (args.Data as JsonObject)?.Deserialize<TestData>();
+        TestData? data = args.Data?.Deserialize<TestData>();
         Console.WriteLine($"Dismissed with data: {data}");
     }
 

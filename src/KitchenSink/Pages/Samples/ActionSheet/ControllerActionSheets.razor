@@ -1,23 +1,23 @@
-﻿<IonButton @onclick="@(async () => { await IonActionSheetController.PresentAsync(ConfigureActionSheet); })">
+﻿@using IonBlazor.Components.Abstractions
+<IonButton @onclick="@(async () => { await IonActionSheetController.PresentAsync(ConfigureActionSheet); })">
     Open
 </IonButton>
 
 @code {
 
-    private async ValueTask ButtonHandler(ActionSheetButton<ActionSheetButtonData>? button, int? index)
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private ValueTask ButtonHandler(IActionSheetButton? button, int? index)
     {
-        await IonToastController.PresentAsync(options =>
-        {
-            options.Message = $"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};";
-            options.Position = IonToastPosition.Bottom;
-            options.Duration = 3000;
-            options.Icon = "logo-ionic";
-        });
+        Console?.Add($"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};");
+        return ValueTask.CompletedTask;
     }
 
     private void ConfigureActionSheet(ActionSheetControllerOptions options)
     {
         options.Header = "Actions";
+        options.OnDidDismiss = args => Console?.Add($"Dismissed with Role: {args.Role}; Data: {args.Data};");
         options.ButtonsBuilder = builder =>
         {
             builder

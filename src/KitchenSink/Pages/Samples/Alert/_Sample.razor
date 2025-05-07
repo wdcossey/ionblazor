@@ -13,9 +13,7 @@
                 Header="A Short Title Is Best"
                 SubHeader="A Sub Header Is Optional"
                 Message="A message should be a short, complete sentence."
-                Buttons="@(() => new [] {
-                             new AlertButton() { Text = "Action" },
-                         })"
+                ButtonsBuilder="@(builder => builder.Add(new AlertButton { Text = "Action" } ))"
             />
         </div>
     </ChildContent>

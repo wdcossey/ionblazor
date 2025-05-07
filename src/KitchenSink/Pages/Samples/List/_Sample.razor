@@ -1,46 +1,62 @@
 ﻿@page "/samples/list"
 
-<h2>Basic Usage</h2>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<style>
+    device-preview .content ion-list {
+        padding: 32px 0;
+    }
+</style>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Basic Usage</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <BasicUsage/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h3>IonListOf&#60;T&gt;</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h3>IonListOf&#60;T&gt;</h3>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <ListOf/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h3>Empty IonListOf&lt;T&gt;</h3>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h3>Empty IonListOf&#60;T&gt;</h3>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign" >
             <ListOfEmpty/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h2>Inset List</h2>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h2>Inset List</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <InsetList/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
 
-<h2>List Lines</h2>
-<div class="playground__container">
-    <div class="playground__preview">
-        <div class="container">
+<PlaygroundContainer>
+    <Header>
+        <h2>List Lines</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
             <ListLines/>
-        </div>
-    </div>
-</div>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>

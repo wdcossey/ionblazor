@@ -25,7 +25,7 @@ public partial class BreadcrumbsSample
                 builder.OpenRegion(i);
                 builder.OpenComponent<IonItem>(0);
                 builder.AddAttribute(1, nameof(IonItem.Href), href);
-                builder.AddAttribute(2, "lines", i == args.Count - 1 ? "none" : null);
+                builder.AddAttribute(2, nameof(IonItem.Lines), i == args.Count - 1 ? IonItemLines.None : null);
                 builder.AddAttribute(3, nameof(IonItem.ChildContent), (RenderFragment)(childBuilder =>
                 {
                     childBuilder.OpenComponent<IonLabel>(0);
@@ -35,6 +35,7 @@ public partial class BreadcrumbsSample
                     }));
                     childBuilder.CloseComponent();
                 }));
+                builder.AddAttribute(4, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, PopoverDidDismiss));
 
                 builder.CloseComponent();
                 builder.CloseRegion();
@@ -52,6 +53,6 @@ public partial class BreadcrumbsSample
 
     private void PopoverDidDismiss()
     {
-        _popover.IsOpen = true;// SetIsOpen(false);
+        _ = _popover.DismissAsync().AsTask();
     }
 }

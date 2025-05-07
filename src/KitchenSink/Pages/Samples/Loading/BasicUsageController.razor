@@ -17,11 +17,14 @@
         {
             config.Message = "Dismissing after 10 seconds... <i>But we'll interrupt after 3 seconds...</i>";
             config.Duration = 10000;
-            config.OnDidPresent += _ => { Console?.Add("Loading OnDidPresent"); };
+            config.OnDidPresent += _ =>
+            {
+                Console?.Add($"{nameof(IonLoading)}::OnDidPresent");
+            };
             config.OnDidDismiss += args =>
             {
                 //TestData? data = (args.Data as JsonObject)?.Deserialize<TestData>();
-                Console?.Add($"Loading OnDidDismiss(Role:{args.Role})");
+                Console?.Add($"{nameof(IonLoading)}::OnDidDismiss(Role:{args.Role})");
                 _ = args.Sender?.DisposeAsync(); //Cleanup the loading reference
             };
 

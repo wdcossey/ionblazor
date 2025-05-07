@@ -19,20 +19,15 @@
     </style>
 
     <IonButton id="open-theming-toast">Open Toast</IonButton>
-    <IonToast Trigger="open-theming-toast" Duration="3000" Message="Hello Styled World!" class="custom-toast" Buttons="@WithButtons"/>
+    <IonToast Trigger="open-theming-toast" Duration="3000" Message="Hello Styled World!" class="custom-toast" ButtonsBuilder="@ButtonsBuilder"/>
 
 </div>
 
 @code {
-    private IReadOnlyCollection<IIonToastButton> WithButtons()
+
+    private static void ButtonsBuilder(ToastButtonBuilder builder)
     {
-        return new[]
-        {
-            new IonToastButton
-            {
-                Text = "Dismiss",
-                Role = "cancel",
-            }
-        };
+        builder.Add(new IonToastButton { Text = "Dismiss", Role = "cancel" });
     }
+
 }

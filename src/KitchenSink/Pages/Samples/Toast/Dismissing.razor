@@ -1,6 +1,6 @@
 ﻿@using IonBlazor.Components.Abstractions
 <IonButton id="open-dismissing-toast">Open Toast</IonButton>
-<IonToast Trigger="open-dismissing-toast" Duration="3000" Message="Hello World!" Buttons="@WithButtons" IonToastDidDismiss="@IonToastDidDismiss"></IonToast>
+<IonToast Trigger="open-dismissing-toast" Duration="3000" Message="Hello World!" ButtonsBuilder="@ButtonsBuilder" IonToastDidDismiss="@IonToastDidDismiss"></IonToast>
 <p>@((MarkupString)_handlerOutput)</p>
 <p>@((MarkupString)_roleOutput)</p>
 
@@ -9,11 +9,10 @@
     private string _handlerOutput = null!;
     private string _roleOutput = null!;
 
-    private IReadOnlyCollection<IIonToastButton> WithButtons()
+    private void ButtonsBuilder(ToastButtonBuilder builder)
     {
-        return new IIonToastButton[]
-        {
-            new IonToastButton()
+        builder
+            .Add(new IonToastButton
             {
                 Text = "More Info",
                 Role = "info",
@@ -22,9 +21,9 @@
                     _handlerOutput = "More Info clicked";
                     StateHasChanged();
                     return ValueTask.CompletedTask;
-                },
-            },
-            new IonToastButton()
+                }
+            })
+            .Add(new IonToastButton
             {
                 Text = "Dismiss",
                 Role = "cancel",
@@ -34,8 +33,8 @@
                     StateHasChanged();
                     return ValueTask.CompletedTask;
                 }
-            },
-            new IonToastButton()
+            })
+            .Add(new IonToastButton
             {
                 Text = "Custom",
                 Role = "custom",
@@ -46,8 +45,7 @@
                     StateHasChanged();
                     await (args.Sender?.DismissAsync() ?? ValueTask.CompletedTask);
                 }
-            }
-        };
+            });
     }
 
     private Task IonToastDidDismiss(IonToastDismissEventArgs args)

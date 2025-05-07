@@ -11,25 +11,30 @@
     <link rel="icon" type="image/png" href="favicon.png" />
 
 
-<!--
+    <!-- If using Ionic from a CDN
+
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+
+    <script type="module">
+        import { createAnimation, createGesture } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+        window.createAnimation = createAnimation;
+    </script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/core.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/palettes/dark.class.css" />
--->
+
+    -->
 
 
-    <!-- Import Ionic JS-->
+    <!-- If using Ionic from IonBlazor.StaticAssets.Ionic -->
     <script type="module" src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.esm.js"></script>
 
-    <!-- Add @ionic helpers [if needed] -->
     <script type="module">
         import { createAnimation, createGesture } from './_content/IonBlazor/@ionic/core/dist/ionic/index.esm.js';
         window.createAnimation = createAnimation;
     </script>
 
-    <!-- Import Ionic CSS -->
     <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/core.css" />
     <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/ionic.bundle.css" />
     <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/palettes/dark.class.css" />

@@ -25,12 +25,9 @@
                 .Delay(3000)
                 .ContinueWith(_ =>
                 {
-                    _test.Configure(icon =>
-                    {
-                        icon.Name = "cloud-outline";
-                        icon.Color = IonColor.Danger;
-                        icon.Size = IonIconSize.Small;
-                    });
+                    _test.SetName("cloud-outline");
+                    _test.SetColor(IonColor.Danger);
+                    _test.SetSize(IonIconSize.Small);
                 });
         }
 

@@ -2,11 +2,7 @@
 <IonAlert @ref="_alert"
           Trigger="present-alert-buttons"
           Header="Alert!"
-          Buttons="@(() => { return new[]
-                   {
-                       new AlertButton { Text = "Cancel", Role = "cancel", Handler = CancelHandler },
-                       new AlertButton { Text = "OK", Role = "confirm", Handler = ConfirmHandler }
-                   }; })"
+          ButtonsBuilder="@ButtonBuilder"
           IonAlertDidDismiss="IonAlertDidDismiss"/>
 
 @code {
@@ -30,6 +26,12 @@
     {
         Console?.Add("Alert confirmed");
         return ValueTask.CompletedTask;
+    }
+
+    private void ButtonBuilder(AlertButtonBuilder builder)
+    {
+        builder.Add(new AlertButton { Text = "Cancel", Role = "cancel", Handler = CancelHandler });
+        builder.Add(new AlertButton { Text = "OK", Role = "confirm", Handler = ConfirmHandler });
     }
 
 }

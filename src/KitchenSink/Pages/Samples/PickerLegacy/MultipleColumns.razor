@@ -1,11 +1,12 @@
-﻿@namespace IonicTest.Pages.Samples.PickerLegacy
+﻿@using IonBlazor.Components.Abstractions
+@namespace IonicTest.Pages.Samples.PickerLegacy
 
 <IonButton id="open-multi-picker">Open</IonButton>
 <IonPickerLegacy TColumn="PickerColumn"
            TColumnOption="PickerColumnOption"
            TButton="PickerButton"
-           Columns="@WithColumns"
-           Buttons="@WithButtons"
+           ColumnsBuilder="@ColumnsBuilder"
+           ButtonsBuilder="@ButtonsBuilder"
            Trigger="open-multi-picker"></IonPickerLegacy>
 
 <p>@((MarkupString)_message)</p>
@@ -14,59 +15,48 @@
 
     string _message = string.Empty;
 
-    private IReadOnlyList<PickerColumn> WithColumns()
+    private void ColumnsBuilder(PickerLegacyColumnBuilder builder)
     {
-        return
-        [
-            new()
+        builder
+            .Add<PickerColumn>(column =>
             {
-                Name = "meat",
-                Options =
+                column.Name = "meat";
+                column.Options =
                 [
-                    new() { Text = "Pepperoni", Value = "pepperoni" },
-                    new() { Text = "Smoked Ham", Value = "smoked-ham" },
-                    new() { Text = "Crispy Bacon", Value = "bacon" }
-                ]
-            },
-            new()
+                    new PickerColumnOption { Text = "Pepperoni", Value = "pepperoni" },
+                    new PickerColumnOption { Text = "Smoked Ham", Value = "smoked-ham" },
+                    new PickerColumnOption { Text = "Crispy Bacon", Value = "bacon" }
+                ];
+            })
+            .Add<PickerColumn>(column =>
             {
-                Name = "veggies",
-                Options =
+                column.Name = "veggies";
+                column.Options =
                 [
-                    new() { Text = "Red onion", Value = "red-onion" },
-                    new() { Text = "Peppers", Value = "peppers" },
-                    new() { Text = "Black olives", Value = "black-olives" }
-                ]
-            },
-            new()
+                    new PickerColumnOption { Text = "Red onion", Value = "red-onion" },
+                    new PickerColumnOption { Text = "Peppers", Value = "peppers" },
+                    new PickerColumnOption { Text = "Black olives", Value = "black-olives" }
+                ];
+            })
+            .Add<PickerColumn>(column =>
             {
-                Name = "crust",
-                Options =
+                column.Name = "crust";
+                column.Options =
                 [
-                    new() { Text = "Pan style", Value = "pan" },
-                    new() { Text = "Hand tossed", Value = "hand-tossed" },
-                    new() { Text = "Stuffed crust", Value = "stuffed-crust" }
-                ]
-            }
-        ];
+                    new PickerColumnOption { Text = "Pan style", Value = "pan" },
+                    new PickerColumnOption { Text = "Hand tossed", Value = "hand-tossed" },
+                    new PickerColumnOption { Text = "Stuffed crust", Value = "stuffed-crust" }
+                ];
+            });
     }
 
-    private IReadOnlyList<PickerButton> WithButtons()
+    private void ButtonsBuilder(PickerLegacyButtonBuilder builder)
     {
-        return
-        [
-            new()
-            {
-                Text = "Cancel",
-                Role = "cancel"
-            },
-            new()
-            {
-                Text = "Confirm",
-                Handler = ConfirmHandler
-            }
-        ];
+        builder
+            .Add(new PickerButton { Text = "Cancel", Role = "cancel" })
+            .Add(new PickerButton { Text = "Confirm", Handler = ConfirmHandler });
     }
+
 
     private ValueTask ConfirmHandler(Dictionary<string, PickedColumnOption>? value)
     {

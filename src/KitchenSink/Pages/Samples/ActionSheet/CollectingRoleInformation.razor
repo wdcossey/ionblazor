@@ -6,8 +6,20 @@
     Trigger="open-action-sheet-role-info"
     Header="Example header"
     SubHeader="Example subheader"
-    IonActionSheetDidDismiss="@(args => { Console.WriteLine(JsonSerializer.Serialize(new { data = args.Data, role = args.Role }, new JsonSerializerOptions(JsonSerializerDefaults.General) { WriteIndented = false })); })"
-    Buttons="@(() => { return new List<BasicActionSheetButton>() {
-                     new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } },
-                     new() { Text = "Share", Data = new ActionSheetButtonData { Action = "share" } },
-                     new() { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })"></IonActionSheet>
+    IonActionSheetDidDismiss="@(args => { Console?.Add(JsonSerializer.Serialize(new { data = args.Data, role = args.Role }, _jsonSerializerOptions )); })"
+    ButtonsBuilder="@ButtonsBuilder"></IonActionSheet>
+
+@code {
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new(JsonSerializerDefaults.General) { WriteIndented = false };
+
+    private static void ButtonsBuilder(ActionSheetButtonBuilder builder)
+    {
+        builder
+            .Add(new BasicActionSheetButton { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } })
+            .Add(new BasicActionSheetButton { Text = "Share", Data = new ActionSheetButtonData { Action = "share" } })
+            .Add(new BasicActionSheetButton { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } });
+    }
+}

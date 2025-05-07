@@ -12,7 +12,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\IonBlazor\IonBlazor.csproj" />
+        <ProjectReference Include="..\..\src\IonBlazor.Components\IonBlazor.Components.csproj" />
+        <ProjectReference Include="..\..\src\IonBlazor.StaticAssets\IonBlazor.StaticAssets.csproj" />
+        <ProjectReference Include="..\..\src\IonBlazor.StaticAssets.Ionic\IonBlazor.StaticAssets.Ionic.csproj" />
+        <ProjectReference Include="..\..\src\IonBlazor.StaticAssets.Ionic.Svg\IonBlazor.StaticAssets.Ionic.Svg.csproj" />
     </ItemGroup>
 
 </Project>

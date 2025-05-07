@@ -16,5 +16,15 @@
     Trigger="open-action-sheet-css-custom-properties"
     Header="Example header"
     SubHeader="Example subheader"
-    Buttons="@(() => { return new List<BasicActionSheetButton>() { new() { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } }, new() { Text = "Share" }, new() { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })">
+    ButtonsBuilder="@ButtonsBuilder">
 </IonActionSheet>
+
+@code {
+    private static void ButtonsBuilder(ActionSheetButtonBuilder builder)
+    {
+        builder
+            .Add(new BasicActionSheetButton { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } })
+            .Add(new BasicActionSheetButton { Text = "Share" })
+            .Add(new BasicActionSheetButton { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } });
+    }
+}

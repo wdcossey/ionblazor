@@ -2,42 +2,8 @@
 <IonAlert Trigger="present-alert-text-inputs-example"
           Header="Please enter your info"
           IonAlertDidDismiss="IonAlertDidDismiss"
-          Buttons="@(() =>
-                   {
-                       return new[]
-                       {
-                           new AlertButton { Text = "OK", Role = "confirm" },
-                       };
-                   })"
-          Inputs="@(() =>
-                  {
-                      return new[]
-                      {
-                          new AlertInput
-                          {
-                              Placeholder = "Name",
-                              Name = "name"
-                          },
-                          new AlertInput
-                          {
-                              Placeholder = "Nickname (max 8 characters)",
-                              Attributes = new Dictionary<string, object>() { { "maxlength", 8 } },
-                              Name = "nickname"
-                          },
-                          new AlertInputNumber
-                          {
-                              Placeholder = "Age",
-                              Min = "1",
-                              Max = "100",
-                              Name = "age"
-                          },
-                          new AlertInputTextArea
-                          {
-                              Placeholder = "A little about yourself",
-                              Name = "info"
-                          },
-                      };
-                  })"
+          ButtonsBuilder="@ButtonsBuilder"
+          InputsBuilder="@InputsBuilder"
           />
 @code{
 
@@ -49,6 +15,21 @@
         var values = string.Join(",", (args.Values as AlertValuesDictionary)?.Values?.Select(s => $"{{\"{s.Key}\":\"{s.Value}\"}}") ?? []);
         Console?.Add($"Dismissed with role: {args.Role}");
         Console?.Add($"{{{values}}}");
+    }
+
+    private static void ButtonsBuilder(AlertButtonBuilder builder)
+    {
+        builder.Add(new AlertButton { Text = "OK", Role = "confirm" });
+    }
+
+    private static void InputsBuilder(AlertInputBuilder builder)
+    {
+        builder
+            .Add(new AlertInput { Placeholder = "Name", Name = "name" })
+            .Add(new AlertInput { Placeholder = "Nickname (max 8 characters)", Attributes = new Dictionary<string, object>() { { "maxlength", 8 } }, Name = "nickname" })
+            .Add(new AlertInputNumber { Placeholder = "Age", Min = "1", Max = "100", Name = "age" })
+            .Add(new AlertInputTextArea { Placeholder = "A little about yourself", Name = "info" });
+
     }
 
 }

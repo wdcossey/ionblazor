@@ -165,10 +165,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
         DidPresent="@DidPresent"
         DidDismiss="@DidDismiss"
         ButtonHandler="@OnButtonHandler"
-        Buttons="@(() => { return new List<ActionSheetButton<ActionSheetButtonData>>() {
-                                 new () { Text = "Delete", Role = "destructive", Icon = "trash-outline", Data = new ActionSheetButtonData { Action = "delete" } },
-                                 new () { Text = "Share", Icon = "share" },
-                                 new () { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } } }; })"></IonActionSheet>
+        ButtonsBuilder="@ButtonsBuilder"></IonActionSheet>
 
     @*<ion-icon name="chevron-back"></ion-icon>*@
     @*    {
@@ -326,8 +323,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
             _content = string.Empty;
         }
     }
-}
-@code {
+
     private void PresentToast(string position, string message) {
         _ = JsRuntime.InvokeVoidAsync("presentToast", position, message);
     }
@@ -340,10 +336,6 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
 
     private void DidDismiss(ActionSheetDismissEventArgs<ActionSheetButtonData> args) {
         //presentToast("bottom", $"Role: {args.Role}; Data: {args.Data}");
-    }
-
-    private void OnButtonHandler(ActionSheetButtonHandlerEventArgs<ActionSheetButtonData> args) {
-        PresentToast("bottom", $"Button Index: {args.Index}; Role: {args.Button?.Role}; Text: {args.Button?.Text}; Action: {args.Button?.Data?.Action};");
     }
 
     private void SearchbarCallback(IonSearchbarInputEventArgs args)
@@ -379,4 +371,15 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
         }
     }
 
+    private static void ButtonsBuilder(ActionSheetButtonBuilder builder)
+    {
+        builder
+            .Add(new BasicActionSheetButton { Text = "Delete", Role = "destructive", Icon = "trash-outline", Data = new ActionSheetButtonData { Action = "delete" } })
+            .Add(new BasicActionSheetButton { Text = "Share", Icon = "share" })
+            .Add(new BasicActionSheetButton { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } });
+    }
+
+    private void OnButtonHandler(ActionSheetButtonHandlerEventArgs<ActionSheetButtonData> args) {
+        PresentToast("bottom", $"Button Index: {args.Index}; Role: {args.Button?.Role}; Text: {args.Button?.Text}; Action: {args.Data?.Action};");
+    }
 }

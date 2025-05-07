@@ -10,10 +10,9 @@
 
       height: 100%;
     }
-
 </style>
 
-<PlaygroundContainer>
+<PlaygroundContainer EnableConsole="true">
     <Header>
         <h2>Inline Action Sheets(Recommended)</h2>
         <p><code>ion-action-sheet</code> can be used by writing the component directly in your template. This reduces the number of handlers you need to wire up in order to present the Action Sheet.</p>
@@ -25,7 +24,7 @@
     </ChildContent>
 </PlaygroundContainer>
 
-<PlaygroundContainer>
+<PlaygroundContainer EnableConsole="true">
     <Header>
         <h2>Using <code>isOpen</code></h2>
         <p>The <code>isOpen</code> property on <code>ion-action-sheet</code> allows developers to control the presentation state of the Action Sheet from their application state. This means when <code>isOpen</code> is set to <code>true</code> the Action Sheet will be presented, and when <code>isOpen</code> is set to <code>false</code> the Action Sheet will be dismissed.</p>
@@ -38,7 +37,7 @@
     </ChildContent>
 </PlaygroundContainer>
 
-<PlaygroundContainer>
+<PlaygroundContainer EnableConsole="true">
     <Header>
         <h2>Controller Action Sheets</h2>
         <p>The <code>actionSheetController</code> can be used in situations where more control is needed over when the Action Sheet is presented and dismissed.</p>
@@ -50,7 +49,7 @@
     </ChildContent>
 </PlaygroundContainer>
 
-<PlaygroundContainer>
+<PlaygroundContainer EnableConsole="true">
     <Header>
         <h2>Collecting Role Information on Dismiss</h2>
         <p>When the <code>didDismiss</code> event is fired, the <code>data</code> and <code>role</code> fields of the event detail can be used to gather information about how the Action Sheet was dismissed.</p>

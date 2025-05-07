@@ -1,40 +1,34 @@
-﻿<IonButton @onclick="@(() => _actionSheet.IsOpen = true)">Open</IonButton>
+﻿@using IonBlazor.Components.Abstractions
+<IonButton @onclick="@(() => _actionSheet.IsOpen = true)">Open</IonButton>
 <IonActionSheet TButtonData="ActionSheetButtonData"
                 @ref="_actionSheet"
                 Header="Actions"
-                Buttons="@(() =>
-                         {
-                             return new List<ActionSheetButton<ActionSheetButtonData>>() {
-                                 new () { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" }, Handler = ButtonHandler },
-                                 new () { Text = "Share", Handler = ButtonHandler },
-                                 new ()
-                                 {
-                                     Text = "Cancel",
-                                     Role = "cancel",
-                                     Data = new ActionSheetButtonData { Action = "cancel" },
-                                     Handler = ButtonHandler
-                                 }
-                             };
-                         })"
+                ButtonsBuilder="@ButtonsBuilder"
                 IonActionSheetDidDismiss="@IonActionSheetDidDismiss"></IonActionSheet>
 
 @code {
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
     private IonActionSheet<ActionSheetButtonData> _actionSheet = null!;
 
     private void IonActionSheetDidDismiss(ActionSheetDismissEventArgs<ActionSheetButtonData> args)
     {
+        Console?.Add($"Dismissed with Role: {args.Role}; Action: {args.Data?.Action}");
         _actionSheet.IsOpen = false;
     }
 
-    private async ValueTask ButtonHandler(ActionSheetButton<ActionSheetButtonData>? button, int? index)
+    private ValueTask ButtonHandler(IActionSheetButton? button, int? index)
     {
-        await IonToastController.PresentAsync(options =>
-        {
-            options.Message = $"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};";
-            options.Position = "bottom";
-            options.Duration = 3000;
-            options.Icon = "logo-ionic";
-        });
+        Console?.Add($"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};");
+        return ValueTask.CompletedTask;
     }
 
+    private void ButtonsBuilder(ActionSheetButtonBuilder builder)
+    {
+        builder
+            .Add(new BasicActionSheetButton { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" }, Handler = ButtonHandler })
+            .Add(new BasicActionSheetButton { Text = "Share", Handler = ButtonHandler })
+            .Add(new BasicActionSheetButton { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" }, Handler = ButtonHandler });
+    }
 }

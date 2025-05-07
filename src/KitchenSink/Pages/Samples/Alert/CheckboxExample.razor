@@ -2,35 +2,8 @@
 <IonAlert Trigger="present-alert-checkbox-example"
           Header="Select your favorite color"
           IonAlertDidDismiss="IonAlertDidDismiss"
-          Buttons="@(() =>
-                   {
-                       return new[]
-                       {
-                           new AlertButton { Text = "OK", Role = "ok" },
-                       };
-                   })"
-          Inputs="@(() =>
-                  {
-                      return new AlertInput[]
-                      {
-                          new AlertInputCheckbox()
-                          {
-                              Label = "Red",
-                              Checked = true,
-                              Value = "red"
-                          },
-                          new AlertInputCheckbox
-                          {
-                              Label = "Blue",
-                              Value = "blue"
-                          },
-                          new AlertInputCheckbox
-                          {
-                              Label = "Green",
-                              Value = "green"
-                          },
-                      };
-                  })"
+          ButtonsBuilder="@ButtonsBuilder"
+          InputsBuilder="@InputsBuilder"
 />
 
 @code{
@@ -47,4 +20,18 @@
         var values = string.Join(",", (args.Values as AlertValuesArray)?.Values ?? []);
         Console?.Add($"{values}");
     }
+
+    private static void ButtonsBuilder(AlertButtonBuilder builder)
+    {
+        builder.Add(new AlertButton { Text = "OK", Role = "ok" });
+    }
+
+    private static void InputsBuilder(AlertInputBuilder builder)
+    {
+        builder
+            .Add(new AlertInputCheckbox { Label = "Red", Checked = true, Value = "red" })
+            .Add(new AlertInputCheckbox { Label = "Blue", Value = "blue" })
+            .Add(new AlertInputCheckbox { Label = "Green", Value = "green" });
+    }
+
 }

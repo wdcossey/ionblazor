@@ -6,7 +6,7 @@
       Trigger="open-layout-inline-toast"
       Duration="3000"
       Message="This is a toast with a long message and a button that appears on the same line."
-      Buttons="@WithButtons">
+      ButtonsBuilder="@ButtonsBuilder">
 </IonToast>
 
 <IonToast
@@ -14,18 +14,14 @@
     Duration="3000"
     Message="This is a toast with a long message and a button that appears on the next line."
     Layout="@IonToastLayout.Stacked"
-    Buttons="@WithButtons">
+    ButtonsBuilder="@ButtonsBuilder">
 </IonToast>
 
 @code {
 
-    private IReadOnlyCollection<IIonToastButton> WithButtons() =>
-        new IIonToastButton[]
-        {
-            new IonToastButton()
-            {
-                Text = "Action With Long Text",
-            }
-        };
-    
+    private static void ButtonsBuilder(ToastButtonBuilder builder)
+    {
+        builder.Add(new IonToastButton { Text = "Action With Long Text" });
+    }
+
 }
