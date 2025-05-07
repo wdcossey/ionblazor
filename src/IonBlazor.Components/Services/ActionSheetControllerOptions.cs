@@ -38,5 +38,5 @@ public sealed record ActionSheetControllerOptions
     public IDictionary<string, string>? HtmlAttributes { get; set; }
 
     [JsonIgnore]
-    public Action<IonAlertDismissEventArgs>? OnDidDismiss { get; set; }
+    public Action<ActionSheetControllerDismissEventArgs>? OnDidDismiss { get; set; }
 }

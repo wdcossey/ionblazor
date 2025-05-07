@@ -1,11 +1,8 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed record IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TButton>
-    where TColumn: class, IPickerColumn<TColumnOption>
-    where TColumnOption: class, IPickerColumnOption
-    where TButton: class, IPickerButton
+public sealed record IonPickerLegacyDismissEventArgs
 {
-    public IonPickerLegacy<TColumn, TColumnOption, TButton>? Sender { get; internal set; } = null!;
+    public IonPickerLegacy? Sender { get; internal set; } = null!;
 
     public string? Role { get; internal set; }
 

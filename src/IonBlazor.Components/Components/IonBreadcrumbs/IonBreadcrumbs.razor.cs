@@ -8,7 +8,7 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// The number of breadcrumbs to show after the collapsed indicator.

@@ -4,7 +4,7 @@ public sealed partial class IonDateTimeButton : IonComponent, IIonModeComponent,
 {
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// The ID of the ion-datetime instance associated with the datetime button.

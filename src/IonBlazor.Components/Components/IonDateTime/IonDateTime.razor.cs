@@ -23,7 +23,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// Values used to create the list of selectable days.

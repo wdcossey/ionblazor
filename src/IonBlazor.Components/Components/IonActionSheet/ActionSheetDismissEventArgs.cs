@@ -4,5 +4,6 @@ public sealed record ActionSheetDismissEventArgs<TData> : ActionSheetEventArgs<T
     where TData: class, IActionSheetButtonData
 {
     public string? Role { get; internal init; }
+
     public TData? Data { get; internal init; }
 }

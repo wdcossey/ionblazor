@@ -5,7 +5,49 @@ public sealed class IonLoadingController: ComponentBase
     private static IJSRuntime _jsRuntime = null!;
 
     [Inject]
-    private IJSRuntime JsRuntime { get; set; } = null!;
+    private IJSRuntime JsRuntime { get; init; } = null!;
+
+    public static async ValueTask<string?> PresentAsync(Action<IonLoadingControllerOptions> configure)
+    {
+        IonLoadingControllerOptions options = new();
+        configure(options);
+
+        DotNetObjectReference<IonicEventCallback<JsonObject?>>? didDismissHandler = null;
+        DotNetObjectReference<IonicEventCallback<JsonObject?>>? didPresentHandler = null;
+
+        if (options.OnDidDismiss is not null)
+        {
+            didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
+            {
+                options.OnDidDismiss.Invoke(new IonLoadingDismissEventArgs
+                {
+                    Sender = null,
+                    Role = args?["detail"]?["role"]?.GetValue<string>(),
+                    Data = args?["detail"]?["data"]?.Deserialize<JsonElement>(),
+                    HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
+                });
+
+                return Task.CompletedTask;
+            });
+        }
+
+        if (options.OnDidPresent is not null)
+        {
+            didPresentHandler = IonicEventCallback<JsonObject?>.Create(args =>
+            {
+                options.OnDidPresent.Invoke(new IonLoadingPresentEventArgs()
+                {
+                    Sender = null,
+                    HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
+                });
+                return Task.CompletedTask;
+            });
+        }
+
+        IJSObjectReference jsComponent = await CreateComponentAsync();
+        var result = await jsComponent.InvokeAsync<string?>("present", options, didDismissHandler, didPresentHandler);
+        return result;
+    }
 
     public static async ValueTask<string?> PresentAsync(
         string? message = null,
@@ -21,11 +63,11 @@ public sealed class IonLoadingController: ComponentBase
         {
             didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
             {
-                onDidDismiss?.Invoke(new IonLoadingDismissEventArgs
+                onDidDismiss.Invoke(new IonLoadingDismissEventArgs
                 {
                     Sender = null,
                     Role = args?["detail"]?["role"]?.GetValue<string>(),
-                    Data = args?["detail"]?["data"],
+                    Data = args?["detail"]?["data"]?.Deserialize<JsonElement>(),
                     HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
                 });
 
@@ -42,30 +84,42 @@ public sealed class IonLoadingController: ComponentBase
             });
         }
 
-        IJSObjectReference jsComponent = await _jsRuntime.ImportAsync(nameof(IonLoadingController));
+        IJSObjectReference jsComponent = await CreateComponentAsync();
         var result = await jsComponent.InvokeAsync<string?>("present", message, duration, htmlAttributes, didDismissHandler, didPresentHandler);
         return result;
     }
 
-    public static IonLoadingReference Create(Action<IonLoadingReferenceConfiguration> configure)
+    public static IonLoadingReference Create(Action<IonLoadingControllerOptions> configure)
     {
         return CreateAsync(configure).GetAwaiter().GetResult();
     }
 
-    public static async Task<IonLoadingReference> CreateAsync(Action<IonLoadingReferenceConfiguration> configure)
+    public static async Task<IonLoadingReference> CreateAsync(Action<IonLoadingControllerOptions> configure)
     {
-        IonLoadingReferenceConfiguration configuration = new();
+        IonLoadingControllerOptions configuration = new();
         configure(configuration);
 
-        IJSObjectReference jsComponent = await _jsRuntime.ImportAsync(nameof(IonLoadingController));
+        IJSObjectReference jsComponent = await CreateComponentAsync();
         IonLoadingReference result = new(jsComponent, configuration);
         await result.CreateAsync();
         return result;
     }
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
-        base.OnParametersSet();
+        await base.OnParametersSetAsync();
         _jsRuntime = JsRuntime;
+    }
+
+    private static async Task<IJSObjectReference> CreateComponentAsync()
+    {
+        IJSObjectReference result = await _jsRuntime.ImportAsync(nameof(IonLoadingController));
+
+        if (result is null)
+        {
+            throw new InvalidOperationException($"{nameof(IonLoadingController)} is not initialized");
+        }
+
+        return result;
     }
 }

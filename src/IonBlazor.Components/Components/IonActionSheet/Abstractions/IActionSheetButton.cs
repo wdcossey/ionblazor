@@ -1,4 +1,4 @@
-﻿namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components.Abstractions;
 
 public interface IActionSheetButton
 {
@@ -23,5 +23,5 @@ public interface IActionSheetButton
     HandlerDelegate? Handler { get; }
 
     [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    object? Data { get; }
+    IActionSheetButtonData? Data { get; }
 }

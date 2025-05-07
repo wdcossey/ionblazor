@@ -1,9 +1,8 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Collections.Immutable;
 
-public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonComponent, IIonModeComponent
-    where TColumn: class, IPickerColumn<TColumnOption>
-    where TColumnOption: class, IPickerColumnOption
-    where TButton: class, IPickerButton
+namespace IonBlazor.Components;
+
+public partial class IonPickerLegacy : IonComponent, IIonModeComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
@@ -15,8 +14,13 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
 
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
+    private IImmutableList<IPickerButton> _buttons = null!;
+    private IImmutableList<IPickerColumn> _columns = null!;
 
-    protected override string JsImportName => nameof(IonPickerLegacy<TColumn, TColumnOption, TButton>);
+    protected override string JsImportName => nameof(IonPickerLegacy);
+
+    public delegate void ButtonBuilder(PickerLegacyButtonBuilder builder);
+    public delegate void ColumnBuilder(PickerLegacyColumnBuilder builder);
 
     /// <summary>
     /// If <b>true</b>, the picker will animate.
@@ -30,17 +34,11 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
     [Parameter]
     public bool? BackdropDismiss { get; set; }
 
-    /// <summary>
-    /// Array of buttons to be displayed at the top of the picker.
-    /// </summary>
     [Parameter]
-    public Func<IReadOnlyCollection<TButton>>? Buttons { get; set; }
+    public ButtonBuilder? ButtonsBuilder { get; init; }
 
-    /// <summary>
-    /// Array of columns to be displayed in the picker.
-    /// </summary>
     [Parameter]
-    public Func<IReadOnlyCollection<TColumn>>? Columns { get; set; }
+    public ColumnBuilder? ColumnsBuilder { get; init; }
 
     /// <summary>
     /// Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
@@ -107,7 +105,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
     /// Emitted after the picker has dismissed. Shorthand for <see cref="IonPickerDidDismiss"/>.
     /// </summary>
     [Parameter]
-    public EventCallback<IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TButton>> DidDismiss { get; set; }
+    public EventCallback<IonPickerLegacyDismissEventArgs> DidDismiss { get; set; }
 
     /// <summary>
     /// Emitted after the picker has presented. Shorthand for <see cref="IonPickerWillDismiss"/>.
@@ -119,7 +117,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
     /// Emitted after the picker has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TButton>> IonPickerDidDismiss { get; set; }
+    public EventCallback<IonPickerLegacyDismissEventArgs> IonPickerDidDismiss { get; set; }
 
     /// <summary>
     /// Emitted after the picker has presented.
@@ -131,7 +129,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
     /// Emitted before the picker has dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback<IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TButton>> IonPickerWillDismiss { get; set; }
+    public EventCallback<IonPickerLegacyDismissEventArgs> IonPickerWillDismiss { get; set; }
 
     /// <summary>
     /// Emitted before the picker has presented.
@@ -143,7 +141,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
     /// Emitted before the picker has dismissed. Shorthand for <see cref="IonPickerWillDismiss"/>.
     /// </summary>
     [Parameter]
-    public EventCallback<IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TButton>> WillDismiss { get; set; }
+    public EventCallback<IonPickerLegacyDismissEventArgs> WillDismiss { get; set; }
 
     /// <summary>
     /// Emitted before the picker has presented. Shorthand for <see cref="IonPickerWillPresent"/>.
@@ -152,7 +150,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
     public EventCallback WillPresent { get; set; }
 
     [Parameter]
-    public EventCallback<IonPickerLegacyButtonHandlerEventArgs<TColumn, TColumnOption, TButton>> ButtonHandler { get; set; }
+    public EventCallback<IonPickerLegacyButtonHandlerEventArgs> ButtonHandler { get; set; }
 
     public IonPickerLegacy()
     {
@@ -160,7 +158,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             var data = args?["detail"]?["data"]?.Deserialize<Dictionary<string, PickedColumnOption>>();
-            await DidDismiss.InvokeAsync(new IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TButton>() { Sender = this, Data = data, Role = role });
+            await DidDismiss.InvokeAsync(new IonPickerLegacyDismissEventArgs() { Sender = this, Data = data, Role = role });
         });
 
         _didPresentReference = IonicEventCallback<JsonObject?>.Create(async _ =>
@@ -173,7 +171,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             var data = args?["detail"]?["data"]?.Deserialize<Dictionary<string, PickedColumnOption>>();
-            await IonPickerDidDismiss.InvokeAsync(new IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TButton> { Sender = this, Data = data, Role = role });
+            await IonPickerDidDismiss.InvokeAsync(new IonPickerLegacyDismissEventArgs { Sender = this, Data = data, Role = role });
         });
 
         _ionPickerDidPresentReference = IonicEventCallback<JsonObject?>.Create(async _ =>
@@ -185,7 +183,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             var data = args?["detail"]?["data"]?.Deserialize<Dictionary<string, PickedColumnOption>>();
-            await IonPickerWillDismiss.InvokeAsync(new IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TButton> { Sender = this, Data = data, Role = role });
+            await IonPickerWillDismiss.InvokeAsync(new IonPickerLegacyDismissEventArgs { Sender = this, Data = data, Role = role });
         });
 
         _ionPickerWillPresentReference = IonicEventCallback<JsonObject?>.Create(async _ => await IonPickerWillPresent.InvokeAsync(this));
@@ -194,7 +192,7 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
         {
             var role = args?["detail"]?["role"]?.GetValue<string>();
             var data = args?["detail"]?["data"]?.Deserialize<Dictionary<string, PickedColumnOption>>();
-            await WillDismiss.InvokeAsync(new IonPickerLegacyDismissEventArgs<TColumn, TColumnOption, TButton>() { Sender = this, Data = data, Role = role });
+            await WillDismiss.InvokeAsync(new IonPickerLegacyDismissEventArgs() { Sender = this, Data = data, Role = role });
         });
 
         _willPresentReference = IonicEventCallback<JsonObject?>.Create(async _ => await WillPresent.InvokeAsync(this));
@@ -237,19 +235,20 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
             IonEvent.Set("willPresent", _willPresentReference)
         );
 
-        var columns = Columns?.Invoke();
-        var buttons = Buttons?.Invoke();
+        PickerLegacyButtonBuilder buttonBuilder = new();
+        ButtonsBuilder?.Invoke(buttonBuilder);
+        _buttons = buttonBuilder.Build();
 
         _buttonHandlerReference = IonicEventCallback<JsonObject?>.Create(
             async args =>
             {
-                var index = args?["index"]?.GetValue<int?>();
+                var index = args?["index"]?.GetValue<int?>() ?? -1;
                 var value = args?["value"]?.Deserialize<Dictionary<string, PickedColumnOption>>();
-                var button = buttons?.ElementAtOrDefault(index ?? -1);
+                IPickerButton? button = _buttons.ElementAtOrDefault(index);
                 await (button?.Handler?.Invoke(value) ?? ValueTask.CompletedTask);
 
                 await ButtonHandler.InvokeAsync(
-                    new IonPickerLegacyButtonHandlerEventArgs<TColumn, TColumnOption, TButton>()
+                    new IonPickerLegacyButtonHandlerEventArgs
                     {
                         Sender = this,
                         Index = index,
@@ -258,8 +257,12 @@ public partial class IonPickerLegacy<TColumn, TColumnOption, TButton> : IonCompo
                     });
             });
 
-        await JsComponent.InvokeVoidAsync("withColumns", IonElement, columns);
-        await JsComponent.InvokeVoidAsync("withButtons", IonElement, buttons, _buttonHandlerReference);
+        PickerLegacyColumnBuilder columnBuilder = new();
+        ColumnsBuilder?.Invoke(columnBuilder);
+        _columns = columnBuilder.Build();
+
+        await JsComponent.InvokeVoidAsync("withColumns", IonElement, _columns);
+        await JsComponent.InvokeVoidAsync("withButtons", IonElement, _buttons, _buttonHandlerReference);
     }
 
     public override async ValueTask DisposeAsync()

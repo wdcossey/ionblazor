@@ -12,7 +12,7 @@ public sealed partial class IonItem : IonContentComponent, IIonModeComponent, II
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// If <b>true</b>, a detail arrow will appear on the item.

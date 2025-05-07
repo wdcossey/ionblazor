@@ -5,7 +5,7 @@ public sealed partial class IonToolbar : IonContentComponent, IIonModeComponent,
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
     /// <inheritdoc/>
-    [Parameter] public string? Color { get; set; }
+    [Parameter] public string? Color { get; init; }
 
     /// <inheritdoc/>
     [Parameter] public string? Mode { get; set; } = IonMode.Default;

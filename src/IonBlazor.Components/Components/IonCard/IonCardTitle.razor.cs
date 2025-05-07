@@ -4,7 +4,7 @@ public sealed partial class IonCardTitle : IonContentComponent, IIonModeComponen
 {
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <inheritdoc/>
     [Parameter]

@@ -9,7 +9,7 @@ public sealed record IonLoadingDismissEventArgs
 
     public string? Role { get; internal init; }
 
-    public object? Data { get; internal init; }
+    public JsonElement? Data { get; internal init; }
 
     /// <summary>
     /// The HTML attributes that were passed to the loader, used by <see cref="IonLoadingController"/>

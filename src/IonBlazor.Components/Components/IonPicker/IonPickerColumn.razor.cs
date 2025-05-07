@@ -9,7 +9,7 @@ public sealed partial class IonPickerColumn : IonContentComponent, IIonModeCompo
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
     /// <inheritdoc/>
-    [Parameter] public string? Color { get; set; }
+    [Parameter] public string? Color { get; init; }
 
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the picker.

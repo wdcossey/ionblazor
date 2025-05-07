@@ -1,3 +1,3 @@
 ﻿namespace IonBlazor.Components;
 
-public partial class IonSimplePickerLegacy : IonPickerLegacy<PickerColumn, PickerColumnOption, PickerButton>;
+public partial class IonSimplePickerLegacy : IonPickerLegacy;

@@ -50,7 +50,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// If <b>true</b>, a character counter will display the ratio of characters used and the total character limit.

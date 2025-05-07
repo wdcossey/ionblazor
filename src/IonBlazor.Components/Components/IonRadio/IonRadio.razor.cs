@@ -7,7 +7,7 @@ public sealed partial class IonRadio : IonContentComponent, IIonModeComponent, I
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the radio.

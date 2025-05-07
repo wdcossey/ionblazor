@@ -22,7 +22,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// How long, in milliseconds, to wait to trigger the ionInput event after each change in the range value.

@@ -4,7 +4,7 @@ public sealed partial class IonChip : IonContentComponent, IIonModeComponent, II
 {
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// If true, the user cannot interact with the <see cref="IonChip"/>.

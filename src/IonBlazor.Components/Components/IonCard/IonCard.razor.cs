@@ -10,7 +10,7 @@ public sealed partial class IonCard : IonContentComponent, IIonModeComponent, II
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// If true, the user cannot interact with the <see cref="IonCard"/>.

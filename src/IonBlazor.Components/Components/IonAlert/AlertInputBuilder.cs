@@ -1,13 +1,16 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Collections.Immutable;
+
+namespace IonBlazor.Components;
 
 public sealed class AlertInputBuilder
 {
-    private readonly IList<IAlertInput> _inputs = new List<IAlertInput>();
+    private readonly IList<IAlertInput> _inputs = [];
+
     internal AlertInputBuilder() { }
 
-    public IReadOnlyList<IAlertInput> Build()
+    internal IImmutableList<IAlertInput> Build()
     {
-        return _inputs.ToArray();
+        return _inputs.ToImmutableList();
     }
 
     public AlertInputBuilder Add<TInput>(Action<TInput> configure) where TInput : class, IAlertInput, new()

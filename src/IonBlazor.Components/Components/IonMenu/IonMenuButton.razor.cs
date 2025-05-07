@@ -4,7 +4,7 @@ public sealed partial class IonMenuButton : IonComponent, IIonColorComponent, II
 {
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <inheritdoc/>
     [Parameter]

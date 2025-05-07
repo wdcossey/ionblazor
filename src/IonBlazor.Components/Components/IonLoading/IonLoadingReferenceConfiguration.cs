@@ -1,6 +1,6 @@
-﻿namespace IonBlazor.Components;
+﻿/*namespace IonBlazor.Components;
 
-public sealed class IonLoadingReferenceConfiguration
+public sealed record IonLoadingReferenceConfiguration
 {
     public string? Message { get; set; }
 
@@ -13,4 +13,4 @@ public sealed class IonLoadingReferenceConfiguration
     public Action<IonLoadingPresentEventArgs>? OnDidPresent { get; set; }
 
     internal IonLoadingReferenceConfiguration() { }
-}
+}*/

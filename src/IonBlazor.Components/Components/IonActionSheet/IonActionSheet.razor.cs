@@ -15,7 +15,11 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
     private DotNetObjectReference<IonicEventCallback> _willPresentReference = null!;
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
+    private IReadOnlyList<IActionSheetButton> _buttons = null!;
+
     protected override string JsImportName => nameof(IonActionSheet<TButtonData>);
+
+    public delegate void ButtonBuilder(ActionSheetButtonBuilder builder);
 
     [Parameter]
     public bool? Animated { get; init; }
@@ -24,7 +28,7 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
     public bool? BackdropDismiss { get; init; }
 
     [Parameter]
-    public Func<IEnumerable<ActionSheetButton<TButtonData>>>? Buttons { get; init; }
+    public ButtonBuilder? ButtonsBuilder { get; init; }
 
     [Parameter]
     public string? CssClass { get; init; }
@@ -108,8 +112,6 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
         if (!firstRender)
             return;
 
-        var buttons = Buttons?.Invoke();
-
         _didDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             await DidDismiss.InvokeAsync(new ActionSheetDismissEventArgs<TButtonData>()
@@ -172,18 +174,25 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
             await WillPresent.InvokeAsync(new ActionSheetEventArgs<TButtonData>() { Sender = this });
         });
 
+        ActionSheetButtonBuilder buttonBuilder = new();
+        ButtonsBuilder?.Invoke(buttonBuilder);
+        _buttons = buttonBuilder.Build();
+
         _buttonHandlerReference = IonicEventCallback<JsonObject?>.Create(
             async args =>
             {
-                var index = args?["index"]?.GetValue<int?>();
-                var button = buttons?.ElementAtOrDefault(index ?? -1);
+
+                var index = args?["index"]?.GetValue<int?>() ?? -1;
+                IActionSheetButton? button = _buttons.ElementAtOrDefault(index);
+                TButtonData? data = button?.Data as TButtonData;
                 await (button?.Handler?.Invoke(button, index) ?? ValueTask.CompletedTask);
 
-                await ButtonHandler.InvokeAsync(new ActionSheetButtonHandlerEventArgs<TButtonData>()
+                await ButtonHandler.InvokeAsync(new ActionSheetButtonHandlerEventArgs<TButtonData>
                 {
                     Sender = this,
                     Index = index,
-                    Button = button
+                    Button = button,
+                    Data = data
                 });
             });
 
@@ -202,7 +211,7 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
             IonEvent.Set("willPresent", _willPresentReference )
         );
 
-        await JsComponent.InvokeVoidAsync("addButtons", IonElement, buttons, _buttonHandlerReference);
+        await JsComponent.InvokeVoidAsync("addButtons", IonElement, _buttons, _buttonHandlerReference);
     }
 
     /// <summary>

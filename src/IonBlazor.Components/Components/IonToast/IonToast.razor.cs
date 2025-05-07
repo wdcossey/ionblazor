@@ -1,4 +1,6 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Collections.Immutable;
+
+namespace IonBlazor.Components;
 
 public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonModeComponent
 {
@@ -13,7 +15,11 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
 
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference = null!;
 
+    private IImmutableList<IIonToastButton> _buttons = null!;
+
     protected override string JsImportName => nameof(IonToast);
+
+    public delegate void ButtonBuilder(ToastButtonBuilder builder);
 
     /// <summary>
     /// If <b>true</b>, the toast will animate.
@@ -25,11 +31,11 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
     /// An array of buttons for the toast.
     /// </summary>
     [Parameter]
-    public Func<IReadOnlyCollection<IIonToastButton>>? Buttons { get; set; }
+    public ButtonBuilder? ButtonsBuilder { get; set; }
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// How many milliseconds to wait before hiding the toast.
@@ -239,13 +245,15 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
             IonEvent.Set("willPresent", _willPresentReference)
         );
 
-        var buttons = Buttons?.Invoke();
+        ToastButtonBuilder builder = new();
+        ButtonsBuilder?.Invoke(builder);
+        _buttons = builder.Build();
 
         _buttonHandlerReference = IonicEventCallback<JsonObject?>.Create(
             async args =>
             {
-                int? index = args?["index"]?.GetValue<int?>();
-                IIonToastButton? button = buttons?.ElementAtOrDefault(index ?? -1);
+                var index = args?["index"]?.GetValue<int?>() ?? -1;
+                IIonToastButton? button = _buttons.ElementAtOrDefault(index);
                 IonToastButtonEventArgs arguments = new()
                 {
                     Sender = this,
@@ -258,7 +266,7 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
                 await ButtonHandler.InvokeAsync(arguments);
             });
 
-        await JsComponent.InvokeVoidAsync("withButtons", IonElement, buttons, _buttonHandlerReference);
+        await JsComponent.InvokeVoidAsync("withButtons", IonElement, _buttons, _buttonHandlerReference);
     }
 
     public override async ValueTask DisposeAsync()

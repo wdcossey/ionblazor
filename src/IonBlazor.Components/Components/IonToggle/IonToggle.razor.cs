@@ -16,7 +16,7 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// If true, the user cannot interact with the toggle.

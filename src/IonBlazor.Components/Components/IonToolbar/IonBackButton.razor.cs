@@ -5,7 +5,7 @@ public sealed partial class IonBackButton : IonComponent, IIonModeComponent, IIo
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
     /// <inheritdoc/>
-    [Parameter] public string? Color { get; set; }
+    [Parameter] public string? Color { get; init; }
 
     /// <summary>
     /// The url to navigate back to by default when there is no history.

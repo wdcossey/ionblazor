@@ -12,5 +12,5 @@ public interface IIonColorComponent
     /// and <see cref="IonColor.Dark"/>. <br/>
     /// For more information on colors, see theming.
     /// </summary>
-    string? Color { get; set; }
+    string? Color { get; }
 }

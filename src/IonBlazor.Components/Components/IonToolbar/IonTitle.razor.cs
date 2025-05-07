@@ -5,7 +5,7 @@ public sealed partial class IonTitle: IonContentComponent, IIonColorComponent
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
     /// <inheritdoc/>
-    [Parameter] public string? Color { get; set; }
+    [Parameter] public string? Color { get; init; }
 
     /// <summary>
     /// The size of the toolbar title.

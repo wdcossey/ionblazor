@@ -4,10 +4,11 @@ namespace IonBlazor.Components;
 
 public sealed class AlertButtonBuilder
 {
-    private readonly List<IAlertButton> _buttons = [];
+    private readonly IList<IAlertButton> _buttons = [];
+
     internal AlertButtonBuilder() { }
 
-    public IImmutableList<IAlertButton> Build()
+    internal IImmutableList<IAlertButton> Build()
     {
         return _buttons.ToImmutableList();
     }
@@ -25,6 +26,4 @@ public sealed class AlertButtonBuilder
         _buttons.Add(button);
         return this;
     }
-
-
 }

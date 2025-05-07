@@ -6,7 +6,7 @@ public sealed partial class IonInputPasswordToggle : IonComponent, IIonModeCompo
     [Parameter] public string? Mode { get; set; }
 
     /// <inheritdoc />
-    [Parameter] public string? Color { get; set; }
+    [Parameter] public string? Color { get; init; }
 
     /// <summary>
     /// The icon that can be used to represent hiding a password. If not set, the "eyeOff" Ionicon will be used.

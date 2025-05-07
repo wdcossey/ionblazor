@@ -6,7 +6,7 @@ public sealed partial class IonItemDivider : IonContentComponent, IIonModeCompon
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <inheritdoc/>
     [Parameter]

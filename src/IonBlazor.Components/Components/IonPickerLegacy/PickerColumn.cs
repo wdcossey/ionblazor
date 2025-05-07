@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public class PickerColumn : IPickerColumn<PickerColumnOption>
+public class PickerColumn : IPickerColumn
 {
     [JsonPropertyName("name"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Name { get; set; } = null!;
@@ -20,7 +20,7 @@ public class PickerColumn : IPickerColumn<PickerColumnOption>
     public string? Suffix { get; set; }
 
     [JsonPropertyName("options"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public PickerColumnOption[] Options { get; set; } = null!;
+    public IPickerColumnOption[] Options { get; set; } = null!;
 
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CssClass { get; set; }

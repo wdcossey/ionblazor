@@ -52,7 +52,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.

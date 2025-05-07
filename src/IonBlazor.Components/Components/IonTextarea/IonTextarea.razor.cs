@@ -39,7 +39,7 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.

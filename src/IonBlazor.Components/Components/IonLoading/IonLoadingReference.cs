@@ -15,12 +15,12 @@ public sealed class IonLoadingReference : IIonLoading
     private readonly uint? _duration;
     private readonly IDictionary<string, string>? _htmlAttributes;
 
-    internal IonLoadingReference(IJSObjectReference? jsComponent, IonLoadingReferenceConfiguration config)
+    internal IonLoadingReference(IJSObjectReference? jsComponent, IonLoadingControllerOptions options)
     {
         _jsComponent = jsComponent;
-        _message = config.Message;
-        _duration = config.Duration;
-        _htmlAttributes = config.HtmlAttributes;
+        _message = options.Message;
+        _duration = options.Duration;
+        _htmlAttributes = options.HtmlAttributes;
 
         _didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
         {
@@ -28,11 +28,11 @@ public sealed class IonLoadingReference : IIonLoading
             {
                 Sender = this,
                 Role = args?["detail"]?["role"]?.GetValue<string>(),
-                Data = args?["detail"]?["data"],
+                Data = args?["detail"]?["data"]?.Deserialize<JsonElement>(),
                 HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
             };
 
-            config.OnDidDismiss?.Invoke(obj);
+            options.OnDidDismiss?.Invoke(obj);
 
             return Task.CompletedTask;
         });
@@ -44,7 +44,7 @@ public sealed class IonLoadingReference : IIonLoading
                 Sender = this,
                 HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
             };
-            config.OnDidPresent?.Invoke(obj);
+            options.OnDidPresent?.Invoke(obj);
             return Task.CompletedTask;
         });
     }
@@ -102,7 +102,6 @@ public sealed class IonLoadingReference : IIonLoading
     /// <inheritdoc/>
     public async ValueTask DisposeAsync()
     {
-
         await (_jsComponent?.InvokeVoidAsync("remove", _componentId) ?? ValueTask.CompletedTask);
         _didDismissHandler?.Dispose();
         _didPresentHandler?.Dispose();

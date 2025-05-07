@@ -2,13 +2,13 @@
 
 namespace IonBlazor.Services;
 
-public sealed class IonToastController: ComponentBase, IAsyncDisposable
+public sealed class IonToastController: ComponentBase
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
-    private static IJSObjectReference _jsComponent = null!;
+    private static IJSRuntime _jsRuntime = null!;
 
-    public static ValueTask PresentAsync(Action<ToastControllerOptions> configure)
+    public static async ValueTask PresentAsync(Action<ToastControllerOptions> configure)
     {
         ToastControllerOptions options = new();
         configure(options);
@@ -43,7 +43,8 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
             return Task.CompletedTask;
         });
 
-        return _jsComponent.InvokeVoidAsync("presentToast", options, buttons, buttonHandler, didDismissHandler);
+        await using IJSObjectReference jsComponent = await CreateComponentAsync();
+        await jsComponent.InvokeVoidAsync("presentToast", options, buttons, buttonHandler, didDismissHandler);
     }
 
     public static ValueTask PresentAsync(
@@ -59,13 +60,12 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
         IDictionary<string, string>? htmlAttributes = null,
         Action<IonToastDismissEventArgs>? onDidDismiss = null)
     {
-        var durationAsInt = (int?)duration?.TotalMilliseconds ?? 1500;
         return PresentAsync(options =>
         {
             options.Header = header;
             options.Message = message;
             options.Position = position;
-            options.Duration = durationAsInt;
+            options.Duration = (int?)duration?.TotalMilliseconds ?? 1500;
             options.Icon = icon;
             options.PositionAnchor = positionAnchor;
             options.Translucent = translucent;
@@ -76,18 +76,21 @@ public sealed class IonToastController: ComponentBase, IAsyncDisposable
         });
     }
 
-    public ValueTask DisposeAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        return _jsComponent.DisposeAsync();
+        await base.OnParametersSetAsync();
+        _jsRuntime = JsRuntime;
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private static async Task<IJSObjectReference> CreateComponentAsync()
     {
-        await base.OnAfterRenderAsync(firstRender);
+        IJSObjectReference result = await _jsRuntime.ImportAsync(nameof(IonToastController));
 
-        if (!firstRender)
-            return;
+        if (result is null)
+        {
+            throw new InvalidOperationException($"{nameof(IonToastController)} is not initialized");
+        }
 
-        _jsComponent = await JsRuntime.ImportAsync(nameof(IonToastController));
+        return result;
     }
 }

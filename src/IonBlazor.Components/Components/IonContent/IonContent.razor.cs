@@ -10,7 +10,7 @@ public sealed partial class IonContent : IonContentComponent, IIonColorComponent
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.

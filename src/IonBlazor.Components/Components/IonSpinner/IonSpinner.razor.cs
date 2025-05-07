@@ -4,7 +4,7 @@ public sealed partial class IonSpinner : IonComponent, IIonColorComponent
 {
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// Duration of the spinner animation in milliseconds.

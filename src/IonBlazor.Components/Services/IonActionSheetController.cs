@@ -2,18 +2,19 @@
 
 namespace IonBlazor.Services;
 
-public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
+public sealed class IonActionSheetController : ComponentBase
 {
-    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
+    private static IJSRuntime _jsRuntime = null!;
 
-    private static IJSObjectReference? _jsComponent;
+    [Inject]
+    private IJSRuntime JsRuntime { get; init; } = null!;
 
     public static async ValueTask PresentAsync(Action<ActionSheetControllerOptions> configure)
     {
         ActionSheetControllerOptions options = new();
         configure(options);
 
-        IImmutableList<IActionSheetButton>? buttons = null;
+        IReadOnlyList<IActionSheetButton>? buttons = null;
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
 
         if (options.ButtonsBuilder is not null)
@@ -26,29 +27,48 @@ public sealed class IonActionSheetController : ComponentBase, IAsyncDisposable
                 async args =>
                 {
                     var index = args?["index"]?.GetValue<int?>();
-                    var button = buttons?.ElementAtOrDefault(index ?? -1);
+                    IActionSheetButton? button = buttons?.ElementAtOrDefault(index ?? -1);
                     await (button?.Handler?.Invoke(button, index) ?? ValueTask.CompletedTask);
                     // ReSharper disable once AccessToModifiedClosure
                     buttonHandler?.Dispose();
                 });
         }
 
-        await (_jsComponent?.InvokeVoidAsync("present", options, buttons, buttonHandler) ?? ValueTask.CompletedTask);
+        var didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
+        {
+            options.OnDidDismiss?.Invoke(new ActionSheetControllerDismissEventArgs()
+            {
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+                Data = args?["detail"]?["data"]?.Deserialize<JsonElement>(),
+            });
+
+            return Task.CompletedTask;
+        });
+
+        await using IJSObjectReference jsComponent = await CreateComponentAsync();
+        await jsComponent.InvokeVoidAsync("present", options, buttons, buttonHandler, didDismissHandler);
     }
 
-    public async ValueTask DisposeAsync()
+    private class DynamicButtonData : IActionSheetButtonData
     {
-        await (_jsComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
-        _jsComponent = null;
+        public string? Action { get; set; }
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnParametersSetAsync()
     {
-        await base.OnAfterRenderAsync(firstRender);
+        await base.OnParametersSetAsync();
+        _jsRuntime = JsRuntime;
+    }
 
-        if (!firstRender)
-            return;
+    private static async Task<IJSObjectReference> CreateComponentAsync()
+    {
+        IJSObjectReference result = await _jsRuntime.ImportAsync(nameof(IonActionSheetController));
 
-        _jsComponent = await JsRuntime.ImportAsync(nameof(IonActionSheetController));
+        if (result is null)
+        {
+            throw new InvalidOperationException($"{nameof(IonActionSheetController)} is not initialized");
+        }
+
+        return result;
     }
 }

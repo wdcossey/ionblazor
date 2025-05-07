@@ -4,10 +4,11 @@ namespace IonBlazor.Components;
 
 public sealed class ActionSheetButtonBuilder
 {
-    private readonly List<IActionSheetButton> _buttons = [];
+    private readonly IList<IActionSheetButton> _buttons = [];
+
     internal ActionSheetButtonBuilder() { }
 
-    public IImmutableList<IActionSheetButton> Build()
+    internal IImmutableList<IActionSheetButton> Build()
     {
         return _buttons.ToImmutableList();
     }
@@ -27,6 +28,4 @@ public sealed class ActionSheetButtonBuilder
         _buttons.Add(button);
         return this;
     }
-
-
 }

@@ -2,30 +2,27 @@
 
 namespace IonBlazor.Services;
 
-public sealed class IonAlertController: ComponentBase, IAsyncDisposable
+public sealed class IonAlertController: ComponentBase
 {
-    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
+    private static IJSRuntime _jsRuntime = null!;
 
-    private static IJSObjectReference? _jsComponent;
+    [Inject]
+    private IJSRuntime JsRuntime { get; init; } = null!;
 
     public static async ValueTask PresentAsync(Action<AlertControllerOptions> configure)
     {
         AlertControllerOptions options = new();
         configure(options);
 
-        IImmutableList<IAlertButton>? buttons = null;
-
-        AlertInputBuilder alertInputBuilder = new();
-        options.InputsBuilder?.Invoke(alertInputBuilder);
-        IEnumerable<IAlertInput> inputs = alertInputBuilder.Build();
+        IReadOnlyList<IAlertButton>? buttons = null;
 
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? buttonHandler = null!;
 
         if (options.ButtonsBuilder is not null)
         {
-            AlertButtonBuilder toastButtonBuilder = new();
-            options.ButtonsBuilder.Invoke(toastButtonBuilder);
-            buttons = toastButtonBuilder.Build();
+            AlertButtonBuilder alertButtonBuilder = new();
+            options.ButtonsBuilder.Invoke(alertButtonBuilder);
+            buttons = alertButtonBuilder.Build();
 
             buttonHandler = IonicEventCallback<JsonObject?>.Create(
                 async args =>
@@ -36,6 +33,15 @@ public sealed class IonAlertController: ComponentBase, IAsyncDisposable
                     // ReSharper disable once AccessToModifiedClosure
                     buttonHandler?.Dispose();
                 });
+        }
+
+        IReadOnlyList<IAlertInput>? inputs = null;
+
+        if (options.InputsBuilder is not null)
+        {
+            AlertInputBuilder alertInputBuilder = new();
+            options.InputsBuilder?.Invoke(alertInputBuilder);
+            inputs = alertInputBuilder.Build();
         }
 
         var didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
@@ -52,23 +58,25 @@ public sealed class IonAlertController: ComponentBase, IAsyncDisposable
             return Task.CompletedTask;
         });
 
-
-        await (_jsComponent?.InvokeVoidAsync("presentAlert", options, buttons, inputs, buttonHandler, didDismissHandler) ?? ValueTask.CompletedTask);
+        await using IJSObjectReference jsComponent = await CreateComponentAsync();
+        await jsComponent.InvokeVoidAsync("presentAlert", options, buttons, inputs, buttonHandler, didDismissHandler);
     }
 
-    public async ValueTask DisposeAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        await (_jsComponent?.DisposeAsync() ?? ValueTask.CompletedTask);
-        _jsComponent = null;
+        await base.OnParametersSetAsync();
+        _jsRuntime = JsRuntime;
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private static async Task<IJSObjectReference> CreateComponentAsync()
     {
-        await base.OnAfterRenderAsync(firstRender);
+        IJSObjectReference result = await _jsRuntime.ImportAsync(nameof(IonAlertController));
 
-        if (!firstRender)
-            return;
+        if (result is null)
+        {
+            throw new InvalidOperationException($"{nameof(IonAlertController)} is not initialized");
+        }
 
-        _jsComponent = await JsRuntime.ImportAsync(nameof(IonAlertController));
+        return result;
     }
 }

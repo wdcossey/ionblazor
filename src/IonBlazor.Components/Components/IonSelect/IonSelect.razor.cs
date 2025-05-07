@@ -12,7 +12,7 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
 
     /// <inheritdoc />
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <inheritdoc />
     [Parameter]

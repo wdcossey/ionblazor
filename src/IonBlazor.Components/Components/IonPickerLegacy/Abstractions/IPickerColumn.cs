@@ -1,7 +1,6 @@
 ﻿namespace IonBlazor.Components.Abstractions;
 
-public interface IPickerColumn<TColumnOptions>
-    where TColumnOptions: class, IPickerColumnOption
+public interface IPickerColumn
 {
     [JsonPropertyName("name"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string Name { get; set; }
@@ -22,7 +21,7 @@ public interface IPickerColumn<TColumnOptions>
     string? Suffix { get; set; }
 
     [JsonPropertyName("options"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    TColumnOptions[] Options { get; set; }
+    IPickerColumnOption[] Options { get; set; }
 
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? CssClass { get; set; }

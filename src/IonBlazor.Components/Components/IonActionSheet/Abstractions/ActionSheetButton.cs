@@ -1,6 +1,6 @@
-﻿namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components.Abstractions;
 
-public class ActionSheetButton : IActionSheetButton
+public abstract class ActionSheetButton : IActionSheetButton
 {
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Text { get; set; }
@@ -21,5 +21,5 @@ public class ActionSheetButton : IActionSheetButton
     public IActionSheetButton.HandlerDelegate? Handler { get; set; }
 
     [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public object? Data { get; set; }
+    public IActionSheetButtonData? Data { get; set; }
 }

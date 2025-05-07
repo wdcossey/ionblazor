@@ -4,7 +4,7 @@ public sealed partial class IonListHeader : IonContentComponent, IIonModeCompone
 {
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// How the bottom border should be displayed on the list header.

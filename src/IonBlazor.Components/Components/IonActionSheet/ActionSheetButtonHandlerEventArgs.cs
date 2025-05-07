@@ -5,5 +5,7 @@ public sealed record ActionSheetButtonHandlerEventArgs<TData> : ActionSheetEvent
 {
     public int? Index { get; internal init; }
 
-    public ActionSheetButton<TData>? Button { get; internal init; }
+    public IActionSheetButton? Button { get; internal init; }
+
+    public TData? Data { get; internal init; }
 }

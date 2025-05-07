@@ -12,8 +12,13 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _buttonHandlerReference;
 
-    private AlertButton[]? _buttons;
-    private AlertInput[]? _inputs;
+    private IReadOnlyList<IAlertButton> _buttons = null!;
+
+    private IReadOnlyList<IAlertInput> _inputs = null!;
+
+    public delegate void ButtonBuilder(AlertButtonBuilder builder);
+
+    public delegate void InputBuilder(AlertInputBuilder builder);
 
     protected override string JsImportName => nameof(IonAlert);
 
@@ -29,8 +34,11 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
     [Parameter]
     public bool? BackdropDismiss { get; init; }
 
-    [Parameter] public Func<AlertButton[]>? Buttons { get; init; }
-    [Parameter] public Func<AlertInput[]>? Inputs { get; init; }
+    [Parameter]
+    public ButtonBuilder? ButtonsBuilder { get; init; }
+
+    [Parameter]
+    public InputBuilder? InputsBuilder { get; init; }
 
     /// <summary>
     /// Additional classes to apply for custom CSS.
@@ -220,9 +228,6 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
         if (!firstRender)
             return;
 
-        _buttons = Buttons?.Invoke();
-        _inputs = Inputs?.Invoke();
-
         await this.AttachIonListenersAsync(
             IonElement,
             IonEvent.Set("didDismiss", _didDismissReference),
@@ -235,11 +240,25 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
             IonEvent.Set("willPresent", _willPresentReference)
         );
 
-        if (_buttons?.Length > 0)
-            await JsComponent.InvokeVoidAsync("addButtons", IonElement, _buttons, _buttonHandlerReference);
+        if (ButtonsBuilder is not null)
+        {
+            AlertButtonBuilder buttonBuilder = new();
+            ButtonsBuilder.Invoke(buttonBuilder);
+            _buttons = buttonBuilder.Build();
 
-        if (_inputs?.Length > 0)
-            await JsComponent.InvokeVoidAsync("addInputs", IonElement, _inputs);
+            if (_buttons.Count > 0)
+                await JsComponent.InvokeVoidAsync("addButtons", IonElement, _buttons, _buttonHandlerReference);
+        }
+
+        if (InputsBuilder is not null)
+        {
+            AlertInputBuilder inputBuilder = new();
+            InputsBuilder.Invoke(inputBuilder);
+            _inputs = inputBuilder.Build();
+
+            if (_inputs.Count > 0)
+                await JsComponent.InvokeVoidAsync("addInputs", IonElement, _inputs);
+        }
     }
 
     private IonAlertDismissEventArgs AsDismissEventArgs(JsonObject? args)

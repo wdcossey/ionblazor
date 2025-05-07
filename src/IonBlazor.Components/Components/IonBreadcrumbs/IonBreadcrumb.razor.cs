@@ -14,7 +14,7 @@ public sealed partial class IonBreadcrumb : IonContentComponent, IIonModeCompone
     [Parameter] public bool? Active { get; init; }
 
     /// <inheritdoc/>
-    [Parameter] public string? Color { get; set; }
+    [Parameter] public string? Color { get; init; }
 
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the breadcrumb.

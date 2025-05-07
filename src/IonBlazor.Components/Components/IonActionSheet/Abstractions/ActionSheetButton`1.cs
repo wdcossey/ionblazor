@@ -1,9 +1,9 @@
-﻿namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components.Abstractions;
 
-public class ActionSheetButton<TData> : IActionSheetButton
+public abstract class ActionSheetButton<TData> : IActionSheetButton
     where TData: class, IActionSheetButtonData
 {
-    public delegate ValueTask HandlerDelegate(ActionSheetButton<TData> button, int? index);
+    public delegate ValueTask HandlerDelegate(IActionSheetButton button, int? index);
 
     [JsonPropertyName("text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Text { get; set; }
@@ -26,12 +26,12 @@ public class ActionSheetButton<TData> : IActionSheetButton
     [JsonIgnore]
     IActionSheetButton.HandlerDelegate? IActionSheetButton.Handler =>
         Handler is not null
-            ? (button, index) => button is ActionSheetButton<TData> data ? Handler(data, index) : ValueTask.CompletedTask
+            ? (button, index) => button is ActionSheetButton<TData> actionSheetButton ? Handler(actionSheetButton, index) : ValueTask.CompletedTask
             : null;
 
     [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public TData? Data { get; set; }
 
     [JsonIgnore]
-    object? IActionSheetButton.Data => this.Data;
+    IActionSheetButtonData? IActionSheetButton.Data => Data;
 }

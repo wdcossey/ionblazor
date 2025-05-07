@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public partial class IonList : IonContentComponent, IIonModeComponent
+public sealed partial class IonList : IonContentComponent, IIonList, IIonModeComponent
 {
     private Func<ValueTask<bool>> _closeSlidingItemsWrapper = null!;
 
@@ -8,15 +8,11 @@ public partial class IonList : IonContentComponent, IIonModeComponent
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
-    /// <summary>
-    /// If <b>true</b>, the list will have margin around it and rounded corners.
-    /// </summary>
+    /// <inheritdoc/>
     [Parameter]
     public bool? Inset { get; set; }
 
-    /// <summary>
-    /// How the bottom border should be displayed on all items.
-    /// </summary>
+    /// <inheritdoc/>
     [Parameter]
     public string? Lines { get; set; } = IonListLines.Default;
 
@@ -24,11 +20,7 @@ public partial class IonList : IonContentComponent, IIonModeComponent
     [Parameter]
     public string? Mode { get; set; } = IonMode.Default;
 
-    /// <summary>
-    /// If ion-item-sliding are used inside the list, this method closes any open sliding item.
-    /// Returns true if an actual ion-item-sliding is closed.
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public ValueTask<bool> CloseSlidingItemsAsync() => _closeSlidingItemsWrapper();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

@@ -270,7 +270,7 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
     private IonLoadingDismissEventArgs GetDismissArgs(JsonObject? args)
     {
         var role = args?["detail"]?["role"]?.GetValue<string>();
-        var data = args?["detail"]?["data"];
+        var data = args?["detail"]?["data"]?.Deserialize<JsonElement>();
         var htmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>();
 
         return new IonLoadingDismissEventArgs()

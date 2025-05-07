@@ -6,7 +6,7 @@ public sealed partial class IonItemOption : IonContentComponent, IIonModeCompone
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; set; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// If <b>true</b>, the user cannot interact with the item option.
