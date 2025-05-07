@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KitchenSink", "src\KitchenSink\KitchenSink.csproj", "{91FCA234-4369-4342-8416-434FA81D5E06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IonBlazor.KitchenSink", "samples\IonBlazor.KitchenSink\IonBlazor.KitchenSink.csproj", "{91FCA234-4369-4342-8416-434FA81D5E06}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IonBlazor", "src\IonBlazor\IonBlazor.csproj", "{9894B571-F97A-409A-B033-F17FAC84BF5F}"
 EndProject
@@ -71,11 +71,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-										SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {02E114CD-9980-4CE0-8240-0A1E731FD693}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A9A0D25B-9C3D-477C-A4DB-322B21291FF9} = {6B7F3AA8-DC76-4AD4-8DC9-BEBD08872AD8}
 		{09B84C1F-21D2-4D4B-847A-BA7BF93EDD2F} = {6B7F3AA8-DC76-4AD4-8DC9-BEBD08872AD8}
+		{91FCA234-4369-4342-8416-434FA81D5E06} = {6B7F3AA8-DC76-4AD4-8DC9-BEBD08872AD8}
 	EndGlobalSection
 EndGlobal

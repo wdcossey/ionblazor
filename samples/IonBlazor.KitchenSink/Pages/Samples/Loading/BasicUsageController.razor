@@ -2,7 +2,7 @@
 
 @code
 {
-    private Timer _timer;
+    private Timer _timer = null!;
 
     [CascadingParameter(Name = nameof(Console))]
     private PlaygroundConsole? Console { get; init; }
