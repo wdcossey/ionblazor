@@ -1,20 +1,24 @@
 import { dotNetCallbackMethod } from './common.js';
 
-export async function create(id, message, duration, htmlAttributes, didDismissHandler, didPresentHandler) {
+export async function create(options, didDismissHandler, didPresentHandler) {
 
     const loading = document.createElement('ion-loading');
 
-    if (id) {
-        loading.setAttribute("id", id);
+    if (options.id) {
+        loading.id = options.id;
     }
 
-    loading.message = message;
-
-    if (duration) {
-        loading.duration = duration;
-    }
-
-    loading.htmlAttributes = htmlAttributes;
+    loading.spinner = options.spinner ?? undefined;
+    loading.message = options.message;
+    loading.cssClass = options.cssClass ?? undefined;
+    loading.showBackdrop = options.showBackdrop ?? undefined;
+    loading.duration = options.duration ?? undefined;
+    loading.translucent = options.translucent ?? undefined;
+    loading.animated = options.animated ?? undefined;
+    loading.backdropDismiss = options.backdropDismiss ?? undefined;
+    loading.mode = options.mode ?? undefined;
+    loading.keyboardClose = options.keyboardClose ?? undefined;
+    loading.htmlAttributes = options.htmlAttributes ?? undefined;
 
     document.body.appendChild(loading);
 
@@ -41,7 +45,7 @@ export async function create(id, message, duration, htmlAttributes, didDismissHa
         });
     }
 
-    return id ?? loading.id;
+    return options.id ?? loading.id;
 }
 
 export async function present(id) {
