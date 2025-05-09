@@ -28,7 +28,7 @@
     <link href="css/app.css" rel="stylesheet" />
     <link href="theme/variables.css" rel="stylesheet" />
 
-    <link href="KitchenSink.styles.css" rel="stylesheet" />
+    <link href="IonBlazor.KitchenSink.styles.css" rel="stylesheet" />
 
     <script type="text/javascript">
         window.showIonAlert = () => {
@@ -68,73 +68,7 @@
         <a class="dismiss">🗙</a>
     </div>
 
-<script>
-        function addCustomEventListener(element, ref) {
-
-            element.addEventListener('ionInput', (ev) => {
-                console.log(ev);
-                ref.invokeMethodAsync('OnCallbackEvent', ev.target.value);
-            });
-            //element.addEventListener('ionInput', e => ref.invokeMethodAsync('OnCustomEvent', e));
-                //document.addEventListener('hello', (event) => {
-                    // Calls a method by name with the [JSInokable] attribute (above)
-
-                //});
-        }
-
-        function addIonEventListener(type, element, ref) {
-
-            element.addEventListener(type, (ev) => {
-                //console.log(type, element, ev);
-                ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
-            });
-            //element.addEventListener('ionInput', e => ref.invokeMethodAsync('OnCustomEvent', e));
-            //document.addEventListener('hello', (event) => {
-            // Calls a method by name with the [JSInvokable] attribute (above)
-
-            //});
-        }
-
-        function attachIonEventListener(type, element, ref) {
-            element.addEventListener(type, (ev) => {
-                ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
-            });
-        }
-
-        function attachIonEventListeners(configs, element) {
-
-            configs.forEach(function (config) {
-                attachIonEventListener(config.event, element, config.ref)
-                //element.addEventListener(config.Event, (ev) => {
-                //    config.Reference.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
-                //});
-            });
-
-            //element.addEventListener(type, (ev) => {
-            //    ref.invokeMethodAsync('OnCallbackEvent', { tagName: ev.target.tagName, detail: ev.detail });
-            //});
-        }
-
-        async function presentToast(position, message) {
-
-                const alert = document.createElement('ion-toast');
-                alert.duration = 1500;
-                alert.message = message;
-                alert.buttons = ['OK'];
-                alert.position = position;
-                alert.icon = 'globe'
-
-                document.body.appendChild(alert);
-                await alert.present();
-                //const toast = await this.toastController.create({
-                //    message: 'Hello World!',
-                //    duration: 1500,
-                //    position: position
-                //});
-                //
-                //await toast.present();
-            }
-
+    <script>
         Object.defineProperty(Object.prototype, "getProperty", {
             value: function getProperty(key) {
                 return this[key];

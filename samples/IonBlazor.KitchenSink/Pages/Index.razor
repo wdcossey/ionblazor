@@ -325,7 +325,11 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
     }
 
     private void PresentToast(string position, string message) {
-        _ = JsRuntime.InvokeVoidAsync("presentToast", position, message);
+        _ = IonToastController.PresentAsync(options =>
+        {
+            options.Message = message;
+            options.Position = position;
+        });
     }
 
     private Task DidPresent(ActionSheetEventArgs<ActionSheetButtonData> args)
@@ -380,6 +384,6 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
     }
 
     private void OnButtonHandler(ActionSheetButtonHandlerEventArgs<ActionSheetButtonData> args) {
-        PresentToast("bottom", $"Button Index: {args.Index}; Role: {args.Button?.Role}; Text: {args.Button?.Text}; Action: {args.Data?.Action};");
+        PresentToast(IonToastPosition.Bottom, $"Button Index: {args.Index}; Role: {args.Button?.Role}; Text: {args.Button?.Text}; Action: {args.Data?.Action};");
     }
 }
