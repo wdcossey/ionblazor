@@ -132,6 +132,7 @@
     box-shadow: none;
     width: 100%;
 }
+
 #blazor-error-ui {
     background: var(--ion-color-danger);
     bottom: 0;

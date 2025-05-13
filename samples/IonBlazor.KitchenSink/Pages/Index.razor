@@ -1,8 +1,8 @@
 ﻿@page "/"
 
 @inject IJSRuntime JsRuntime
-@inject NavigationManager NavigationManager
 
+    <IonImg Src="/img/blazor.svg" Alt="blazor" style="max-width: 200px; max-height: 200px"></IonImg>
 
     <IonList Inset="true">
         <IonItem Button="@true" Detail="@false" id="select-fruits">
@@ -306,22 +306,6 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
     private async Task Confirm()
     {
         await _inputModalRef.DismissAsync(_inputNameValue, "confirm");
-    }
-
-    private async Task AddCard()
-    {
-        if (!string.IsNullOrEmpty(Title))
-        {
-            if (cards.Any(x => x.Title == Title))
-            {
-                @* If Title already exists, show a message *@
-                await JsRuntime.InvokeVoidAsync("showIonAlert");
-                return;
-            }
-            cards.Add(new { Title = Title, Content = _content });
-            Title = string.Empty;
-            _content = string.Empty;
-        }
     }
 
     private void PresentToast(string position, string message) {

@@ -7,7 +7,10 @@ namespace IonicTest.Shared;
 
 public partial class MainLayout
 {
+    private IonToggle _themeToggle = null!;
     private IonToggle _darkToggle = null!;
+    private bool _useSystemTheme = false;
+    private readonly Color _defaultColor = Color.FromRgb(112, 42, 247);
 
 #if WINDOWS
     private readonly UISettings _windowsUiSettings = new();
@@ -20,6 +23,9 @@ public partial class MainLayout
 #if WINDOWS
         _windowsUiSettings.ColorValuesChanged += (settings, e) =>
         {
+            if (_useSystemTheme is false)
+                return;
+
             Color color = settings.GetColorValue(UIColorType.Accent).ToColor();
             _ = SetAccentColor(color);
         };
@@ -30,7 +36,7 @@ public partial class MainLayout
     {
         if (firstRender)
         {
-            Color? color = Application.AccentColor ?? Color.FromArgb("#FFCF40");
+            Color color = _useSystemTheme ? Application.AccentColor ?? _defaultColor : _defaultColor;
             await SetAccentColor(color);
 
             var @checked = await JsRuntime.InvokeAsync<bool>("prefersDarkColorScheme");
@@ -44,15 +50,25 @@ public partial class MainLayout
     private async Task SetAccentColor(Color color)
     {
         color.ToRgb(out var red, out var green, out var blue);
-
         await JsRuntime.InvokeVoidAsync("document.body.style.setProperty", "--ion-color-primary", color.ToArgbHex());
         await JsRuntime.InvokeVoidAsync("document.body.style.setProperty", "--ion-color-primary-rgb", $"{red}, {green}, {blue}");
     }
 #endif
 
 
-    private void DarkModeChange(IonToggleChangeEventArgs args)
+    private async Task DarkModeChange(IonToggleChangeEventArgs args)
     {
-        JsRuntime.InvokeVoidAsync("document.documentElement.classList.toggle", "ion-palette-dark", args.Checked);
+        await JsRuntime.InvokeVoidAsync("document.documentElement.classList.toggle", "ion-palette-dark", args.Checked);
+    }
+
+    private async Task ThemeChange(IonToggleChangeEventArgs args)
+    {
+        _useSystemTheme = args.Checked is true;
+
+        Color color = args.Checked is true
+            ? Application.AccentColor ?? _defaultColor
+            : _defaultColor;
+
+        await SetAccentColor(color);
     }
 }

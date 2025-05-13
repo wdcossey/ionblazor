@@ -19,6 +19,7 @@
                         @*<IonButton id="popover-trigger">
                             <IonIcon slot="icon-only" Name="brush"></IonIcon>
                         </IonButton>*@
+                        <IonToggle @ref="@_themeToggle" IonChange="@ThemeChange"/>
                         <IonToggle @ref="@_darkToggle" IonChange="@DarkModeChange"/>
                     </IonButtons>
                 </IonToolbar>

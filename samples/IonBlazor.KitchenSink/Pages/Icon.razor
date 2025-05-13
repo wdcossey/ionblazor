@@ -10,27 +10,24 @@
         <IonIcon Name="logo-ionic" Color="@IonColor.Primary"></IonIcon>
         <IonIcon Name="logo-ionic" Size="@IonIconSize.Large" color="@IonColor.Primary"></IonIcon>
         <IonIcon src="/img/blazor.svg" Size="@IonIconSize.Large"></IonIcon>
-        <IonIcon @ref="_test" Name="logo-ionic" Size="@IonIconSize.Large" color="@IonColor.Primary"></IonIcon>
+        <IonIcon Name="@_iconName" Size="@IonIconSize.Large" Color="@_iconColor"></IonIcon>
     </ChildContent>
 </PlaygroundContainer>
 
 @code {
-    IonIcon _test = null!;
+    private string _iconName = "cloud-outline";
+    private string _iconColor = IonColor.Primary;
 
-    protected override Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        await base.OnAfterRenderAsync(firstRender);
+
         if (firstRender)
         {
-            _ = Task
-                .Delay(3000)
-                .ContinueWith(_ =>
-                {
-                    _test.SetName("cloud-outline");
-                    _test.SetColor(IonColor.Danger);
-                    _test.SetSize(IonIconSize.Small);
-                });
+            await Task.Delay(3000);
+            _iconName = "cloud-offline-outline";
+            _iconColor = IonColor.Danger;
+            await InvokeAsync(StateHasChanged);
         }
-
-        return Task.CompletedTask;
     }
 }
