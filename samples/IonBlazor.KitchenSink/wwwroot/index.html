@@ -22,6 +22,26 @@
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />-->
 
+    <script type="module" src="@maskito/core/index.esm.js"></script>
+
+    <script type="module">
+        import { Maskito, maskitoTransform } from './@maskito/core/index.esm.js';
+        window.Maskito = Maskito;
+        window.maskitoTransform = maskitoTransform;
+
+        window.InitMaskito = async function (ionInput, options) {
+            const convertedMask = options.mask.map(item => {
+                return item === "\\d" ? /\d/ : item;
+            });
+
+            const finalMaskOptions = { mask: convertedMask };
+
+            const nativeEl = await ionInput.getInputElement();
+            new Maskito(nativeEl, finalMaskOptions);
+        };
+
+    </script>
+
     <link href="css/app.css" rel="stylesheet" />
     <link href="theme/variables.css" rel="stylesheet" />
 
@@ -37,9 +57,17 @@
                 //rippleEffect: false,
                 mode: 'md',
                 innerHTMLTemplatesEnabled: true,
+                statusTap: true
             }
         }
     </script>
+
+    <style>
+        ::selection {
+            background: var(--ion-color-primary);
+            color: var(--ion-color-primary-contrast);
+        }
+    </style>
 </head>
 
 <body>

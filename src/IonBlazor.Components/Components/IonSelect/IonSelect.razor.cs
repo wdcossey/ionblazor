@@ -10,6 +10,8 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     private readonly DotNetObjectReference<IonicEventCallback> _ionDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
+    protected override string JsImportName => nameof(IonSelect<TValue>);
+
     /// <inheritdoc />
     [Parameter]
     public string? Color { get; init; }
@@ -232,9 +234,9 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// <see cref="IonSelect{TValue}"/>.
     /// </summary>
     /// <returns></returns>
-    public ValueTask OpenAsync(/*event?: UIEvent*/)
+    public async ValueTask OpenAsync(/*event?: UIEvent*/)
     {
-        throw new NotImplementedException();
+        await JsComponent.InvokeVoidAsync("open", IonElement);
     }
 
     public override async ValueTask DisposeAsync()

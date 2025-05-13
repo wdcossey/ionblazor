@@ -45,4 +45,11 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
         JsComponent = new Lazy<Task<IJSObjectReference>>(() =>
             _jsRuntime.ImportAsync(JsImportName!));
     }
+
+    public async ValueTask AddEventListener<TArgs>(string eventName, DotNetObjectReference<TArgs> callback)
+        where TArgs : class
+    {
+        await using var jsModule = await JsRuntime.ImportAsync("common");
+        await jsModule.InvokeVoidAsync("attachListener", eventName, IonElement, callback).AsTask();
+    }
 }

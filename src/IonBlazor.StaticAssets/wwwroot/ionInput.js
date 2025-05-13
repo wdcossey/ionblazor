@@ -1,6 +1,11 @@
 import { dotNetCallbackMethod } from './common.js';
 
 export function counterFormatter(element, expression) {
+    if (!expression || expression.length === 0) {
+        element.counterFormatter = undefined;
+        return;
+    }
+
     element.counterFormatter = eval(expression);
 }
 

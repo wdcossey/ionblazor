@@ -7,18 +7,42 @@ namespace IonicTest.Shared;
 
 public partial class MainLayout
 {
-    private IonToggle _themeToggle = null!;
-    private IonToggle _darkToggle = null!;
-    private bool _useSystemTheme = false;
+
+    private readonly Dictionary<bool, string> _systemThemeIconNames = new()
+    {
+        { true, "color-palette" },
+        { false, "color-palette-outline" }
+    };
+
+    private readonly Dictionary<bool, string> _darkThemeIconNames = new()
+    {
+        { true, "sunny-outline" },
+        { false, "moon-outline" }
+    };
+
+    private string? _systemThemeIconName;
+    private string? _themeIconName;
+    private bool _useSystemTheme;
+    private bool _isDarkMode;
     private readonly Color _defaultColor = Color.FromRgb(112, 42, 247);
+
+    private IonContent _mainContent = null!;
 
 #if WINDOWS
     private readonly UISettings _windowsUiSettings = new();
 #endif
 
+    [Inject] private IJSRuntime JsRuntime { get; init; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; init; } = null!;
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
+        NavigationManager.LocationChanged += (sender, args) =>
+        {
+            _ = _mainContent.ScrollToTopAsync(500).AsTask();
+        };
 
 #if WINDOWS
         _windowsUiSettings.ColorValuesChanged += (settings, e) =>
@@ -26,7 +50,7 @@ public partial class MainLayout
             if (_useSystemTheme is false)
                 return;
 
-            Color color = settings.GetColorValue(UIColorType.Accent).ToColor();
+            var color = settings.GetColorValue(UIColorType.Accent).ToColor();
             _ = SetAccentColor(color);
         };
 #endif
@@ -34,16 +58,21 @@ public partial class MainLayout
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            Color color = _useSystemTheme ? Application.AccentColor ?? _defaultColor : _defaultColor;
-            await SetAccentColor(color);
+        await base.OnAfterRenderAsync(firstRender);
 
-            var @checked = await JsRuntime.InvokeAsync<bool>("prefersDarkColorScheme");
-            _ = _darkToggle.SetChecked(@checked).AsTask();
+        if (!firstRender)
+        {
+            return;
         }
 
-        await base.OnAfterRenderAsync(firstRender);
+        var color = _useSystemTheme ? Application.AccentColor ?? _defaultColor : _defaultColor;
+        _systemThemeIconName = _systemThemeIconNames[_useSystemTheme];
+        await SetAccentColor(color);
+
+        _isDarkMode = await JsRuntime.InvokeAsync<bool>("prefersDarkColorScheme");
+        _themeIconName = _darkThemeIconNames[_isDarkMode];
+
+        StateHasChanged();
     }
 
 #if WINDOWS
@@ -56,16 +85,19 @@ public partial class MainLayout
 #endif
 
 
-    private async Task DarkModeChange(IonToggleChangeEventArgs args)
+    private async Task ToggleDarkMode()
     {
-        await JsRuntime.InvokeVoidAsync("document.documentElement.classList.toggle", "ion-palette-dark", args.Checked);
+        _isDarkMode = !_isDarkMode;
+        _themeIconName = _darkThemeIconNames[_isDarkMode];
+        await JsRuntime.InvokeVoidAsync("document.documentElement.classList.toggle", "ion-palette-dark", _isDarkMode);
     }
 
-    private async Task ThemeChange(IonToggleChangeEventArgs args)
+    private async Task ToggleSystemTheme()
     {
-        _useSystemTheme = args.Checked is true;
+        _useSystemTheme = !_useSystemTheme;
+        _systemThemeIconName = _systemThemeIconNames[_useSystemTheme];
 
-        Color color = args.Checked is true
+        var color = _useSystemTheme
             ? Application.AccentColor ?? _defaultColor
             : _defaultColor;
 

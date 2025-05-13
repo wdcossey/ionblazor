@@ -14,4 +14,8 @@
         <None Include="..\..\docs\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Remove="wwwroot" />
+    </ItemGroup>
+
 </Project>

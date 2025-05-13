@@ -43,7 +43,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
 
     /// <summary>
     /// If <b>true</b>, the value will be cleared after focus upon edit.
-    /// Defaults to <b>true</b> when type is <b>password</b>", <b>false</b> for all other types.
+    /// Defaults to <b>true</b> when type is <b>password</b>, <b>false</b> for all other types.
     /// </summary>
     [Parameter]
     public bool? ClearOnEdit { get; set; }
@@ -251,7 +251,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     /// The value of the input.
     /// </summary>
     [Parameter]
-    public string? Value { get; set; }
+    public string? Value { get; init; }
 
     /// <summary>
     /// Emitted when the input loses focus.
@@ -288,6 +288,11 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     [Parameter]
     public EventCallback<IonInputInputEventArgs> IonInputEvent { get; set; }
 
+    public async ValueTask SetCounterFormatterAsync(string? format)
+    {
+        await JsComponent.InvokeVoidAsync("counterFormatter", IonElement, format);
+    }
+
     public IonInput()
     {
         _ionBlurReference = IonicEventCallback.Create(async () =>
@@ -299,7 +304,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
         {
             var value = args?["detail"]?["value"]?.GetValue<string?>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>() is true;
-            await IonChange.InvokeAsync(new IonInputChangeEventArgs() { Sender = this, Value = value, Event = new IonInputEvent(isTrusted) });
+            await IonChange.InvokeAsync(new IonInputChangeEventArgs { Sender = this, Value = value, Event = new IonInputEvent(isTrusted) });
         });
 
         _ionFocusReference = IonicEventCallback.Create(async () =>
@@ -313,12 +318,6 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>() is true;
             var inputArgs = new IonInputInputEventArgs { Sender = this, Value = value, Event = new IonInputEvent(isTrusted) };
             await IonInputEvent.InvokeAsync(inputArgs);
-
-            if (inputArgs.Value?.Equals(value) is false)
-            {
-                Value = inputArgs.Value;
-                await JsComponent.InvokeVoidAsync("setValue", IonElement, inputArgs.Value);
-            }
         });
     }
 
