@@ -95,7 +95,6 @@
       SourceFiles="@(MaskitoAssets)"
       DestinationFiles="@(MaskitoAssets->'wwwroot\@maskito\core\%(RecursiveDir)%(Filename)%(Extension)')"
       SkipUnchangedFiles="true" />
-
   </Target>
 
 

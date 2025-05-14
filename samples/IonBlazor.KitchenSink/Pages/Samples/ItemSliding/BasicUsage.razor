@@ -1,0 +1,37 @@
+﻿<IonList>
+    <IonItemSliding>
+        <IonItem>
+            <IonLabel>Sliding Item with End Options</IonLabel>
+        </IonItem>
+
+        <IonItemOptions Side="@IonItemOptionsSide.End">
+            <IonItemOption>Favorite</IonItemOption>
+            <IonItemOption Color="@IonColor.Danger">Delete</IonItemOption>
+        </IonItemOptions>
+    </IonItemSliding>
+
+    <IonItemSliding>
+        <IonItemOptions Side="@IonItemOptionsSide.Start">
+            <IonItemOption Color="@IonColor.Success">Archive</IonItemOption>
+        </IonItemOptions>
+
+        <IonItem>
+            <IonLabel>Sliding Item with Start Options</IonLabel>
+        </IonItem>
+    </IonItemSliding>
+
+    <IonItemSliding>
+        <IonItemOptions Side="@IonItemOptionsSide.Start">
+            <IonItemOption Color="@IonColor.Success">Archive</IonItemOption>
+        </IonItemOptions>
+
+        <IonItem>
+            <IonLabel>Sliding Item with Options on Both Sides</IonLabel>
+        </IonItem>
+
+        <IonItemOptions Side="@IonItemOptionsSide.End">
+            <IonItemOption>Favorite</IonItemOption>
+            <IonItemOption Color="@IonColor.Danger">Delete</IonItemOption>
+        </IonItemOptions>
+    </IonItemSliding>
+</IonList>
