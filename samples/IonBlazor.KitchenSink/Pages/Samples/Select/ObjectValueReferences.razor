@@ -1,8 +1,8 @@
 ﻿<IonList>
     <IonItem>
-        <IonSelectOf TItem="@Food" Multiple="@true" ItemsSource="@_foods" aria-label="Food" Placeholder="Select food" IonChange="OnIonChange">
+        <IonSelectOf TItem="@Food" CompareWith="CompareWith" Multiple="@true" ItemsSource="@_foods" aria-label="Food" Placeholder="Select food" IonChange="OnIonChange">
             <ItemTemplate>
-                <IonSelectOptionOf TValue="@int" Value="@context.Key">@context.Value.Name</IonSelectOptionOf>
+                <IonSelectOptionOf Value="@context.Key">@context.Value.Name</IonSelectOptionOf>
             </ItemTemplate>
         </IonSelectOf>
     </IonItem>
@@ -10,6 +10,7 @@
 
 
 @code {
+
     [CascadingParameter(Name = nameof(Console))]
     private PlaygroundConsole? Console { get; init; }
 
@@ -22,55 +23,23 @@
 
     private readonly List<Food> _foods =
     [
-        new() { Id = 1, Name = "Apples", Type = "fruit" },
-        new() { Id = 2, Name = "Carrots", Type = "vegetable" },
-        new() { Id = 3, Name = "Cupcakes", Type = "dessert" }
+        new() { Id = 7, Name = "Apples", Type = "fruit" },
+        new() { Id = 8, Name = "Carrots", Type = "vegetable" },
+        new() { Id = 9, Name = "Cupcakes", Type = "dessert" }
     ];
 
     private void OnIonChange(IonSelectChangeEventArgs<Food> args)
     {
-        Console?.Add($"ionChange fired with value: {args.Value}");
+        Console?.Add($"IonSelectOf::IonChange fired with value: {args.Value}");
     }
 
+    private void CompareWith(IonSelectCompareEventArgs<Food> args)
+    {
+        args.Compare = (indexes, item) =>
+        {
+            Console?.Add($"IonSelectOf::Comparing:: Index:{item.Key} with {item.Value}");
+            var result = indexes.Contains(item.Key);
+            return result;
+        };
+    }
 }
-
-@*
-<script>
-  const foods = [
-    {
-      id: 1,
-      name: 'Apples',
-      type: 'fruit',
-    },
-    {
-      id: 2,
-      name: 'Carrots',
-      type: 'vegetable',
-    },
-    {
-      id: 3,
-      name: 'Cupcakes',
-      type: 'dessert',
-    },
-  ];
-
-  const compareWithFn = (o1, o2) => {
-    return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  };
-
-  const selectEl = document.querySelector('ion-select');
-  selectEl.compareWith = compareWithFn;
-
-  foods.forEach((option, i) => {
-    const selectOption = document.createElement('ion-select-option');
-    selectOption.value = option;
-    selectOption.textContent = option.name;
-    selectEl.appendChild(selectOption);
-  });
-
-  const valueLabel = document.querySelector('ion-text');
-  selectEl.addEventListener('ionChange', () => {
-    console.log('Current value:', JSON.stringify(selectEl.value));
-  });
-</script>
-*@

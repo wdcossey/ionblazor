@@ -5,30 +5,48 @@ namespace IonBlazor.Components;
 public partial class IonSelectOf<TItem> : IonSelect<TItem>
     where TItem : notnull
 {
-    [Parameter, EditorRequired] public IEnumerable<TItem> ItemsSource { get; set; } = null!;
+    /// <summary>
+    /// A property name or function used to compare object values
+    /// </summary>
+    [Parameter]
+    public EventCallback<IonSelectCompareEventArgs<TItem>> CompareWith { get; init; }
 
-    [Parameter, EditorRequired] public RenderFragment<KeyValuePair<int, TItem>> ItemTemplate { get; set; } = null!;
+    [Parameter, EditorRequired]
+    public IEnumerable<TItem> ItemsSource { get; set; } = null!;
+
+    [Parameter, EditorRequired]
+    public RenderFragment<KeyValuePair<int, TItem>> ItemTemplate { get; set; } = null!;
 
     protected override async Task IonChangeCallback(JsonObject? args)
     {
-        JsonNode? value = args?["detail"]?["value"];
+        var value = args?["detail"]?["value"];
         var indexes = value switch
         {
             null => [],
-            JsonArray => value.Deserialize<string[]>(),
-            _ => [value.GetValue<string>()]
+            JsonArray jsonArray => jsonArray.Deserialize<string[]>()?.Select(int.Parse).ToArray() ?? [],
+            _ => [int.Parse(value.GetValue<string>())]
         };
 
-        var values = ItemsSource
-            .Select((s, i) => (Index: (i).ToString(), Value: s))
-            .Where(w => indexes?.Contains(w.Index) is true)
+        var compareArgs = new IonSelectCompareEventArgs<TItem>
+        {
+            Sender = this
+        };
+
+        await CompareWith.InvokeAsync(compareArgs);
+
+        IList<TItem> values = ItemsSource
+            .Select((s, i) => new KeyValuePair<int, TItem>(i, s))
+            .Where(w => compareArgs.Compare(indexes, w))
             .Select(s => s.Value)
             .ToList();
 
         await IonChange.InvokeAsync(new IonSelectChangeEventArgs<TItem>
         {
             Sender = this,
-            Value = new IonSelectValue<TItem>(values ?? [])
+            Value = new IonSelectValue<TItem>(values)
         });
     }
+
+
+
 }

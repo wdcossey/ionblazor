@@ -1,0 +1,16 @@
+﻿<IonList>
+    <IonItem>
+        <IonSelect @ref="_select" TValue="@string" aria-label="Fruit" Interface="@IonSelectInterface.Popover" Placeholder="Select fruit">
+            <IonSelectOption Value="apples">Apples</IonSelectOption>
+            <IonSelectOption Value="oranges">Oranges</IonSelectOption>
+            <IonSelectOption Value="bananas">Bananas</IonSelectOption>
+        </IonSelect>
+    </IonItem>
+</IonList>
+
+<IonButton @ref="_button" @onclick="@(() => _ = _select.OpenAsync(_button))">Open</IonButton>
+
+@code {
+    private IonSelect<string> _select = null!;
+    private IonButton _button = null!;
+}

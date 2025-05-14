@@ -27,12 +27,6 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     public string? CancelText { get; set; }
 
     /// <summary>
-    /// A property name or function used to compare object values
-    /// </summary>
-    [Parameter]
-    public object? CompareWith { get; set; }
-
-    /// <summary>
     /// If <b>true</b>, the user cannot interact with the select.
     /// </summary>
     [Parameter]
@@ -234,9 +228,9 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// <see cref="IonSelect{TValue}"/>.
     /// </summary>
     /// <returns></returns>
-    public async ValueTask OpenAsync(/*event?: UIEvent*/)
+    public async ValueTask OpenAsync(IIonComponent? target = null)
     {
-        await JsComponent.InvokeVoidAsync("open", IonElement);
+        await JsComponent.InvokeVoidAsync("open", IonElement, target?.IonElement);
     }
 
     public override async ValueTask DisposeAsync()
