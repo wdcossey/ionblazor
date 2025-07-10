@@ -6,7 +6,7 @@ public sealed partial class IonRefresher: IonContentComponent
     private readonly DotNetObjectReference<IonicEventCallback> _ionRefreshReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionStartReference;
 
-    protected override string JsImportName => nameof(IonRefresher);
+    internal override string JsImportName => nameof(IonRefresher);
 
     /// <summary>
     /// Time it takes to close the refresher.

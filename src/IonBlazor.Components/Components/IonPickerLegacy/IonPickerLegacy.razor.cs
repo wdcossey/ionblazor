@@ -17,7 +17,7 @@ public partial class IonPickerLegacy : IonComponent, IIonModeComponent
     private IImmutableList<IPickerButton> _buttons = null!;
     private IImmutableList<IPickerColumn> _columns = null!;
 
-    protected override string JsImportName => nameof(IonPickerLegacy);
+    internal override string JsImportName => nameof(IonPickerLegacy);
 
     public delegate void ButtonBuilder(PickerLegacyButtonBuilder builder);
     public delegate void ColumnBuilder(PickerLegacyColumnBuilder builder);

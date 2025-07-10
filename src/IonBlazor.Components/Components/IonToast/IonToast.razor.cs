@@ -17,7 +17,7 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
 
     private IImmutableList<IIonToastButton> _buttons = null!;
 
-    protected override string JsImportName => nameof(IonToast);
+    internal override string JsImportName => nameof(IonToast);
 
     public delegate void ButtonBuilder(ToastButtonBuilder builder);
 

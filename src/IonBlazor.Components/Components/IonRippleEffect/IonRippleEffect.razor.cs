@@ -2,7 +2,7 @@
 
 public sealed partial class IonRippleEffect : IonContentComponent
 {
-    protected override string JsImportName => nameof(IonRippleEffect);
+    internal override string JsImportName => nameof(IonRippleEffect);
 
     /// <summary>
     /// Sets the type of ripple-effect:<br/>

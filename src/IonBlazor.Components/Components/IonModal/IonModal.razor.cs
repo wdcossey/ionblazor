@@ -15,7 +15,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willPresentReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<bool>> _canDismissReference;
 
-    protected override string JsImportName => nameof(IonModal);
+    internal override string JsImportName => nameof(IonModal);
 
     private string Script => Breakpoints?.Length > 0 ?
                               $$"""

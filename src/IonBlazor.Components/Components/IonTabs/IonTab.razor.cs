@@ -2,7 +2,7 @@
 
 public sealed partial class IonTab : IonContentComponent
 {
-    protected override string JsImportName => nameof(IonTab);
+    internal override string JsImportName => nameof(IonTab);
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 

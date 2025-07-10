@@ -17,7 +17,7 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
 
     private IReadOnlyList<IActionSheetButton> _buttons = null!;
 
-    protected override string JsImportName => nameof(IonActionSheet<TButtonData>);
+    internal override string JsImportName => nameof(IonActionSheet<TButtonData>);
 
     public delegate void ButtonBuilder(ActionSheetButtonBuilder builder);
 

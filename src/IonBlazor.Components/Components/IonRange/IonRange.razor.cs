@@ -10,7 +10,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionKnobMoveStartReference;
     private readonly DotNetObjectReference<IonicEventCallbackResult<int, string?>> _pinFormatterReference;
 
-    protected override string JsImportName => nameof(IonRange);
+    internal override string JsImportName => nameof(IonRange);
 
     /// <summary>
     /// The start position of the range active bar. This feature is only available with a single knob

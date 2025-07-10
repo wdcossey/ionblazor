@@ -4,7 +4,7 @@ public sealed partial class IonInfiniteScroll : IonContentComponent
 {
     private DotNetObjectReference<IonicEventCallback> _ionInfiniteReference;
 
-    protected override string JsImportName => nameof(IonInfiniteScroll);
+    internal override string JsImportName => nameof(IonInfiniteScroll);
 
     /// <summary>
     /// If <b>true</b>, the infinite scroll will be hidden and scroll event listeners will be removed.

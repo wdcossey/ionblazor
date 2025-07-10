@@ -11,7 +11,7 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _willDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _willPresentReference;
 
-    protected override string JsImportName => nameof(IonLoading);
+    internal override string JsImportName => nameof(IonLoading);
 
     /// <inheritdoc/>
     [Parameter]

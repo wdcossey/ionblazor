@@ -4,7 +4,7 @@ public sealed partial class IonAccordionGroup : IonContentComponent, IIonModeCom
 {
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeObjectReference = null!;
 
-    protected override string JsImportName => nameof(IonAccordionGroup);
+    internal override string JsImportName => nameof(IonAccordionGroup);
 
 /*#if NET8_0_OR_GREATER
     [Inject(Key = nameof(IonAccordionGroup))]

@@ -9,7 +9,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
-    protected override string JsImportName => nameof(IonSearchbar);
+    internal override string JsImportName => nameof(IonSearchbar);
 
     /// <summary>
     /// If true, enable searchbar animation.

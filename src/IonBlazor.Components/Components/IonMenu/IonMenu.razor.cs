@@ -7,7 +7,7 @@ public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback> _ionWillCloseReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionWillOpenReference;
 
-    protected override string JsImportName => nameof(IonMenu);
+    internal override string JsImportName => nameof(IonMenu);
 
     /// <summary>
     /// The <b>id</b> of the main content. When using a router this is typically <b>ion-router-outlet</b>.

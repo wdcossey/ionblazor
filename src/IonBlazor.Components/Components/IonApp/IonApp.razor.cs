@@ -2,7 +2,7 @@
 
 public sealed partial class IonApp: IonContentComponent, IIonModeComponent
 {
-    protected override string JsImportName => nameof(IonApp);
+    internal override string JsImportName => nameof(IonApp);
 
     /// <inheritdoc />
     [Parameter] public string? Mode { get; set; }

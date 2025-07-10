@@ -7,7 +7,7 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
-    protected override string JsImportName => nameof(IonTextarea);
+    internal override string JsImportName => nameof(IonTextarea);
 
     /// <summary>
     /// If <b>true</b>, the textarea container will grow and shrink based on the contents of the textarea.

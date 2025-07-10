@@ -18,7 +18,7 @@ public abstract class IonComponent : ComponentBase, IIonComponent, IAsyncDisposa
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? Attributes { get; init; }
 
-    protected virtual string? JsImportName => null;
+    internal virtual string? JsImportName => null;
 
     internal Lazy<Task<IJSObjectReference>> JsComponent { get; set; } = null!;
 

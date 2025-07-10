@@ -20,7 +20,7 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
 
     public delegate void InputBuilder(AlertInputBuilder builder);
 
-    protected override string JsImportName => nameof(IonAlert);
+    internal override string JsImportName => nameof(IonAlert);
 
     /// <summary>
     /// If <b>true</b>, the alert will animate.

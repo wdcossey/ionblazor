@@ -7,7 +7,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionInputReference;
 
-    protected override string JsImportName => nameof(IonInput);
+    internal override string JsImportName => nameof(IonInput);
 
     /// <summary>
     /// Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.

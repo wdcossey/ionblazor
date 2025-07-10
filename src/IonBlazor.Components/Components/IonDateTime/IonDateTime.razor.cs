@@ -7,7 +7,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
-    protected override string JsImportName => nameof(IonDateTime);
+    internal override string JsImportName => nameof(IonDateTime);
 
     /// <summary>
     /// The text to display on the picker's cancel button.

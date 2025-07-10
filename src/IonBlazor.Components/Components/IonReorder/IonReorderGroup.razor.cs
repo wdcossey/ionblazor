@@ -4,7 +4,7 @@ public sealed partial class IonReorderGroup : IonContentComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionItemReorderReference;
 
-    protected override string JsImportName => nameof(IonReorderGroup);
+    internal override string JsImportName => nameof(IonReorderGroup);
 
     /// <summary>
     /// If true, the reorder will be hidden.

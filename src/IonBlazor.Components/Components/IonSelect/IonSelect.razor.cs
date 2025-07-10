@@ -10,7 +10,7 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     private readonly DotNetObjectReference<IonicEventCallback> _ionDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
-    protected override string JsImportName => nameof(IonSelect<TValue>);
+    internal override string JsImportName => nameof(IonSelect<TValue>);
 
     /// <inheritdoc />
     [Parameter]

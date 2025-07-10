@@ -4,7 +4,7 @@ public sealed partial class IonPickerColumn : IonContentComponent, IIonModeCompo
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
 
-    protected override string JsImportName => nameof(IonPickerColumn);
+    internal override string JsImportName => nameof(IonPickerColumn);
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 

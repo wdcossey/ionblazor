@@ -4,7 +4,7 @@ public sealed partial class IonList : IonContentComponent, IIonList, IIonModeCom
 {
     private Func<ValueTask<bool>> _closeSlidingItemsWrapper = null!;
 
-    protected override string JsImportName => nameof(IonList);
+    internal override string JsImportName => nameof(IonList);
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
