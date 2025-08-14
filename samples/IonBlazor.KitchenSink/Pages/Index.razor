@@ -7,11 +7,11 @@
     <IonList Inset="true">
         <IonItem Button="@true" Detail="@false" id="select-fruits">
             <IonLabel>Favorite Fruits</IonLabel>
-            <div slot="end" id="#selected-fruits">@($"{workingSelectedFruits.Count} Items")</div>
+            <div slot="end">@($"{workingSelectedFruits.Count} Items")</div>
         </IonItem>
-        <IonButton Expand="@IonButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => PresentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
-
     </IonList>
+
+    <IonButton Expand="@IonButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => PresentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
 
     <IonList>
         <IonItemSliding IonDrag="@(args => { Console.WriteLine("IonDrag -- Amount: {0}; Ratio: {1}", args.Amount, args.Ratio); })">
@@ -70,7 +70,7 @@
 
     <IonButton id="open-modal" Expand="block">Open</IonButton>
 
-    <IonModal @ref="_selectFruitsModalRef" Trigger="select-fruits" id="selected-fruits" IonModalDidDismiss="IonModalDidDismiss">
+    <IonModal @ref="_selectFruitsModalRef" Trigger="select-fruits" IonModalDidDismiss="IonModalDidDismiss">
         <IonHeader>
             <IonToolbar>
                 <IonButtons slot="start">
@@ -85,7 +85,7 @@
                 <IonSearchbar Debounce="1000" Value="@_searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchbar>
             </IonToolbar>
         </IonHeader>
-        <IonContent Color="@IonColor.Light" class="ion-padding">
+        <IonContent>
             <IonList id="modal-list" Inset="@false">
                 @foreach (var item in RenderList)
                 {

@@ -31,6 +31,18 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
     public bool? EnableOnOffLabels { get; init; }
 
     /// <summary>
+    /// Text that is placed under the toggle label and displayed when an error is detected.
+    /// </summary>
+    [Parameter]
+    public string? ErrorText { get; init; }
+
+    /// <summary>
+    /// Text that is placed under the toggle label and displayed when no error is detected.
+    /// </summary>
+    [Parameter]
+    public string? HelperText { get; init; }
+
+    /// <summary>
     /// How to pack the label and toggle within a line.<br/><br/>
     /// <see cref="IonJustify.Start"/>: The label and <see cref="IonToggle"/> will appear on the left in LTR
     /// and on the right in RTL.<br/><br/>
@@ -63,6 +75,12 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
     /// </summary>
     [Parameter]
     public string? Name { get; init; }
+
+    /// <summary>
+    /// If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+    /// </summary>
+    [Parameter]
+    public bool? Required { get; init; }
 
     /// <summary>
     /// The value of the toggle does not mean if it's checked or not, use the checked property for that. <br/><br/>

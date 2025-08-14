@@ -187,8 +187,12 @@
                     <IonLabel>ion-input</IonLabel>
                 </IonItem>
 
-                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/sample/password-toggle"))">
-                    <IonLabel>ion-password-toggle</IonLabel>
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/password-toggle"))">
+                    <IonLabel>ion-input-password-toggle</IonLabel>
+                </IonItem>
+
+                <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/samples/input-otp"))">
+                    <IonLabel>ion-input-otp</IonLabel>
                 </IonItem>
 
                 <IonItem Button="@true" Disabled="true" @onclick="@(() => NavigationManager.NavigateTo("/sample/ion-textarea"))">

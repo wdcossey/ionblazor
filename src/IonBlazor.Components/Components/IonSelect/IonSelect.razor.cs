@@ -33,6 +33,12 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     public bool? Disabled { get; set; }
 
     /// <summary>
+    /// Text that is placed under the select and displayed when an error is detected.
+    /// </summary>
+    [Parameter]
+    public string? ErrorText { get; init; }
+
+    /// <summary>
     /// The toggle icon to show when the select is open.<br/>
     /// If defined, the icon rotation behavior in <b>md</b> mode will be disabled.<br/>
     /// If undefined, <see cref="ToggleIcon"/> will be used for when the select is both open and closed.
@@ -47,6 +53,12 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// </summary>
     [Parameter]
     public string? Fill { get; set; } = IonSelectFill.Default;
+
+    /// <summary>
+    /// Text that is placed under the select and displayed when no error is detected.
+    /// </summary>
+    [Parameter]
+    public string? HelperText { get; init; }
 
     /// <summary>
     /// The interface the select should use:
@@ -137,6 +149,12 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// </summary>
     [Parameter]
     public string? Placeholder { get; set; }
+
+    /// <summary>
+    /// If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+    /// </summary>
+    [Parameter]
+    public bool? Required { get; init; }
 
     /// <summary>
     /// The text to display instead of the selected option's value.

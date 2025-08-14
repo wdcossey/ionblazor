@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public static class IonInputInputMode
+public static class IonInputMode
 {
     public const string? Default = null;
     public const string Decimal = "decimal";
@@ -12,3 +12,6 @@ public static class IonInputInputMode
     public const string Text = "text";
     public const string Url = "url";
 }
+
+[Obsolete("Renamed to IonInputMode.", true)]
+public static class IonInputInputMode;

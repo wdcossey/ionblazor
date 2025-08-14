@@ -11,6 +11,18 @@ public sealed partial class IonRadioGroup : IonContentComponent
     public bool AllowEmptySelection { get; set; }
 
     /// <summary>
+    /// The error text to display at the top of the radio group.
+    /// </summary>
+    [Parameter]
+    public string? ErrorText { get; init; }
+
+    /// <summary>
+    /// The helper text to display at the top of the radio group.
+    /// </summary>
+    [Parameter]
+    public string? HelperText { get; init; }
+
+    /// <summary>
     /// The name of the control, which is submitted with the form data.
     /// </summary>
     [Parameter]

@@ -1,8 +1,10 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Diagnostics;
+
+namespace IonBlazor.Components;
 
 public sealed partial class IonModal : IonContentComponent, IIonModeComponent
 {
-    private readonly string _id = $"{Guid.NewGuid():N}";
+    private readonly string _id = $"ibz-modal-{Stopwatch.GetTimestamp():x}";
 
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
@@ -25,7 +27,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
                                     modal.initialBreakpoint = {{InitialBreakpoint}};
                                     modal.breakpoints = [{{string.Join(",", Breakpoints)}}];
                                 }
-                  
+
                               </script>
                               """ : "";
 
@@ -95,6 +97,35 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// Animation to use when the modal is presented.
     /// </summary>
     [Parameter] public string? EnterAnimation { get; set; }
+
+    /// <summary>
+    /// <p>
+    /// Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint.
+    /// This only takes effect when <see cref="Breakpoints"/> and <see cref="InitialBreakpoint"/> are set.
+    /// </p>
+    /// <p>
+    /// If <b>true</b>, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint.
+    /// Once fully expanded, scrolling will affect the content.
+    /// If <b>false</b>, scrolling will always affect the content.
+    /// The modal will only expand when dragging the header or handle.
+    /// The modal will close when dragging the header or handle.
+    /// It can also be closed when dragging the content, but only if the content is scrolled to the top.
+    /// </p>
+    /// </summary>
+    [Parameter] public bool? ExpandToScroll { get; set; }
+
+    /// <summary>
+    /// <p>
+    /// If <b>true</b>, focus will not be allowed to move outside of this overlay. If <b>false</b>, focus will be allowed to move outside of the overlay.
+    /// </p>
+    /// <p>
+    /// In most scenarios this property should remain set to <b>true</b>. Setting this property to <b>false</b> can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to <b>false</b> when absolutely necessary.
+    /// </p>
+    /// <p>
+    /// Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
+    /// </p>
+    /// </summary>
+    [Parameter] public bool? focusTrap { get; set; }
 
     [Parameter] public bool? Handle { get; set; }
 

@@ -183,6 +183,13 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     public bool? Readonly { get; set; }
 
     /// <summary>
+    /// If <b>true</b>, the datetime calendar displays a six-week (42-day) layout, including days from the
+    /// previous and next months to fill the grid. These adjacent days are selectable unless disabled.
+    /// </summary>
+    [Parameter]
+    public bool? ShowAdjacentDays { get; set; }
+
+    /// <summary>
     /// If <b>true</b>, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the
     /// bottom of the <see cref="IonDateTime"/> component. Developers can also use the button slot if they want to
     /// customize these buttons. If custom buttons are set in the button slot then the default buttons will not be rendered.

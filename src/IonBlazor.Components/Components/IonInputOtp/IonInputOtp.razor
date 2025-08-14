@@ -1,0 +1,21 @@
+﻿@namespace IonBlazor.Components
+
+@inherits IonContentComponent
+
+<ion-input-otp @ref="@IonElement"
+               @attributes="@Attributes"
+               autocapitalize="@Autocapitalize"
+               color="@Color"
+               disabled="@Disabled.AsString()"
+               fill="@Fill"
+               inputmode="@InputMode"
+               length="@Length"
+               pattern="@Pattern"
+               readonly="@Readonly.AsString()"
+               separators="@Separators"
+               shape="@Shape"
+               size="@Size"
+               type="@Type"
+               value="@Value">
+    @ChildContent
+</ion-input-otp>

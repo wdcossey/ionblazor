@@ -1,8 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public interface IIonInputEventArgs
+public interface IIonInputEventArgs : IIonInputArgs
 {
-    string? Value { get; }
-
     IonInputEvent Event { get; }
 }

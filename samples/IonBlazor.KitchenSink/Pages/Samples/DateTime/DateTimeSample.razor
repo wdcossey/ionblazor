@@ -101,6 +101,17 @@
     </div>
 </div>
 
+<h2>Show Adjacent Days</h2>
+<p>If the <code>showAdjacentDays</code> property is set to <code>true</code>, days from the previous and next month will be displayed in the calendar view to fill any empty spaces at the beginning or end of the month. When a user clicks on an enabled adjacent day, the calendar will smoothly animate to show that month's view.</p>
+<p>The calendar view always displays 6 rows when <code>showAdjacentDays</code> is enabled, so days from the previous or next month will be shown as needed to fill the grid. For example, even if a month starts on the first day of the week and ends within the fifth row, days from the next month will appear at the end to complete the sixth row.</p>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="container">
+            <IonDateTime ShowAdjacentDays="true" Presentation="@IonDateTimePresentation.Date" PreferWheel="false"></IonDateTime>
+        </div>
+    </div>
+</div>
+
 <h3>Time Selection</h3>
 <div class="playground__container">
     <div class="playground__preview">

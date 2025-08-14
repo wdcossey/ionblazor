@@ -102,10 +102,10 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
 
     /// <summary>
     /// A hint to the browser for which keyboard to display.
-    /// Possible values: <see cref="IonInputInputMode.None"/>, <see cref="IonInputInputMode.Text"/>,
-    /// <see cref="IonInputInputMode.Tel"/>, <see cref="IonInputInputMode.Url"/>, <see cref="IonInputInputMode.Email"/>,
-    /// <see cref="IonInputInputMode.Numeric"/>, <see cref="IonInputInputMode.Decimal"/>, and
-    /// <see cref="IonInputInputMode.Search"/>.
+    /// Possible values: <see cref="IonInputMode.None"/>, <see cref="IonInputMode.Text"/>,
+    /// <see cref="IonInputMode.Tel"/>, <see cref="IonInputMode.Url"/>, <see cref="IonInputMode.Email"/>,
+    /// <see cref="IonInputMode.Numeric"/>, <see cref="IonInputMode.Decimal"/>, and
+    /// <see cref="IonInputMode.Search"/>.
     /// </summary>
     [Parameter]
     public string? InputMode { get; set; }

@@ -22,3 +22,17 @@
 .ion-palette-dark.md {
 
 }
+
+:root {
+    color-scheme: light dark;
+}
+
+:root.prefers-light,
+:root.ion-palette-light {
+    color-scheme: light;
+}
+
+:root.prefers-dark,
+:root.ion-palette-dark {
+    color-scheme: dark;
+}

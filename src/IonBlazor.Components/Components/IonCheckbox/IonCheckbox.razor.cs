@@ -23,6 +23,18 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
     public bool? Disabled { get; set; }
 
     /// <summary>
+    /// Text that is placed under the checkbox  label and displayed when an error is detected.
+    /// </summary>
+    [Parameter]
+    public string? ErrorText { get; init; }
+
+    /// <summary>
+    /// Text that is placed under the checkbox  label and displayed when no error is detected.
+    /// </summary>
+    [Parameter]
+    public string? HelperText { get; init; }
+
+    /// <summary>
     /// If <b>true</b>, the <see cref="IonCheckbox"/> will visually appear as indeterminate.
     /// </summary>
     [Parameter]
@@ -63,6 +75,12 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
     /// </summary>
     [Parameter]
     public string Name { get; set; } = null!;
+
+    /// <summary>
+    /// If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+    /// </summary>
+    [Parameter]
+    public bool? Required { get; init; }
 
     /// <summary>
     /// The value of the <see cref="IonCheckbox"/> does not mean if it's checked or not,
