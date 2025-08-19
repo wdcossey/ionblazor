@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <PackageVersion>0.843.1-alpha.1</PackageVersion>
+        <PackageVersion>0.872.1</PackageVersion>
         <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
         <WindowsPackageType>None</WindowsPackageType>
