@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "outDir": "wwwroot/dist",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "Typescript/*"
+      ]
+    }
+  },
+  "include": [
+    "Typescript/**/*.ts",
+    "Components/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "wwwroot/dist"
+  ]
+}

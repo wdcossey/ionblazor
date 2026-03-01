@@ -1,0 +1,1 @@
+﻿<ion-alert backdrop-dismiss="true"></ion-alert>

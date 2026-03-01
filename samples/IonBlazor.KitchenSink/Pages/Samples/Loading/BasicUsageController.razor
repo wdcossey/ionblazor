@@ -14,14 +14,17 @@
             config.Spinner = IonSpinnerName.LinesSmall;
             config.Message = "Dismissing after <strong>10</strong> seconds... Interrupting in <i>5</i> seconds...";
             config.Duration = 10000;
-            config.OnDidPresent += _ =>
+            config.OnDidPresent += (_, _) =>
             {
                 Console?.Add($"{nameof(IonLoading)}::OnDidPresent");
+                return Task.CompletedTask;
             };
-            config.OnDidDismiss += args =>
+
+            config.OnDidDismiss += (__, args) =>
             {
                 Console?.Add($"{nameof(IonLoading)}::OnDidDismiss(Role:{args.Role})");
                 _ = args.Sender?.DisposeAsync(); //Clean up the reference
+                return Task.CompletedTask;
             };
 
         });

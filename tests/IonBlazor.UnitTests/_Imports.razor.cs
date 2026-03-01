@@ -1,4 +1,5 @@
 ﻿global using Xunit;
+global using VerifyXunit;
 global using Bunit;
 
 global using IonBlazor.Abstractions;

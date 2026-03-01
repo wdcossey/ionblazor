@@ -1,0 +1,20 @@
+* text=auto eol=lf
+*.cs text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.razor text eol=lf
+*.razor.cs text eol=lf
+*.md text eol=lf
+*.csproj text eol=lf
+*.props text eol=lf
+*.targets text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

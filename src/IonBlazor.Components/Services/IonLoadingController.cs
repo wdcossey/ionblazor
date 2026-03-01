@@ -15,34 +15,26 @@ public sealed class IonLoadingController: ComponentBase
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? didDismissHandler = null;
         DotNetObjectReference<IonicEventCallback<JsonObject?>>? didPresentHandler = null;
 
-        if (options.OnDidDismiss is not null)
+        didDismissHandler = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
+            await options.InvokeOnDidDismiss(null, new IonLoadingDismissEventArgs
             {
-                options.OnDidDismiss.Invoke(new IonLoadingDismissEventArgs
-                {
-                    Sender = null,
-                    Role = args?["detail"]?["role"]?.GetValue<string>(),
-                    Data = args?["detail"]?["data"]?.Deserialize<JsonElement>(),
-                    HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
-                });
-
-                return Task.CompletedTask;
+                Sender = null,
+                Role = args?["detail"]?["role"]?.GetValue<string>(),
+                Data = args?["detail"]?["data"]?.Deserialize<JsonElement>(),
+                HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
             });
-        }
+        });
 
-        if (options.OnDidPresent is not null)
+        didPresentHandler = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            didPresentHandler = IonicEventCallback<JsonObject?>.Create(args =>
+            await options.InvokeOnDidPresent(null, new IonLoadingPresentEventArgs()
             {
-                options.OnDidPresent.Invoke(new IonLoadingPresentEventArgs()
-                {
-                    Sender = null,
-                    HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
-                });
-                return Task.CompletedTask;
+                Sender = null,
+                HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
             });
-        }
+        });
+
 
         IJSObjectReference jsComponent = await IonLoadingReference.CreateComponentAsync(_jsRuntime);
         var result = await jsComponent.InvokeAsync<string?>("present", options, didDismissHandler, didPresentHandler);

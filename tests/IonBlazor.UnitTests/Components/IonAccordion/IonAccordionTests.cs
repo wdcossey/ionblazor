@@ -3,7 +3,7 @@ using IonBlazor.UnitTests.TestHelpers;
 
 namespace IonBlazor.UnitTests.Components;
 
-public class IonAccordionTests: BunitContext
+public class IonAccordionTests: IonTestContext
 {
     [Fact]
     public async Task IonAccordionRendersCorrectly()

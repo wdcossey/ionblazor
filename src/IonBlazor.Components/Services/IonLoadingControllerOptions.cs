@@ -39,8 +39,16 @@ public sealed record IonLoadingControllerOptions
     public Dictionary<string, string>? HtmlAttributes { get; set; }
 
     [JsonIgnore]
-    public Action<IonLoadingDismissEventArgs>? OnDidDismiss { get; set; }
+    public Func<object, IonLoadingDismissEventArgs, Task>? OnDidDismiss { get; set; }
 
     [JsonIgnore]
-    public Action<IonLoadingPresentEventArgs>? OnDidPresent { get; set; }
+    public Func<object, IonLoadingPresentEventArgs, Task>? OnDidPresent { get; set; }
+
+    /*public event EventHandler<IonLoadingDismissEventArgs>? OnDidDismiss;
+
+    public event EventHandler<IonLoadingPresentEventArgs>? OnDidPresent;*/
+
+    internal async Task InvokeOnDidDismiss(object? sender, IonLoadingDismissEventArgs args) => await (OnDidDismiss?.Invoke(sender ?? this, args) ?? Task.CompletedTask);
+
+    internal async Task InvokeOnDidPresent(object? sender, IonLoadingPresentEventArgs args) => await (OnDidPresent?.Invoke(sender ?? this, args) ?? Task.CompletedTask);
 }

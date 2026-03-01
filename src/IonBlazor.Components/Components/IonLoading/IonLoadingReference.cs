@@ -20,7 +20,7 @@ public sealed class IonLoadingReference : IIonLoading
             _options.Id = $"ibz-loading-{Stopwatch.GetTimestamp():x}";
         }
 
-        _didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
+        _didDismissHandler = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             IonLoadingDismissEventArgs eventArgs = new()
             {
@@ -30,20 +30,18 @@ public sealed class IonLoadingReference : IIonLoading
                 HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
             };
 
-            options.OnDidDismiss?.Invoke(eventArgs);
-
-            return Task.CompletedTask;
+            await options.InvokeOnDidDismiss(this, eventArgs);
         });
 
-        _didPresentHandler = IonicEventCallback<JsonObject?>.Create(args =>
+        _didPresentHandler = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             IonLoadingPresentEventArgs eventArgs = new()
             {
                 Sender = this,
                 HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
             };
-            options.OnDidPresent?.Invoke(eventArgs);
-            return Task.CompletedTask;
+
+            await options.InvokeOnDidPresent(this, eventArgs);
         });
     }
 

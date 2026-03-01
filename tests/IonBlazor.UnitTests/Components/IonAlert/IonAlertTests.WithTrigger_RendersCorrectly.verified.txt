@@ -1,0 +1,1 @@
+﻿<ion-alert trigger="open-alert"></ion-alert>

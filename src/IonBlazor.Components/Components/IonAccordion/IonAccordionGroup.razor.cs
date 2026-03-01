@@ -6,13 +6,6 @@ public sealed partial class IonAccordionGroup : IonContentComponent, IIonModeCom
 
     internal override string JsImportName => nameof(IonAccordionGroup);
 
-/*#if NET8_0_OR_GREATER
-    [Inject(Key = nameof(IonAccordionGroup))]
-    internal override Task<IJSObjectReference>? JsComponent { get; init; }
-#else
-    protected override string JsImportName => nameof(IonAccordionGroup);
-#endif*/
-
     /// <summary>
     /// If true, all accordions inside of the accordion group will animate when expanding or collapsing.
     /// </summary>
