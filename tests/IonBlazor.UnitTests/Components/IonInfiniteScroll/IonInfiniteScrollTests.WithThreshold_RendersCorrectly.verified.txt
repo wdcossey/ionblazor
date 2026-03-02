@@ -1,0 +1,1 @@
+﻿<ion-infinite-scroll threshold="100px"></ion-infinite-scroll>

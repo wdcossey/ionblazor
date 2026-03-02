@@ -1,0 +1,1 @@
+﻿<ion-input type="number"></ion-input>

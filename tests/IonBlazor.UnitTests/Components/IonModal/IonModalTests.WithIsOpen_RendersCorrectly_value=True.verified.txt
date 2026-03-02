@@ -1,0 +1,2 @@
+﻿<ion-modal is-open="true" ibz-id><p>Modal content</p></ion-modal>
+

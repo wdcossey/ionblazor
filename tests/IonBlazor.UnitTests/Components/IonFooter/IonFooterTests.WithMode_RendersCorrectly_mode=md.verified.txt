@@ -1,0 +1,1 @@
+﻿<ion-footer mode="md"></ion-footer>

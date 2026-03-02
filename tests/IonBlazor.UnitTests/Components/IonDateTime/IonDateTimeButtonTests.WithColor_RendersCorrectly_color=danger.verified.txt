@@ -1,0 +1,1 @@
+﻿<ion-datetime-button color="danger" datetime="datetime-id" disabled="false"></ion-datetime-button>

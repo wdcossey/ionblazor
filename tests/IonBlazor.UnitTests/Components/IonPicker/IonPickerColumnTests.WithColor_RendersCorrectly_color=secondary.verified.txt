@@ -1,0 +1,1 @@
+﻿<ion-picker-column color="secondary" disabled="false"></ion-picker-column>

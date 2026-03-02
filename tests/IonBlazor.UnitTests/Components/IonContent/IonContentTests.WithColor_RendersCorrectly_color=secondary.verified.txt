@@ -1,0 +1,1 @@
+﻿<ion-content color="secondary"></ion-content>

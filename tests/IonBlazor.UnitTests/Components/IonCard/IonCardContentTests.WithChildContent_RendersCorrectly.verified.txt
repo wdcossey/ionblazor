@@ -1,0 +1,1 @@
+﻿<ion-card-content><p>Card content</p></ion-card-content>

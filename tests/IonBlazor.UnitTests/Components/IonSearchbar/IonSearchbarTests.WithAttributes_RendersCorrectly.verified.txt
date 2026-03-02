@@ -1,0 +1,1 @@
+﻿<ion-searchbar id="searchbar" autocomplete="off" autocorrect="off" placeholder=""></ion-searchbar>

@@ -1,0 +1,1 @@
+﻿<ion-menu content-id="main-content" max-edge-start=""></ion-menu>

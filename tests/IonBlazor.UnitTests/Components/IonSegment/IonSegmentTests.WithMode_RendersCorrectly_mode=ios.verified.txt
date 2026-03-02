@@ -1,0 +1,1 @@
+﻿<ion-segment disabled="false" mode="ios" scrollable="false" select-on-focus="false" swipe-gesture="false"></ion-segment>

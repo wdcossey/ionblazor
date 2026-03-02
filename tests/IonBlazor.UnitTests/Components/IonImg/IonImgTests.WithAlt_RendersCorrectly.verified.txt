@@ -1,0 +1,1 @@
+﻿<ion-img alt="A descriptive alt text" src="image.png"></ion-img>

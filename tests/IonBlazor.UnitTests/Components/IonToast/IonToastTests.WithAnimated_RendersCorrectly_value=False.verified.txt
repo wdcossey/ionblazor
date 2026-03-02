@@ -1,0 +1,1 @@
+﻿<ion-toast animated="false"></ion-toast>

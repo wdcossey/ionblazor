@@ -1,0 +1,1 @@
+﻿<ion-text id="text"></ion-text>

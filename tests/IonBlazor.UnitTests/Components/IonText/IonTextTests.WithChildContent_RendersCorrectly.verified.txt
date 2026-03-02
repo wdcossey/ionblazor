@@ -1,0 +1,1 @@
+﻿<ion-text><p>Some text content</p></ion-text>

@@ -1,0 +1,1 @@
+﻿<ion-skeleton-text id="skeleton-text" animated="false"></ion-skeleton-text>

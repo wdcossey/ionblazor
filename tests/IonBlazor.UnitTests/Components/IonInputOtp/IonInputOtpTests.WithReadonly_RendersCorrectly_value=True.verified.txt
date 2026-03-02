@@ -1,0 +1,1 @@
+﻿<ion-input-otp length="4" readonly="true" type="number"></ion-input-otp>

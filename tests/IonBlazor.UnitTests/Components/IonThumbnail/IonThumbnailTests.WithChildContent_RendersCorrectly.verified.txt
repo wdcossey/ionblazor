@@ -1,0 +1,1 @@
+﻿<ion-thumbnail><ion-img src="thumbnail.png"></ion-img></ion-thumbnail>

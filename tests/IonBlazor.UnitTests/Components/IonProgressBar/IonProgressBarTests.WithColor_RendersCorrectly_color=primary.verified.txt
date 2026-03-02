@@ -1,0 +1,1 @@
+﻿<ion-progress-bar buffer="1" color="primary" reversed="false" value="0"></ion-progress-bar>

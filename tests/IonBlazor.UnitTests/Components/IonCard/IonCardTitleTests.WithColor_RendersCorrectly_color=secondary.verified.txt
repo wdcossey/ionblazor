@@ -1,0 +1,1 @@
+﻿<ion-card-title color="secondary"></ion-card-title>

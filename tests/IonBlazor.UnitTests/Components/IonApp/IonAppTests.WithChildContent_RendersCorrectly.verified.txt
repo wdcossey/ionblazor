@@ -1,0 +1,1 @@
+﻿<ion-app><p>Child content</p></ion-app>

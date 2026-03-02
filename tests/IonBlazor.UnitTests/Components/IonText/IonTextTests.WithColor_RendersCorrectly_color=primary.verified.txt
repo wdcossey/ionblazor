@@ -1,0 +1,1 @@
+﻿<ion-text color="primary"></ion-text>

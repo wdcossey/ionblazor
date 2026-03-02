@@ -1,0 +1,1 @@
+﻿<ion-menu-toggle auto-hide="false"></ion-menu-toggle>

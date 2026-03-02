@@ -1,0 +1,1 @@
+﻿<ion-breadcrumbs items-after-collapse="2"></ion-breadcrumbs>

@@ -1,0 +1,1 @@
+﻿<ion-list mode="ios">item-1</ion-list>

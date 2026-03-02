@@ -1,0 +1,1 @@
+﻿<ion-button button-type="button" color="danger" form=""></ion-button>

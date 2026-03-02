@@ -1,0 +1,1 @@
+﻿<ion-select><ion-select-option value="a">Option A</ion-select-option></ion-select>

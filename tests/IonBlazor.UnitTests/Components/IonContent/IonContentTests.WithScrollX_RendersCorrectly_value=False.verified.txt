@@ -1,0 +1,1 @@
+﻿<ion-content scroll-x="false"></ion-content>

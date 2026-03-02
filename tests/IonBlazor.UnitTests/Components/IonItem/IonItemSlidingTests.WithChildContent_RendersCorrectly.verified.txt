@@ -1,0 +1,1 @@
+﻿<ion-item-sliding><ion-item><ion-label>Item</ion-label></ion-item></ion-item-sliding>

@@ -1,0 +1,1 @@
+﻿<ion-badge id="badge"></ion-badge>

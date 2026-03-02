@@ -1,0 +1,1 @@
+﻿<ion-col><p>Column content</p></ion-col>

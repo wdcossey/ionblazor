@@ -1,0 +1,1 @@
+﻿<ion-header collapse="fade"></ion-header>

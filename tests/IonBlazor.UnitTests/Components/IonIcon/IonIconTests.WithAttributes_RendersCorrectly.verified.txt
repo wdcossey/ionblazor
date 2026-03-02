@@ -1,0 +1,1 @@
+﻿<ion-icon id="icon"></ion-icon>

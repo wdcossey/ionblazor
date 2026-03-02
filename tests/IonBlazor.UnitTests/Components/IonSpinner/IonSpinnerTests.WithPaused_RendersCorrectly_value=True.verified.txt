@@ -1,0 +1,1 @@
+﻿<ion-spinner paused="true"></ion-spinner>

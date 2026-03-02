@@ -22,7 +22,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     private string Script => Breakpoints?.Length > 0 ?
                               $$"""
                               <script>
-                                var modal = document.querySelector(`[is-modal="{{_id}}"]`);
+                                var modal = document.querySelector(`[ibz-id="{{_id}}"]`);
                                 if (modal) {
                                     modal.initialBreakpoint = {{InitialBreakpoint}};
                                     modal.breakpoints = [{{string.Join(",", Breakpoints)}}];

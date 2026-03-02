@@ -1,0 +1,1 @@
+﻿<ion-toggle color="secondary"></ion-toggle>

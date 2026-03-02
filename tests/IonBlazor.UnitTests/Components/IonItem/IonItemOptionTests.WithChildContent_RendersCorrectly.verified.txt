@@ -1,0 +1,1 @@
+﻿<ion-item-option><ion-icon name="trash"></ion-icon></ion-item-option>

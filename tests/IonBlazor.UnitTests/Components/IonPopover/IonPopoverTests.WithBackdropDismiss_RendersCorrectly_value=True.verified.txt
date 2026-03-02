@@ -1,0 +1,1 @@
+﻿<ion-popover backdrop-dismiss="true"><p>Popover content</p></ion-popover>

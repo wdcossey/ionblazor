@@ -1,0 +1,1 @@
+﻿<ion-toolbar><ion-title>My Title</ion-title></ion-toolbar>

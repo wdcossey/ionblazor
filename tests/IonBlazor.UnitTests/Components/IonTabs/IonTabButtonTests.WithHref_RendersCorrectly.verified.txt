@@ -1,0 +1,1 @@
+﻿<ion-tab-button href="/home" layout="icon-top" tab="home"></ion-tab-button>

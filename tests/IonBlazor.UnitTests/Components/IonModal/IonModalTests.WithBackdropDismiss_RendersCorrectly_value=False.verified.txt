@@ -1,0 +1,2 @@
+﻿<ion-modal backdrop-dismiss="false" ibz-id><p>Modal content</p></ion-modal>
+

@@ -1,0 +1,1 @@
+﻿<ion-range dual-knobs="false"></ion-range>

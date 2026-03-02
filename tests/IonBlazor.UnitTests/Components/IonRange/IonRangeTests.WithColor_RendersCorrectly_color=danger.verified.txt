@@ -1,0 +1,1 @@
+﻿<ion-range color="danger"></ion-range>

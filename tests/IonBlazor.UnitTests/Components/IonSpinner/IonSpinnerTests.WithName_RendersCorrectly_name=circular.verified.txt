@@ -1,0 +1,1 @@
+﻿<ion-spinner name="circular" paused="false"></ion-spinner>

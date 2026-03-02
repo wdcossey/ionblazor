@@ -1,0 +1,1 @@
+﻿<ion-textarea><div slot="label">Label</div></ion-textarea>

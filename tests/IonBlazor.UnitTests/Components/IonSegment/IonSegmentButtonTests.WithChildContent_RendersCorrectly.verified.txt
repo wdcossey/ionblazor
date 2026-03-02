@@ -1,0 +1,1 @@
+﻿<ion-segment-button disabled="false" layout="icon-top" type="button" value="segment-a"><ion-label>Option A</ion-label></ion-segment-button>
