@@ -24,7 +24,7 @@ public sealed partial class IonSegmentButton : IonContentComponent, IIonModeComp
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// The type of the button.

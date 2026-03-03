@@ -87,7 +87,7 @@ public partial class IonPickerLegacy : IonComponent, IIonModeComponent
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// If <b>true</b>, a backdrop will be displayed behind the picker.

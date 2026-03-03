@@ -68,7 +68,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     /// The hour cycle of the <see cref="IonDateTime"/>. If no value is set, this is specified by the current locale.
     /// </summary>
     [Parameter]
-    public string? HourCycle { get; set; } = IonDateTimeHourCycle.Default;
+    public string? HourCycle { get; set; } = IonDateTimeHourCycle.Undefined;
 
     /// <summary>
     /// Values used to create the list of selectable hours.
@@ -128,7 +128,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Values used to create the list of selectable months. By default the month values range from 1 to 12.
@@ -174,7 +174,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     /// "time-date" will show the time picker first and date picker second.<br/>
     /// </summary>
     [Parameter]
-    public string? Presentation { get; set; } = IonDateTimePresentation.Default;
+    public string? Presentation { get; set; } = IonDateTimePresentation.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the datetime appears normal but is not interactive.
@@ -225,7 +225,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     /// If fixed, the ion-datetime will have a fixed width.
     /// </summary>
     [Parameter]
-    public string? Size { get; set; } = IonDateTimeSize.Default;
+    public string? Size { get; set; } = IonDateTimeSize.Undefined;
 
     ///// <summary>
     ///// A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or

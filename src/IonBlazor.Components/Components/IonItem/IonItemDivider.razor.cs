@@ -10,7 +10,7 @@ public sealed partial class IonItemDivider : IonContentComponent, IIonModeCompon
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// When it's set to <b>true</b>, the item-divider will stay visible when it reaches the top of the viewport

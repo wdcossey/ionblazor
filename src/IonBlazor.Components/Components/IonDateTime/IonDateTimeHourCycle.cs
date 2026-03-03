@@ -2,7 +2,7 @@ namespace IonBlazor.Components;
 
 public static class IonDateTimeHourCycle
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string H11 = "h11";
     public const string H12 = "h12";
     public const string H23 = "h23";

@@ -2,7 +2,7 @@
 
 public static class IonSearchbarUserAction
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
 
     /// <summary>
     /// done

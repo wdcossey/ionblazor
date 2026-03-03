@@ -84,7 +84,7 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
     /// Use this if you have long text in your buttons.
     /// </summary>
     [Parameter]
-    public string? Layout { get; set; } = IonToastLayout.Default;
+    public string? Layout { get; set; } = IonToastLayout.Undefined;
 
     //leaveAnimation
 
@@ -99,13 +99,13 @@ public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonMod
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// The position of the toast on the screen.
     /// </summary>
     [Parameter]
-    public string? Position { get; set; } = IonToastPosition.Default;
+    public string? Position { get; set; } = IonToastPosition.Undefined;
 
     /// <summary>
     /// The element to anchor the toast's position to. Can be set as a direct reference or the ID of the element.<br/>

@@ -21,13 +21,13 @@ public sealed partial class IonFab : IonContentComponent
     /// Where to align the fab horizontally in the viewport.<br/>
     /// See <see cref="IonFabHorizontalAlignment"/> for options
     /// </summary>
-    [Parameter] public string? Horizontal { get; set; } = IonFabHorizontalAlignment.Default;
+    [Parameter] public string? Horizontal { get; set; } = IonFabHorizontalAlignment.Undefined;
 
     /// <summary>
     /// Where to align the fab vertically in the viewport.<br/>
     /// See <see cref="IonFabVerticalAlignment"/> for options
     /// </summary>
-    [Parameter] public string? Vertical { get; set; } = IonFabVerticalAlignment.Default;
+    [Parameter] public string? Vertical { get; set; } = IonFabVerticalAlignment.Undefined;
 
     /// <summary>
     /// Close an active FAB list container.

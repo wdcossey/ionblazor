@@ -60,7 +60,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     /// Long text will be truncated with ellipses ("...").
     /// </summary>
     [Parameter]
-    public string? LabelPlacement { get; set; } = IonRangeLabelPlacement.Default;
+    public string? LabelPlacement { get; set; } = IonRangeLabelPlacement.Undefined;
 
     /// <summary>
     /// Maximum integer value of the range.
@@ -76,7 +76,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// The name of the control, which is submitted with the form data.<br/>
@@ -281,7 +281,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
 
 public static class IonRangeLabelPlacement
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string End = "end";
     public const string Fixed = "fixed";
     public const string Start = "start";

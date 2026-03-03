@@ -15,19 +15,19 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     /// <see cref="IonInputAutocapitalize.Sentences"/>, <see cref="IonInputAutocapitalize.Words"/>, <see cref="IonInputAutocapitalize.Characters"/>.
     /// </summary>
     [Parameter]
-    public string? Autocapitalize { get; set; } = IonInputAutocapitalize.Default;
+    public string? Autocapitalize { get; set; } = IonInputAutocapitalize.Undefined;
 
     ///<summary>
     /// Indicates whether the value of the control can be automatically completed by the browser.
     ///</summary>
     [Parameter]
-    public string? Autocomplete { get; set; } = IonInputAutocomplete.Default;
+    public string? Autocomplete { get; set; } = IonInputAutocomplete.Undefined;
 
     /// <summary>
     /// Whether auto correction should be enabled when the user is entering/editing the text value.
     /// </summary>
     [Parameter]
-    public string? Autocorrect { get; set; } = IonInputAutocorrect.Default;
+    public string? Autocorrect { get; set; } = IonInputAutocorrect.Undefined;
 
     /// <summary>
     /// This Boolean attribute lets you specify that a form control should have input focus when the page loads.
@@ -85,7 +85,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     /// and <see cref="IonInputEnterkeyhint.Send"/>.
     /// </summary>
     [Parameter]
-    public string? Enterkeyhint { get; set; } = IonInputEnterkeyhint.Default;
+    public string? Enterkeyhint { get; set; } = IonInputEnterkeyhint.Undefined;
 
     /// <summary>
     /// Text that is placed under the input and displayed when an error is detected.
@@ -102,7 +102,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     /// Only available in md mode.
     /// </summary>
     [Parameter]
-    public string? Fill { get; set; } = IonInputFill.Default;
+    public string? Fill { get; set; } = IonInputFill.Undefined;
 
     /// <summary>
     /// Text that is placed under the input and displayed when no error is detected.
@@ -118,7 +118,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     /// <see cref="IonInputMode.Search"/>.
     /// </summary>
     [Parameter]
-    public string? InputMode { get; set; } = IonInputMode.Default;
+    public string? InputMode { get; set; } = IonInputMode.Undefined;
 
     /// <summary>
     /// The visible label associated with the input.
@@ -144,7 +144,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     /// </ul>
     /// </summary>
     [Parameter]
-    public string? LabelPlacement { get; set; } = IonInputLabelPlacement.Default;
+    public string? LabelPlacement { get; set; } = IonInputLabelPlacement.Undefined;
 
     /// <summary>
     /// The maximum value, which must not be less than its minimum (min attribute) value.
@@ -174,7 +174,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the user can enter more than one value.
@@ -226,7 +226,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     /// The shape of the input. If "round" it will have an increased border radius.
     /// </summary>
     [Parameter]
-    public string? Shape { get; set; } = IonInputShape.Default;
+    public string? Shape { get; set; } = IonInputShape.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the element will have its spelling and grammar checked.
@@ -245,7 +245,7 @@ public sealed partial class IonInput : IonContentComponent, IIonColorComponent, 
     /// The type of control to display. The default type is <see cref="IonInputType.Text"/>.
     /// </summary>
     [Parameter]
-    public string? Type { get; set; } = IonInputType.Default;
+    public string? Type { get; set; } = IonInputType.Undefined;
 
     /// <summary>
     /// The value of the input.

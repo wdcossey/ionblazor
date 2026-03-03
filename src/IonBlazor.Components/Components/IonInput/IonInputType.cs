@@ -2,7 +2,7 @@
 
 public static class IonInputType
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Date = "date";
     public const string DatetimeLocal = "datetime-local";
     public const string Email = "email";

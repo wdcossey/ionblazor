@@ -37,7 +37,7 @@ public sealed partial class IonItemOption : IonContentComponent, IIonModeCompone
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Specifies the relationship of the target object to the link object. The value is a space-separated list
@@ -58,5 +58,5 @@ public sealed partial class IonItemOption : IonContentComponent, IIonModeCompone
     /// The type of the button.
     /// </summary>
     [Parameter]
-    public string? Type { get; set; } = IonItemOptionType.Default;
+    public string? Type { get; set; } = IonItemOptionType.Undefined;
 }

@@ -2,7 +2,7 @@ namespace IonBlazor.Components;
 
 public static class IonLoadingSpinner
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Bubbles = "bubbles";
     public const string Circles = "circles";
     public const string Circular = "circular";

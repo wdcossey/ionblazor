@@ -2,7 +2,7 @@
 
 public static class IonInputEnterkeyhint
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Enter = "enter";
     public const string Done = "done";
     public const string Go = "go";

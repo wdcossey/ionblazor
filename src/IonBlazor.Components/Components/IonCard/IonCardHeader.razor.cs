@@ -8,7 +8,7 @@ public sealed partial class IonCardHeader : IonContentComponent, IIonModeCompone
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the card header will be translucent.

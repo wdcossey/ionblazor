@@ -7,8 +7,8 @@ public sealed partial class IonIcon : IonComponent, IIonColorComponent
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Color { get; init; } = IonColor.Default;
+    public string? Color { get; init; } = IonColor.Undefined;
 
     [Parameter]
-    public string? Size { get; set; } = IonIconSize.Null;
+    public string? Size { get; set; } = IonIconSize.Undefined;
 }

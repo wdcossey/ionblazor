@@ -34,7 +34,7 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Emitted when the collapsed indicator is clicked on.

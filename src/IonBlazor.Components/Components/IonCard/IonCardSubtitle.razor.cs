@@ -8,5 +8,5 @@ public sealed partial class IonCardSubtitle : IonContentComponent, IIonModeCompo
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 }

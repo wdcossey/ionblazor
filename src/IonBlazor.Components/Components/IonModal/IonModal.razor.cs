@@ -139,7 +139,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// is not set (using a fullscreen or card modal).
     /// </summary>
     [Parameter]
-    public string? HandleBehavior { get; set; } = IonModalHandleBehavior.Default;
+    public string? HandleBehavior { get; set; } = IonModalHandleBehavior.Undefined;
 
     /// <summary>
     /// Additional attributes to pass to the loader.<br/>
@@ -198,7 +198,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     ///// <summary>
     ///// The element that presented the modal. This is used for card presentation effects and for stacking multiple

@@ -52,7 +52,7 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// If <see cref="IonSelectFill.Outline"/> the item will be transparent with a border. Only available in md mode.
     /// </summary>
     [Parameter]
-    public string? Fill { get; set; } = IonSelectFill.Default;
+    public string? Fill { get; set; } = IonSelectFill.Undefined;
 
     /// <summary>
     /// Text that is placed under the select and displayed when no error is detected.
@@ -67,7 +67,7 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// <see cref="IonSelectInterface.Popover"/>.
     /// </summary>
     [Parameter]
-    public string? Interface { get; set; } = IonSelectInterface.Default;
+    public string? Interface { get; set; } = IonSelectInterface.Undefined;
 
     /// <summary>
     /// Any additional options that the <b>alert</b>, <b>action-sheet</b> or <b>popover</b> interface can take.
@@ -96,7 +96,7 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// two elements.
     /// </summary>
     [Parameter]
-    public string? Justify { get; set; } = IonSelectJustify.Default;
+    public string? Justify { get; set; } = IonSelectJustify.Undefined;
 
     /// <summary>
     /// The visible label associated with the select.
@@ -124,7 +124,7 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// recommend initializing the select with either a <see cref="Value"/> or a <see cref="Placeholder"/>.
     /// </summary>
     [Parameter]
-    public string? LabelPlacement { get; set; } = IonSelectLabelPlacement.Default;
+    public string? LabelPlacement { get; set; } = IonSelectLabelPlacement.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the select can accept multiple values.
@@ -166,7 +166,7 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// The shape of the select. If <see cref="IonSelectShape.Round"/> it will have an increased border radius
     /// </summary>
     [Parameter]
-    public string? Shape { get; set; } = IonSelectShape.Default;
+    public string? Shape { get; set; } = IonSelectShape.Undefined;
 
     /// <summary>
     /// The toggle icon to use. Defaults to <b>chevronExpand</b> for ios mode, or <b>caretDownSharp</b> for md mode.

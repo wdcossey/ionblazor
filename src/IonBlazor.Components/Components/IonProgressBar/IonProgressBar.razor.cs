@@ -15,7 +15,7 @@ public sealed partial class IonProgressBar : IonContentComponent, IIonModeCompon
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// If true, reverse the progress bar direction.
@@ -29,7 +29,7 @@ public sealed partial class IonProgressBar : IonContentComponent, IIonModeCompon
     /// <see cref="IonProgressBarType.Indeterminate"/> (animate from left to right).
     /// </summary>
     [Parameter]
-    public string? Type { get; set; } = IonProgressBarType.Default;
+    public string? Type { get; set; } = IonProgressBarType.Undefined;
 
     /// <summary>
     /// The value determines how much of the active bar should display when the type is "determinate".

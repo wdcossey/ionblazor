@@ -2,7 +2,7 @@ namespace IonBlazor.Components;
 
 public static class IonDateTimePresentation
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Date = "date";
     public const string DateTime = "date-time";
     public const string Month = "month";

@@ -14,11 +14,11 @@ public sealed partial class IonList : IonContentComponent, IIonList, IIonModeCom
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Lines { get; set; } = IonListLines.Default;
+    public string? Lines { get; set; } = IonListLines.Undefined;
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <inheritdoc/>
     public ValueTask<bool> CloseSlidingItemsAsync() => _closeSlidingItemsWrapper();

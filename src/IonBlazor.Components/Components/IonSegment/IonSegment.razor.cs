@@ -16,7 +16,7 @@ public sealed partial class IonSegment : IonContentComponent, IIonModeComponent,
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the segment buttons will overflow and the user can swipe to see them.

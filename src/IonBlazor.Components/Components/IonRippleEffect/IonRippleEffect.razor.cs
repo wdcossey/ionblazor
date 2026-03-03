@@ -13,7 +13,7 @@ public sealed partial class IonRippleEffect : IonContentComponent
     /// NOTE: Surfaces for bounded ripples should have the overflow property set to hidden, while surfaces for unbounded ripples should have it set to visible.
     /// </summary>
     [Parameter]
-    public string? Type { get; set; } = IonRippleEffectType.Default;
+    public string? Type { get; set; } = IonRippleEffectType.Undefined;
 
     /// <summary>
     /// Adds the ripple effect to the parent element.

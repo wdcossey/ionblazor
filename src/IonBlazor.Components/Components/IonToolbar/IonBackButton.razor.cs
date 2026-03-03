@@ -23,7 +23,7 @@ public sealed partial class IonBackButton : IonComponent, IIonModeComponent, IIo
     [Parameter] public string? Icon { get; set; }
 
     /// <inheritdoc/>
-    [Parameter] public string? Mode { get; set; } = IonMode.Default;
+    [Parameter] public string? Mode { get; set; } = IonMode.Undefined;
 
     //routerAnimation
 

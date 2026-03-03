@@ -8,7 +8,7 @@ public sealed partial class IonInfiniteScrollContent : IonComponent
     /// An animated SVG spinner that shows while loading.
     /// </summary>
     [Parameter]
-    public string? LoadingSpinner { get; set; } = LoadingSpinnerType.Default;
+    public string? LoadingSpinner { get; set; } = LoadingSpinnerType.Undefined;
 
     /// <summary>
     /// Optional text to display while loading. <see cref="LoadingText"/> can accept either plaintext or HTML as a

@@ -34,5 +34,5 @@ public sealed partial class IonMenuButton : IonComponent, IIonColorComponent, II
     /// The type of the button.
     /// </summary>
     [Parameter]
-    public string? Type { get; set; } = IonMenuButtonType.Default;
+    public string? Type { get; set; } = IonMenuButtonType.Undefined;
 }

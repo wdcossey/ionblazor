@@ -2,6 +2,6 @@
 
 public static class IonInputShape
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Round = "round";
 }

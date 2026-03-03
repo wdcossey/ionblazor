@@ -10,5 +10,5 @@ public sealed partial class IonTitle: IonContentComponent, IIonColorComponent
     /// <summary>
     /// The size of the toolbar title.
     /// </summary>
-    [Parameter] public string? Size { get; set; } = IonTitleSize.Default;
+    [Parameter] public string? Size { get; set; } = IonTitleSize.Undefined;
 }

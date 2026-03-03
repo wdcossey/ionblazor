@@ -2,7 +2,7 @@
 
 public static class IonAccordionGroupExpand
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Compact = "compact";
     public const string Inset = "inset";
 }

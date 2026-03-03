@@ -52,7 +52,7 @@ public sealed partial class IonFabButton : IonContentComponent, IIonModeComponen
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Specifies the relationship of the target object to the link object.
@@ -87,7 +87,7 @@ public sealed partial class IonFabButton : IonContentComponent, IIonModeComponen
     /// Default: <see cref="IonFabButtonSize.Default"/>
     /// </summary>
     [Parameter]
-    public string? Size { get; set; } = IonFabButtonSize.Default;
+    public string? Size { get; set; } = IonFabButtonSize.Undefined;
 
     /// <summary>
     /// Specifies where to display the linked URL. Only applies when an href is provided.<br/>

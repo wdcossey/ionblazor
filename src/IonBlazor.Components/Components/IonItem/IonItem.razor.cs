@@ -52,11 +52,11 @@ public sealed partial class IonItem : IonContentComponent, IIonModeComponent, II
     /// How the bottom border should be displayed on the item.
     /// </summary>
     [Parameter]
-    public string? Lines { get; set; } = IonItemLines.Default;
+    public string? Lines { get; set; } = IonItemLines.Undefined;
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Specifies the relationship of the target object to the link object. The value is a space-separated list
@@ -77,5 +77,5 @@ public sealed partial class IonItem : IonContentComponent, IIonModeComponent, II
     /// The shape of the item. If <see cref="IonItemShape.Round"/> it will have increased border radius.
     /// </summary>
     [Parameter]
-    public string? Type { get; set; } = IonItemType.Default;
+    public string? Type { get; set; } = IonItemType.Undefined;
 }

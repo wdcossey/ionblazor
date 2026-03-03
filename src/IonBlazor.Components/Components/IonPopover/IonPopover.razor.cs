@@ -18,7 +18,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     /// Defaults to <see cref="IonPopoverAlignment.Center"/> for <see cref="IonMode.iOS"/> mode, and
     /// <see cref="IonPopoverAlignment.Start"/> for <see cref="IonMode.MaterialDesign"/> mode.
     /// </summary>
-    [Parameter] public string? Alignment { get; set; } = IonPopoverAlignment.Default;
+    [Parameter] public string? Alignment { get; set; } = IonPopoverAlignment.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the popover will animate.
@@ -83,7 +83,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     //LeaveAnimation
 
     /// <inheritdoc/>
-    [Parameter] public string? Mode { get; set; } = IonMode.Default;
+    [Parameter] public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Describes what to position the popover relative to.
@@ -94,7 +94,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     /// of the trigger action.
     /// If passing in an event, this is determined via event.clientX and event.clientY.
     /// </summary>
-    [Parameter] public string? Reference { get; set; } = IonPopoverReference.Default;
+    [Parameter] public string? Reference { get; set; } = IonPopoverReference.Undefined;
 
     /// <summary>
     /// If <b>true</b>, a backdrop will be displayed behind the popover. This property controls whether or not the
@@ -108,14 +108,14 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     /// The <see cref="IonPopoverSide.Start"/> and <see cref="IonPopoverSide.End"/> values are RTL-aware,
     /// and the <see cref="IonPopoverSide.Left"/> and <see cref="IonPopoverSide.Right"/> values are not.
     /// </summary>
-    [Parameter] public string? Side { get; set; } = IonPopoverSide.Default;
+    [Parameter] public string? Side { get; set; } = IonPopoverSide.Undefined;
 
     /// <summary>
     /// Describes how to calculate the popover width.
     /// If <see cref="IonPopoverSize.Cover"/>, the popover width will match the width of the trigger.
     /// If <see cref="IonPopoverSize.Auto"/>, the popover width will be determined by the content in the popover.
     /// </summary>
-    [Parameter] public string? Size { get; set; } = IonPopoverSize.Default;
+    [Parameter] public string? Size { get; set; } = IonPopoverSize.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the popover will be translucent.
@@ -140,7 +140,7 @@ public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
     /// clicked on desktop and long pressed on mobile.
     /// This will also prevent your device's normal context menu from appearing.
     /// </summary>
-    [Parameter] public string? TriggerAction { get; set; } = IonPopoverTriggerAction.Default;
+    [Parameter] public string? TriggerAction { get; set; } = IonPopoverTriggerAction.Undefined;
 
     [Parameter] public EventCallback DidDismiss { get; set; }
     [Parameter] public EventCallback DidPresent { get; set; }

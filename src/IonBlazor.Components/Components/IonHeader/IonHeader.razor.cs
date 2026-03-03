@@ -6,7 +6,7 @@ public sealed partial class IonHeader : IonContentComponent, IIonModeComponent
     /// Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
     /// </summary>
     [Parameter]
-    public string? Collapse { get; set; } = IonHeaderCollapse.Default;
+    public string? Collapse { get; set; } = IonHeaderCollapse.Undefined;
 
     /// <summary>
     /// The mode from the parent (<see cref="IonApp"/>).
@@ -17,7 +17,7 @@ public sealed partial class IonHeader : IonContentComponent, IIonModeComponent
     /// <inheritdoc/>
     //[Parameter]
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// If true, the header will be translucent. Only applies when the mode is "ios" and the device supports backdrop-filter.

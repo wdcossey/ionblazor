@@ -83,7 +83,7 @@ public sealed partial class IonAlert : IonComponent, IIonModeComponent
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// The subtitle in the heading of the alert. Displayed under the title.

@@ -21,7 +21,7 @@ public sealed partial class IonInfiniteScroll : IonContentComponent
     /// <see cref="IonInfiniteScrollPosition.Top"/> or <see cref="IonInfiniteScrollPosition.Bottom"/>.
     /// </summary>
     [Parameter]
-    public string? Position { get; set; } = IonInfiniteScrollPosition.Default;
+    public string? Position { get; set; } = IonInfiniteScrollPosition.Undefined;
 
     /// <summary>
     /// The threshold distance from the bottom of the content to call the infinite output event when scrolled.

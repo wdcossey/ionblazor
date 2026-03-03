@@ -4,5 +4,5 @@ public sealed partial class IonCardContent : IonContentComponent, IIonModeCompon
 {
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 }

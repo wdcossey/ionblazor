@@ -35,7 +35,7 @@ public sealed partial class IonCard : IonContentComponent, IIonModeComponent, II
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Specifies the relationship of the target object to the link object. The value is a space-separated list of
@@ -59,5 +59,5 @@ public sealed partial class IonCard : IonContentComponent, IIonModeComponent, II
     /// The type of the button. Only used when an <b>@onclick</b> or <see cref="IonButton"/> property is present.
     /// </summary>
     [Parameter]
-    public string? Type { get; init; } = IonCardButtonType.Default;
+    public string? Type { get; init; } = IonCardButtonType.Undefined;
 }

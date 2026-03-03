@@ -2,7 +2,7 @@
 
 public static class IonSearchbarInputType
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Email = "email";
     public const string Number = "number";
     public const string Password = "password";

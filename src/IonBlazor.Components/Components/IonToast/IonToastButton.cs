@@ -9,10 +9,10 @@ public class IonToastButton: IIonToastButton
     public string? Icon { get; set; }
 
     [JsonPropertyName("side"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Side { get; set; } = ToastButtonSide.Default;
+    public string? Side { get; set; } = ToastButtonSide.Undefined;
 
     [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Role { get; set; } = ToastButtonRole.Default;
+    public string? Role { get; set; } = ToastButtonRole.Undefined;
 
     [JsonPropertyName("cssClass"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CssClass { get; set; }

@@ -18,7 +18,7 @@ public sealed partial class IonSpinner : IonComponent, IIonColorComponent
     /// If a name is not provided, the platform's default spinner will be used.
     /// </summary>
     [Parameter]
-    public string? Name { get; set; } = IonSpinnerName.Default;
+    public string? Name { get; set; } = IonSpinnerName.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the spinner's animation will be paused.

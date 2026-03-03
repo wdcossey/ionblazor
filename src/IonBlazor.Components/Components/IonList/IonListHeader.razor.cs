@@ -10,9 +10,9 @@ public sealed partial class IonListHeader : IonContentComponent, IIonModeCompone
     /// How the bottom border should be displayed on the list header.
     /// </summary>
     [Parameter]
-    public string? Lines { get; set; } = IonListHeaderLines.Default;
+    public string? Lines { get; set; } = IonListHeaderLines.Undefined;
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 }

@@ -78,7 +78,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// and <see cref="IonSearchbarUserAction.Send"/>.
     /// </summary>
     [Parameter]
-    public string? EnterKeyHint { get; set; } = IonSearchbarUserAction.Default;
+    public string? EnterKeyHint { get; set; } = IonSearchbarUserAction.Undefined;
 
     /// <summary>
     /// A hint to the browser for which keyboard to display.
@@ -93,11 +93,11 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// and <see cref="IonSearchbarInputMode.Search"/>.
     /// </summary>
     [Parameter]
-    public string? InputMode { get; set; } = IonSearchbarInputMode.Default;
+    public string? InputMode { get; set; } = IonSearchbarInputMode.Undefined;
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Set the input's placeholder. placeholder can accept either plaintext or HTML as a string.
@@ -122,7 +122,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// Setting to <see cref="IonSearchbarButtonBehavior.Always"/> shows the cancel button regardless of focus state.
     /// </summary>
     [Parameter]
-    public string? ShowCancelButton { get; set; } = IonSearchbarButtonBehavior.Default;
+    public string? ShowCancelButton { get; set; } = IonSearchbarButtonBehavior.Undefined;
 
     /// <summary>
     /// Sets the behavior for the clear button. Defaults to <see cref="IonSearchbarButtonBehavior.Focus"/>.<br/>
@@ -132,7 +132,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// but only if the input is not empty.
     /// </summary>
     [Parameter]
-    public string? ShowClearButton { get; set; } = IonSearchbarButtonBehavior.Default;
+    public string? ShowClearButton { get; set; } = IonSearchbarButtonBehavior.Undefined;
 
     /// <summary>
     /// If <b>true</b>, enable spellcheck on the input.
@@ -145,7 +145,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// </summary>
     /// <returns></returns>
     [Parameter]
-    public string? Type { get; set; } = IonSearchbarInputType.Default;
+    public string? Type { get; set; } = IonSearchbarInputType.Undefined;
 
     /// <summary>
     /// the value of the searchbar.<p/>

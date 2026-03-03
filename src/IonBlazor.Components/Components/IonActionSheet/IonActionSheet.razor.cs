@@ -43,7 +43,7 @@ public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonMode
     public bool? KeyboardClose { get; init; }
 
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     [Parameter]
     public string? SubHeader { get; init; }

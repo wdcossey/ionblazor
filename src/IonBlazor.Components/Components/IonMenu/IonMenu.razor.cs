@@ -40,7 +40,7 @@ public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
     /// Which side of the view the menu should be placed.
     /// </summary>
     [Parameter]
-    public string? Side { get; set; } = IonMenuSide.Default;
+    public string? Side { get; set; } = IonMenuSide.Undefined;
 
     /// <summary>
     /// If <b>true</b>, swiping the menu is enabled.
@@ -52,11 +52,11 @@ public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
     /// The display type of the menu. Available options: "overlay", "reveal", "push".
     /// </summary>
     [Parameter]
-    public string? Type { get; set; } = IonMenuType.Default;
+    public string? Type { get; set; } = IonMenuType.Undefined;
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Emitted when the menu is closed.

@@ -14,7 +14,7 @@ public sealed partial class IonChip : IonContentComponent, IIonModeComponent, II
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Display an outline style <see cref="IonChip"/>.

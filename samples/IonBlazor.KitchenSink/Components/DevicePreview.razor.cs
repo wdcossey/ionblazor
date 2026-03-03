@@ -14,5 +14,5 @@ public partial class DevicePreview : IonContentComponent
     internal string? CascadingMode { get; set; }
 
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 }

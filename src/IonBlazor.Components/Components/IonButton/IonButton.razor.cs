@@ -37,7 +37,7 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// or to <see cref="IonButtonExpand.Full"/> for a full-width button with square corners and no left or right borders.
     /// </summary>
     [Parameter]
-    public string? Expand { get; init; } = IonButtonExpand.Default;
+    public string? Expand { get; init; } = IonButtonExpand.Undefined;
 
     /// <summary>
     /// Set to <see cref="IonButtonFill.Clear"/> for a transparent button that resembles a flat button,
@@ -69,7 +69,7 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Specifies the relationship of the target object to the link object. The value is a space-separated list of
@@ -85,7 +85,7 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// Set to <see cref="IonButtonShape.Round"/> for a button with more rounded corners.
     /// </summary>
     [Parameter]
-    public string? Shape { get; init; } = IonButtonShape.Default;
+    public string? Shape { get; init; } = IonButtonShape.Undefined;
 
     /// <summary>
     /// Set to <see cref="IonButtonSize.Small"/> for a button with less height and padding,
@@ -116,7 +116,7 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// The type of the button.
     /// </summary>
     [Parameter]
-    public string? Type { get; init; } = IonButtonType.Default;
+    public string? Type { get; init; } = IonButtonType.Undefined;
 
     /// <summary>
     /// Emitted when the button loses focus.

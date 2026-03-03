@@ -35,7 +35,7 @@ public sealed partial class IonTabButton : IonContentComponent, IIonModeComponen
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Specifies the relationship of the target object to the link object.

@@ -2,7 +2,7 @@
 
 public static class IonInputMode
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Decimal = "decimal";
     public const string Email = "email";
     public const string None = "none";

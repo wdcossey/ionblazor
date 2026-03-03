@@ -20,5 +20,5 @@ public sealed partial class IonDateTimeButton : IonComponent, IIonModeComponent,
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 }

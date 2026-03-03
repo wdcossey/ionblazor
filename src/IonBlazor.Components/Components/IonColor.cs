@@ -2,7 +2,7 @@
 
 public static class IonColor
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Danger = "danger";
     public const string Dark = "dark";
     public const string Light = "light";

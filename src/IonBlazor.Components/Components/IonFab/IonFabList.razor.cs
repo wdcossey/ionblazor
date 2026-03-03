@@ -14,5 +14,5 @@ public sealed partial class IonFabList : IonContentComponent
     /// Default: <see cref="IonFabListSide.Bottom"/>
     /// </summary>
     [Parameter]
-    public string? Side { get; set; } = IonFabListSide.Default;
+    public string? Side { get; set; } = IonFabListSide.Undefined;
 }

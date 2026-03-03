@@ -8,11 +8,11 @@ public sealed partial class IonLabel : IonContentComponent, IIonModeComponent, I
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// The position determines where and how the label behaves inside an item.
     /// </summary>
     [Parameter]
-    public string? Position { get; set; } = IonLabelPosition.Default;
+    public string? Position { get; set; } = IonLabelPosition.Undefined;
 }

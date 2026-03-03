@@ -35,7 +35,7 @@ public sealed partial class IonBreadcrumb : IonContentComponent, IIonModeCompone
     [Parameter] public string? Href { get; init; }
 
     /// <inheritdoc/>
-    [Parameter] public string? Mode { get; set; } = IonMode.Default;
+    [Parameter] public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// Specifies the relationship of the target object to the link object. The value is a space-separated list of

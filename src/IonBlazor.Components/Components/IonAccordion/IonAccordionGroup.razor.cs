@@ -23,11 +23,11 @@ public sealed partial class IonAccordionGroup : IonContentComponent, IIonModeCom
     /// Possible values are <see cref="IonAccordionGroupExpand.Compact"/> and <see cref="IonAccordionGroupExpand.Inset"/>. Defaults to <see cref="IonAccordionGroupExpand.Compact"/>.
     /// </summary>
     [Parameter]
-    public string? Expand { get; init; } = IonAccordionGroupExpand.Default;
+    public string? Expand { get; init; } = IonAccordionGroupExpand.Undefined;
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// If true, the accordion group can have multiple accordion components expanded at the same time.

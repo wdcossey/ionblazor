@@ -148,7 +148,7 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// The name of the control, which is submitted with the form data.

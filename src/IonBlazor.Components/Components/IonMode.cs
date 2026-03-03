@@ -7,7 +7,7 @@ public static class IonMode
     /// <summary>
     /// Automatic
     /// </summary>
-    public const string? Default = null;
+    public const string? Undefined = null;
 
     /// <summary>
     /// Apple iOS

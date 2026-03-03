@@ -2,7 +2,7 @@
 
 public static class SearchbarAutoComplete
 {
-    public const string? Default = null;
+    public const string? Undefined = null;
     public const string Name = "name";
     public const string Email = "email";
     public const string Tel = "tel";

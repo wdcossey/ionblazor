@@ -15,7 +15,7 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the loading indicator will animate.
@@ -92,7 +92,7 @@ public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonMo
     /// The name of the spinner to display.
     /// </summary>
     [Parameter]
-    public string? Spinner { get; set; } = IonLoadingSpinner.Default;
+    public string? Spinner { get; set; } = IonLoadingSpinner.Undefined;
 
     /// <summary>
     /// If <b>true</b>, the loading indicator will be translucent.

@@ -50,7 +50,7 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
     /// ends of the line with space between the two elements.
     /// </summary>
     [Parameter]
-    public string? Justify { get; set; } = IonJustify.Default;
+    public string? Justify { get; set; } = IonJustify.Undefined;
 
     /// <summary>
     /// Where to place the label relative to the checkbox.<br/><br/>
@@ -64,11 +64,11 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
     /// Long text will be truncated with ellipses ("...").
     /// </summary>
     [Parameter]
-    public string? LabelPlacement { get; set; } = IonLabelPlacement.Default;
+    public string? LabelPlacement { get; set; } = IonLabelPlacement.Undefined;
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// The name of the control, which is submitted with the form data.

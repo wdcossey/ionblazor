@@ -17,7 +17,7 @@ public sealed partial class IonInputOtp : IonContentComponent, IIonColorComponen
     /// <see cref="IonInputAutocapitalize.Sentences"/>, <see cref="IonInputAutocapitalize.Words"/>, <see cref="IonInputAutocapitalize.Characters"/>.
     /// </summary>
     [Parameter]
-    public string? Autocapitalize { get; set; } = IonInputAutocapitalize.Default;
+    public string? Autocapitalize { get; set; } = IonInputAutocapitalize.Undefined;
 
     /// <inheritdoc/>
     [Parameter]
@@ -38,7 +38,7 @@ public sealed partial class IonInputOtp : IonContentComponent, IIonColorComponen
     /// Only available in md mode.
     /// </summary>
     [Parameter]
-    public string? Fill { get; set; } = IonInputFill.Default;
+    public string? Fill { get; set; } = IonInputFill.Undefined;
 
     /// <summary>
     /// A hint to the browser for which keyboard to display.
@@ -48,7 +48,7 @@ public sealed partial class IonInputOtp : IonContentComponent, IIonColorComponen
     /// <see cref="IonInputMode.Search"/>.
     /// </summary>
     [Parameter]
-    public string? InputMode { get; set; } = IonInputMode.Default;
+    public string? InputMode { get; set; } = IonInputMode.Undefined;
 
     /// <summary>
     /// The number of input boxes to display.
@@ -80,13 +80,13 @@ public sealed partial class IonInputOtp : IonContentComponent, IIonColorComponen
     /// The shape of the input. If "round" it will have an increased border radius.
     /// </summary>
     [Parameter]
-    public string? Shape { get; set; } = IonInputOtpShape.Default;
+    public string? Shape { get; set; } = IonInputOtpShape.Undefined;
 
     /// <summary>
     /// The size of the input boxes.
     /// </summary>
     [Parameter]
-    public string? Size { get; set; } = IonInputOtpSize.Default;
+    public string? Size { get; set; } = IonInputOtpSize.Undefined;
 
     /// <summary>
     /// The type of control to display. The default type is <see cref="IonInputType.Text"/>.

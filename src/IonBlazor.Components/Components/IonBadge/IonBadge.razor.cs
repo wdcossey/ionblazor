@@ -8,5 +8,5 @@ public sealed partial class IonBadge : IonContentComponent, IIonModeComponent, I
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 }

@@ -8,5 +8,5 @@ public sealed partial class IonToolbar : IonContentComponent, IIonModeComponent,
     [Parameter] public string? Color { get; init; }
 
     /// <inheritdoc/>
-    [Parameter] public string? Mode { get; set; } = IonMode.Default;
+    [Parameter] public string? Mode { get; set; } = IonMode.Undefined;
 }

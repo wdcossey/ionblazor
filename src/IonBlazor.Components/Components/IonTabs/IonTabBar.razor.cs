@@ -8,7 +8,7 @@ public sealed partial class IonTabBar : IonContentComponent, IIonModeComponent, 
 
     /// <inheritdoc/>
     [Parameter]
-    public string? Mode { get; set; } = IonMode.Default;
+    public string? Mode { get; set; } = IonMode.Undefined;
 
     /// <summary>
     /// The selected tab component
