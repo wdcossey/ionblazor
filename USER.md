@@ -241,12 +241,124 @@ private readonly DotNetObjectReference<IonicEventCallback<>> _ionChangeReference
 ```
 The `<>` is empty because the generator doesn't map the JS `detail` type to a C# type.
 
-**Task:** For the most common event detail types, what should the C# type be?
+### The Two-Layer Architecture
 
-- [ ] `OverlayEventDetail<T>` → `JsonObject?` (used on dismiss events)
-- [ ] `AccordionGroupChangeEventDetail` → `JsonObject?`
-- [ ] `CheckboxChangeEventDetail` → `JsonObject?`
-- [ ] `InputChangeEventDetail` → `JsonObject?`
-- [ ] `void` → `JsonObject?` (events with no detail)
+Every event in IonBlazor has two layers:
 
-Is `JsonObject?` always the right fallback, or do some events warrant a typed `EventArgs` class?
+**Layer 1 — Internal JS binding** (`IonicEventCallback<T>`):
+Receives the raw JS `CustomEvent` object from `common.js`. This is always `JsonObject?`
+(or no generic at all for events with no detail). The generator should consistently emit one of:
+
+```csharp
+// Events with detail
+private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
+
+// Events with no detail (blur, focus, willPresent, didPresent, willDismiss)
+private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+```
+
+The broken `IonicEventCallback<>` in the current stub → fix to `IonicEventCallback<JsonObject?>`.
+
+**Layer 2 — Public Blazor parameter** (`EventCallback<T>`):
+Typed EventArgs extracted from the `JsonObject?` and passed to Razor consumers. This always uses
+a dedicated `sealed record IonXxxEventArgs`. `JsonObject?` is **not** the right type here.
+
+```csharp
+// Internal binding extracts from JsonObject?, then invokes the public callback
+[Parameter] public EventCallback<IonCheckboxChangeEventArgs> IonChange { get; set; }
+```
+
+### EventArgs Patterns Found in Handwritten Components
+
+All EventArgs are `sealed record` types with `Sender { get; internal init; }` + detail fields.
+
+| JS Detail Type | C# EventArgs | Fields |
+|---|---|---|
+| `void` / no detail | `EventCallback` (no generic) | — |
+| Sender-only (tap, no detail data) | `IonXxxEventArgs` | `Sender` only |
+| `AccordionGroupChangeEventDetail` | `IonAccordionGroupIonChangeEventArgs` | `Sender`, `Value: string[]?` |
+| `CheckboxChangeEventDetail` | `IonCheckboxChangeEventArgs` | `Sender`, `Checked: bool?`, `Value: string?` |
+| `ToggleChangeEventDetail` | `IonToggleChangeEventArgs` | `Sender`, `Checked: bool?`, `Value: string?` |
+| `InputChangeEventDetail` | `IonInputChangeEventArgs` | `Sender`, `Value: string?`, `Event: IonInputEvent` |
+| `InputChangeEventDetail` (OTP) | `IonInputOtpChangeEventArgs` | `Sender`, `Value: string?`, `Event: IonInputEvent` |
+| `RadioGroupChangeEventDetail` | `IonRadioGroupIonChangeEventArgs` | `Sender`, `Value: string?`, `Event: IonRadioGroupIonChangeEvent?` |
+| `SegmentChangeEventDetail` | `IonSegmentIonChangeEventArgs` | `Sender`, `Value: string?` |
+| `SearchbarChangeEventDetail` | `IonSearchbarChangeEventArgs` | `Sender`, `Value: string?`, `IsTrusted: bool?` |
+| `TabsDidChangeEventDetail` | `IonTabsDidChangeEventArgs` | `Tab: string?` |
+| `TabsWillChangeEventDetail` | `IonTabsWillChangeEventArgs` | `Tab: string?` |
+| `OverlayEventDetail<T>` (modal/loading) | `IonModalDismissEventArgs` | `Sender`, `Role: string?`, `Data: object?` |
+| `OverlayEventDetail<T>` (alert) | `IonAlertDismissEventArgs` | `Sender`, `Role: string?`, `Values: IAlertValues?` |
+| `OverlayEventDetail<T>` (toast) | `IonToastDismissEventArgs` | `Sender`, `Role: string?` |
+| `ScrollBaseDetail` | `IonContentScrollEventArgs` | `ScrollTop: double`, `ScrollLeft: double`, + 10 more double/bool fields |
+| `SplitPaneVisibleEventDetail` | `IonSplitPaneVisibleEventArgs` | `Sender` only |
+| `ItemReorderEventDetail` | `IonReorderGroupIonItemReorderEventArgs` | (TBD) |
+| `RefresherEventDetail` | `IonRefresherIonRefreshEventArgs` | (TBD) |
+
+`IonInputEvent` is a `struct { bool IsTrusted }` — the nested `event.isTrusted` from the JS detail.
+
+### Special Cases
+
+**CanDismiss on `IonModal`** — uses `IonicEventCallbackResult<bool>` (returns a value to JS):
+```csharp
+// Public parameter
+[Parameter] public EventCallback<IonModalCanDismissEventArgs> CanDismiss { get; set; }
+
+// Internal binding returns bool back to JS
+_canDismissReference = IonicEventCallbackResult<bool>.Create(async () =>
+{
+    var args = new IonModalCanDismissEventArgs { Sender = this };
+    await CanDismiss.InvokeAsync(args);
+    return args.CanDismiss;   // mutable bool, default true
+});
+```
+
+**Generic `IonSelect<TValue>`** — EventArgs carries the generic type:
+```csharp
+[Parameter] public EventCallback<IonSelectChangeEventArgs<TValue>> IonChange { get; set; }
+```
+
+**Builder events (IonAlert, IonActionSheet, IonToast buttons)** — use `IonicEventCallback<JsonObject?>` internally
+to pluck an index, look up the button object, then invoke a per-button `Handler` delegate + a
+component-level `EventCallback<AlertButtonHandlerEventArgs>`.
+
+### Answer: Is `JsonObject?` Always the Right Fallback?
+
+**For the internal `IonicEventCallback<T>`**: Yes — `JsonObject?` is always correct at this layer.
+The generator should emit `IonicEventCallback<JsonObject?>` (with detail) or `IonicEventCallback`
+(no detail). This fixes the broken `<>` stub immediately.
+
+**For the public `EventCallback<T>`**: No — every event should have a typed `sealed record EventArgs`.
+`JsonObject?` as a public parameter is poor DX. However, it is an acceptable temporary stub
+while the proper EventArgs class is being hand-authored. The generator could emit:
+
+```csharp
+// TODO: replace JsonObject? with a typed IonXxxEventArgs once authored
+[Parameter] public EventCallback<JsonObject?> IonChange { get; set; }
+```
+
+**EventArgs classes cannot be auto-generated from Stencil metadata alone.** The JS field names
+are available in `complexType`, but the C# types for each field require judgement
+(e.g. `detail.value` → `string?` vs `int?`, `detail.checked` → `bool?`).
+
+### Generator Strategy Options
+
+- [ ] **Option A — `JsonObject?` stub**: Generator emits `EventCallback<JsonObject?>` with a
+  `// TODO` comment. Clean to generate, poor DX until replaced.
+- [ ] **Option B — lookup table**: Maintain a hardcoded `Dictionary<string, string>` in
+  `Program.cs` mapping known JS detail type names to their C# EventArgs class names.
+  Generator emits the correct `EventCallback<IonXxxEventArgs>` for known types, falls back
+  to `JsonObject?` for unknowns. Requires keeping the table in sync.
+- [ ] **Option C — skip events entirely**: Generator emits no event properties. Human adds them
+  manually. Simplest generator, most manual work.
+
+Which strategy do you prefer?
+
+### Checklist: Fix the Broken Stub
+
+Regardless of public-parameter strategy, the internal binding type is unambiguous:
+
+- [ ] `void` events → `IonicEventCallback` (no generic)
+- [ ] `OverlayEventDetail<T>` → `IonicEventCallback<JsonObject?>` + public `EventCallback<IonXxxDismissEventArgs>`
+- [ ] `AccordionGroupChangeEventDetail` → `IonicEventCallback<JsonObject?>` + public `EventCallback<IonAccordionGroupIonChangeEventArgs>`
+- [ ] `CheckboxChangeEventDetail` → `IonicEventCallback<JsonObject?>` + public `EventCallback<IonCheckboxChangeEventArgs>`
+- [ ] `InputChangeEventDetail` → `IonicEventCallback<JsonObject?>` + public `EventCallback<IonInputChangeEventArgs>`
