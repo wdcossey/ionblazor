@@ -23,18 +23,21 @@ public sealed partial class IonSplitPane : IonContentComponent
     [Parameter] public string? When { get; set; }
 
     /// <summary>
-    /// Emitted when the backdrop is tapped.
+    /// Expression to be called when the split-pane visibility has changed.
     /// </summary>
     [Parameter]
-    public EventCallback IonSplitPaneVisible { get; set; }
+    public EventCallback<IonSplitPaneVisibleEventArgs> IonSplitPaneVisible { get; set; }
 
     public IonSplitPane()
     {
-        _ionSplitPaneVisibleReference = IonicEventCallback<JsonObject?>.Create(
-            async args =>
+        _ionSplitPaneVisibleReference = IonicEventCallback<JsonObject?>.Create(async args =>
+        {
+            await IonSplitPaneVisible.InvokeAsync(new IonSplitPaneVisibleEventArgs
             {
-                await IonSplitPaneVisible.InvokeAsync(new IonSplitPaneVisibleEventArgs { Sender = this });
+                Sender = this,
+                Visible = args?["detail"]?["visible"]?.GetValue<bool>()
             });
+        });
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

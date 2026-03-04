@@ -1,4 +1,6 @@
-﻿namespace IonBlazor.Components;
+﻿using System.Collections.Immutable;
+
+namespace IonBlazor.Components;
 
 public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
@@ -40,16 +42,30 @@ public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeCompon
     /// Emitted when the collapsed indicator is clicked on.
     /// </summary>
     [Parameter]
-    public EventCallback<IDictionary<string, string?>> IonCollapsedClick { get; set; }
+    public EventCallback<IonBreadcrumbsCollapsedClickEventArgs> IonCollapsedClick { get; set; }
 
     public IonBreadcrumbs()
     {
         _ionCollapsedClickReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            var value = args?["detail"]?.AsArray().ToDictionary(k => k!["href"]?.GetValue<string>()!,
-                v => v?["textContent"]?.GetValue<string>());
-
-            await IonCollapsedClick.InvokeAsync(value);
+            await IonCollapsedClick.InvokeAsync(new IonBreadcrumbsCollapsedClickEventArgs
+            {
+                Sender = this,
+                CollapsedBreadcrumbs = args?["detail"]?
+                    .AsArray()
+                    .Where(w => w is JsonObject)
+                    .Cast<JsonObject>()
+                    .Select(obj => new CollapsedBreadcrumb
+                    {
+                        Active = obj["active"]?.GetValue<bool>(),
+                        Collapsed = obj["collapsed"]?.GetValue<bool>(),
+                        Disabled = obj["disabled"]?.GetValue<bool>(),
+                        Download = obj["download"]?.GetValue<string>(),
+                        Href = obj["href"]?.GetValue<string>(),
+                        Last = obj["last"]?.GetValue<bool>(),
+                        TextContent = obj["textContent"]?.GetValue<string>(),
+                    }).ToImmutableList()
+            });
         });
     }
 

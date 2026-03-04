@@ -236,7 +236,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// Emitted after the modal breakpoint has changed.
     /// </summary>
     [Parameter]
-    public EventCallback IonBreakpointDidChange { get; set; }
+    public EventCallback<IonModalBreakpointDidChangeEventArgs> IonBreakpointDidChange { get; set; }
 
     /// <summary>
     /// Emitted after the modal has dismissed.
@@ -295,9 +295,13 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
             await DidPresent.InvokeAsync(this);
         });
 
-        _ionBreakpointDidChangeReference = IonicEventCallback<JsonObject?>.Create(async _ =>
+        _ionBreakpointDidChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
-            await IonBreakpointDidChange.InvokeAsync(this);
+            await IonBreakpointDidChange.InvokeAsync(new IonModalBreakpointDidChangeEventArgs
+            {
+                Sender = this,
+                Breakpoint = args?["detail"]?["breakpoint"]?.GetValue<double>()
+            });
         });
 
         _ionModalDidDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>

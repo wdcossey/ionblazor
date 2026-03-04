@@ -2,9 +2,9 @@
 
 public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
 {
-    private readonly DotNetObjectReference<IonicEventCallback> _ionDidCloseReference;
-    private readonly DotNetObjectReference<IonicEventCallback> _ionDidOpenReference ;
-    private readonly DotNetObjectReference<IonicEventCallback> _ionWillCloseReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionDidCloseReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionDidOpenReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionWillCloseReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionWillOpenReference;
 
     internal override string JsImportName => nameof(IonMenu);
@@ -62,7 +62,7 @@ public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
     /// Emitted when the menu is closed.
     /// </summary>
     [Parameter]
-    public EventCallback IonDidClose { get; set; }
+    public EventCallback<IonMenuCloseEventArgs> IonDidClose { get; set; }
 
     /// <summary>
     /// Emitted when the menu is open.
@@ -74,7 +74,7 @@ public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
     /// Emitted when the menu is about to be closed.
     /// </summary>
     [Parameter]
-    public EventCallback IonWillClose { get; set; }
+    public EventCallback<IonMenuCloseEventArgs> IonWillClose { get; set; }
 
     /// <summary>
     /// Emitted when the menu is about to be opened.
@@ -84,9 +84,19 @@ public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
 
     public IonMenu()
     {
-        _ionDidCloseReference = IonicEventCallback.Create(async () => await IonDidClose.InvokeAsync());
+        _ionDidCloseReference = IonicEventCallback<JsonObject?>.Create(async args =>
+            await IonDidClose.InvokeAsync(new IonMenuCloseEventArgs
+            {
+                Sender = this,
+                Role = args?["detail"]?["role"]?.GetValue<string>()
+            }));
         _ionDidOpenReference = IonicEventCallback.Create(async () => await IonDidOpen.InvokeAsync(this));
-        _ionWillCloseReference = IonicEventCallback.Create(async () => await IonWillClose.InvokeAsync());
+        _ionWillCloseReference = IonicEventCallback<JsonObject?>.Create(async args =>
+            await IonWillClose.InvokeAsync(new IonMenuCloseEventArgs
+            {
+                Sender = this,
+                Role = args?["detail"]?["role"]?.GetValue<string>()
+            }));
         _ionWillOpenReference = IonicEventCallback.Create(async () => await IonWillOpen.InvokeAsync(this));
     }
 

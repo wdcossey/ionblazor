@@ -9,23 +9,23 @@ public partial class BreadcrumbsSample
     private IonPopover _popover = null!;
     private RenderFragment _popoverContent = null!;
 
-    private async Task IonCollapsedClickPopover(IDictionary<string, string?> args)
+    private async Task IonCollapsedClickPopover(IonBreadcrumbsCollapsedClickEventArgs args)
     {
         _popoverContent = builder =>
         {
             var i = 0;
-            foreach (var (href, textContent) in args)
+            foreach (var breadcrumb in args.CollapsedBreadcrumbs ?? [])
             {
                 builder.OpenRegion(i);
                 builder.OpenComponent<IonItem>(0);
-                builder.AddAttribute(1, nameof(IonItem.Href), $"{NavigationManager.Uri}/{href}");
-                builder.AddAttribute(2, nameof(IonItem.Lines), i == args.Count - 1 ? IonItemLines.None : null);
+                builder.AddAttribute(1, nameof(IonItem.Href), $"{NavigationManager.Uri}/{breadcrumb.Href}");
+                builder.AddAttribute(2, nameof(IonItem.Lines), i == args.CollapsedBreadcrumbs!.Count - 1 ? IonItemLines.None : null);
                 builder.AddAttribute(3, nameof(IonItem.ChildContent), (RenderFragment)(childBuilder =>
                 {
                     childBuilder.OpenComponent<IonLabel>(0);
                     childBuilder.AddAttribute(1, nameof(IonLabel.ChildContent), (RenderFragment)(labelContent =>
                     {
-                        labelContent.AddContent(0, textContent);
+                        labelContent.AddContent(0, breadcrumb.TextContent);
                     }));
                     childBuilder.CloseComponent();
                 }));
