@@ -2,7 +2,7 @@
 
 public sealed partial class IonSplitPane : IonContentComponent
 {
-    private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionSplitPaneVisibleReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionSplitPaneVisibleReference;
 
     /// <summary>
     /// The <b>id</b> of the main content. When using a router this is typically <b>ion-router-outlet</b>.

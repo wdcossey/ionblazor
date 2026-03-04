@@ -230,7 +230,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// Emitted after the modal has presented. Shorthand for ionModalDidPresent.
     /// </summary>
     [Parameter]
-    public EventCallback DidPresent { get; set; }
+    public EventCallback<IonModal> DidPresent { get; set; }
 
     /// <summary>
     /// Emitted after the modal breakpoint has changed.
@@ -248,7 +248,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// Emitted after the modal has presented.
     /// </summary>
     [Parameter]
-    public EventCallback IonModalDidPresent { get; set; }
+    public EventCallback<IonModal> IonModalDidPresent { get; set; }
 
     /// <summary>
     /// Emitted before the modal has dismissed.
@@ -260,7 +260,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// Emitted before the modal has presented.
     /// </summary>
     [Parameter]
-    public EventCallback IonModalWillPresent { get; set; }
+    public EventCallback<IonModal> IonModalWillPresent { get; set; }
 
     /// <summary>
     /// Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss.
@@ -272,7 +272,7 @@ public sealed partial class IonModal : IonContentComponent, IIonModeComponent
     /// Emitted before the modal has presented. Shorthand for ionModalWillPresent.
     /// </summary>
     [Parameter]
-    public EventCallback WillPresent { get; set; }
+    public EventCallback<IonModal> WillPresent { get; set; }
 
     /// <summary>
     /// Emitted before the modal has presented. Shorthand for ionModalWillPresent.

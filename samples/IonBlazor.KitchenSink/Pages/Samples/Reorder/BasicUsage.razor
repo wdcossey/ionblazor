@@ -51,6 +51,6 @@
         // Finish the reorder and position the item in the DOM based on
         // where the gesture ended. This method can also be called directly
         // by the reorder group
-        await (args.Sender?.CompleteAsync(reorder: true) ?? Task.CompletedTask);
+        await (args.Sender?.CompleteAsync(reorder: true) ?? ValueTask.CompletedTask);
     }
 }

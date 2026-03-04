@@ -138,7 +138,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     /// Emitted when the <see cref="IonRange"/> loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonRange> IonBlur { get; set; }
 
     /// <summary>
     /// The <see cref="IonChange"/> event is fired for <see cref="IonRange"/> elements when the user modifies the
@@ -153,7 +153,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     /// Emitted when the <see cref="IonRange"/> has focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<IonRange> IonFocus { get; set; }
 
     /// <summary>
     /// The <see cref="IonInput"/> event is fired for <see cref="IonRange"/> elements when the value is modified.
@@ -180,7 +180,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     {
         _ionBlurReference = IonicEventCallback.Create(async () =>
         {
-            await IonBlur.InvokeAsync();
+            await IonBlur.InvokeAsync(this);
         });
 
         _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
@@ -191,7 +191,7 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
 
         _ionFocusReference = IonicEventCallback.Create(async () =>
         {
-            await IonFocus.InvokeAsync();
+            await IonFocus.InvokeAsync(this);
         });
 
         _ionInputReference = IonicEventCallback<JsonObject?>.Create(async args =>

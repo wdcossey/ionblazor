@@ -3,6 +3,9 @@
 public sealed partial class IonReorderGroup : IonContentComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionItemReorderReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionReorderEndReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionReorderMoveReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionReorderStartReference;
 
     internal override string JsImportName => nameof(IonReorderGroup);
 
@@ -20,6 +23,31 @@ public sealed partial class IonReorderGroup : IonContentComponent
     [Parameter]
     public EventCallback<IonReorderGroupIonItemReorderEventArgs> IonItemReorder { get; set; }
 
+    /// <summary>
+    /// Event that is emitted when the reorder gesture ends.
+    /// <br/><br/>
+    /// The <see cref="IonReorderGroupIonReorderEndEventArgs.From"/> and
+    /// <see cref="IonReorderGroupIonReorderEndEventArgs.To"/> properties are always available, regardless of
+    /// whether the reorder gesture moved the item. If the item did not change from its start position,
+    /// the <c>From</c> and <c>To</c> values will be the same.
+    /// <br/><br/>
+    /// Once the event has been emitted, <c>sender.CompleteAsync()</c> must be called to finalize the reorder action.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IonReorderGroupIonReorderEndEventArgs> IonReorderEnd { get; set; }
+
+    /// <summary>
+    /// Event that is emitted as the reorder gesture moves.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IonReorderGroupIonReorderMoveEventArgs> IonReorderMove { get; set; }
+
+    /// <summary>
+    /// Event that is emitted when the reorder gesture starts.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IonReorderGroup> IonReorderStart { get; set; }
+
     public IonReorderGroup()
     {
         _ionItemReorderReference = IonicEventCallback<JsonObject?>.Create(async args =>
@@ -29,6 +57,25 @@ public sealed partial class IonReorderGroup : IonContentComponent
             await IonItemReorder.InvokeAsync(new IonReorderGroupIonItemReorderEventArgs()
                 { From = from, To = to, Sender = this });
         });
+
+        _ionReorderEndReference = IonicEventCallback<JsonObject?>.Create(async args =>
+        {
+            var from = args?["detail"]?["from"]?.GetValue<int>();
+            var to = args?["detail"]?["to"]?.GetValue<int>();
+            await IonReorderEnd.InvokeAsync(new IonReorderGroupIonReorderEndEventArgs
+                { From = from, To = to, Sender = this });
+        });
+
+        _ionReorderMoveReference = IonicEventCallback<JsonObject?>.Create(async args =>
+        {
+            var from = args?["detail"]?["from"]?.GetValue<int>();
+            var to = args?["detail"]?["to"]?.GetValue<int>();
+            await IonReorderMove.InvokeAsync(new IonReorderGroupIonReorderMoveEventArgs
+                { From = from, To = to, Sender = this });
+        });
+
+        _ionReorderStartReference = IonicEventCallback.Create(async () =>
+            await IonReorderStart.InvokeAsync(this));
     }
 
     /// <summary>
@@ -37,7 +84,7 @@ public sealed partial class IonReorderGroup : IonContentComponent
     /// If <b>true</b>, the reorder will complete and the item will remain in the position it was dragged to.<br/>
     /// If <b>false</b> is passed, the reorder will complete and the item will bounce back to its original position.<br/>
     /// </summary>
-    public async Task CompleteAsync(bool reorder = true)
+    public async ValueTask CompleteAsync(bool reorder = true)
     {
         await JsComponent.InvokeVoidAsync("complete", IonElement, reorder);
     }
@@ -65,12 +112,20 @@ public sealed partial class IonReorderGroup : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionItemReorder", _ionItemReorderReference ));
+        await this.AttachIonListenersAsync(
+            IonElement,
+            IonEvent.Set("ionItemReorder",  _ionItemReorderReference),
+            IonEvent.Set("ionReorderEnd",   _ionReorderEndReference),
+            IonEvent.Set("ionReorderMove",  _ionReorderMoveReference),
+            IonEvent.Set("ionReorderStart", _ionReorderStartReference));
     }
 
     public override async ValueTask DisposeAsync()
     {
         _ionItemReorderReference.Dispose();
+        _ionReorderEndReference.Dispose();
+        _ionReorderMoveReference.Dispose();
+        _ionReorderStartReference.Dispose();
         await base.DisposeAsync();
     }
 }

@@ -240,7 +240,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     [Parameter]
     public string? Value { get; set; }
 
-    public async Task<IonDateTime> SetValue(params string[]? value)
+    public async ValueTask<IonDateTime> SetValueAsync(params string[]? value)
     {
         await JsComponent.InvokeVoidAsync("setValue", IonElement, value ?? Array.Empty<string>());
         Value = value?.Any() is true ? string.Join(',', value) : null;
@@ -260,13 +260,13 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     /// Emitted when the <see cref="IonDateTime"/> loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonDateTime> IonBlur { get; set; }
 
     /// <summary>
     /// Emitted when the datetime selection was cancelled.
     /// </summary>
     [Parameter]
-    public EventCallback IonCancel { get; set; }
+    public EventCallback<IonDateTime> IonCancel { get; set; }
 
     /// <summary>
     /// Emitted when the value (selected date) has changed.
@@ -278,7 +278,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     /// Emitted when the <see cref="IonDateTime"/> has focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<IonDateTime> IonFocus { get; set; }
 
     public IonDateTime()
     {

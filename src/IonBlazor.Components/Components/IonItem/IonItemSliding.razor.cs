@@ -36,7 +36,7 @@ public sealed partial class IonItemSliding : IonContentComponent
     /// Close the sliding item. Items can also be closed from the List.
     /// </summary>
     /// <returns></returns>
-    public Task CloseAsync()
+    public ValueTask CloseAsync()
     {
         throw new NotImplementedException();
     }
@@ -45,7 +45,7 @@ public sealed partial class IonItemSliding : IonContentComponent
     /// Close all of the sliding items in the list. Items can also be closed from the List.
     /// </summary>
     /// <returns></returns>
-    public Task CloseOpenedAsync()
+    public ValueTask CloseOpenedAsync()
     {
         throw new NotImplementedException();
     }
@@ -54,7 +54,7 @@ public sealed partial class IonItemSliding : IonContentComponent
     /// Get the amount the item is open in pixels.
     /// </summary>
     /// <returns></returns>
-    public Task GetOpenAmountAsync()
+    public ValueTask<double> GetOpenAmountAsync()
     {
         throw new NotImplementedException();
     }
@@ -66,7 +66,7 @@ public sealed partial class IonItemSliding : IonContentComponent
     /// the width of the options.
     /// </summary>
     /// <returns></returns>
-    public Task GetSlidingRatioAsync()
+    public ValueTask<double> GetSlidingRatioAsync()
     {
         throw new NotImplementedException();
     }
@@ -75,7 +75,7 @@ public sealed partial class IonItemSliding : IonContentComponent
     /// Open the sliding item.
     /// </summary>
     /// <returns></returns>
-    public Task OpenAsync()
+    public ValueTask OpenAsync()
     {
         throw new NotImplementedException();
     }

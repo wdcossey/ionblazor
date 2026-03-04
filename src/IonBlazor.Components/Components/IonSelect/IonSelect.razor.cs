@@ -184,13 +184,13 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// Emitted when the input loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonSelect<TValue>> IonBlur { get; set; }
 
     /// <summary>
     /// Emitted when the selection is cancelled.
     /// </summary>
     [Parameter]
-    public EventCallback IonCancel { get; set; }
+    public EventCallback<IonSelect<TValue>> IonCancel { get; set; }
 
     /// <summary>
     /// Emitted when the value has changed.
@@ -202,25 +202,25 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// Emitted when the overlay is dismissed.
     /// </summary>
     [Parameter]
-    public EventCallback IonDismiss { get; set; }
+    public EventCallback<IonSelect<TValue>> IonDismiss { get; set; }
 
     /// <summary>
     /// Emitted when the input has focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<IonSelect<TValue>> IonFocus { get; set; }
 
     public IonSelect()
     {
-        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
 
-        _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync());
+        _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync(this));
 
         _ionChangeReference = IonicEventCallback<JsonObject?>.Create(IonChangeCallback);
 
-        _ionDismissReference = IonicEventCallback.Create(async () => await IonDismiss.InvokeAsync());
+        _ionDismissReference = IonicEventCallback.Create(async () => await IonDismiss.InvokeAsync(this));
 
-        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync());
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync(this));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

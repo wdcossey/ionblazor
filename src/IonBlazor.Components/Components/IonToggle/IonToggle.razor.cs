@@ -94,7 +94,7 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
     /// Emitted when the <see cref="IonToggle"/> loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonToggle> IonBlur { get; set; }
 
     /// <summary>
     /// Emitted when the user switches the toggle on or off.
@@ -107,13 +107,13 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
     /// Emitted when the <see cref="IonToggle"/> has focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<IonToggle> IonFocus { get; set; }
 
     public IonToggle()
     {
         _ionBlurReference = IonicEventCallback.Create(async () =>
         {
-            await IonBlur.InvokeAsync();
+            await IonBlur.InvokeAsync(this);
         });
 
         _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
@@ -125,7 +125,7 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
 
         _ionFocusReference = IonicEventCallback.Create(async () =>
         {
-            await IonFocus.InvokeAsync();
+            await IonFocus.InvokeAsync(this);
         });
     }
 

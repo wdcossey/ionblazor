@@ -2,9 +2,9 @@
 
 public sealed partial class IonContent : IonContentComponent, IIonColorComponent
 {
-    private DotNetObjectReference<IonicEventCallback<__ionScrollEventArgs?>> _ionScrollReference;
-    private DotNetObjectReference<IonicEventCallback<__ionScrollEndEventArgs?>> _ionScrollEndReference;
-    private DotNetObjectReference<IonicEventCallback<__ionScrollStartEventArgs?>> _ionScrollStartReference;
+    private readonly DotNetObjectReference<IonicEventCallback<__ionScrollEventArgs?>> _ionScrollReference;
+    private readonly DotNetObjectReference<IonicEventCallback<__ionScrollEndEventArgs?>> _ionScrollEndReference;
+    private readonly DotNetObjectReference<IonicEventCallback<__ionScrollStartEventArgs?>> _ionScrollStartReference;
 
     internal override string JsImportName => nameof(IonContent);
 

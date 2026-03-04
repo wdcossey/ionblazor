@@ -29,6 +29,6 @@ public partial class DateTimeSample
         if (!firstRender)
             return;
 
-        await _multipleDateSelectionRef.SetValue("2022-06-03", "2022-06-13", "2022-06-29");
+        await _multipleDateSelectionRef.SetValueAsync("2022-06-03", "2022-06-13", "2022-06-29");
     }
 }

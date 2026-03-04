@@ -2,7 +2,7 @@
 
 public sealed partial class IonBackdrop : IonComponent, IIonComponent
 {
-    private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionBackdropTapReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionBackdropTapReference;
 
     /// <summary>
     /// If <b>true</b>, the backdrop will stop propagation on tap.
@@ -26,12 +26,11 @@ public sealed partial class IonBackdrop : IonComponent, IIonComponent
     /// Emitted when the backdrop is tapped.
     /// </summary>
     [Parameter]
-    public EventCallback IonBackdropTap { get; set; }
+    public EventCallback<IonBackdrop> IonBackdropTap { get; set; }
 
     public IonBackdrop()
     {
-        _ionBackdropTapReference = IonicEventCallback<JsonObject?>
-            .Create(async _ => { await IonBackdropTap.InvokeAsync(new IonBackdropTapEventArgs { Sender = this }); });
+        _ionBackdropTapReference = IonicEventCallback.Create(async () => await IonBackdropTap.InvokeAsync(this));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

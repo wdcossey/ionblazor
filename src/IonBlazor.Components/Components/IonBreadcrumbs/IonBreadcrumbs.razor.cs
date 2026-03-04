@@ -2,7 +2,7 @@
 
 public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionCollapsedClickReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionCollapsedClickReference;
 
     internal override string JsImportName => nameof(IonBreadcrumbs);
 

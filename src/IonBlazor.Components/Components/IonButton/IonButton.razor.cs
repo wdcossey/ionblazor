@@ -2,8 +2,8 @@
 
 public sealed partial class IonButton : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private DotNetObjectReference<IonicEventCallback> _ionBlurReference;
-    private DotNetObjectReference<IonicEventCallback> _ionFocusReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
@@ -122,18 +122,18 @@ public sealed partial class IonButton : IonContentComponent, IIonModeComponent, 
     /// Emitted when the button loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback OnBlur { get; set; }
+    public EventCallback<IonButton> IonBlur { get; set; }
 
     /// <summary>
     /// Emitted when the button has focus.
     /// </summary>
     [Parameter]
-    public EventCallback OnFocus { get; set; }
+    public EventCallback<IonButton> IonFocus { get; set; }
 
     public IonButton()
     {
-        _ionBlurReference = IonicEventCallback.Create(async () => await OnBlur.InvokeAsync());
-        _ionFocusReference = IonicEventCallback.Create(async () => await OnFocus.InvokeAsync());
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync(this));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

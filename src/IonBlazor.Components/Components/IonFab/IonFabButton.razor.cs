@@ -2,8 +2,8 @@
 
 public sealed partial class IonFabButton : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private DotNetObjectReference<IonicEventCallback> _ionBlurReference;
-    private DotNetObjectReference<IonicEventCallback> _ionFocusReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
     /// <summary>
     /// If <b>true</b>, the <see cref="IonFabButton"/> will be show a close icon.<br/>
@@ -113,16 +113,16 @@ public sealed partial class IonFabButton : IonContentComponent, IIonModeComponen
     public string? Type { get; set; } = IonButtonType.Button;
 
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonFabButton> IonBlur { get; set; }
 
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<IonFabButton> IonFocus { get; set; }
 
 
     public IonFabButton()
     {
-        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
-        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync());
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync(this));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

@@ -96,7 +96,7 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
     /// Emitted when the <see cref="IonToggle"/> loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonCheckbox> IonBlur { get; set; }
 
     /// <summary>
     /// Emitted when the user switches the toggle on or off.
@@ -109,11 +109,11 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
     /// Emitted when the <see cref="IonToggle"/> has focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<IonCheckbox> IonFocus { get; set; }
 
     public IonCheckbox()
     {
-        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
 
         _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
@@ -131,7 +131,7 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
             });
         });
 
-        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync());
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync(this));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

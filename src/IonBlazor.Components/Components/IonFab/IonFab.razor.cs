@@ -33,7 +33,7 @@ public sealed partial class IonFab : IonContentComponent
     /// Close an active FAB list container.
     /// </summary>
     /// <returns></returns>
-    public Task CloseAsync()
+    public ValueTask CloseAsync()
     {
         throw new NotImplementedException();
     }

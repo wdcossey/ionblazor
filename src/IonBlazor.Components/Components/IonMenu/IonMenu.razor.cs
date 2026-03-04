@@ -68,7 +68,7 @@ public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
     /// Emitted when the menu is open.
     /// </summary>
     [Parameter]
-    public EventCallback IonDidOpen { get; set; }
+    public EventCallback<IonMenu> IonDidOpen { get; set; }
 
     /// <summary>
     /// Emitted when the menu is about to be closed.
@@ -80,14 +80,14 @@ public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
     /// Emitted when the menu is about to be opened.
     /// </summary>
     [Parameter]
-    public EventCallback IonWillOpen { get; set; }
+    public EventCallback<IonMenu> IonWillOpen { get; set; }
 
     public IonMenu()
     {
         _ionDidCloseReference = IonicEventCallback.Create(async () => await IonDidClose.InvokeAsync());
-        _ionDidOpenReference = IonicEventCallback.Create(async () => await IonDidOpen.InvokeAsync());
+        _ionDidOpenReference = IonicEventCallback.Create(async () => await IonDidOpen.InvokeAsync(this));
         _ionWillCloseReference = IonicEventCallback.Create(async () => await IonWillClose.InvokeAsync());
-        _ionWillOpenReference = IonicEventCallback.Create(async () => await IonWillOpen.InvokeAsync());
+        _ionWillOpenReference = IonicEventCallback.Create(async () => await IonWillOpen.InvokeAsync(this));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

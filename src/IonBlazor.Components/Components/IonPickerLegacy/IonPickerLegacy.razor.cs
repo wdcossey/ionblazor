@@ -201,19 +201,19 @@ public partial class IonPickerLegacy : IonComponent, IIonModeComponent
     /// <summary>
     /// Dismiss the picker overlay after it has been presented.
     /// </summary>
-    public async Task DismissAsync(object[]? data = null, string? role = null) =>
+    public async ValueTask DismissAsync(object[]? data = null, string? role = null) =>
         await JsComponent.InvokeVoidAsync("dismiss", IonElement, data, role);
 
     /// <summary>
     /// Get the column that matches the specified name.
     /// </summary>
-    public async Task<object> GetColumnAsync(string name) =>
+    public async ValueTask<JsonObject> GetColumnAsync(string name) =>
         await JsComponent.InvokeAsync<JsonObject>("getColumn", IonElement, name);
 
     /// <summary>
     /// Present the picker overlay after it has been created.
     /// </summary>
-    public async Task PresentAsync() =>
+    public async ValueTask PresentAsync() =>
         await JsComponent.InvokeVoidAsync("present", IonElement);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

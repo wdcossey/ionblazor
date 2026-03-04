@@ -60,19 +60,19 @@ public sealed partial class IonRadio : IonContentComponent, IIonModeComponent, I
     /// Emitted when the <see cref="IonRadio"/> loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonRadio> IonBlur { get; set; }
 
     /// <summary>
     /// Emitted when the <see cref="IonRadio"/> has focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<IonRadio> IonFocus { get; set; }
 
     public IonRadio()
     {
-        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
 
-        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync());
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync(this));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

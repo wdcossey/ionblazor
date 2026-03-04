@@ -157,13 +157,13 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// Emitted when the input loses focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonBlur { get; set; }
+    public EventCallback<IonSearchbar> IonBlur { get; set; }
 
     /// <summary>
     /// Emitted when the cancel button is clicked.
     /// </summary>
     [Parameter]
-    public EventCallback IonCancel { get; set; }
+    public EventCallback<IonSearchbar> IonCancel { get; set; }
 
     /// <summary>
     /// The <see cref="IonChange"/> event is fired for <see cref="IonSearchbar"/> elements when the user modifies the
@@ -181,13 +181,13 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     /// Emitted when the clear input button is clicked.
     /// </summary>
     [Parameter]
-    public EventCallback IonClear { get; set; }
+    public EventCallback<IonSearchbar> IonClear { get; set; }
 
     /// <summary>
     /// Emitted when the input has focus.
     /// </summary>
     [Parameter]
-    public EventCallback IonFocus { get; set; }
+    public EventCallback<IonSearchbar> IonFocus { get; set; }
 
     /// <summary>
     /// Emitted when the value of the <see cref="IonSearchbar"/> element has changed.
@@ -197,9 +197,9 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
 
     public IonSearchbar()
     {
-        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync());
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
 
-        _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync());
+        _ionCancelReference = IonicEventCallback.Create(async () => await IonCancel.InvokeAsync(this));
 
         _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
@@ -210,9 +210,9 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
             await IonChange.InvokeAsync(new IonSearchbarChangeEventArgs { Value = value, IsTrusted = isTrusted });
         });
 
-        _ionClearReference = IonicEventCallback.Create(async () => await IonClear.InvokeAsync());
+        _ionClearReference = IonicEventCallback.Create(async () => await IonClear.InvokeAsync(this));
 
-        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync());
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync(this));
 
         _ionInputReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {

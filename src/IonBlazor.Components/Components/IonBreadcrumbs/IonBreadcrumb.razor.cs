@@ -2,8 +2,8 @@
 
 public sealed partial class IonBreadcrumb : IonContentComponent, IIonModeComponent, IIonColorComponent
 {
-    private DotNetObjectReference<IonicEventCallback> _ionBlurReference;
-    private DotNetObjectReference<IonicEventCallback> _ionFocusReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionFocusReference;
 
     [CascadingParameter(Name = nameof(Parent))] public IIonComponent? Parent { get; init; }
 
@@ -59,17 +59,17 @@ public sealed partial class IonBreadcrumb : IonContentComponent, IIonModeCompone
     /// <summary>
     /// Emitted when the breadcrumb loses focus.
     /// </summary>
-    [Parameter] public EventCallback OnBlur { get; set; }
+    [Parameter] public EventCallback<IonBreadcrumb> IonBlur { get; set; }
 
     /// <summary>
     /// Emitted when the breadcrumb has focus.
     /// </summary>
-    [Parameter] public EventCallback OnFocus { get; set; }
+    [Parameter] public EventCallback<IonBreadcrumb> IonFocus { get; set; }
 
     public IonBreadcrumb()
     {
-        _ionBlurReference = IonicEventCallback.Create(async () => await OnBlur.InvokeAsync());
-        _ionFocusReference = IonicEventCallback.Create(async () => await OnFocus.InvokeAsync());
+        _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
+        _ionFocusReference = IonicEventCallback.Create(async () => await IonFocus.InvokeAsync(this));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
