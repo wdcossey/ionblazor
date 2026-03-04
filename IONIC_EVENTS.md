@@ -75,21 +75,21 @@ Comparing `node_modules/@ionic/docs/core.json` (Stencil metadata) against C# imp
 
 | Ionic Event | Detail Type | Properties | C# Parameter | C# EventArgs | Status |
 |-------------|-------------|-----------|--------------|-------------|--------|
-| `ionBlur` | `void` | — | `IonBlur` | — | ✅ *(renamed from `OnBlur`)* |
-| `ionFocus` | `void` | — | `IonFocus` | — | ✅ *(renamed from `OnFocus`)* |
+| `ionBlur` | `void` | — | `IonBlur` | — | ✅ |
+| `ionFocus` | `void` | — | `IonFocus` | — | ✅ |
 
 ### IonBreadcrumbs (`ion-breadcrumbs`)
 
 | Ionic Event | Detail Type | Properties | C# Parameter | C# EventArgs | Status |
 |-------------|-------------|-----------|--------------|-------------|--------|
-| `ionCollapsedClick` | `BreadcrumbCollapsedClickEventDetail` | `collapsedBreadcrumbs?: HTMLIonBreadcrumbElement[]` | `IonCollapsedClick` | `IonBreadcrumbsCollapsedClickEventArgs` | ✅ JS serializes `active`, `collapsed`, `disabled`, `download`, `href`, `last`, `textContent` per breadcrumb |
+| `ionCollapsedClick` | `BreadcrumbCollapsedClickEventDetail` | `collapsedBreadcrumbs?: HTMLIonBreadcrumbElement[]` | `IonCollapsedClick` | `IonBreadcrumbsCollapsedClickEventArgs` | ✅ |
 
 ### IonButton (`ion-button`)
 
 | Ionic Event | Detail Type | Properties | C# Parameter | C# EventArgs | Status |
 |-------------|-------------|-----------|--------------|-------------|--------|
-| `ionBlur` | `void` | — | `IonBlur` | — | ✅ *(renamed from `OnBlur`)* |
-| `ionFocus` | `void` | — | `IonFocus` | — | ✅ *(renamed from `OnFocus`)* |
+| `ionBlur` | `void` | — | `IonBlur` | — | ✅ |
+| `ionFocus` | `void` | — | `IonFocus` | — | ✅ |
 
 ### IonCheckbox (`ion-checkbox`)
 
@@ -141,9 +141,9 @@ Comparing `node_modules/@ionic/docs/core.json` (Stencil metadata) against C# imp
 
 | Ionic Event | Detail Type | Properties | C# Parameter | C# EventArgs | Status |
 |-------------|-------------|-----------|--------------|-------------|--------|
-| `ionBlur` | `FocusEvent` | DOM FocusEvent | `IonBlur` | — (void) | ✅ |
+| `ionBlur` | `FocusEvent` | DOM FocusEvent | `IonBlur` | — | ✅ |
 | `ionChange` | `InputChangeEventDetail` | `value: string \| null \| undefined` | `IonChange` | `IonInputChangeEventArgs` | ✅ |
-| `ionFocus` | `FocusEvent` | DOM FocusEvent | `IonFocus` | — (void) | ✅ |
+| `ionFocus` | `FocusEvent` | DOM FocusEvent | `IonFocus` | — | ✅ |
 | `ionInput` | `InputInputEventDetail` | `value: string \| null \| undefined`, `event: InputEvent` | `IonInputEvent` | `IonInputInputEventArgs` | ✅ |
 
 ### IonInputOtp (`ion-input-otp`)
@@ -160,13 +160,13 @@ Comparing `node_modules/@ionic/docs/core.json` (Stencil metadata) against C# imp
 
 | Ionic Event | Detail Type | Properties | C# Parameter | C# EventArgs | Status |
 |-------------|-------------|-----------|--------------|-------------|--------|
-| `ionSwipe` | `any` | untyped | `IonSwipe` | `IonItemOptionsSwipeEventArgs` | ✅ (detail is `any` in Ionic) |
+| `ionSwipe` | `any` | untyped | `IonSwipe` | `IonItemOptionsSwipeEventArgs` | ✅ |
 
 ### IonItemSliding (`ion-item-sliding`)
 
 | Ionic Event | Detail Type | Properties | C# Parameter | C# EventArgs | Status |
 |-------------|-------------|-----------|--------------|-------------|--------|
-| `ionDrag` | `any` | untyped | `IonDrag` | `IonDragEventArgs` | ✅ (detail is `any` in Ionic) |
+| `ionDrag` | `any` | untyped | `IonDrag` | `IonDragEventArgs` | ✅ |
 
 ### IonLoading (`ion-loading`)
 
@@ -222,26 +222,26 @@ Comparing `node_modules/@ionic/docs/core.json` (Stencil metadata) against C# imp
 | Ionic Event | Detail Type | Properties | C# Parameter | C# EventArgs | Status |
 |-------------|-------------|-----------|--------------|-------------|--------|
 | `didDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `DidDismiss` | `IonPickerLegacyDismissEventArgs` | ✅ |
-| `didPresent` | `void` | — | `DidPresent` | `EventCallback` (void) | ✅ |
+| `didPresent` | `void` | — | `DidPresent` | `EventCallback` | ✅ |
 | `ionPickerDidDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `IonPickerDidDismiss` | `IonPickerLegacyDismissEventArgs` | ✅ |
-| `ionPickerDidPresent` | `void` | — | `IonPickerDidPresent` | `EventCallback` (void) | ✅ |
+| `ionPickerDidPresent` | `void` | — | `IonPickerDidPresent` | `EventCallback` | ✅ |
 | `ionPickerWillDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `IonPickerWillDismiss` | `IonPickerLegacyDismissEventArgs` | ✅ |
-| `ionPickerWillPresent` | `void` | — | `IonPickerWillPresent` | `EventCallback` (void) | ✅ |
+| `ionPickerWillPresent` | `void` | — | `IonPickerWillPresent` | `EventCallback` | ✅ |
 | `willDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `WillDismiss` | `IonPickerLegacyDismissEventArgs` | ✅ |
-| `willPresent` | `void` | — | `WillPresent` | `EventCallback` (void) | ✅ |
+| `willPresent` | `void` | — | `WillPresent` | `EventCallback` | ✅ |
 
 ### IonPopover (`ion-popover`)
 
 | Ionic Event | Detail Type | Properties | C# Parameter | C# EventArgs | Status |
 |-------------|-------------|-----------|--------------|-------------|--------|
 | `didDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `DidDismiss` | `IonModalDismissEventArgs` | ✅ |
-| `didPresent` | `void` | — | `DidPresent` | `EventCallback` (void) | ✅ |
+| `didPresent` | `void` | — | `DidPresent` | `EventCallback` | ✅ |
 | `ionPopoverDidDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `IonPopoverDidDismiss` | `IonModalDismissEventArgs` | ✅ |
-| `ionPopoverDidPresent` | `void` | — | `IonPopoverDidPresent` | `EventCallback` (void) | ✅ |
+| `ionPopoverDidPresent` | `void` | — | `IonPopoverDidPresent` | `EventCallback` | ✅ |
 | `ionPopoverWillDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `IonPopoverWillDismiss` | `IonModalDismissEventArgs` | ✅ |
-| `ionPopoverWillPresent` | `void` | — | `IonPopoverWillPresent` | `EventCallback` (void) | ✅ |
+| `ionPopoverWillPresent` | `void` | — | `IonPopoverWillPresent` | `EventCallback` | ✅ |
 | `willDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `WillDismiss` | `IonModalDismissEventArgs` | ✅ |
-| `willPresent` | `void` | — | `WillPresent` | `EventCallback` (void) | ✅ |
+| `willPresent` | `void` | — | `WillPresent` | `EventCallback` | ✅ |
 
 ### IonRadio (`ion-radio`)
 
@@ -344,13 +344,13 @@ Comparing `node_modules/@ionic/docs/core.json` (Stencil metadata) against C# imp
 | Ionic Event | Detail Type | Properties | C# Parameter | C# EventArgs | Status |
 |-------------|-------------|-----------|--------------|-------------|--------|
 | `didDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `DidDismiss` | `IonToastDismissEventArgs` | ✅ |
-| `didPresent` | `void` | — | `DidPresent` | `EventCallback` (void) | ✅ |
+| `didPresent` | `void` | — | `DidPresent` | `EventCallback` | ✅ |
 | `ionToastDidDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `IonToastDidDismiss` | `IonToastDismissEventArgs` | ✅ |
-| `ionToastDidPresent` | `void` | — | `IonToastDidPresent` | `EventCallback` (void) | ✅ |
+| `ionToastDidPresent` | `void` | — | `IonToastDidPresent` | `EventCallback` | ✅ |
 | `ionToastWillDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `IonToastWillDismiss` | `IonToastDismissEventArgs` | ✅ |
-| `ionToastWillPresent` | `void` | — | `IonToastWillPresent` | `EventCallback` (void) | ✅ |
+| `ionToastWillPresent` | `void` | — | `IonToastWillPresent` | `EventCallback` | ✅ |
 | `willDismiss` | `OverlayEventDetail<any>` | `role?, data?` | `WillDismiss` | `IonToastDismissEventArgs` | ✅ |
-| `willPresent` | `void` | — | `WillPresent` | `EventCallback` (void) | ✅ |
+| `willPresent` | `void` | — | `WillPresent` | `EventCallback` | ✅ |
 
 ### IonToggle (`ion-toggle`)
 
