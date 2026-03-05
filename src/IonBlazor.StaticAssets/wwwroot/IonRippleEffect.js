@@ -1,3 +1,3 @@
-﻿export function addRipple(element, x, y) {
-    element.addRipple(x, y);
+export function addRipple(element, x, y) {
+    return element.addRipple(x, y);
 }

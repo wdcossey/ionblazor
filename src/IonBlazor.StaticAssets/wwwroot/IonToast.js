@@ -1,19 +1,14 @@
-﻿import { dotNetCallbackMethod } from './common.js';
-
+import { dotNetCallbackMethod } from './common.js';
 export function dismiss(element) {
-    element.dismiss();
+    return element.dismiss();
 }
-
 export function withButtons(element, buttons, callback) {
-
     if (buttons == null)
         return;
-
     buttons.forEach(function (button, index) {
-        button.handler = (value) => {
-            callback.invokeMethodAsync(dotNetCallbackMethod, {value, index});
-        }
+        button.handler = () => {
+            callback.invokeMethodAsync(dotNetCallbackMethod, { index });
+        };
     });
-
     element.buttons = buttons;
 }

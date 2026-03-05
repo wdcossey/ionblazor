@@ -1,3 +1,3 @@
-﻿export function setActive(element) {
-    element.setActive();
+export function setActive(element) {
+    return element.setActive();
 }
