@@ -18,6 +18,8 @@ public sealed partial class IonItemSliding : IonContentComponent
     [Parameter]
     public EventCallback<IonDragEventArgs> IonDrag { get; set; }
 
+    internal override string JsImportName => nameof(IonItemSliding);
+
     public IonItemSliding()
     {
         _ionDragReference = IonicEventCallback<JsonObject?>
@@ -35,29 +37,20 @@ public sealed partial class IonItemSliding : IonContentComponent
     /// <summary>
     /// Close the sliding item. Items can also be closed from the List.
     /// </summary>
-    /// <returns></returns>
-    public ValueTask CloseAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async ValueTask CloseAsync() =>
+        await JsComponent.InvokeVoidAsync("close", IonElement);
 
     /// <summary>
     /// Close all of the sliding items in the list. Items can also be closed from the List.
     /// </summary>
-    /// <returns></returns>
-    public ValueTask CloseOpenedAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async ValueTask CloseOpenedAsync() =>
+        await JsComponent.InvokeVoidAsync("closeOpened", IonElement);
 
     /// <summary>
     /// Get the amount the item is open in pixels.
     /// </summary>
-    /// <returns></returns>
-    public ValueTask<double> GetOpenAmountAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async ValueTask<double> GetOpenAmountAsync() =>
+        await JsComponent.InvokeAsync<double>("getOpenAmount", IonElement);
 
     /// <summary>
     /// Get the ratio of the open amount of the item compared to the width of the options. If the number returned is
@@ -65,20 +58,15 @@ public sealed partial class IonItemSliding : IonContentComponent
     /// on the left side are open. If the absolute value of the number is greater than 1, the item is open more than
     /// the width of the options.
     /// </summary>
-    /// <returns></returns>
-    public ValueTask<double> GetSlidingRatioAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async ValueTask<double> GetSlidingRatioAsync() =>
+        await JsComponent.InvokeAsync<double>("getSlidingRatio", IonElement);
 
     /// <summary>
     /// Open the sliding item.
     /// </summary>
-    /// <returns></returns>
-    public ValueTask OpenAsync()
-    {
-        throw new NotImplementedException();
-    }
+    /// <param name="side">Which side of the sliding item to open. If unspecified, the first side with options will open.</param>
+    public async ValueTask OpenAsync(string? side = null) =>
+        await JsComponent.InvokeVoidAsync("open", IonElement, side);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
