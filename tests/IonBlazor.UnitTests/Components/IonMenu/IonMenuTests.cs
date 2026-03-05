@@ -158,6 +158,46 @@ public class IonMenuTests : IonTestContext
             .Which.Should().Be(cut.Instance.IonElement);
     }
 
+    [Fact]
+    public async Task IsActiveAsync_InvokesJsMethod_WhenCalled()
+    {
+        var cut = Render<IonMenu>();
+
+        await cut.Instance.IsActiveAsync();
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["isActive"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+    }
+
+    [Fact]
+    public async Task IsOpenAsync_InvokesJsMethod_WhenCalled()
+    {
+        var cut = Render<IonMenu>();
+
+        await cut.Instance.IsOpenAsync();
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["isOpen"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+    }
+
+    [Fact]
+    public async Task SetOpenAsync_InvokesJsMethod_WhenCalled()
+    {
+        var cut = Render<IonMenu>();
+
+        await cut.Instance.SetOpenAsync(shouldOpen: true);
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["setOpen"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+        invocation.Arguments[1].Should().Be(true);
+    }
+
     // ---------------------------------------------------------------------------
     // JsImportName
     // ---------------------------------------------------------------------------

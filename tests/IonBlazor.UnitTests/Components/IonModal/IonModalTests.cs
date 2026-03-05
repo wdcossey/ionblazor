@@ -9,10 +9,12 @@ public class IonModalTests : IonTestContext
     {
         SetupComponentModule<IonModal>(module =>
         {
+            module.SetupVoid("breakpoints", _ => true).SetVoidResult();
             module.SetupVoid("canDismissCallback", _ => true).SetVoidResult();
             module.SetupVoid("enterAnimation", _ => true).SetVoidResult();
             module.Setup<bool>("dismiss", _ => true).SetResult(true);
             module.Setup<int>("getCurrentBreakpoint", _ => true).SetResult(0);
+            module.SetupVoid("initialBreakpoint", _ => true).SetVoidResult();
             module.Setup<bool>("isOpen", _ => true).SetResult(true);
             module.SetupVoid("present", _ => true).SetVoidResult();
             module.SetupVoid("setCurrentBreakpoint", _ => true).SetVoidResult();
@@ -160,6 +162,79 @@ public class IonModalTests : IonTestContext
         invocation.Arguments[0]
             .Should().BeAssignableTo<ElementReference>()
             .Which.Should().Be(cut.Instance.IonElement);
+    }
+
+    [Fact]
+    public async Task GetCurrentBreakpointAsync_InvokesJsMethod_WhenCalled()
+    {
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>"));
+
+        await cut.Instance.GetCurrentBreakpointAsync();
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["getCurrentBreakpoint"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+    }
+
+    [Fact]
+    public async Task SetCurrentBreakpointAsync_InvokesJsMethod_WhenCalled()
+    {
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>"));
+
+        await cut.Instance.SetCurrentBreakpointAsync(0.5);
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["setCurrentBreakpoint"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+        invocation.Arguments[1].Should().Be(0.5);
+    }
+
+    [Fact]
+    public async Task SetIsOpenAsync_InvokesJsMethod_WhenCalled()
+    {
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>"));
+
+        await cut.Instance.SetIsOpenAsync(true);
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["isOpen"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+        invocation.Arguments[1].Should().Be(true);
+    }
+
+    [Fact]
+    public async Task SetBreakpointsAsync_InvokesJsMethod_WhenCalled()
+    {
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>"));
+
+        await cut.Instance.SetBreakpointsAsync(0, 0.25, 0.5, 1);
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["breakpoints"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+    }
+
+    [Fact]
+    public async Task SetInitialBreakpointAsync_InvokesJsMethod_WhenCalled()
+    {
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>"));
+
+        await cut.Instance.SetInitialBreakpointAsync(0.5);
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["initialBreakpoint"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+        invocation.Arguments[1].Should().Be(0.5d);
     }
 
     // ---------------------------------------------------------------------------
