@@ -1,3 +1,3 @@
-﻿export function complete(element) {
-    element.complete();
+export function complete(element) {
+    return element.complete();
 }

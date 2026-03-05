@@ -1,5 +1,4 @@
 export function open(element, target) {
-
     if (target) {
         const event = new MouseEvent('click', {
             bubbles: true,
@@ -7,11 +6,8 @@ export function open(element, target) {
             view: window,
             relatedTarget: target,
         });
-
         element.open(event);
-
         return;
     }
-
     element.open();
 }

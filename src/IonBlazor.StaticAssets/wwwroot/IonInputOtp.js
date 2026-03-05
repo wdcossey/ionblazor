@@ -1,3 +1,3 @@
-﻿export function setFocus(element) {
-    element.setFocus();
+export function setFocus(element) {
+    return element.setFocus();
 }
