@@ -252,7 +252,177 @@ function expectedCsType(prop) {
   }
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
+// Extract bool-specific [Parameter] info: name -> { type: 'bool'|'bool?', csDefault: 'true'|'false'|null }
+// Captures optional explicit initialiser (= true / = false) after the property body
+function extractBoolParameters(csContent) {
+  if (!csContent) return new Map();
+  const params = new Map();
+  // Matches: [Parameter...] ... public bool?/bool NAME { get/set/init ... } [= true|false]
+  const re = /\[Parameter[^\]]*\][^\[]*?public\s+(bool\??)\s+(\w+)\s*\{[^}]*\}\s*(?:=\s*(true|false))?/gs;
+  let m;
+  while ((m = re.exec(csContent)) !== null) {
+    params.set(m[2].trim(), { type: m[1].trim(), csDefault: m[3] ?? null });
+  }
+  return params;
+}
+
+// ─── Boolean analysis ─────────────────────────────────────────────────────────
+function generateBoolAnalysis() {
+  const defaultTrueRows = [];  // non-optional Ionic booleans with default=true
+  const optionalRows    = [];  // optional Ionic booleans (boolean | undefined)
+  const bugRows         = [];  // Category D: bool without default where Ionic default=true
+
+  for (const component of coreData.components) {
+    const tag = component.tag;
+    const relPath = TAG_MAP[tag];
+    if (!relPath) continue; // unwrapped component
+
+    const csContent    = readFile(`${COMPONENTS_DIR}/${relPath}.razor.cs`);
+    const boolParams   = extractBoolParameters(csContent);
+    const componentName = relPath.split('/').pop();
+
+    for (const prop of (component.props ?? [])) {
+      if (prop.name.startsWith('on')) continue;
+      const ionicType = prop.complexType?.resolved ?? prop.type;
+      if (!ionicType.includes('boolean')) continue;
+      // Skip mixed function+boolean types (e.g. canDismiss, compareWith, isDateEnabled)
+      if (isJsFunctionType(ionicType)) continue;
+
+      const ionicDefault = prop.default
+        ?? prop.docsTags?.find(t => t.name === 'default')?.text
+        ?? null;
+      const isOptional  = prop.optional || ionicType.includes('undefined');
+      const propPascal  = prop.attr ? attrToPascal(prop.attr) : attrToPascal(prop.name);
+
+      // Find C# param (case-insensitive)
+      const csEntry = [...boolParams.entries()].find(
+        ([k]) => k.toLowerCase() === propPascal.toLowerCase()
+      );
+      const csType   = csEntry?.[1].type    ?? '—';
+      const csDef    = csEntry?.[1].csDefault ?? null;
+
+      // Display value for C# default column
+      let csDefDisplay;
+      if (!csEntry) {
+        csDefDisplay = '—';
+      } else if (csType === 'bool?') {
+        csDefDisplay = csDef ? `= ${csDef}` : '*(null)*';
+      } else {
+        // bool (non-nullable)
+        csDefDisplay = csDef ? `= ${csDef}` : '*(implicit false)*';
+      }
+
+      // Classify
+      let category, status;
+      if (!csEntry) {
+        category = '—'; status = '❌ not found';
+      } else if (isOptional) {
+        category = 'optional';
+        status = csType === 'bool?' ? '✅' : '⚠️ should be `bool?`';
+      } else if (ionicDefault === 'true') {
+        if (csType === 'bool?') {
+          // null → attr omitted → Ionic default true — correct but invisible in IDE
+          category = 'B'; status = '✅ B';
+        } else if (csDef === 'true') {
+          // bool = true — explicit, gold standard
+          category = 'C'; status = '✅ C';
+        } else if (csDef === null) {
+          // bool without default → implicit false → always renders "false" → overrides Ionic default
+          category = 'D'; status = '❌ D — bug';
+        } else {
+          category = '?'; status = '⚠️';
+        }
+      } else {
+        // default=false (or null/expression — non-true defaults)
+        if (csType === 'bool') {
+          category = 'A'; status = csDef === null ? '✅ A' : `✅ A (= ${csDef})`;
+        } else {
+          category = 'A'; status = '✅ A';
+        }
+      }
+
+      const row = { tag, componentName, prop: prop.name, ionicDefault: ionicDefault ?? '—',
+        csType, csDefDisplay, category, status };
+
+      if (isOptional) {
+        optionalRows.push(row);
+      } else if (ionicDefault === 'true') {
+        defaultTrueRows.push(row);
+        if (category === 'D') bugRows.push(row);
+      }
+    }
+  }
+
+  // ─── Format tables ──────────────────────────────────────────────────────────
+  const ROW_COLS = ['Component', 'Ionic Prop', 'Ionic Default', 'C# Type', 'C# Default', 'Cat', 'Status'];
+  const SEP      = ROW_COLS.map(() => '---');
+  const fmtRow   = r =>
+    `| \`${r.componentName}\` | \`${r.prop}\` | \`${r.ionicDefault}\` | \`${r.csType}\` | ${r.csDefDisplay} | ${r.category} | ${r.status} |`;
+
+  const header = [`| ${ROW_COLS.join(' | ')} |`, `| ${SEP.join(' | ')} |`];
+
+  const bugSection = bugRows.length > 0 ? [
+    '',
+    `### ❌ Category D — Bugs (bool without default where Ionic default = \`true\`)`,
+    '',
+    'These C# `bool` parameters have no explicit default (`= true`), so the C# default of `false`',
+    'is always rendered into the HTML attribute, overriding the Ionic component\'s own `true` default.',
+    '',
+    ...header,
+    ...bugRows.map(fmtRow),
+  ] : [
+    '',
+    `### ❌ Category D — Bugs`,
+    '',
+    '*None found.*',
+  ];
+
+  return [
+    `## Boolean Parameter Analysis`,
+    '',
+    '### Background: `bool` vs `bool?` and Stencil attribute reflection',
+    '',
+    'Stencil boolean props work as follows:',
+    '',
+    '- **Attribute omitted** → Stencil uses the prop\'s declared `@Prop()` default',
+    '- **Attribute = `"true"`** → Stencil converts to JS `true`',
+    '- **Attribute = `"false"`** → Stencil converts to JS `false`',
+    '',
+    'Most Ionic props have `reflectToAttr: false` — the attribute is read once at initialisation',
+    'and not written back. IonBlazor\'s `BooleanExtensions.AsString()` has two overloads:',
+    '',
+    '```',
+    'bool.AsString()  → always "true" or "false"   (attribute always rendered)',
+    'bool?.AsString() → null | "true" | "false"    (null = attribute omitted = Ionic default applies)',
+    '```',
+    '',
+    '### Category key',
+    '',
+    '| Cat | Ionic type | Ionic default | C# type | Effect |',
+    '|-----|-----------|--------------|---------|--------|',
+    '| **A** | `boolean` | `false` | `bool` or `bool?` | Attr omitted or "false" — Ionic default matches ✓ |',
+    '| **B** | `boolean` | `true` | `bool?` | Attr omitted → Ionic uses `true` — correct, but default is invisible in IDE |',
+    '| **C** | `boolean` | `true` | `bool = true` | Attr always rendered as "true" — explicit, gold standard ✓ |',
+    '| **D** | `boolean` | `true` | `bool` *(no default)* | Attr always rendered as "false" — **overrides Ionic default** ❌ |',
+    '',
+    `### Non-optional Ionic booleans with \`default = true\` (${defaultTrueRows.length} props)`,
+    '',
+    ...header,
+    ...defaultTrueRows.map(fmtRow),
+    ...bugSection,
+    '',
+    `### Optional Ionic booleans (\`boolean | undefined\`) (${optionalRows.length} props)`,
+    '',
+    '`bool?` is the correct C# type for all of these — the attribute should be omitted when null.',
+    '',
+    ...header,
+    ...optionalRows.map(fmtRow),
+    '',
+  ].join('\n');
+}
+
+
+
 
 const coreData = JSON.parse(readFileSync(CORE_JSON, 'utf-8'));
 
@@ -396,6 +566,8 @@ for (const component of coreData.components) {
   sections.push(block);
 }
 
+const boolAnalysisSection = generateBoolAnalysis();
+
 // ─── Blazor-only component notes ──────────────────────────────────────────────
 const blazorOnlySection = [
   `## IonBlazor-Only Components`,
@@ -503,6 +675,9 @@ const doc = [
   '---',
   '',
   notWrappedSection,
+  '---',
+  '',
+  boolAnalysisSection,
 ].join('\n');
 
 writeFileSync(OUTPUT_FILE, doc, 'utf-8');

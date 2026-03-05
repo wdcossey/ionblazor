@@ -1162,3 +1162,100 @@ These components exist in IonBlazor but have no counterpart in Ionic's Stencil m
 | `ion-router-link` | Routing — handled by Blazor router, not wrapped |
 | `ion-router-outlet` | Routing — handled by Blazor router, not wrapped |
 | `ion-select-modal` | Internal Ionic component — not intended for direct consumer use |
+
+---
+
+## Boolean Parameter Analysis
+
+### Background: `bool` vs `bool?` and Stencil attribute reflection
+
+Stencil boolean props work as follows:
+
+- **Attribute omitted** → Stencil uses the prop's declared `@Prop()` default
+- **Attribute = `"true"`** → Stencil converts to JS `true`
+- **Attribute = `"false"`** → Stencil converts to JS `false`
+
+Most Ionic props have `reflectToAttr: false` — the attribute is read once at initialisation
+and not written back. IonBlazor's `BooleanExtensions.AsString()` has two overloads:
+
+```
+bool.AsString()  → always "true" or "false"   (attribute always rendered)
+bool?.AsString() → null | "true" | "false"    (null = attribute omitted = Ionic default applies)
+```
+
+### Category key
+
+| Cat | Ionic type | Ionic default | C# type | Effect |
+|-----|-----------|--------------|---------|--------|
+| **A** | `boolean` | `false` | `bool` or `bool?` | Attr omitted or "false" — Ionic default matches ✓ |
+| **B** | `boolean` | `true` | `bool?` | Attr omitted → Ionic uses `true` — correct, but default is invisible in IDE |
+| **C** | `boolean` | `true` | `bool = true` | Attr always rendered as "true" — explicit, gold standard ✓ |
+| **D** | `boolean` | `true` | `bool` *(no default)* | Attr always rendered as "false" — **overrides Ionic default** ❌ |
+
+### Non-optional Ionic booleans with `default = true` (39 props)
+
+| Component | Ionic Prop | Ionic Default | C# Type | C# Default | Cat | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| `IonAccordionGroup` | `animated` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonActionSheet` | `animated` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonActionSheet` | `backdropDismiss` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonActionSheet` | `keyboardClose` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonAlert` | `animated` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonAlert` | `backdropDismiss` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonAlert` | `keyboardClose` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonBackdrop` | `stopPropagation` | `true` | `bool` | = true | C | ✅ C |
+| `IonBackdrop` | `tappable` | `true` | `bool` | = true | C | ✅ C |
+| `IonBackdrop` | `visible` | `true` | `bool` | = true | C | ✅ C |
+| `IonContent` | `scrollY` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonDateTime` | `showDefaultTimeLabel` | `true` | `bool?` | = true | B | ✅ B |
+| `IonLoading` | `animated` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonLoading` | `keyboardClose` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonLoading` | `showBackdrop` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonMenu` | `swipeGesture` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonMenuButton` | `autoHide` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonMenuToggle` | `autoHide` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonModal` | `animated` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonModal` | `backdropDismiss` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonModal` | `expandToScroll` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonModal` | `focusTrap` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonModal` | `keyboardClose` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonModal` | `showBackdrop` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonPickerLegacy` | `animated` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonPickerLegacy` | `backdropDismiss` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonPickerLegacy` | `keyboardClose` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonPickerLegacy` | `showBackdrop` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonPopover` | `animated` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonPopover` | `arrow` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonPopover` | `backdropDismiss` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonPopover` | `focusTrap` | `true` | `—` | — | — | ❌ not found |
+| `IonPopover` | `keyboardClose` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonPopover` | `showBackdrop` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonRange` | `ticks` | `true` | `bool?` | *(null)* | B | ✅ B |
+| `IonReorderGroup` | `disabled` | `true` | `bool` | = true | C | ✅ C |
+| `IonSegment` | `swipeGesture` | `true` | `bool` | *(implicit false)* | D | ❌ D — bug |
+| `IonSegmentView` | `swipeGesture` | `true` | `—` | — | — | ❌ not found |
+| `IonToast` | `animated` | `true` | `bool?` | *(null)* | B | ✅ B |
+
+### ❌ Category D — Bugs (bool without default where Ionic default = `true`)
+
+These C# `bool` parameters have no explicit default (`= true`), so the C# default of `false`
+is always rendered into the HTML attribute, overriding the Ionic component's own `true` default.
+
+| Component | Ionic Prop | Ionic Default | C# Type | C# Default | Cat | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| `IonSegment` | `swipeGesture` | `true` | `bool` | *(implicit false)* | D | ❌ D — bug |
+
+### Optional Ionic booleans (`boolean | undefined`) (8 props)
+
+`bool?` is the correct C# type for all of these — the attribute should be omitted when null.
+
+| Component | Ionic Prop | Ionic Default | C# Type | C# Default | Cat | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| `IonAccordionGroup` | `multiple` | `—` | `bool?` | *(null)* | optional | ✅ |
+| `IonBreadcrumb` | `separator` | `—` | `bool?` | *(null)* | optional | ✅ |
+| `IonContent` | `forceOverscroll` | `—` | `bool?` | *(null)* | optional | ✅ |
+| `IonInput` | `clearOnEdit` | `—` | `bool?` | *(null)* | optional | ✅ |
+| `IonInput` | `multiple` | `—` | `bool?` | *(null)* | optional | ✅ |
+| `IonItem` | `detail` | `—` | `bool?` | *(null)* | optional | ✅ |
+| `IonModal` | `handle` | `—` | `bool?` | *(null)* | optional | ✅ |
+| `IonToggle` | `enableOnOffLabels` | `config.get('toggleOnOffLabels')` | `bool?` | *(null)* | optional | ✅ |
