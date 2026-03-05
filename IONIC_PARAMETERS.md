@@ -3,7 +3,7 @@
 Comparing `node_modules/@ionic/docs/core.json` (Stencil metadata) against C# `[Parameter]`
 implementations in `src/IonBlazor.Components/Components/`.
 
-> Generated: 2026-03-05
+> Generated: 2026-03-05 · Ionic version: **8.8.0** (package.json pins `^8.7.2`)
 
 ---
 
@@ -23,9 +23,9 @@ implementations in `src/IonBlazor.Components/Components/`.
 
 | Symbol | Count |
 |--------|-------|
-| ✅ Correct | 560 |
-| ❌ Missing | 18 |
-| ⚠️ Issues | 8 |
+| ✅ Correct | 559 |
+| ❌ Missing | 19 |
+| ⚠️ Issues | 9 |
 
 ### ❌ Missing Parameters
 
@@ -43,6 +43,7 @@ implementations in `src/IonBlazor.Components/Components/`.
 - `ion-searchbar` → `maxlength`
 - `ion-searchbar` → `minlength`
 - `ion-searchbar` → `name`
+- `ion-segment-view` → `swipeGesture`
 - `ion-select` → `interfaceOptions`
 - `ion-toast` → `cssClass`
 - `ion-toast` → `swipeGesture`
@@ -53,11 +54,23 @@ implementations in `src/IonBlazor.Components/Components/`.
 - `ion-accordion-group` → `value` — Attr `value` rendered in .razor but no [Parameter] found in .razor.cs
 - `ion-button` → `routerDirection` — [Parameter] exists but attr `router-direction` not rendered in .razor
 - `ion-card` → `routerDirection` — [Parameter] exists but attr `router-direction` not rendered in .razor
-- `ion-modal` → `presentingElement` — [Parameter] exists but attr `presenting-element` not rendered in .razor
+- `ion-modal` → `breakpoints` — [Parameter] exists but attr `—` not rendered in .razor
+- `ion-modal` → `presentingElement` — [Parameter] exists but attr `—` not rendered in .razor
 - `ion-popover` → `event` — [Parameter] exists but attr `event` not rendered in .razor
 - `ion-select-option` → `disabled` — Attr `disabled` rendered in .razor but no [Parameter] found in .razor.cs
 - `ion-select-option` → `value` — Attr `value` rendered in .razor but no [Parameter] found in .razor.cs
 - `ion-spinner` → `duration` — [Parameter] exists but attr `duration` not rendered in .razor
+
+---
+
+## Version Delta: 8.7.2 (pinned) → 8.8.0 (audited)
+
+The following changes were introduced between the pinned version and the audited version:
+
+### 8.8.0
+
+- `ion-segment-view` — new prop `swipeGesture` (`boolean`, default `true`) added
+- `ion-modal.breakpoints` — `attr` field removed; prop is now JS-only (no HTML attribute binding)
 
 ---
 
@@ -92,14 +105,14 @@ implementations in `src/IonBlazor.Components/Components/`.
 |------------|------------|---------|-----------|--------------|---------|--------|
 | `animated` | `boolean` | `true` | `animated` | `Animated` | `bool?` | ✅ |
 | `backdropDismiss` | `boolean` | `true` | `backdrop-dismiss` | `BackdropDismiss` | `bool?` | ✅ |
-| `buttons` | `(string | ActionSheetButton<any>)[]` | `[]` | `buttons` | `Buttons` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ButtonsBuilder` parameter))_ |
+| `buttons` | `(string | ActionSheetButton<any>)[]` | `[]` | `—` | `Buttons` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ButtonsBuilder` parameter))_ |
 | `cssClass` | `string | string[] | undefined` | `—` | `css-class` | `CssClass` | `string?` | ✅ |
-| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `enter-animation` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `header` | `string | undefined` | `—` | `header` | `Header` | `string?` | ✅ |
-| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `html-attributes` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
+| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `—` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
 | `isOpen` | `boolean` | `false` | `is-open` | `IsOpen` | `bool?` | ✅ |
 | `keyboardClose` | `boolean` | `true` | `keyboard-close` | `KeyboardClose` | `bool?` | ✅ |
-| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `leave-animation` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `subHeader` | `string | undefined` | `—` | `sub-header` | `SubHeader` | `string?` | ✅ |
 | `translucent` | `boolean` | `false` | `translucent` | `Translucent` | `bool?` | ✅ |
@@ -113,15 +126,15 @@ implementations in `src/IonBlazor.Components/Components/`.
 |------------|------------|---------|-----------|--------------|---------|--------|
 | `animated` | `boolean` | `true` | `animated` | `Animated` | `bool?` | ✅ |
 | `backdropDismiss` | `boolean` | `true` | `backdrop-dismiss` | `BackdropDismiss` | `bool?` | ✅ |
-| `buttons` | `(string | AlertButton)[]` | `[]` | `buttons` | `Buttons` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ButtonsBuilder` parameter))_ |
+| `buttons` | `(string | AlertButton)[]` | `[]` | `—` | `Buttons` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ButtonsBuilder` parameter))_ |
 | `cssClass` | `string | string[] | undefined` | `—` | `css-class` | `CssClass` | `string?` | ✅ |
-| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `enter-animation` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `header` | `string | undefined` | `—` | `header` | `Header` | `string?` | ✅ |
-| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `html-attributes` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
-| `inputs` | `AlertInput[]` | `[]` | `inputs` | `Inputs` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `InputsBuilder` parameter))_ |
+| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `—` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
+| `inputs` | `AlertInput[]` | `[]` | `—` | `Inputs` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `InputsBuilder` parameter))_ |
 | `isOpen` | `boolean` | `false` | `is-open` | `IsOpen` | `bool?` | ✅ |
 | `keyboardClose` | `boolean` | `true` | `keyboard-close` | `KeyboardClose` | `bool?` | ✅ |
-| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `leave-animation` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `message` | `IonicSafeString | string | undefined` | `—` | `message` | `Message` | `string?` | ✅ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `subHeader` | `string | undefined` | `—` | `sub-header` | `SubHeader` | `string?` | ✅ |
@@ -150,7 +163,7 @@ _No props._
 | `disabled` | `boolean` | `false` | `disabled` | `Disabled` | `bool` | ✅ |
 | `icon` | `null | string | undefined` | `—` | `icon` | `Icon` | `string?` | ✅ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
-| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `router-animation` | `RouterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `RouterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `text` | `null | string | undefined` | `—` | `text` | `Text` | `string?` | ✅ |
 | `type` | `"button" | "reset" | "submit"` | `'button'` | `type` | `Type` | `string` | ✅ |
 
@@ -180,7 +193,7 @@ _No props._
 | `href` | `string | undefined` | `—` | `href` | `Href` | `string?` | ✅ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `rel` | `string | undefined` | `—` | `rel` | `Rel` | `string?` | ✅ |
-| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `router-animation` | `RouterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `RouterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `routerDirection` | `"back" | "forward" | "root"` | `'forward'` | `router-direction` | `RouterDirection` | `—` | ❌ |
 | `separator` | `boolean | undefined` | `—` | `separator` | `Separator` | `bool?` | ✅ |
 | `target` | `string | undefined` | `—` | `target` | `Target` | `string?` | ✅ |
@@ -209,7 +222,7 @@ _No props._
 | `href` | `string | undefined` | `—` | `href` | `Href` | `string?` | ✅ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `rel` | `string | undefined` | `—` | `rel` | `Rel` | `string?` | ✅ |
-| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `router-animation` | `RouterAnimation` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `RouterAnimation` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `routerDirection` | `"back" | "forward" | "root"` | `'forward'` | `router-direction` | `RouterDirection` | `string?` | ⚠️ _([Parameter] exists but attr `router-direction` not rendered in .razor; [Parameter] present but Blazor handles routing via `href`/`NavigationManager`; HTML attr likely intentionally omitted)_ |
 | `shape` | `"round" | undefined` | `—` | `shape` | `Shape` | `string?` | ✅ |
 | `size` | `"default" | "large" | "small" | undefined` | `—` | `size` | `Size` | `string?` | ✅ |
@@ -234,7 +247,7 @@ _No props._
 | `href` | `string | undefined` | `—` | `href` | `Href` | `string?` | ✅ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `rel` | `string | undefined` | `—` | `rel` | `Rel` | `string?` | ✅ |
-| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `router-animation` | `RouterAnimation` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `RouterAnimation` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `routerDirection` | `"back" | "forward" | "root"` | `'forward'` | `router-direction` | `RouterDirection` | `string?` | ⚠️ _([Parameter] exists but attr `router-direction` not rendered in .razor; [Parameter] present but Blazor handles routing via `href`/`NavigationManager`; HTML attr likely intentionally omitted)_ |
 | `target` | `string | undefined` | `—` | `target` | `Target` | `string?` | ✅ |
 | `type` | `"button" | "reset" | "submit"` | `'button'` | `type` | `Type` | `string?` | ✅ |
@@ -346,11 +359,11 @@ _No props._
 | `disabled` | `boolean` | `false` | `disabled` | `Disabled` | `bool?` | ✅ |
 | `doneText` | `string` | `'Done'` | `done-text` | `DoneText` | `string?` | ✅ |
 | `firstDayOfWeek` | `number` | `0` | `first-day-of-week` | `FirstDayOfWeek` | `int?` | ✅ |
-| `formatOptions` | `undefined | { date: DateTimeFormatOptions; time…` | `—` | `format-options` | `FormatOptions` | `—` | ❌ |
-| `highlightedDates` | `((dateIsoString: string) => DatetimeHighlightSt…` | `—` | `highlighted-dates` | `HighlightedDates` | `object?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `formatOptions` | `undefined | { date: DateTimeFormatOptions; time…` | `—` | `—` | `FormatOptions` | `—` | ❌ |
+| `highlightedDates` | `((dateIsoString: string) => DatetimeHighlightSt…` | `—` | `—` | `HighlightedDates` | `object?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `hourCycle` | `"h11" | "h12" | "h23" | "h24" | undefined` | `—` | `hour-cycle` | `HourCycle` | `string?` | ✅ |
 | `hourValues` | `number | number[] | string | undefined` | `—` | `hour-values` | `HourValues` | `string?` | ✅ |
-| `isDateEnabled` | `((dateIsoString: string) => boolean) | undefined` | `—` | `is-date-enabled` | `IsDateEnabled` | `Func<string>?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `isDateEnabled` | `((dateIsoString: string) => boolean) | undefined` | `—` | `—` | `IsDateEnabled` | `Func<string>?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `locale` | `string` | `'default'` | `locale` | `Locale` | `string?` | ✅ |
 | `max` | `string | undefined` | `—` | `max` | `Max` | `string?` | ✅ |
 | `min` | `string | undefined` | `—` | `min` | `Min` | `string?` | ✅ |
@@ -368,7 +381,7 @@ _No props._
 | `showDefaultTimeLabel` | `boolean` | `true` | `show-default-time-label` | `ShowDefaultTimeLabel` | `bool?` | ✅ |
 | `showDefaultTitle` | `boolean` | `false` | `show-default-title` | `ShowDefaultTitle` | `bool?` | ✅ |
 | `size` | `"cover" | "fixed"` | `'fixed'` | `size` | `Size` | `string?` | ✅ |
-| `titleSelectedDatesFormatter` | `((selectedDates: string[]) => string) | undefined` | `—` | `title-selected-dates-formatter` | `TitleSelectedDatesFormatter` | `string` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `titleSelectedDatesFormatter` | `((selectedDates: string[]) => string) | undefined` | `—` | `—` | `TitleSelectedDatesFormatter` | `string` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `value` | `null | string | string[] | undefined` | `—` | `value` | `Value` | `string?` | ✅ |
 | `yearValues` | `number | number[] | string | undefined` | `—` | `year-values` | `YearValues` | `string?` | ✅ |
 
@@ -402,7 +415,7 @@ _No props._
 | `href` | `string | undefined` | `—` | `href` | `Href` | `string?` | ✅ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `rel` | `string | undefined` | `—` | `rel` | `Rel` | `string?` | ✅ |
-| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `router-animation` | `RouterAnimation` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `RouterAnimation` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `routerDirection` | `"back" | "forward" | "root"` | `'forward'` | `router-direction` | `RouterDirection` | `string?` | ✅ |
 | `show` | `boolean` | `false` | `show` | `Show` | `bool` | ✅ |
 | `size` | `"small" | undefined` | `—` | `size` | `Size` | `string?` | ✅ |
@@ -466,7 +479,7 @@ _No props._
 | Ionic Prop | Ionic Type | Default | HTML Attr | C# Parameter | C# Type | Status |
 |------------|------------|---------|-----------|--------------|---------|--------|
 | `autocapitalize` | `string` | `'off'` | `autocapitalize` | `Autocapitalize` | `string?` | ✅ |
-| `autocomplete` | `"name" | "email" | "tel" | "url" | "on" | "off"…` | `'off'` | `autocomplete` | `Autocomplete` | `string?` | ✅ |
+| `autocomplete` | `"additional-name" | "address-level1" | "address…` | `'off'` | `autocomplete` | `Autocomplete` | `string?` | ✅ |
 | `autocorrect` | `"off" | "on"` | `'off'` | `autocorrect` | `Autocorrect` | `string?` | ✅ |
 | `autofocus` | `boolean` | `false` | `autofocus` | `Autofocus` | `bool?` | ✅ |
 | `clearInput` | `boolean` | `false` | `clear-input` | `ClearInput` | `bool?` | ✅ |
@@ -474,7 +487,7 @@ _No props._
 | `clearOnEdit` | `boolean | undefined` | `—` | `clear-on-edit` | `ClearOnEdit` | `bool?` | ✅ |
 | `color` | `"danger" | "dark" | "light" | "medium" | "prima…` | `—` | `color` | `Color` | `string?` | ✅ |
 | `counter` | `boolean` | `false` | `counter` | `Counter` | `bool?` | ✅ |
-| `counterFormatter` | `((inputLength: number, maxLength: number) => st…` | `—` | `counter-formatter` | `CounterFormatter` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `counterFormatter` | `((inputLength: number, maxLength: number) => st…` | `—` | `—` | `CounterFormatter` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `debounce` | `number | undefined` | `—` | `debounce` | `Debounce` | `int?` | ✅ |
 | `disabled` | `boolean` | `false` | `disabled` | `Disabled` | `bool?` | ✅ |
 | `enterkeyhint` | `"done" | "enter" | "go" | "next" | "previous" |…` | `—` | `enterkeyhint` | `Enterkeyhint` | `string?` | ✅ |
@@ -542,7 +555,7 @@ _No props._
 | `lines` | `"full" | "inset" | "none" | undefined` | `—` | `lines` | `Lines` | `string?` | ✅ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `rel` | `string | undefined` | `—` | `rel` | `Rel` | `string?` | ✅ |
-| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `router-animation` | `RouterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `routerAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `RouterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `routerDirection` | `"back" | "forward" | "root"` | `'forward'` | `router-direction` | `RouterDirection` | `—` | ❌ |
 | `target` | `string | undefined` | `—` | `target` | `Target` | `string?` | ✅ |
 | `type` | `"button" | "reset" | "submit"` | `'button'` | `type` | `Type` | `string?` | ✅ |
@@ -617,11 +630,11 @@ _No props._
 | `backdropDismiss` | `boolean` | `false` | `backdrop-dismiss` | `BackdropDismiss` | `bool?` | ✅ |
 | `cssClass` | `string | string[] | undefined` | `—` | `css-class` | `CssClass` | `string?` | ✅ |
 | `duration` | `number` | `0` | `duration` | `Duration` | `int?` | ✅ |
-| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `enter-animation` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
-| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `html-attributes` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
+| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `—` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
 | `isOpen` | `boolean` | `false` | `is-open` | `IsOpen` | `bool?` | ✅ |
 | `keyboardClose` | `boolean` | `true` | `keyboard-close` | `KeyboardClose` | `bool?` | ✅ |
-| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `leave-animation` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `message` | `IonicSafeString | string | undefined` | `—` | `message` | `Message` | `string?` | ✅ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `showBackdrop` | `boolean` | `true` | `show-backdrop` | `ShowBackdrop` | `bool?` | ✅ |
@@ -668,21 +681,21 @@ _No props._
 | `animated` | `boolean` | `true` | `animated` | `Animated` | `bool?` | ✅ |
 | `backdropBreakpoint` | `number` | `0` | `backdrop-breakpoint` | `BackdropBreakpoint` | `double?` | ✅ |
 | `backdropDismiss` | `boolean` | `true` | `backdrop-dismiss` | `BackdropDismiss` | `bool?` | ✅ |
-| `breakpoints` | `number[] | undefined` | `—` | `breakpoints` | `Breakpoints` | `double[]?` | ✅ |
+| `breakpoints` | `number[] | undefined` | `—` | `—` | `Breakpoints` | `double[]?` | ⚠️ _([Parameter] exists but attr `—` not rendered in .razor; Array prop — no HTML attribute in 8.8.0 (attr removed in this version); must be set via JS interop; [Parameter] is correct but template rendering is N/A)_ |
 | `canDismiss` | `((data?: any, role?: string | undefined) => Pro…` | `true` | `can-dismiss` | `CanDismiss` | `EventCallback<IonModalCanDismissEventArgs>` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
-| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `enter-animation` | `EnterAnimation` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `EnterAnimation` | `string?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `expandToScroll` | `boolean` | `true` | `expand-to-scroll` | `ExpandToScroll` | `bool?` | ✅ |
 | `focusTrap` | `boolean` | `true` | `focus-trap` | `focusTrap` | `bool?` | ✅ |
 | `handle` | `boolean | undefined` | `—` | `handle` | `Handle` | `bool?` | ✅ |
 | `handleBehavior` | `"cycle" | "none" | undefined` | `'none'` | `handle-behavior` | `HandleBehavior` | `string?` | ✅ |
-| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `html-attributes` | `HtmlAttributes` | `Dictionary<string, object>` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
+| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `—` | `HtmlAttributes` | `Dictionary<string, object>` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
 | `initialBreakpoint` | `number | undefined` | `—` | `initial-breakpoint` | `InitialBreakpoint` | `double?` | ✅ |
 | `isOpen` | `boolean` | `false` | `is-open` | `IsOpen` | `bool?` | ✅ |
 | `keepContentsMounted` | `boolean` | `false` | `keep-contents-mounted` | `KeepContentsMounted` | `bool?` | ✅ |
 | `keyboardClose` | `boolean` | `true` | `keyboard-close` | `KeyboardClose` | `bool?` | ✅ |
-| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `leave-animation` | `LeaveAnimation` | `object?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `LeaveAnimation` | `object?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
-| `presentingElement` | `HTMLElement | undefined` | `—` | `presenting-element` | `PresentingElement` | `object?` | ⚠️ _([Parameter] exists but attr `presenting-element` not rendered in .razor; DOM element reference — must be set via JS interop, not an HTML attribute; [Parameter] correct)_ |
+| `presentingElement` | `HTMLElement | undefined` | `—` | `—` | `PresentingElement` | `object?` | ⚠️ _([Parameter] exists but attr `—` not rendered in .razor; DOM element reference — must be set via JS interop, not an HTML attribute; [Parameter] correct)_ |
 | `showBackdrop` | `boolean` | `true` | `show-backdrop` | `ShowBackdrop` | `bool?` | ✅ |
 | `trigger` | `string | undefined` | `—` | `trigger` | `Trigger` | `string?` | ✅ |
 
@@ -722,15 +735,15 @@ _No props._
 |------------|------------|---------|-----------|--------------|---------|--------|
 | `animated` | `boolean` | `true` | `animated` | `Animated` | `bool?` | ✅ |
 | `backdropDismiss` | `boolean` | `true` | `backdrop-dismiss` | `BackdropDismiss` | `bool?` | ✅ |
-| `buttons` | `PickerButton[]` | `[]` | `buttons` | `Buttons` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ButtonsBuilder` parameter))_ |
-| `columns` | `PickerColumn[]` | `[]` | `columns` | `Columns` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ColumnsBuilder` parameter))_ |
+| `buttons` | `PickerButton[]` | `[]` | `—` | `Buttons` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ButtonsBuilder` parameter))_ |
+| `columns` | `PickerColumn[]` | `[]` | `—` | `Columns` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ColumnsBuilder` parameter))_ |
 | `cssClass` | `string | string[] | undefined` | `—` | `css-class` | `CssClass` | `string?` | ✅ |
 | `duration` | `number` | `0` | `duration` | `Duration` | `int?` | ✅ |
-| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `enter-animation` | `EnterAnimation` | `object?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
-| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `html-attributes` | `HtmlAttributes` | `object?` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
+| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `EnterAnimation` | `object?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `—` | `HtmlAttributes` | `object?` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
 | `isOpen` | `boolean` | `false` | `is-open` | `IsOpen` | `bool?` | ✅ |
 | `keyboardClose` | `boolean` | `true` | `keyboard-close` | `KeyboardClose` | `bool?` | ✅ |
-| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `leave-animation` | `LeaveAnimation` | `object?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `LeaveAnimation` | `object?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `showBackdrop` | `boolean` | `true` | `show-backdrop` | `ShowBackdrop` | `bool?` | ✅ |
 | `trigger` | `string | undefined` | `—` | `trigger` | `Trigger` | `string?` | ✅ |
@@ -747,16 +760,16 @@ _No props._
 | `arrow` | `boolean` | `true` | `arrow` | `Arrow` | `bool?` | ✅ |
 | `backdropDismiss` | `boolean` | `true` | `backdrop-dismiss` | `BackdropDismiss` | `bool?` | ✅ |
 | `component` | `Function | HTMLElement | null | string | undefined` | `—` | `component` | `Component` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
-| `componentProps` | `undefined | { [key: string]: any; }` | `—` | `component-props` | `ComponentProps` | `—` | ❌ |
+| `componentProps` | `T | undefined` | `—` | `—` | `ComponentProps` | `—` | ❌ |
 | `dismissOnSelect` | `boolean` | `false` | `dismiss-on-select` | `DismissOnSelect` | `bool?` | ✅ |
-| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `enter-animation` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `event` | `any` | `—` | `event` | `Event` | `object?` | ⚠️ _([Parameter] exists but attr `event` not rendered in .razor; MouseEvent object — must be set via JS interop, not an HTML attribute; [Parameter] correct)_ |
 | `focusTrap` | `boolean` | `true` | `focus-trap` | `FocusTrap` | `—` | ❌ |
-| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `html-attributes` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
+| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `—` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
 | `isOpen` | `boolean` | `false` | `is-open` | `IsOpen` | `bool?` | ✅ |
 | `keepContentsMounted` | `boolean` | `false` | `keep-contents-mounted` | `KeepContentsMounted` | `bool?` | ✅ |
 | `keyboardClose` | `boolean` | `true` | `keyboard-close` | `KeyboardClose` | `bool?` | ✅ |
-| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `leave-animation` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `reference` | `"event" | "trigger"` | `'trigger'` | `reference` | `Reference` | `string?` | ✅ |
 | `showBackdrop` | `boolean` | `true` | `show-backdrop` | `ShowBackdrop` | `bool?` | ✅ |
@@ -817,7 +830,7 @@ _No props._
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `name` | `string` | `this.rangeId` | `name` | `Name` | `string?` | ✅ |
 | `pin` | `boolean` | `false` | `pin` | `Pin` | `bool?` | ✅ |
-| `pinFormatter` | `(value: number) => string | number` | `(value: number): number => Math.round(value)` | `pin-formatter` | `PinFormatter` | `Func<int,string>?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `pinFormatter` | `(value: number) => string | number` | `(value: number): number => Math.round(value)` | `—` | `PinFormatter` | `Func<int,string>?` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `snaps` | `boolean` | `false` | `snaps` | `Snaps` | `bool?` | ✅ |
 | `step` | `number` | `1` | `step` | `Step` | `int?` | ✅ |
 | `ticks` | `boolean` | `true` | `ticks` | `Ticks` | `bool?` | ✅ |
@@ -870,7 +883,7 @@ _No props._
 |------------|------------|---------|-----------|--------------|---------|--------|
 | `animated` | `boolean` | `false` | `animated` | `Animated` | `bool?` | ✅ |
 | `autocapitalize` | `string` | `'off'` | `autocapitalize` | `Autocapitalize` | `—` | ❌ |
-| `autocomplete` | `"name" | "email" | "tel" | "url" | "on" | "off"…` | `'off'` | `autocomplete` | `AutoComplete` | `string?` | ✅ |
+| `autocomplete` | `"additional-name" | "address-level1" | "address…` | `'off'` | `autocomplete` | `AutoComplete` | `string?` | ✅ |
 | `autocorrect` | `"off" | "on"` | `'off'` | `autocorrect` | `AutoCorrect` | `bool` | ✅ |
 | `cancelButtonIcon` | `string` | `config.get('backButtonIcon', arrowBackSharp) as string` | `cancel-button-icon` | `CancelButtonIcon` | `string?` | ✅ |
 | `cancelButtonText` | `string` | `'Cancel'` | `cancel-button-text` | `CancelButtonText` | `string?` | ✅ |
@@ -924,6 +937,7 @@ _No props._
 | Ionic Prop | Ionic Type | Default | HTML Attr | C# Parameter | C# Type | Status |
 |------------|------------|---------|-----------|--------------|---------|--------|
 | `disabled` | `boolean` | `false` | `disabled` | `Disabled` | `bool` | ✅ |
+| `swipeGesture` | `boolean` | `true` | `swipe-gesture` | `SwipeGesture` | `—` | ❌ |
 
 ### IonSelect (`ion-select`)
 
@@ -1035,7 +1049,7 @@ _No props._
 | `color` | `"danger" | "dark" | "light" | "medium" | "prima…` | `—` | `color` | `Color` | `string?` | ✅ |
 | `cols` | `number | undefined` | `—` | `cols` | `Cols` | `int?` | ✅ |
 | `counter` | `boolean` | `false` | `counter` | `Counter` | `bool?` | ✅ |
-| `counterFormatter` | `((inputLength: number, maxLength: number) => st…` | `—` | `counter-formatter` | `CounterFormatter` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `counterFormatter` | `((inputLength: number, maxLength: number) => st…` | `—` | `—` | `CounterFormatter` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `debounce` | `number | undefined` | `—` | `debounce` | `Debounce` | `int?` | ✅ |
 | `disabled` | `boolean` | `false` | `disabled` | `Disabled` | `bool?` | ✅ |
 | `enterkeyhint` | `"done" | "enter" | "go" | "next" | "previous" |…` | `—` | `enterkeyhint` | `Enterkeyhint` | `string?` | ✅ |
@@ -1076,18 +1090,18 @@ _No props._
 | Ionic Prop | Ionic Type | Default | HTML Attr | C# Parameter | C# Type | Status |
 |------------|------------|---------|-----------|--------------|---------|--------|
 | `animated` | `boolean` | `true` | `animated` | `Animated` | `bool?` | ✅ |
-| `buttons` | `(string | ToastButton)[] | undefined` | `—` | `buttons` | `Buttons` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ButtonsBuilder` parameter))_ |
+| `buttons` | `(string | ToastButton)[] | undefined` | `—` | `—` | `Buttons` | `—` | ⚙️ (builder) _(Handled via IonBlazor builder pattern (see `ButtonsBuilder` parameter))_ |
 | `color` | `"danger" | "dark" | "light" | "medium" | "prima…` | `—` | `color` | `Color` | `string?` | ✅ |
 | `cssClass` | `string | string[] | undefined` | `—` | `css-class` | `CssClass` | `—` | ❌ |
 | `duration` | `number` | `config.getNumber('toastDuration', 0)` | `duration` | `Duration` | `int?` | ✅ |
-| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `enter-animation` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `enterAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `EnterAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `header` | `string | undefined` | `—` | `header` | `Header` | `string?` | ✅ |
-| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `html-attributes` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
+| `htmlAttributes` | `undefined | { [key: string]: any; }` | `—` | `—` | `HtmlAttributes` | `—` | ✅ _(Covered by `AdditionalAttributes` ([Parameter(CaptureUnmatchedValues = true)]))_ |
 | `icon` | `string | undefined` | `—` | `icon` | `Icon` | `string?` | ✅ |
 | `isOpen` | `boolean` | `false` | `is-open` | `IsOpen` | `bool?` | ✅ |
 | `keyboardClose` | `boolean` | `false` | `keyboard-close` | `KeyboardClose` | `bool?` | ✅ |
 | `layout` | `"baseline" | "stacked"` | `'baseline'` | `layout` | `Layout` | `string?` | ✅ |
-| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `leave-animation` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
+| `leaveAnimation` | `((baseEl: any, opts?: any) => Animation) | unde…` | `—` | `—` | `LeaveAnimation` | `—` | — (JS fn) _(JS function type — not applicable as HTML attribute)_ |
 | `message` | `IonicSafeString | string | undefined` | `—` | `message` | `Message` | `string?` | ✅ |
 | `mode` | `"ios" | "md"` | `—` | `mode` | `Mode` | `string?` | ✅ |
 | `position` | `"bottom" | "middle" | "top"` | `'bottom'` | `position` | `Position` | `string?` | ✅ |

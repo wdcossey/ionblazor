@@ -12,6 +12,13 @@ const CORE_JSON = './node_modules/@ionic/docs/core.json';
 const OUTPUT_FILE = './IONIC_PARAMETERS.md';
 const TODAY = new Date().toISOString().slice(0, 10);
 
+// Detect Ionic version from installed @ionic/docs
+let ionicVersion = 'unknown';
+try {
+  const docsPkg = JSON.parse(readFileSync('./node_modules/@ionic/docs/package.json', 'utf-8'));
+  ionicVersion = docsPkg.version;
+} catch { /* ignore */ }
+
 // ─── Tag → relative razor path (relative to COMPONENTS_DIR) ─────────────────
 const TAG_MAP = {
   'ion-accordion':               'IonAccordion/IonAccordion',
@@ -214,6 +221,7 @@ const KNOWN_NOTES = {
   'ion-accordion-group:value':    'Computed `ValueTask<IEnumerable<string>>` set via JS — not a plain [Parameter]; see `SetValueAsync`/`GetValueAsync`',
   'ion-button:routerDirection':   '[Parameter] present but Blazor handles routing via `href`/`NavigationManager`; HTML attr likely intentionally omitted',
   'ion-card:routerDirection':     '[Parameter] present but Blazor handles routing via `href`/`NavigationManager`; HTML attr likely intentionally omitted',
+  'ion-modal:breakpoints':        'Array prop — no HTML attribute in 8.8.0 (attr removed in this version); must be set via JS interop; [Parameter] is correct but template rendering is N/A',
   'ion-modal:presentingElement':  'DOM element reference — must be set via JS interop, not an HTML attribute; [Parameter] correct',
   'ion-popover:event':            'MouseEvent object — must be set via JS interop, not an HTML attribute; [Parameter] correct',
   'ion-select-option:disabled':   'Defined in `IonSelectOptionBase<TValue>` base class — false positive (regex only scans direct .razor.cs)',
@@ -431,6 +439,34 @@ const issuesSummary = [
   '',
 ].join('\n');
 
+// ─── Version delta note ───────────────────────────────────────────────────────
+// Hardcoded known differences between the pinned package.json version (8.7.2)
+// and the latest audit version (detected from node_modules).
+// Update this list whenever the audit is re-run against a new version.
+const VERSION_DELTA_NOTES = [
+  {
+    version: '8.8.0',
+    changes: [
+      '`ion-segment-view` — new prop `swipeGesture` (`boolean`, default `true`) added',
+      '`ion-modal.breakpoints` — `attr` field removed; prop is now JS-only (no HTML attribute binding)',
+    ],
+  },
+];
+
+const pinnedVersion = '8.7.2';
+const deltaSection = VERSION_DELTA_NOTES.length > 0 && ionicVersion !== pinnedVersion ? [
+  `## Version Delta: ${pinnedVersion} (pinned) → ${ionicVersion} (audited)`,
+  '',
+  'The following changes were introduced between the pinned version and the audited version:',
+  '',
+  ...VERSION_DELTA_NOTES.flatMap(({ version, changes }) => [
+    `### ${version}`,
+    '',
+    ...changes.map(c => `- ${c}`),
+    '',
+  ]),
+].join('\n') : '';
+
 // ─── Full document ────────────────────────────────────────────────────────────
 const doc = [
   `# Ionic Parameters Audit`,
@@ -438,7 +474,7 @@ const doc = [
   `Comparing \`node_modules/@ionic/docs/core.json\` (Stencil metadata) against C# \`[Parameter]\``,
   `implementations in \`src/IonBlazor.Components/Components/\`.`,
   '',
-  `> Generated: ${TODAY}`,
+  `> Generated: ${TODAY} · Ionic version: **${ionicVersion}** (package.json pins \`^${pinnedVersion}\`)`,
   '',
   '---',
   '',
@@ -457,6 +493,7 @@ const doc = [
   issuesSummary,
   '---',
   '',
+  ...(deltaSection ? [deltaSection, '---', ''] : []),
   `## Full Component Parameter Map`,
   '',
   ...sections,
