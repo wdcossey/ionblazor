@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonList : IonContentComponent, IIonList, IIonModeComponent
+public sealed partial class IonList : IonJsContentComponent, IIonList, IIonModeComponent
 {
     private Func<ValueTask<bool>> _closeSlidingItemsWrapper = null!;
 

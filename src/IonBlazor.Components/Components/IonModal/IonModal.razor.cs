@@ -2,7 +2,7 @@
 
 namespace IonBlazor.Components;
 
-public sealed partial class IonModal : IonContentComponent, IIonModeComponent
+public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
 {
     private readonly string _id = $"ibz-modal-{Stopwatch.GetTimestamp():x}";
 

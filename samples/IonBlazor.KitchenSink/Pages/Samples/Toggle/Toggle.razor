@@ -12,6 +12,20 @@
     </div>
 </div>
 
+<h2>Two-way Binding (@@bind-Checked)</h2>
+<div class="playground__container">
+    <div class="playground__preview">
+        <div class="playground__frame">
+            <IonToggle @bind-Checked="_isOn">Notifications</IonToggle><br /><br />
+            <p>Bound value: <strong>@(_isOn?.ToString() ?? "null")</strong></p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool? _isOn = false;
+}
+
 <h2>On / Off Labels</h2>
 <div class="playground__container">
     <div class="playground__preview">

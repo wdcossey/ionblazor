@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonListOf<TItem> : IonContentComponent, IIonList, IIonModeComponent
+public sealed partial class IonListOf<TItem> : IonJsContentComponent, IIonList, IIonModeComponent
     where TItem : notnull
 {
     [Parameter, EditorRequired]

@@ -1,3 +1,5 @@
+using FluentAssertions;
+
 namespace IonBlazor.UnitTests.Components;
 
 public class IonCheckboxTests : IonTestContext
@@ -103,5 +105,32 @@ public class IonCheckboxTests : IonTestContext
             }));
 
         await Verify(cut.Markup);
+    }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Checked: parallel CheckedChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_CheckedChangedAndIonChange()
+    {
+        bool? capturedChecked = null;
+        IonCheckboxChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonCheckbox>(parameters => parameters
+            .Add(p => p.CheckedChanged, v => capturedChecked = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject { ["checked"] = true, ["value"] = "yes" }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedChecked.Should().Be(true);
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Checked.Should().Be(true);
+        capturedArgs.Value.Should().Be("yes");
+        cut.Instance.Checked.Should().Be(true);
     }
 }

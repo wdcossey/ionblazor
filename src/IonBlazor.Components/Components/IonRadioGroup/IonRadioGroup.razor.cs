@@ -40,10 +40,19 @@ public sealed partial class IonRadioGroup : IonContentComponent
     [Parameter]
     public EventCallback<IonRadioGroupIonChangeEventArgs> IonChange { get; set; }
 
+    /// <summary>
+    /// Fires alongside <see cref="IonChange"/> with the new <see cref="Value"/>, enabling
+    /// <c>@bind-Value</c>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
     public IonRadioGroup()
     {
         _ionChangeReference = IonicEventCallback<__ionChangeEventArgs>.Create(async args =>
         {
+            Value = args.Detail.Value;
+            await ValueChanged.InvokeAsync(args.Detail.Value);
             await IonChange.InvokeAsync(args.Detail with { Sender = this });
         });
 

@@ -41,13 +41,33 @@ This project spans C# and JS. The npm side exists **only** to bundle Ionic's sta
 
 ## Base Classes
 
-- `IonComponent` — base for all components. Handles `IJSRuntime` injection, `JsComponent` lazy module loading, `IonElement` (`ElementReference`), and `DisposeAsync`
-- `IonContentComponent` — extends `IonComponent` with `ChildContent (RenderFragment)`
-- Interfaces: `IIonComponent`, `IIonContentComponent`, `IIonModeComponent`, `IIonColorComponent`
+The hierarchy is a 4-way split. JS plumbing and `ChildContent` are orthogonal — pick the one that
+combines what the component actually needs. Components that don't need JS pay no cost for the
+`Lazy<Task<IJSObjectReference>>` field.
+
+```
+IonComponent                          // IJSRuntime, IonElement, AddEventListener, DisposeAsync
+├── IonContentComponent               // + ChildContent (RenderFragment)
+└── IonJsComponent                    // + abstract JsImportName, lazy JsComponent module
+    └── IonJsContentComponent         // + ChildContent
+```
+
+- `IonComponent` — base for everything. Handles `IJSRuntime` injection, `IonElement`
+  (`ElementReference`), `AddEventListener`, and `DisposeAsync`. No JS module loading.
+- `IonContentComponent` — extends `IonComponent` with `ChildContent (RenderFragment)`. For
+  components that take child content but never call JS methods.
+- `IonJsComponent` — extends `IonComponent` with an abstract `JsImportName` (must be overridden)
+  and a lazy `JsComponent` (`Lazy<Task<IJSObjectReference>>`). For overlays and other components
+  that invoke JS methods but have no `ChildContent` (e.g. `IonAlert`, `IonToast`, `IonActionSheet`,
+  `IonSearchbar`).
+- `IonJsContentComponent` — both JS plumbing **and** `ChildContent`. The most common case for
+  interactive components (`IonInput`, `IonModal`, `IonAccordionGroup`, `IonSelect`, …).
+- Interfaces: `IIonComponent`, `IIonContentComponent`, `IIonModeComponent`, `IIonColorComponent`.
 
 ## JS Interop Pattern
 
-JS modules are loaded lazily per component:
+`IonJsComponent` (and `IonJsContentComponent`) exposes a lazy module reference. Each subclass
+**must** override `JsImportName` — it's abstract:
 
 ```csharp
 internal override string JsImportName => nameof(IonAlert);  // resolves to "IonAlert"
@@ -55,14 +75,37 @@ internal override string JsImportName => nameof(IonAlert);  // resolves to "IonA
 
 This imports `./_content/IonBlazor/IonAlert.js` — **the JS filename must match the PascalCase component name exactly**. All files in `IonBlazor.StaticAssets/wwwroot/` use PascalCase (e.g. `IonAlert.js`, `IonAccordionGroup.js`). This was a known cross-platform casing issue (Windows is forgiving, Linux is not) — now resolved.
 
-Event listeners are wired in `OnAfterRenderAsync` via `AttachIonListenersAsync`, which imports `common.js` and calls `attachListeners`.
+Event listeners are wired in `OnAfterRenderAsync` via `AttachIonListenersAsync`, which imports `common.js` and calls `attachListeners`. This works from any `IonComponent` subclass (it goes through `JsRuntime` directly, not `JsComponent`), so components that listen for Ionic events without invoking JS methods can still use `IonComponent` / `IonContentComponent`.
 
-JS methods are invoked directly via `JsComponent`:
+JS methods are invoked directly via `JsComponent` (only available on `IonJsComponent` subclasses):
 
 ```csharp
 await JsComponent.InvokeVoidAsync("present", IonElement);
 await JsComponent.InvokeAsync<bool>("dismiss", IonElement);
 ```
+
+## Two-Way Binding (`@bind-Value` / `@bind-Checked`)
+
+Several form-style components support Blazor `@bind`. The pattern is a parallel `…Changed` /
+`…Input` `EventCallback` that fires *alongside* the existing `IonChange` / `IonInput`:
+
+- `ValueChanged` (and `CheckedChanged` for `IonToggle` / `IonCheckbox`) fires on commit — i.e.
+  whenever `IonChange` fires. Enables plain `@bind-Value` / `@bind-Checked`.
+- `ValueInput` fires on every keystroke / drag — i.e. whenever `IonInput` fires. Enables
+  `@bind-Value:event="ValueInput"` for live two-way binding on `IonInput`, `IonTextarea`,
+  `IonSearchbar`, `IonRange`.
+
+The callback handler sets the local `Value` / `Checked` *before* invoking the callback so external
+bind targets see the up-to-date state:
+
+```csharp
+Value = value;
+await ValueChanged.InvokeAsync(value);
+await IonChange.InvokeAsync(new IonInputChangeEventArgs { Sender = this, Value = value, ... });
+```
+
+Components currently wired for `@bind`: `IonInput`, `IonTextarea`, `IonSearchbar`, `IonRange`,
+`IonDateTime`, `IonRadioGroup`, `IonSelect<T>`, `IonCheckbox`, `IonToggle`, `IonPickerColumn`.
 
 ## Generator
 
@@ -79,7 +122,7 @@ await JsComponent.InvokeAsync<bool>("dismiss", IonElement);
 - `I{ComponentName}.cs` — **skipped** (commented out); handwritten code uses shared `IIonModeComponent`/`IIonColorComponent` instead
 
 ### Generator design decisions (as of current iteration)
-- Base class: `IonContentComponent` by default; `IonComponent` for components in `NoChildContentComponents` set (`IonBackdrop`, `IonProgressBar`, `IonRefresherContent`, `IonSkeletonText`, `IonSpinner`, `IonRippleEffect`)
+- Base class: `IonContentComponent` by default; `IonComponent` for components in `NoChildContentComponents` set (`IonBackdrop`, `IonProgressBar`, `IonRefresherContent`, `IonSkeletonText`, `IonSpinner`, `IonRippleEffect`). **Note:** this predates the JS/no-JS split — the generator still picks between only the two non-JS bases. Handwritten components that use JS now derive from `IonJsComponent` / `IonJsContentComponent` instead, so generator output for JS-backed components requires manual base-class adjustment until the generator is taught the 4-way choice.
 - Shared interfaces: auto-detected — `mode` prop → `IIonModeComponent`, `color` prop → `IIonColorComponent`
 - `bool?` props: rendered as `attribute="@PropName.AsString()"` in the razor template
 - `Mode` property: always `get; set; } = IonMode.Default` (mutable + default)
@@ -120,6 +163,7 @@ await JsComponent.InvokeAsync<bool>("dismiss", IonElement);
 - `SetupComponentModule(string, Action<BunitJSModuleInterop>)` helper
 - `SetupComponentModule<T>(Action<BunitJSModuleInterop>)` generic helper (uses `typeof(T).Name` — consistent with `nameof()` in components)
 - `CreateJsComponentMock(out IJSObjectReference)` helper for NSubstitute-based JS method tests
+- `InvokeIonEventAsync<TArgs>(string eventName, TArgs args)` — locates the `DotNetObjectReference` registered for an event via the `attachListeners` JS interop call and invokes its callback. Use this to simulate a fired Ionic event end-to-end (e.g. `ionChange`, `ionInput`) and assert that the C# side dispatches both `IonChange` *and* the parallel `ValueChanged` / `CheckedChanged` callback.
 
 ### Test Class Structure
 
@@ -228,6 +272,34 @@ public void Assert_JsImportName()
 }
 ```
 
+**`@bind-Value` / `@bind-Checked` — parallel callback test via `InvokeIonEventAsync`:**
+```csharp
+[Fact]
+public async Task IonChange_FiresBoth_ValueChangedAndIonChange()
+{
+    string? capturedValue = null;
+    IonInputChangeEventArgs? capturedArgs = null;
+
+    var cut = Render<IonInput>(parameters => parameters
+        .Add(p => p.ValueChanged, v => capturedValue = v)
+        .Add(p => p.IonChange, args => capturedArgs = args));
+
+    var payload = new JsonObject
+    {
+        ["detail"] = new JsonObject
+        {
+            ["value"] = "hello",
+            ["event"] = new JsonObject { ["isTrusted"] = true }
+        }
+    };
+    await InvokeIonEventAsync("ionChange", payload);
+
+    capturedValue.Should().Be("hello");
+    capturedArgs!.Value.Should().Be("hello");
+    cut.Instance.Value.Should().Be("hello");
+}
+```
+
 ### What to Test Per Component
 
 For every component, cover:
@@ -237,8 +309,11 @@ For every component, cover:
 - `AdditionalAttributes` passthrough
 - `ChildContent` (if applicable)
 - Each JS method (`InvokeVoidAsync` / `InvokeAsync<T>`) via `JSInterop.Invocations` + FluentAssertions
-- `JsImportName` assertion
+- `JsImportName` assertion (only on `IonJsComponent`-derived components)
 - Builder patterns where present (e.g. `ButtonsBuilder`, `InputsBuilder`)
+- `@bind-Value` / `@bind-Checked` callbacks where present — assert that `ValueChanged` /
+  `ValueInput` / `CheckedChanged` fires alongside `IonChange` / `IonInput`, and that the
+  component's `Value` / `Checked` property is updated **before** the callback fires
 
 ### Reference Test Files
 

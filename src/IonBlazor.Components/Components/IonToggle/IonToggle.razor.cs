@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, IIonColorComponent
+public sealed partial class IonToggle : IonJsContentComponent, IIonModeComponent, IIonColorComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
@@ -12,7 +12,7 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
     /// If true, the toggle is selected.
     /// </summary>
     [Parameter]
-    public bool? Checked { get; init; }
+    public bool? Checked { get; set; }
 
     /// <inheritdoc/>
     [Parameter]
@@ -88,7 +88,7 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
     /// it's only used when the toggle participates in a native &lt;form&gt;.
     /// </summary>
     [Parameter]
-    public string? Value { get; init; }
+    public string? Value { get; set; }
 
     /// <summary>
     /// Emitted when the <see cref="IonToggle"/> loses focus.
@@ -102,6 +102,13 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
     /// </summary>
     [Parameter]
     public EventCallback<IonToggleChangeEventArgs> IonChange { get; set; }
+
+    /// <summary>
+    /// Fires alongside <see cref="IonChange"/> with the new <see cref="Checked"/> value, enabling
+    /// <c>@bind-Checked</c>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<bool?> CheckedChanged { get; set; }
 
     /// <summary>
     /// Emitted when the <see cref="IonToggle"/> has focus.
@@ -120,6 +127,9 @@ public sealed partial class IonToggle : IonContentComponent, IIonModeComponent, 
         {
             var isChecked = args?["detail"]?["checked"]?.GetValue<bool?>();
             var value = args?["detail"]?["value"]?.GetValue<string?>();
+            Checked = isChecked;
+            Value = value;
+            await CheckedChanged.InvokeAsync(isChecked);
             await IonChange.InvokeAsync(new IonToggleChangeEventArgs { Sender = this, Checked = isChecked, Value = value });
         });
 

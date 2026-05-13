@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent, IIonColorComponent
+public sealed partial class IonDateTime : IonJsContentComponent, IIonModeComponent, IIonColorComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionCancelReference;
@@ -275,6 +275,13 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
     public EventCallback<IonDateTimeChangeEventArgs> IonChange { get; set; }
 
     /// <summary>
+    /// Fires alongside <see cref="IonChange"/> with the new <see cref="Value"/>, enabling
+    /// <c>@bind-Value</c>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>
     /// Emitted when the <see cref="IonDateTime"/> has focus.
     /// </summary>
     [Parameter]
@@ -304,6 +311,7 @@ public sealed partial class IonDateTime : IonContentComponent, IIonModeComponent
 
             Value = value;
 
+            await ValueChanged.InvokeAsync(value);
             await IonChange.InvokeAsync(new IonDateTimeChangeEventArgs { Sender = this, Value = value });
         });
 

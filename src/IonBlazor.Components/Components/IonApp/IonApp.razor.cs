@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonApp: IonContentComponent, IIonModeComponent
+public sealed partial class IonApp: IonJsContentComponent, IIonModeComponent
 {
     internal override string JsImportName => nameof(IonApp);
 

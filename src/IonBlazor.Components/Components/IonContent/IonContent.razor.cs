@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonContent : IonContentComponent, IIonColorComponent
+public sealed partial class IonContent : IonJsContentComponent, IIonColorComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<__ionScrollEventArgs?>> _ionScrollReference;
     private readonly DotNetObjectReference<IonicEventCallback<__ionScrollEndEventArgs?>> _ionScrollEndReference;

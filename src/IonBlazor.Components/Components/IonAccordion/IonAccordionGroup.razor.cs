@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonAccordionGroup : IonContentComponent, IIonModeComponent
+public sealed partial class IonAccordionGroup : IonJsContentComponent, IIonModeComponent
 {
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeObjectReference = null!;
 
@@ -102,7 +102,7 @@ public sealed partial class IonAccordionGroup : IonContentComponent, IIonModeCom
 
     internal async ValueTask<IEnumerable<string>> GetValueAsync()
     {
-        return await JsComponent.InvokeAsync<IEnumerable<string>>("getValue", IonElement);
+        return await JsComponent.InvokeAsync<IEnumerable<string>>("getValue", IonElement) ?? [];
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonActionSheet<TButtonData> : IonComponent, IIonModeComponent
+public sealed partial class IonActionSheet<TButtonData> : IonJsComponent, IIonModeComponent
     where TButtonData : class, IActionSheetButtonData
 {
     private DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference = null!;

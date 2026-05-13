@@ -167,4 +167,60 @@ public class IonTextareaTests : IonTestContext
         var cut = Render<IonTextarea>();
         Assert.Equal(nameof(IonTextarea), cut.Instance.JsImportName);
     }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Value: parallel ValueChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_ValueChangedAndIonChange()
+    {
+        string? capturedValue = null;
+        IonTextareaChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonTextarea>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject
+            {
+                ["value"] = "multi\nline",
+                ["event"] = new System.Text.Json.Nodes.JsonObject { ["isTrusted"] = true }
+            }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().Be("multi\nline");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("multi\nline");
+        cut.Instance.Value.Should().Be("multi\nline");
+    }
+
+    [Fact]
+    public async Task IonInput_FiresBoth_ValueInputAndIonInput()
+    {
+        string? capturedValue = null;
+        IonTextareaInputEventArgs? capturedArgs = null;
+
+        var cut = Render<IonTextarea>(parameters => parameters
+            .Add(p => p.ValueInput, v => capturedValue = v)
+            .Add(p => p.IonInput, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject
+            {
+                ["value"] = "typing",
+                ["event"] = new System.Text.Json.Nodes.JsonObject { ["isTrusted"] = true }
+            }
+        };
+        await InvokeIonEventAsync("ionInput", payload);
+
+        capturedValue.Should().Be("typing");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("typing");
+        cut.Instance.Value.Should().Be("typing");
+    }
 }

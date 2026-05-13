@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonReorderGroup : IonContentComponent
+public sealed partial class IonReorderGroup : IonJsContentComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionItemReorderReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionReorderEndReference;

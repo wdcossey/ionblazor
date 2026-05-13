@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 
@@ -123,5 +124,32 @@ public class IonPickerColumnTests : IonTestContext
     {
         var cut = Render<IonPickerColumn>();
         Assert.Equal(nameof(IonPickerColumn), cut.Instance.JsImportName);
+    }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Value: parallel ValueChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_ValueChangedAndIonChange()
+    {
+        string? capturedValue = null;
+        IonPickerColumnIonChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonPickerColumn>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject { ["value"] = "option-2" }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().Be("option-2");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("option-2");
+        capturedArgs.Sender.Should().BeSameAs(cut.Instance);
+        cut.Instance.Value.Should().Be("option-2");
     }
 }

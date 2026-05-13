@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonRange : IonContentComponent, IIonColorComponent, IIonModeComponent
+public sealed partial class IonRange : IonJsContentComponent, IIonColorComponent, IIonModeComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
@@ -150,6 +150,14 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     public EventCallback<IRangeChangeEventArgs> IonChange { get; set; }
 
     /// <summary>
+    /// Fires alongside <see cref="IonChange"/> with the new <see cref="Value"/>, enabling
+    /// <c>@bind-Value</c>. Like <see cref="IonChange"/> this fires when the user releases the knob, not
+    /// continuously while dragging — use <see cref="IonInput"/> for live updates.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IRangeValue?> ValueChanged { get; set; }
+
+    /// <summary>
     /// Emitted when the <see cref="IonRange"/> has focus.
     /// </summary>
     [Parameter]
@@ -161,6 +169,14 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
     /// </summary>
     [Parameter]
     public EventCallback<RangeChangeEventArgs> IonInput { get; set; }
+
+    /// <summary>
+    /// Fires alongside <see cref="IonInput"/> with the new <see cref="Value"/> continuously while the knob
+    /// is being dragged. Use with <c>@bind-Value:event="ValueInput"</c> for live two-way binding;
+    /// otherwise <c>@bind-Value</c> alone fires only on knob release via <see cref="ValueChanged"/>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IRangeValue?> ValueInput { get; set; }
 
     /// <summary>
     /// Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard
@@ -186,6 +202,8 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
         _ionChangeReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var value = GetRangeValue(args);
+            Value = value;
+            await ValueChanged.InvokeAsync(value);
             await IonChange.InvokeAsync(new RangeChangeEventArgs { Sender = this, Value = value });
         });
 
@@ -197,6 +215,8 @@ public sealed partial class IonRange : IonContentComponent, IIonColorComponent, 
         _ionInputReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var value = GetRangeValue(args);
+            Value = value;
+            await ValueInput.InvokeAsync(value);
             await IonInput.InvokeAsync(new RangeChangeEventArgs { Sender = this, Value = value });
         });
 

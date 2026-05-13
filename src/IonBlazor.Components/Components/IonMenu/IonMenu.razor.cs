@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonMenu: IonContentComponent, IIonModeComponent
+public sealed partial class IonMenu: IonJsContentComponent, IIonModeComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionDidCloseReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionDidOpenReference;

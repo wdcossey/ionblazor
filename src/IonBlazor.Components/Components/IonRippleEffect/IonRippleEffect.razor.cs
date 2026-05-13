@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonRippleEffect : IonContentComponent
+public sealed partial class IonRippleEffect : IonJsContentComponent
 {
     internal override string JsImportName => nameof(IonRippleEffect);
 

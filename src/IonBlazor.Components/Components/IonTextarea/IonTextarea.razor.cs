@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonTextarea : IonContentComponent, IIonColorComponent, IIonModeComponent
+public sealed partial class IonTextarea : IonJsContentComponent, IIonColorComponent, IIonModeComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
@@ -223,6 +223,13 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
     public EventCallback<IonTextareaChangeEventArgs> IonChange { get; set; }
 
     /// <summary>
+    /// Fires alongside <see cref="IonChange"/> with the new <see cref="Value"/>, enabling
+    /// <c>@bind-Value</c>. Like <see cref="IonChange"/> this fires on commit (blur), not on every keystroke.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>
     /// Emitted when the input has focus.
     /// </summary>
     [Parameter]
@@ -239,6 +246,14 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
     [Parameter]
     public EventCallback<IonTextareaInputEventArgs> IonInput { get; set; }
 
+    /// <summary>
+    /// Fires alongside <see cref="IonInput"/> with the new <see cref="Value"/> on every keystroke.
+    /// Use with <c>@bind-Value:event="ValueInput"</c> for live (per-keystroke) two-way binding;
+    /// otherwise <c>@bind-Value</c> alone fires only on commit (blur) via <see cref="ValueChanged"/>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueInput { get; set; }
+
 
     public IonTextarea()
     {
@@ -251,6 +266,8 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
         {
             var value = args?["detail"]?["value"]?.GetValue<string?>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>() is true;
+            Value = value;
+            await ValueChanged.InvokeAsync(value);
             await IonChange.InvokeAsync(new IonTextareaChangeEventArgs() { Sender = this, Value = value, Event = new IonInputEvent(isTrusted) });
         });
 
@@ -264,6 +281,8 @@ public sealed partial class IonTextarea : IonContentComponent, IIonColorComponen
             var value = args?["detail"]?["value"]?.GetValue<string?>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>() is true;
             var inputArgs = new IonTextareaInputEventArgs { Sender = this, Value = value, Event = new IonInputEvent(isTrusted) };
+            Value = value;
+            await ValueInput.InvokeAsync(value);
             await IonInput.InvokeAsync(inputArgs);
 
             if (inputArgs.Value?.Equals(value) is false)

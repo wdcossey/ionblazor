@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonPickerColumn : IonContentComponent, IIonModeComponent, IIonColorComponent
+public sealed partial class IonPickerColumn : IonJsContentComponent, IIonModeComponent, IIonColorComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
 
@@ -25,6 +25,13 @@ public sealed partial class IonPickerColumn : IonContentComponent, IIonModeCompo
     [Parameter] public string? Value { get; set; }
 
     /// <summary>
+    /// Fires alongside <see cref="IonChange"/> with the new <see cref="Value"/>, enabling
+    /// <c>@bind-Value</c>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>
     /// Emitted when the value has changed.
     /// </summary>
     [Parameter]
@@ -43,6 +50,7 @@ public sealed partial class IonPickerColumn : IonContentComponent, IIonModeCompo
         {
             var value = args?["detail"]?["value"]?.GetValue<string>();
             Value = value;
+            await ValueChanged.InvokeAsync(value);
 
             await IonChange.InvokeAsync(
                 new IonPickerColumnIonChangeEventArgs

@@ -193,4 +193,30 @@ public class IonDateTimeTests : IonTestContext
         var cut = Render<IonDateTime>();
         Assert.Equal(nameof(IonDateTime), cut.Instance.JsImportName);
     }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Value: parallel ValueChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_ValueChangedAndIonChange()
+    {
+        string? capturedValue = null;
+        IonDateTimeChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonDateTime>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject { ["value"] = "2026-05-12T10:30:00" }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().Be("2026-05-12T10:30:00");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("2026-05-12T10:30:00");
+        cut.Instance.Value.Should().Be("2026-05-12T10:30:00");
+    }
 }

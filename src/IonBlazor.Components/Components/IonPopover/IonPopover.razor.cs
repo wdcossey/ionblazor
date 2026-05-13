@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonPopover : IonContentComponent, IIonModeComponent
+public sealed partial class IonPopover : IonJsContentComponent, IIonModeComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference;

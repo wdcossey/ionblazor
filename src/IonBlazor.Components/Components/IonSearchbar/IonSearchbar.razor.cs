@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIonColorComponent
+public sealed partial class IonSearchbar : IonJsComponent, IIonModeComponent, IIonColorComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionCancelReference;
@@ -178,6 +178,13 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     public EventCallback<IonSearchbarChangeEventArgs> IonChange { get; set; }
 
     /// <summary>
+    /// Fires alongside <see cref="IonChange"/> with the new <see cref="Value"/>, enabling
+    /// <c>@bind-Value</c>. Like <see cref="IonChange"/> this fires on commit (blur / Enter / clear / cancel).
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>
     /// Emitted when the clear input button is clicked.
     /// </summary>
     [Parameter]
@@ -195,6 +202,15 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
     [Parameter]
     public EventCallback<IonSearchbarInputEventArgs> IonInput { get; set; }
 
+    /// <summary>
+    /// Fires alongside <see cref="IonInput"/> with the new <see cref="Value"/> on every keystroke.
+    /// Use with <c>@bind-Value:event="ValueInput"</c> for live (per-keystroke) two-way binding;
+    /// otherwise <c>@bind-Value</c> alone fires only on commit (blur / Enter / clear / cancel) via
+    /// <see cref="ValueChanged"/>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueInput { get; set; }
+
     public IonSearchbar()
     {
         _ionBlurReference = IonicEventCallback.Create(async () => await IonBlur.InvokeAsync(this));
@@ -207,6 +223,7 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
             Value = value;
 
+            await ValueChanged.InvokeAsync(value);
             await IonChange.InvokeAsync(new IonSearchbarChangeEventArgs { Value = value, IsTrusted = isTrusted });
         });
 
@@ -218,8 +235,9 @@ public sealed partial class IonSearchbar : IonComponent, IIonModeComponent, IIon
         {
             var value = args?["detail"]?["value"]?.GetValue<string>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>();
-            //Value = value;
+            Value = value;
 
+            await ValueInput.InvokeAsync(value);
             await IonInput.InvokeAsync(new IonSearchbarInputEventArgs { Value = value, IsTrusted = isTrusted });
         });
     }

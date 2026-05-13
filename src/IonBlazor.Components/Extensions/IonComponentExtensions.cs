@@ -9,4 +9,10 @@ internal static class IonComponentExtensions
         ElementReference reference,
         params IonEvent[]? args) =>
         await component.JsRuntime.AttachIonListenersAsync(reference, args);
+
+    internal static async ValueTask AttachIonListenersAsync(
+        this IonJsComponent component,
+        ElementReference reference,
+        params IonEvent[]? args) =>
+        await component.JsRuntime.AttachIonListenersAsync(reference, args);
 }

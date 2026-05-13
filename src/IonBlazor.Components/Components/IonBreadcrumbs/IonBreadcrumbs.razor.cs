@@ -2,7 +2,7 @@
 
 namespace IonBlazor.Components;
 
-public sealed partial class IonBreadcrumbs : IonContentComponent, IIonModeComponent, IIonColorComponent
+public sealed partial class IonBreadcrumbs : IonJsContentComponent, IIonModeComponent, IIonColorComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionCollapsedClickReference;
 

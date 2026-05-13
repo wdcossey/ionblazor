@@ -106,6 +106,13 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
     public EventCallback<IonCheckboxChangeEventArgs> IonChange { get; set; }
 
     /// <summary>
+    /// Fires alongside <see cref="IonChange"/> with the new <see cref="Checked"/> value, enabling
+    /// <c>@bind-Checked</c>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<bool?> CheckedChanged { get; set; }
+
+    /// <summary>
     /// Emitted when the <see cref="IonToggle"/> has focus.
     /// </summary>
     [Parameter]
@@ -123,6 +130,7 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
             Checked = isChecked is true;
             Value = value;
 
+            await CheckedChanged.InvokeAsync(Checked);
             await IonChange.InvokeAsync(new IonCheckboxChangeEventArgs
             {
                 Sender = this,
