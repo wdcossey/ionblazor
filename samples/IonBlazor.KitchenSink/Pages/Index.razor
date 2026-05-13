@@ -137,7 +137,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
             <IonSelect TValue="@(string)" Label="Default label"  Multiple="@true" Placeholder="Favorite Fruit" IonChange="@(args =>
                                                                                                                                 {
                                                                                                                                     Console.WriteLine(args.Value!.ToString());
-                                                                                                                                    Console.WriteLine(string.Join("|", (args.Sender!.Value as string[]) ?? new [] { (string?)args.Sender.Value }));
+                                                                                                                                    Console.WriteLine(string.Join("|", args.Sender!.Value ?? []));
                                                                                                                                 })">
                 <IonSelectOption Value="apple">Apple</IonSelectOption>
                 <IonSelectOption Value="banana">Banana</IonSelectOption>

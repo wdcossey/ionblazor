@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent, IIonModeComponent
+public partial class IonSelect<TValue> : IonJsContentComponent, IIonColorComponent, IIonModeComponent
     where TValue : notnull
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
@@ -178,7 +178,14 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
     /// The value of the select.
     /// </summary>
     [Parameter]
-    public object? Value { get; set; }
+    public TValue[]? Value { get; set; }
+
+    /// <summary>
+    /// Fires alongside <see cref="IonChange"/> with the new <see cref="Value"/> value, enabling
+    /// <c>@bind-Value</c>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TValue[]> ValueChanged { get; set; }
 
     /// <summary>
     /// Emitted when the input loses focus.
@@ -238,6 +245,9 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
             IonEvent.Set("ionDismiss", _ionDismissReference),
             IonEvent.Set("ionFocus", _ionFocusReference)
         );
+
+        if (Value is not null && Value.Length > 1)
+            await JsComponent.InvokeVoidAsync("setValue", IonElement, Value.Select(v => v.ToString()));
     }
 
     /// <summary>
@@ -267,9 +277,12 @@ public partial class IonSelect<TValue> : IonContentComponent, IIonColorComponent
         var values = value switch
         {
             null => [],
-            JsonArray => value.Deserialize<TValue[]>(),
+            JsonArray jsonArray => jsonArray.Deserialize<TValue[]>(),
             _ => [value.GetValue<TValue>()]
         };
+
+        Value = values;
+        await ValueChanged.InvokeAsync(values ?? []);
 
         await IonChange.InvokeAsync(new IonSelectChangeEventArgs<TValue>
         {

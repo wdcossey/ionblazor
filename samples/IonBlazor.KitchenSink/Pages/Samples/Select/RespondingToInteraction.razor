@@ -5,7 +5,9 @@
                    Placeholder="Select fruit"
                    IonChange="OnIonChange"
                    IonCancel="OnIonCancel"
-                   IonDismiss="OnIonDismiss">
+                   IonDismiss="OnIonDismiss"
+                   @bind-Value="@Fruit"
+                   @bind-Value:event="ValueChanged">
             <IonSelectOption Value="apples">Apples</IonSelectOption>
             <IonSelectOption Value="oranges">Oranges</IonSelectOption>
             <IonSelectOption Value="bananas">Bananas</IonSelectOption>
@@ -16,6 +18,8 @@
 @code {
     [CascadingParameter(Name = nameof(Console))]
     private PlaygroundConsole? Console { get; init; }
+
+    private string[]? Fruit { get; set; } = ["oranges"];
 
     private void OnIonChange(IonSelectChangeEventArgs<string> args)
     {

@@ -15,3 +15,7 @@ export function open(element: HTMLIonSelectElement, target?: HTMLElement): void 
 
     element.open();
 }
+
+export function setValue(element: HTMLIonSelectElement, value: any[]) {
+    element.value = value;
+}
