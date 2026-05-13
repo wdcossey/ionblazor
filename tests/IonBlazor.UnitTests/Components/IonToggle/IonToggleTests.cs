@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 
@@ -128,5 +129,32 @@ public class IonToggleTests : IonTestContext
     {
         var cut = Render<IonToggle>();
         Assert.Equal(nameof(IonToggle), cut.Instance.JsImportName);
+    }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Checked: parallel CheckedChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_CheckedChangedAndIonChange()
+    {
+        bool? capturedChecked = null;
+        IonToggleChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonToggle>(parameters => parameters
+            .Add(p => p.CheckedChanged, v => capturedChecked = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject { ["checked"] = true, ["value"] = "on" }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedChecked.Should().Be(true);
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Checked.Should().Be(true);
+        capturedArgs.Value.Should().Be("on");
+        cut.Instance.Checked.Should().Be(true);
     }
 }

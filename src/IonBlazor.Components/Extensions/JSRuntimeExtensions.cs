@@ -15,8 +15,11 @@ internal static class JSRuntimeExtensions
         await jsModule.InvokeVoidAsync("attachListeners", args, reference).AsTask();
     }
 
-    internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, params object?[]? args)
+    internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>>? lazyRef, string identifier, params object?[]? args)
     {
+        if (lazyRef is null)
+            return;
+
         IJSObjectReference jsModule = await lazyRef.Value;
         await jsModule.InvokeVoidAsync(identifier, args);
     }
@@ -30,20 +33,29 @@ internal static class JSRuntimeExtensions
         await jsModule.InvokeVoidAsync(identifier, args);
     }
 
-    internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, CancellationToken cancellationToken, params object?[]? args)
+    internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>>? lazyRef, string identifier, CancellationToken cancellationToken, params object?[]? args)
     {
+        if (lazyRef is null)
+            return;
+
         IJSObjectReference jsModule = await lazyRef.Value;
         await jsModule.InvokeVoidAsync(identifier, cancellationToken, args);
     }
 
-    internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, TimeSpan timeout, params object?[]? args)
+    internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>>? lazyRef, string identifier, TimeSpan timeout, params object?[]? args)
     {
+        if (lazyRef is null)
+            return;
+
         IJSObjectReference jsModule = await lazyRef.Value;
         await jsModule.InvokeVoidAsync(identifier, timeout, args);
     }
 
-    internal static async ValueTask<TValue> InvokeAsync<TValue>(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, params object?[]? args)
+    internal static async ValueTask<TValue?> InvokeAsync<TValue>(this Lazy<Task<IJSObjectReference>>? lazyRef, string identifier, params object?[]? args)
     {
+        if (lazyRef is null)
+            return default;
+
         IJSObjectReference jsModule = await lazyRef.Value;
         return await jsModule.InvokeAsync<TValue>(identifier, args);
     }
@@ -57,20 +69,29 @@ internal static class JSRuntimeExtensions
         return await jsModule.InvokeAsync<TValue>(identifier, args);
     }
 
-    internal static async ValueTask<TValue> InvokeAsync<TValue>(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, CancellationToken cancellationToken, params object?[]? args)
+    internal static async ValueTask<TValue?> InvokeAsync<TValue>(this Lazy<Task<IJSObjectReference>>? lazyRef, string identifier, CancellationToken cancellationToken, params object?[]? args)
     {
+        if (lazyRef is null)
+            return default;
+
         IJSObjectReference jsModule = await lazyRef.Value;
         return await jsModule.InvokeAsync<TValue>(identifier, cancellationToken, args);
     }
 
-    internal static async ValueTask<TValue> InvokeAsync<TValue>(this Lazy<Task<IJSObjectReference>> lazyRef, string identifier, TimeSpan timeout, params object?[]? args)
+    internal static async ValueTask<TValue?> InvokeAsync<TValue>(this Lazy<Task<IJSObjectReference>>? lazyRef, string identifier, TimeSpan timeout, params object?[]? args)
     {
+        if (lazyRef is null)
+            return default;
+
         IJSObjectReference jsModule = await lazyRef.Value;
         return await jsModule.InvokeAsync<TValue>(identifier, timeout, args);
     }
 
-    internal static async ValueTask DisposeAsync(this Lazy<Task<IJSObjectReference>> lazyRef)
+    internal static async ValueTask DisposeAsync(this Lazy<Task<IJSObjectReference>>? lazyRef)
     {
+        if (lazyRef is null)
+            return ;
+
         IJSObjectReference jsModule = await lazyRef.Value;
         await jsModule.DisposeAsync();
     }

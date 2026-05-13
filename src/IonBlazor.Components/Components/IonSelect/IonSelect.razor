@@ -1,5 +1,5 @@
 ﻿@namespace IonBlazor.Components
-@inherits IonContentComponent
+@inherits IonJsContentComponent
 @typeparam TValue where TValue: notnull
 
 <ion-select @ref="IonElement"
@@ -24,7 +24,7 @@
             selected-text="@SelectedText"
             shape="@Shape"
             toggle-icon="@ToggleIcon"
-            value="@Value">
+            value="@(Value is null ? null : Value.FirstOrDefault())">
     <CascadingValue Value="@(this)" Name="Parent">
         <CascadingValue Value="@Multiple" Name="IsMultiple">
             <CascadingValue Value="@(Multiple is true ? typeof(TValue[]) : typeof(TValue))" Name="@nameof(TValue)">

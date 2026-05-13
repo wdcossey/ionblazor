@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonTab : IonContentComponent
+public sealed partial class IonTab : IonJsContentComponent
 {
     internal override string JsImportName => nameof(IonTab);
 

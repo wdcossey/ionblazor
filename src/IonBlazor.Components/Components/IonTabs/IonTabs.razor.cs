@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonTabs : IonContentComponent
+public sealed partial class IonTabs : IonJsContentComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsDidChangeReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionTabsWillChangeReference;
@@ -38,7 +38,7 @@ public sealed partial class IonTabs : IonContentComponent
     /// Get the currently selected tab.
     /// </summary>
     /// <returns></returns>
-    public ValueTask<string> GetSelectedAsync() =>
+    public ValueTask<string?> GetSelectedAsync() =>
         JsComponent.InvokeAsync<string>("getSelected", IonElement);
 
     /// <summary>

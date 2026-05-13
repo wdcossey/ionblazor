@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 
@@ -182,5 +183,61 @@ public class IonInputTests : IonTestContext
     {
         var cut = Render<IonInput>();
         Assert.Equal(nameof(IonInput), cut.Instance.JsImportName);
+    }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Value: parallel ValueChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_ValueChangedAndIonChange()
+    {
+        string? capturedValue = null;
+        IonInputChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonInput>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject
+            {
+                ["value"] = "hello",
+                ["event"] = new JsonObject { ["isTrusted"] = true }
+            }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().Be("hello");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("hello");
+        cut.Instance.Value.Should().Be("hello");
+    }
+
+    [Fact]
+    public async Task IonInput_FiresBoth_ValueInputAndIonInputEvent()
+    {
+        string? capturedValue = null;
+        IonInputInputEventArgs? capturedArgs = null;
+
+        var cut = Render<IonInput>(parameters => parameters
+            .Add(p => p.ValueInput, v => capturedValue = v)
+            .Add(p => p.IonInputEvent, args => capturedArgs = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject
+            {
+                ["value"] = "h",
+                ["event"] = new JsonObject { ["isTrusted"] = true }
+            }
+        };
+        await InvokeIonEventAsync("ionInput", payload);
+
+        capturedValue.Should().Be("h");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("h");
+        cut.Instance.Value.Should().Be("h");
     }
 }

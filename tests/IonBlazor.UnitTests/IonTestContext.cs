@@ -1,3 +1,4 @@
+using IonBlazor.Components;
 using Microsoft.JSInterop;
 using NSubstitute;
 
@@ -34,5 +35,20 @@ public abstract class IonTestContext : BunitContext
         mock = Substitute.For<IJSObjectReference>();
         IJSObjectReference? captured = mock;
         return new Lazy<Task<IJSObjectReference>>(() => Task.FromResult(captured));
+    }
+
+    /// <summary>
+    /// Locates the <see cref="IonicEventCallback{TArgs}"/> registered for <paramref name="eventName"/>
+    /// (via the <c>attachListeners</c> JS interop call) and invokes it with <paramref name="args"/>,
+    /// simulating an event fired by the underlying Ionic web component.
+    /// </summary>
+    protected async Task InvokeIonEventAsync<TArgs>(string eventName, TArgs args)
+        where TArgs : class
+    {
+        JSRuntimeInvocation invocation = JSInterop.Invocations["attachListeners"].Single();
+        IEnumerable<IonEvent> events = (IEnumerable<IonEvent>)invocation.Arguments[0]!;
+        IonEvent target = events.Single(e => e.Event == eventName);
+        var dotNetRef = (DotNetObjectReference<IonicEventCallback<TArgs>>)target.Reference!;
+        await dotNetRef.Value.OnCallbackEvent(args);
     }
 }

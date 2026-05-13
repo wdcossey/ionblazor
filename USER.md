@@ -3,6 +3,12 @@
 These are open questions the generator can't resolve automatically from the Stencil metadata.
 Tick `[x]` when verified and I'll incorporate the findings.
 
+> **Heads-up (post base-class split):** Section 1 was written when the runtime hierarchy was
+> 2-way (`IonComponent` / `IonContentComponent`). The hierarchy is now 4-way — see
+> [CLAUDE.md → Base Classes](CLAUDE.md). When teaching the generator about base-class
+> selection, the choice is now a matrix of `{has-JS, no-JS} × {has-ChildContent, no-ChildContent}`,
+> not a single boolean. The list below is still useful as the "no ChildContent" axis.
+
 ---
 
 ## 1 — Base Class: `IonComponent` vs `IonContentComponent`

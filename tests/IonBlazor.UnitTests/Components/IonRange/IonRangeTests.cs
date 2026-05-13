@@ -166,4 +166,52 @@ public class IonRangeTests : IonTestContext
         var cut = Render<IonRange>();
         Assert.Equal(nameof(IonRange), cut.Instance.JsImportName);
     }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Value: parallel ValueChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_ValueChangedAndIonChange()
+    {
+        IRangeValue? capturedValue = null;
+        IRangeChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonRange>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject { ["value"] = 42 }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().BeOfType<RangeValue>().Which.Value.Should().Be(42);
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().BeOfType<RangeValue>().Which.Value.Should().Be(42);
+        cut.Instance.Value.Should().BeOfType<RangeValue>().Which.Value.Should().Be(42);
+    }
+
+    [Fact]
+    public async Task IonInput_FiresBoth_ValueInputAndIonInput()
+    {
+        IRangeValue? capturedValue = null;
+        IRangeChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonRange>(parameters => parameters
+            .Add(p => p.ValueInput, v => capturedValue = v)
+            .Add(p => p.IonInput, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject { ["value"] = 17 }
+        };
+        await InvokeIonEventAsync("ionInput", payload);
+
+        capturedValue.Should().BeOfType<RangeValue>().Which.Value.Should().Be(17);
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().BeOfType<RangeValue>().Which.Value.Should().Be(17);
+        cut.Instance.Value.Should().BeOfType<RangeValue>().Which.Value.Should().Be(17);
+    }
 }

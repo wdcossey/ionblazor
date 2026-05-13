@@ -25,7 +25,7 @@
             selected-text="@SelectedText"
             shape="@Shape"
             toggle-icon="@ToggleIcon"
-            value="@Value">
+            value="@(Value is null ? null : Value.FirstOrDefault())">
     <CascadingValue Value="@(this)" Name="Parent">
         <CascadingValue Value="@Multiple" Name="IsMultiple">
             <CascadingValue Value="@(Multiple is true ? typeof(TItem[]) : typeof(TItem))" Name="@nameof(TItem)">

@@ -2,7 +2,7 @@
 
 namespace IonBlazor.Components;
 
-public partial class IonPickerLegacy : IonComponent, IIonModeComponent
+public partial class IonPickerLegacy : IonJsComponent, IIonModeComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
@@ -207,7 +207,7 @@ public partial class IonPickerLegacy : IonComponent, IIonModeComponent
     /// <summary>
     /// Get the column that matches the specified name.
     /// </summary>
-    public async ValueTask<JsonObject> GetColumnAsync(string name) =>
+    public async ValueTask<JsonObject?> GetColumnAsync(string name) =>
         await JsComponent.InvokeAsync<JsonObject>("getColumn", IonElement, name);
 
     /// <summary>

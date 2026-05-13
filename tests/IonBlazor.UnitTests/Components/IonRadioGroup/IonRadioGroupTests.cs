@@ -1,3 +1,5 @@
+using FluentAssertions;
+
 namespace IonBlazor.UnitTests.Components;
 
 public class IonRadioGroupTests : IonTestContext
@@ -55,5 +57,32 @@ public class IonRadioGroupTests : IonTestContext
             }));
 
         await Verify(cut.Markup);
+    }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Value: parallel ValueChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_ValueChangedAndIonChange()
+    {
+        string? capturedValue = null;
+        IonRadioGroupIonChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonRadioGroup>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new IonRadioGroup.__ionChangeEventArgs
+        {
+            Detail = new IonRadioGroupIonChangeEventArgs { Value = "option-b" }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().Be("option-b");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("option-b");
+        capturedArgs.Sender.Should().BeSameAs(cut.Instance);
+        cut.Instance.Value.Should().Be("option-b");
     }
 }

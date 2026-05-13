@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonItemSliding : IonContentComponent
+public sealed partial class IonItemSliding : IonJsContentComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionDragReference;
 

@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonLoading: IonContentComponent, IIonLoading, IIonModeComponent
+public sealed partial class IonLoading: IonJsContentComponent, IIonLoading, IIonModeComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference ;

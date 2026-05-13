@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonRefresher: IonContentComponent
+public sealed partial class IonRefresher: IonJsContentComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionPullReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionRefreshReference;

@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 
@@ -10,6 +11,7 @@ public class IonSelectTests : IonTestContext
         SetupComponentModule(nameof(IonSelect<string>), module =>
         {
             module.SetupVoid("open", _ => true).SetVoidResult();
+            module.SetupVoid("setValue", _ => true).SetVoidResult();
         });
     }
 
@@ -146,5 +148,102 @@ public class IonSelectTests : IonTestContext
     {
         var cut = Render<IonSelect<string>>();
         Assert.Equal(nameof(IonSelect<string>), cut.Instance.JsImportName);
+    }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Value: parallel ValueChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_ValueChangedAndIonChange_ForSingleValue()
+    {
+        string[]? capturedValue = null;
+        IonSelectChangeEventArgs<string>? capturedArgs = null;
+
+        var cut = Render<IonSelect<string>>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject { ["value"] = "apple" }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().BeEquivalentTo(["apple"]);
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().BeEquivalentTo(["apple"]);
+        cut.Instance.Value.Should().BeEquivalentTo(["apple"]);
+    }
+
+    [Fact]
+    public async Task IonChange_FiresBoth_ValueChangedAndIonChange_ForMultipleValues()
+    {
+        string[]? capturedValue = null;
+        IonSelectChangeEventArgs<string>? capturedArgs = null;
+
+        var cut = Render<IonSelect<string>>(parameters => parameters
+            .Add(p => p.Multiple, true)
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject
+            {
+                ["value"] = new JsonArray { "apple", "orange" }
+            }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().BeEquivalentTo(["apple", "orange"]);
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().BeEquivalentTo(["apple", "orange"]);
+        cut.Instance.Value.Should().BeEquivalentTo(["apple", "orange"]);
+    }
+
+    [Fact]
+    public async Task IonChange_NullValue_YieldsEmptyArray()
+    {
+        string[]? capturedValue = null;
+
+        Render<IonSelect<string>>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject { ["value"] = null }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().NotBeNull().And.BeEmpty();
+    }
+
+    // ---------------------------------------------------------------------------
+    // setValue JS interop: invoked on first render when seeded with multiple values
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public void OnAfterRender_InvokesSetValue_WhenMultipleSeedValuesProvided()
+    {
+        Render<IonSelect<string>>(parameters => parameters
+            .Add(p => p.Multiple, true)
+            .Add(p => p.Value, ["apple", "orange"]));
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["setValue"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>();
+        invocation.Arguments[1]
+            .Should().BeAssignableTo<IEnumerable<string>>()
+            .Which.Should().BeEquivalentTo(["apple", "orange"]);
+    }
+
+    [Fact]
+    public void OnAfterRender_DoesNotInvokeSetValue_WhenSingleSeedValueProvided()
+    {
+        Render<IonSelect<string>>(parameters => parameters
+            .Add(p => p.Value, ["apple"]));
+
+        JSInterop.Invocations["setValue"].Should().BeEmpty();
     }
 }

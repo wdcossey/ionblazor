@@ -402,3 +402,6 @@ FodyWeavers.xsd
 # Ionic Assets
 **/wwwroot/@ionic/
 **/IonBlazor/wwwroot/
+
+# TypeScript compiler output (generated from Typescript/*.ts during dotnet build)
+src/IonBlazor.StaticAssets/wwwroot/*.js

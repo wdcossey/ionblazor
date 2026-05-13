@@ -21,11 +21,11 @@
             <IonButton onclick="@(() => { _ = _modal.DismissAsync(null, "cancel"); } )">Cancel</IonButton>
         </IonButtons>
         <IonButtons slot="end">
-            <IonButton @onclick="@(() => { _ = _modal.DismissAsync(_currentValue, "confirm"); } )">Done</IonButton>
+            <IonButton @onclick="@(() => { _ = _modal.DismissAsync(_onChangeValue, "confirm"); } )">Done</IonButton>
         </IonButtons>
     </IonToolbar>
     <IonPicker class="picker-modal-picker">
-        <IonPickerColumn Value="@_currentValue" IonChange="OnChange">
+        <IonPickerColumn @bind-Value="@_bindValue" @bind-Value:event="ValueChanged" IonChange="OnChange">
             <IonPickerColumnOption Value="" Disabled="@true">--</IonPickerColumnOption>
             <IonPickerColumnOption Value="javascript">Javascript</IonPickerColumnOption>
             <IonPickerColumnOption Value="typescript">Typescript</IonPickerColumnOption>
@@ -39,17 +39,18 @@
 
 @code {
     IonModal _modal = null!;
-    string _currentValue = "javascript";
+    string _bindValue = "javascript";
+    string _onChangeValue = "javascript";
     string _message = string.Empty;
 
     private void OnChange(IonPickerColumnIonChangeEventArgs args)
     {
-        _currentValue = args.Value!;
+        _onChangeValue = args.Value!;
     }
 
     private void OnDidDismiss(IonModalDismissEventArgs args)
     {
-        _message = System.Text.Json.JsonSerializer.Serialize(args);
+        _message = $"args: {System.Text.Json.JsonSerializer.Serialize(args)}<br/>@bind-Value: {_bindValue}";
         StateHasChanged();
     }
 

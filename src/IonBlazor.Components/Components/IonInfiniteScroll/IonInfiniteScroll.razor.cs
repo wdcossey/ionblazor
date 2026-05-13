@@ -1,6 +1,6 @@
 ﻿namespace IonBlazor.Components;
 
-public sealed partial class IonInfiniteScroll : IonContentComponent
+public sealed partial class IonInfiniteScroll : IonJsContentComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionInfiniteReference;
 

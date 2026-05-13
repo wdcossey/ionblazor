@@ -9,8 +9,8 @@ interface ListenerConfig {
 
 export function attachListener(type: string, element: HTMLElement, ref: DotNetObjectReference): void {
     element.addEventListener(type, (ev: Event) => {
-        const customEv = ev as CustomEvent;
-        ref.invokeMethodAsync(dotNetCallbackMethod, { tagName: (ev.target as HTMLElement).tagName, detail: customEv.detail });
+        ref.invokeMethodAsync(dotNetCallbackMethod, { tagName: (ev.target as HTMLElement).tagName, detail: (ev as CustomEvent).detail })
+            .catch(err => console.error(`IonBlazor: ${dotNetCallbackMethod} for "${type}" failed`, err));
     });
 }
 

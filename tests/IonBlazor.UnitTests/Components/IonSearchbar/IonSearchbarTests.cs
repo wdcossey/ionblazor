@@ -152,4 +152,60 @@ public class IonSearchbarTests : IonTestContext
         var cut = Render<IonSearchbar>();
         Assert.Equal(nameof(IonSearchbar), cut.Instance.JsImportName);
     }
+
+    // ---------------------------------------------------------------------------
+    // @bind-Value: parallel ValueChanged + IonChange callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonChange_FiresBoth_ValueChangedAndIonChange()
+    {
+        string? capturedValue = null;
+        IonSearchbarChangeEventArgs? capturedArgs = null;
+
+        var cut = Render<IonSearchbar>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonChange, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject
+            {
+                ["value"] = "query",
+                ["event"] = new System.Text.Json.Nodes.JsonObject { ["isTrusted"] = true }
+            }
+        };
+        await InvokeIonEventAsync("ionChange", payload);
+
+        capturedValue.Should().Be("query");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("query");
+        cut.Instance.Value.Should().Be("query");
+    }
+
+    [Fact]
+    public async Task IonInput_FiresBoth_ValueInputAndIonInput()
+    {
+        string? capturedValue = null;
+        IonSearchbarInputEventArgs? capturedArgs = null;
+
+        var cut = Render<IonSearchbar>(parameters => parameters
+            .Add(p => p.ValueInput, v => capturedValue = v)
+            .Add(p => p.IonInput, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject
+            {
+                ["value"] = "live-query",
+                ["event"] = new System.Text.Json.Nodes.JsonObject { ["isTrusted"] = true }
+            }
+        };
+        await InvokeIonEventAsync("ionInput", payload);
+
+        capturedValue.Should().Be("live-query");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("live-query");
+        cut.Instance.Value.Should().Be("live-query");
+    }
 }

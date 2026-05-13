@@ -2,7 +2,7 @@
 
 namespace IonBlazor.Components;
 
-public sealed partial class IonToast : IonComponent, IIonColorComponent, IIonModeComponent
+public sealed partial class IonToast : IonJsComponent, IIonColorComponent, IIonModeComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback> _didPresentReference;

@@ -1,7 +1,7 @@
 ﻿namespace IonBlazor.Components;
 
 
-public sealed partial class IonInputOtp : IonContentComponent, IIonColorComponent
+public sealed partial class IonInputOtp : IonJsContentComponent, IIonColorComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionBlurReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionChangeReference;
