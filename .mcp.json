@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "ionblazor": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": ["run", "--project", "./src/IonBlazor.Mcp", "--no-build"]
+    }
+  }
+}

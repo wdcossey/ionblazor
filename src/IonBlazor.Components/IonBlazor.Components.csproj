@@ -44,7 +44,7 @@
         <Content Remove="tsconfig.json" />
     </ItemGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PropertyGroup>
         <DocumentationFile>bin\Release\IonBlazor.Components.xml</DocumentationFile>
     </PropertyGroup>
 
