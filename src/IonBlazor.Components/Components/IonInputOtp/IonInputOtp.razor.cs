@@ -170,8 +170,7 @@ public sealed partial class IonInputOtp : IonJsContentComponent, IIonColorCompon
         {
             var value = args?["detail"]?["value"]?.GetValue<string?>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>() is true;
-            var inputArgs = new IonInputOtpInputEventArgs { Sender = this, Value = value, Event = new IonInputEvent(isTrusted) };
-            await IonInputEvent.InvokeAsync(inputArgs);
+            await IonInputEvent.InvokeAsync(new IonInputOtpInputEventArgs { Sender = this, Value = value, Event = new IonInputEvent(isTrusted) });
         });
     }
 

@@ -179,7 +179,7 @@ public sealed partial class IonSearchbar : IonJsComponent, IIonModeComponent, II
 
     /// <summary>
     /// Fires alongside <see cref="IonChange"/> with the new <see cref="Value"/>, enabling
-    /// <c>@bind-Value</c>. Like <see cref="IonChange"/> this fires on commit (blur / Enter / clear / cancel).
+    /// <c>@bind-Value</c>.
     /// </summary>
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }

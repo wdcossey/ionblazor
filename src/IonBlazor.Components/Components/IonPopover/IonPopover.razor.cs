@@ -52,7 +52,14 @@ public sealed partial class IonPopover : IonJsContentComponent, IIonModeComponen
     /// <b>trigger</b> property. Note: <see cref="IsOpen"/> will not automatically be set back to <b>false</b> when the
     /// popover dismisses. You will need to do that in your code.
     /// </summary>
-    [Parameter] public bool? IsOpen { get; init; }
+    [Parameter] public bool? IsOpen { get; set; }
+
+    /// <summary>
+    /// Fires alongside <see cref="DidDismiss"/> and <see cref="DidPresent"/> with the new <see cref="IsOpen"/>, enabling
+    /// <c>@bind-Value</c>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<bool?> IsOpenChanged { get; set; }
 
     /// <summary>
     /// If <b>true</b>, the popover will open. If <b>false</b>, the popover will close.
@@ -153,9 +160,19 @@ public sealed partial class IonPopover : IonJsContentComponent, IIonModeComponen
 
     public IonPopover()
     {
-        _didDismissReference = IonicEventCallback.Create(async () => await DidDismiss.InvokeAsync(this));
+        _didDismissReference = IonicEventCallback.Create(async () =>
+        {
+            IsOpen = false;
+            await IsOpenChanged.InvokeAsync(IsOpen);
+            await DidDismiss.InvokeAsync(this);
+        });
 
-        _didPresentReference = IonicEventCallback.Create(async () => await DidPresent.InvokeAsync(this));
+        _didPresentReference = IonicEventCallback.Create(async () =>
+        {
+            IsOpen = true;
+            await IsOpenChanged.InvokeAsync(IsOpen);
+            await DidPresent.InvokeAsync(this);
+        });
 
         _ionPopoverDidDismissReference = IonicEventCallback.Create(async () => await IonPopoverDidDismiss.InvokeAsync(this));
 

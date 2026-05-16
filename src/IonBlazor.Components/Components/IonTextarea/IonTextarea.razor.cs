@@ -224,7 +224,7 @@ public sealed partial class IonTextarea : IonJsContentComponent, IIonColorCompon
 
     /// <summary>
     /// Fires alongside <see cref="IonChange"/> with the new <see cref="Value"/>, enabling
-    /// <c>@bind-Value</c>. Like <see cref="IonChange"/> this fires on commit (blur), not on every keystroke.
+    /// <c>@bind-Value</c>.
     /// </summary>
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }

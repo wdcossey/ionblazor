@@ -53,8 +53,7 @@ public sealed partial class IonBreadcrumbs : IonJsContentComponent, IIonModeComp
                 Sender = this,
                 CollapsedBreadcrumbs = args?["detail"]?
                     .AsArray()
-                    .Where(w => w is JsonObject)
-                    .Cast<JsonObject>()
+                    .OfType<JsonObject>()
                     .Select(obj => new CollapsedBreadcrumb
                     {
                         Active = obj["active"]?.GetValue<bool>(),
