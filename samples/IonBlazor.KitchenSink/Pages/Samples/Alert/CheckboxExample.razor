@@ -1,0 +1,37 @@
+﻿<IonButton id="present-alert-checkbox-example">Click Me</IonButton>
+<IonAlert Trigger="present-alert-checkbox-example"
+          Header="Select your favorite color"
+          IonAlertDidDismiss="IonAlertDidDismiss"
+          ButtonsBuilder="@ButtonsBuilder"
+          InputsBuilder="@InputsBuilder"
+/>
+
+@code{
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
+    {
+        Console?.Add($"Dismissed with role: {args.Role}");
+
+        if (args.Role != "ok")
+            return;
+
+        var values = string.Join(",", (args.Values as AlertValuesArray)?.Values ?? []);
+        Console?.Add($"{values}");
+    }
+
+    private static void ButtonsBuilder(AlertButtonBuilder builder)
+    {
+        builder.Add(new AlertButton { Text = "OK", Role = "ok" });
+    }
+
+    private static void InputsBuilder(AlertInputBuilder builder)
+    {
+        builder
+            .Add(new AlertInputCheckbox { Label = "Red", Checked = true, Value = "red" })
+            .Add(new AlertInputCheckbox { Label = "Blue", Value = "blue" })
+            .Add(new AlertInputCheckbox { Label = "Green", Value = "green" });
+    }
+
+}

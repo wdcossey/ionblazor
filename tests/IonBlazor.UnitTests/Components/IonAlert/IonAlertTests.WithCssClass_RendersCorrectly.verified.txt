@@ -1,0 +1,1 @@
+﻿<ion-alert css-class="my-alert"></ion-alert>

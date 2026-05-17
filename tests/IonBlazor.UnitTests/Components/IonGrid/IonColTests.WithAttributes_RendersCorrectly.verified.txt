@@ -1,0 +1,1 @@
+﻿<ion-col id="col"></ion-col>

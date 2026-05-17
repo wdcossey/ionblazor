@@ -1,0 +1,1 @@
+﻿<ion-textarea disabled="true"></ion-textarea>

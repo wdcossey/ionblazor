@@ -1,0 +1,1 @@
+﻿<ion-list inset="true">item-1</ion-list>

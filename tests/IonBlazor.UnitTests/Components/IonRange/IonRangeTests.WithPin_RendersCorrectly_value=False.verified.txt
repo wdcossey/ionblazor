@@ -1,0 +1,1 @@
+﻿<ion-range pin="false"></ion-range>

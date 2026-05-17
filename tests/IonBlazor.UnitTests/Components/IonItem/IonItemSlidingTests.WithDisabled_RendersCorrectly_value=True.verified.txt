@@ -1,0 +1,1 @@
+﻿<ion-item-sliding disabled="true"></ion-item-sliding>

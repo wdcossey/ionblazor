@@ -1,0 +1,47 @@
+﻿@using IonBlazor.Components.Abstractions
+<IonButton @onclick="@(async () => { await IonActionSheetController.PresentAsync(ConfigureActionSheet); })">
+    Open
+</IonButton>
+
+@code {
+
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private ValueTask ButtonHandler(IActionSheetButton? button, int? index)
+    {
+        Console?.Add($"Button Index: {index}; Role: {button?.Role}; Text: {button?.Text}; Action: {button?.Data?.Action};");
+        return ValueTask.CompletedTask;
+    }
+
+    private void ConfigureActionSheet(ActionSheetControllerOptions options)
+    {
+        options.Header = "Actions";
+        options.OnDidDismiss = args => Console?.Add($"Dismissed with Role: {args.Role}; Data: {args.Data};");
+        options.ButtonsBuilder = builder =>
+        {
+            builder
+                .Add<BasicActionSheetButton>(button =>
+                {
+                    button.Text = "Delete";
+                    button.Role = "destructive";
+                    button.Data = new ActionSheetButtonData { Action = "delete" };
+                    button.Handler = ButtonHandler;
+                })
+                .Add<BasicActionSheetButton>(button =>
+                {
+                    button.Text = "Share";
+                    button.Data = new ActionSheetButtonData { Action = "share" };
+                    button.Handler = ButtonHandler;
+                })
+                .Add<BasicActionSheetButton>(button =>
+                {
+                    button.Text = "Cancel";
+                    button.Role = "cancel";
+                    button.Data = new ActionSheetButtonData { Action = "cancel" };
+                    button.Handler = ButtonHandler;
+                });
+        };
+    }
+
+}

@@ -1,0 +1,26 @@
+﻿<IonButton id="open-layout-inline-toast">Open Baseline Layout Toast</IonButton>
+<IonButton id="open-layout-stacked-toast">Open Stacked Layout Toast</IonButton>
+
+<IonToast
+      Trigger="open-layout-inline-toast"
+      Duration="3000"
+      Message="This is a toast with a long message and a button that appears on the same line."
+      ButtonsBuilder="@ButtonsBuilder">
+</IonToast>
+
+<IonToast
+    Trigger="open-layout-stacked-toast"
+    Duration="3000"
+    Message="This is a toast with a long message and a button that appears on the next line."
+    Layout="@IonToastLayout.Stacked"
+    ButtonsBuilder="@ButtonsBuilder">
+</IonToast>
+
+@code {
+
+    private static void ButtonsBuilder(ToastButtonBuilder builder)
+    {
+        builder.Add(new IonToastButton { Text = "Action With Long Text" });
+    }
+
+}

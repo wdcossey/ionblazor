@@ -1,37 +1,18 @@
-﻿using System.Runtime.CompilerServices;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using NSubstitute;
 
 namespace IonBlazor.UnitTests.Components;
 
-public class IonAccordionGroupTests: BunitContext
+public class IonAccordionGroupTests: IonTestContext
 {
-    public static class StaticSettingsUsage
-    {
-        [ModuleInitializer]
-        public static void Initialize() =>
-            VerifierSettings.ScrubLinesWithReplace(
-                replaceLine: line =>
-                {
-                    if (!line.Contains(" blazor:elementReference="))
-                    {
-                        return line;
-                    }
-
-                    var index = line.IndexOf(" blazor:elementReference=", StringComparison.Ordinal);
-                    return line.Remove(index, 25 + 2 + 36);
-                });
-    }
-
     public IonAccordionGroupTests()
     {
-        JSInterop
-            .SetupModule("./_content/IonBlazor/common.js")
-            .SetupVoid("attachListeners", _ => true);
-
-        JSInterop
-            .SetupModule("./_content/IonBlazor/ionAccordionGroup.js")
-            .SetupVoid("setValue", _ => true);
+        SetupComponentModule<IonAccordionGroup>(module =>
+        {
+            module.SetupVoid("setValue", _ => true).SetVoidResult();
+        });
     }
 
     [Fact]
@@ -41,8 +22,7 @@ public class IonAccordionGroupTests: BunitContext
         var cut = Render<IonAccordionGroup>();
 
         // Assert
-        await Verify(cut.Markup)
-            .IgnoreParameters("blazor:elementReference");
+        await Verify(cut.Markup);
     }
 
     [Fact]
@@ -72,12 +52,15 @@ public class IonAccordionGroupTests: BunitContext
     [InlineData(IonAccordionGroupExpand.Inset)]
     public async Task WithExpand_RendersCorrectly(string expand)
     {
+        VerifySettings settings = new ();
+        settings.UseTextForParameters($"expand={expand}");
+
         // Act
         var cut = Render<IonAccordionGroup>(parameters => parameters
             .Add(p => p.Expand, expand));
 
         // Assert
-        await Verify(cut.Markup);
+        await Verify(cut.Markup, settings);
     }
 
     [Theory]
@@ -85,12 +68,15 @@ public class IonAccordionGroupTests: BunitContext
     [InlineData(IonMode.MaterialDesign)]
     public async Task WithMode_RendersCorrectly(string mode)
     {
+        VerifySettings settings = new ();
+        settings.UseTextForParameters($"mode={mode}");
+
         // Act
         var cut = Render<IonAccordionGroup>(parameters => parameters
             .Add(p => p.Mode, mode));
 
         // Assert
-        await Verify(cut.Markup);
+        await Verify(cut.Markup, settings);
     }
 
     [Fact]
@@ -136,34 +122,38 @@ public class IonAccordionGroupTests: BunitContext
     public async Task SetValueAsync_WithNull_InvokesJsMethod_WhenCalled()
     {
         // Arrange
-        IJSObjectReference? jsComponent = Substitute.For<IJSObjectReference>();
-
         var cut = Render<IonAccordionGroup>();
-
-        cut.Instance.JsComponent = new Lazy<Task<IJSObjectReference>>(() => Task.FromResult(jsComponent));
 
         // Act
         await cut.Instance.SetValueAsync(null);
 
         // Assert
-        await jsComponent.Received(1).InvokeVoidAsync("setValue", Arg.Is<object[]>(result => result.Length == 2 && result[0].Equals(cut.Instance.IonElement) && result[1] == null!));
+        JSRuntimeInvocation invocation = JSInterop.Invocations["setValue"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+
+        invocation.Arguments[1].Should().Be(null);
     }
 
     [Fact]
     public async Task SetValueAsync_WithSingleValue_InvokesJsMethod_WhenCalled()
     {
         // Arrange
-        IJSObjectReference? jsComponent = Substitute.For<IJSObjectReference>();
-
         var cut = Render<IonAccordionGroup>();
-
-        cut.Instance.JsComponent = new Lazy<Task<IJSObjectReference>>(() => Task.FromResult(jsComponent));
 
         // Act
         await cut.Instance.SetValueAsync("second");
 
         // Assert
-        await jsComponent.Received(1).InvokeVoidAsync("setValue", Arg.Is<object[]>(result => result.Length == 2 && result[0].Equals(cut.Instance.IonElement) && result[1].Equals("second")));
+        JSRuntimeInvocation invocation = JSInterop.Invocations["setValue"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(cut.Instance.IonElement);
+
+        invocation.Arguments[1]
+            .Should().BeAssignableTo<string>()
+            .Which.Should().Be("second");
     }
 
     [Fact]
@@ -215,5 +205,17 @@ public class IonAccordionGroupTests: BunitContext
 
         // Assert
         await jsComponent.Received(1).InvokeAsync<IEnumerable<string>>("getValue", Arg.Is<object[]>(result => result.Length == 1 && result[0].Equals(cut.Instance.IonElement)));
+    }
+
+    [Fact]
+    public void Assert_JsImportName()
+    {
+        // Arrange
+        var cut = Render<IonAccordionGroup>();
+
+        // Act
+
+        // Assert
+        Assert.Equal(nameof(IonAccordionGroup), cut.Instance.JsImportName);
     }
 }

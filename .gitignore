@@ -401,3 +401,10 @@ FodyWeavers.xsd
 
 # Ionic Assets
 **/wwwroot/@ionic/
+**/IonBlazor/wwwroot/
+**/IonBlazor/wwwroot/
+**/samples/IonBlazor.KitchenSink/wwwroot/
+**/.claude/settings.local.json
+
+# TypeScript compiler output (generated from Typescript/*.ts during dotnet build)
+src/IonBlazor.StaticAssets/wwwroot/*.js

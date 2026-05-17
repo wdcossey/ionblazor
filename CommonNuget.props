@@ -1,0 +1,37 @@
+<Project>
+    <PropertyGroup>
+        <PackageVersion>0.872.1</PackageVersion>
+        <TargetFrameworks>net6.0;net7.0;net8.0;net9.0;net10.0</TargetFrameworks>
+        <EnableDefaultCssItems>false</EnableDefaultCssItems>
+        <WindowsPackageType>None</WindowsPackageType>
+        <EnableDefaultContentItems>true</EnableDefaultContentItems>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <PackageProjectUrl>https://github.com/wdcossey/ionblazor</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Authors>wdcossey</Authors>
+        <RepositoryUrl>https://github.com/wdcossey/ionblazor</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>ionblazor, ionic, blazor, maui, hybrid, webcomponents, razor, aspnetcore</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>logo-ionic.png</PackageIcon>
+        <PackagePath>wwwroot\</PackagePath>
+        <RootNamespace>IonBlazor</RootNamespace>
+        <RazorClassLibrary>true</RazorClassLibrary>
+        <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+        <StaticWebAssetBasePath>_content/IonBlazor</StaticWebAssetBasePath>
+        <StaticWebAssetItemPatterns>wwwroot\**\*.*</StaticWebAssetItemPatterns>
+        <PublishSingleFile>false</PublishSingleFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\assets\logo-ionic.png" Pack="true" Visible="false" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\" />
+    </ItemGroup>
+</Project>

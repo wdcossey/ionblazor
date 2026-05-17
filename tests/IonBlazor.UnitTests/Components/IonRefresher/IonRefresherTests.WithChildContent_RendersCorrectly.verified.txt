@@ -1,0 +1,1 @@
+﻿<ion-refresher close-duration="280ms" disabled="false" pull-factor="1" pull-min="60" snapback-duration="280ms"><ion-refresher-content></ion-refresher-content></ion-refresher>

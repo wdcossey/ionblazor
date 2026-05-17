@@ -1,0 +1,39 @@
+﻿<IonList>
+    <IonItem>
+        <IonSelect TValue="@string"
+                   aria-label="Fruit"
+                   Placeholder="Select fruit"
+                   IonChange="OnIonChange"
+                   IonCancel="OnIonCancel"
+                   IonDismiss="OnIonDismiss"
+                   @bind-Value="@Fruit"
+                   @bind-Value:event="ValueChanged">
+            <IonSelectOption Value="apples">Apples</IonSelectOption>
+            <IonSelectOption Value="oranges">Oranges</IonSelectOption>
+            <IonSelectOption Value="bananas">Bananas</IonSelectOption>
+        </IonSelect>
+    </IonItem>
+</IonList>
+
+@code {
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private string[]? Fruit { get; set; } = ["oranges"];
+
+    private void OnIonChange(IonSelectChangeEventArgs<string> args)
+    {
+        Console?.Add($"ionChange fired with value: {args.Value}");
+    }
+
+    private void OnIonCancel()
+    {
+        Console?.Add("ionCancel fired");
+    }
+
+    private void OnIonDismiss()
+    {
+        Console?.Add("ionDismiss fired");
+    }
+
+}

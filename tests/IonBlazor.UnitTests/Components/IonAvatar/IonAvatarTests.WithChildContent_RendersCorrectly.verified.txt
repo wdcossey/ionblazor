@@ -1,0 +1,1 @@
+﻿<ion-avatar><ion-img src="avatar.png"></ion-img></ion-avatar>

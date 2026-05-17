@@ -1,0 +1,1 @@
+﻿<ion-split-pane><ion-menu content-id="main-content"></ion-menu></ion-split-pane>

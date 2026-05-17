@@ -1,0 +1,49 @@
+﻿<IonButton @onclick="@(Present)">Click Me</IonButton>
+
+@code
+{
+    private Timer _timer = null!;
+
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private async Task Present()
+    {
+        IonLoadingReference ionLoading = await IonLoadingController.CreateAsync(config =>
+        {
+            config.Spinner = IonSpinnerName.LinesSmall;
+            config.Message = "Dismissing after <strong>10</strong> seconds... Interrupting in <i>5</i> seconds...";
+            config.Duration = 10000;
+            config.OnDidPresent += (_, _) =>
+            {
+                Console?.Add($"{nameof(IonLoading)}::OnDidPresent");
+                return Task.CompletedTask;
+            };
+
+            config.OnDidDismiss += (__, args) =>
+            {
+                Console?.Add($"{nameof(IonLoading)}::OnDidDismiss(Role:{args.Role})");
+                _ = args.Sender?.DisposeAsync(); //Clean up the reference
+                return Task.CompletedTask;
+            };
+
+        });
+
+        await ionLoading.PresentAsync();
+
+        var counter = 5;
+        _timer = new Timer(state =>
+        {
+            counter--;
+            if (counter == 0)
+            {
+                _ = ionLoading.DismissAsync("interrupt");
+                _ = _timer.DisposeAsync();
+                return;
+            }
+
+            _ = ionLoading.UpdateMessageAsync($"Dismissing after <strong>10</strong> seconds... Interrupting in <i>{counter}</i> seconds...");
+
+        }, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+    }
+}

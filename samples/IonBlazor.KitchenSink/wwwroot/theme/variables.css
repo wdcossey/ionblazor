@@ -1,0 +1,38 @@
+/* Ionic Variables and Theming
+ * ---------------------------------------------------------------
+ * Any overrides to theme variables should be placed in this file.
+ * For more information, please see:
+ * http://ionicframework.com/docs/theming/
+ * https://ionicframework.com/docs/theming/dark-mode#css-class
+ */
+
+:root {
+
+}
+
+:root.ios {
+
+}
+
+:root.md {
+
+}
+
+.ion-palette-dark.ios,
+.ion-palette-dark.md {
+
+}
+
+:root {
+    color-scheme: light dark;
+}
+
+:root.prefers-light,
+:root.ion-palette-light {
+    color-scheme: light;
+}
+
+:root.prefers-dark,
+:root.ion-palette-dark {
+    color-scheme: dark;
+}

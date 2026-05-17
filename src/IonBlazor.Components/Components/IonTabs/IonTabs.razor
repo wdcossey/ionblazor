@@ -1,0 +1,9 @@
+﻿@namespace IonBlazor.Components
+@inherits IonJsContentComponent
+
+<ion-tabs @ref="@IonElement"
+          @attributes="@Attributes">
+    <CascadingValue TValue="@IIonComponent" Name="@nameof(IonTab.Parent)" Value="@(this)" IsFixed="@true">
+        @ChildContent
+    </CascadingValue>
+</ion-tabs>

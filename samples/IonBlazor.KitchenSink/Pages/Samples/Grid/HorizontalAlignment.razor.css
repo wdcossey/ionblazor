@@ -1,0 +1,6 @@
+::deep ion-col {
+    background-color: var(--ion-color-primary);
+    border: solid 1px var(--ion-color-primary-contrast);
+    color: var(--ion-color-primary-contrast);
+    text-align: center;
+}

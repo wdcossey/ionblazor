@@ -1,0 +1,1 @@
+﻿<ion-refresher-content pulling-text="Pull to refresh" refreshing-text=""></ion-refresher-content>

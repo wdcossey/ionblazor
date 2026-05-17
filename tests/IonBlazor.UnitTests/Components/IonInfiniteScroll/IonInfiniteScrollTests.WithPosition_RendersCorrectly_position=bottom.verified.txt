@@ -1,0 +1,1 @@
+﻿<ion-infinite-scroll position="bottom"></ion-infinite-scroll>

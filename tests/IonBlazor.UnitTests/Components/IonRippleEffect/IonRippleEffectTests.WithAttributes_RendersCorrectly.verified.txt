@@ -1,0 +1,1 @@
+﻿<ion-ripple-effect id="ripple-effect"></ion-ripple-effect>

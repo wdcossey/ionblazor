@@ -1,0 +1,1 @@
+﻿<ion-reorder-group disabled="true"><ion-item><ion-label>Item 1</ion-label><ion-reorder slot="end"></ion-reorder></ion-item></ion-reorder-group>

@@ -1,0 +1,1 @@
+﻿<ion-footer id="footer"></ion-footer>

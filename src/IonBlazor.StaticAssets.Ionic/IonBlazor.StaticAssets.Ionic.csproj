@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <Import Project="..\..\CommonNuget.props" />
+
+    <PropertyGroup>
+        <PackageId>IonBlazor.StaticAssets.Ionic</PackageId>
+        <Description>Ionic assets for IonBlazor</Description>
+
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\docs\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+
+    <Target Name="PrepareNpmAssets" BeforeTargets="Build">
+        <!--
+        <RemoveDir Directories="wwwroot\@ionic" />
+        -->
+
+        <ItemGroup>
+            <IonicDistAssets Include="$(SolutionDir)node_modules\@ionic\core\dist\ionic\*.*" />
+            <IonicCssAssets Include="$(SolutionDir)node_modules\@ionic\core\css\**\*.css" />
+        </ItemGroup>
+
+        <Copy
+                SourceFiles="@(IonicDistAssets)"
+                DestinationFiles="@(IonicDistAssets->'wwwroot\@ionic\core\dist\ionic\%(RecursiveDir)%(Filename)%(Extension)')"
+                SkipUnchangedFiles="true" />
+        <Copy
+                SourceFiles="@(IonicCssAssets)"
+                DestinationFiles="@(IonicCssAssets->'wwwroot\@ionic\core\css\%(RecursiveDir)%(Filename)%(Extension)')"
+                SkipUnchangedFiles="true" />
+    </Target>
+</Project>

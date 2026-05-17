@@ -1,0 +1,37 @@
+﻿<IonButton id="present-alert-buttons">Click Me</IonButton>
+<IonAlert @ref="_alert"
+          Trigger="present-alert-buttons"
+          Header="Alert!"
+          ButtonsBuilder="@ButtonBuilder"
+          IonAlertDidDismiss="IonAlertDidDismiss"/>
+
+@code {
+    private IonAlert _alert = null!;
+
+    [CascadingParameter(Name = nameof(Console))]
+    public PlaygroundConsole? Console { get; init; }
+
+    private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
+    {
+        Console?.Add($"Dismissed with role: {args.Role}");
+    }
+
+    private ValueTask CancelHandler(AlertButtonEventArgs args)
+    {
+        Console?.Add("Alert canceled");
+        return ValueTask.CompletedTask;
+    }
+
+    private ValueTask ConfirmHandler(AlertButtonEventArgs args)
+    {
+        Console?.Add("Alert confirmed");
+        return ValueTask.CompletedTask;
+    }
+
+    private void ButtonBuilder(AlertButtonBuilder builder)
+    {
+        builder.Add(new AlertButton { Text = "Cancel", Role = "cancel", Handler = CancelHandler });
+        builder.Add(new AlertButton { Text = "OK", Role = "confirm", Handler = ConfirmHandler });
+    }
+
+}

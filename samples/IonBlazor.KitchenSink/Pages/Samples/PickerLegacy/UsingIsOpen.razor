@@ -1,0 +1,58 @@
+﻿@namespace IonicTest.Pages.Samples.PickerLegacy
+
+<IonButton @onclick="@(() => _picker.IsOpen = true)">Open</IonButton>
+<IonPickerLegacy @ref="_picker"
+           TColumn="PickerColumn"
+           TColumnOption="PickerColumnOption"
+           TButton="PickerButton"
+           ColumnsBuilder="@ColumnsBuilder"
+           ButtonsBuilder="@ButtonsBuilder"
+           IonPickerDidDismiss="@IonPickerDidDismiss"></IonPickerLegacy>
+
+<p>@((MarkupString)_message)</p>
+
+@code{
+
+    string _message = string.Empty;
+
+    IonPickerLegacy _picker = null!;
+
+    private static void ColumnsBuilder(PickerLegacyColumnBuilder builder)
+    {
+        builder
+            .Add<PickerColumn>(column =>
+            {
+                column.Name = "languages";
+                column.Options =
+                [
+                    new PickerColumnOption { Text = "JavaScript", Value = "javascript" },
+                    new PickerColumnOption { Text = "TypeScript", Value = "typescript" },
+                    new PickerColumnOption { Text = "Rust", Value = "rust" },
+                    new PickerColumnOption { Text = "C#", Value = "c#" }
+                ];
+            });
+    }
+
+    private void ButtonsBuilder(PickerLegacyButtonBuilder builder)
+    {
+        builder
+            .Add(new PickerButton { Text = "Cancel", Role = "cancel" })
+            .Add(new PickerButton { Text = "Confirm", Handler = ConfirmHandler });
+    }
+
+    private ValueTask ConfirmHandler(Dictionary<string, PickedColumnOption>? value)
+    {
+        if (value is null)
+            return ValueTask.CompletedTask;
+
+        _message = $"You selected: <b>{value["languages"].Value}</b>";
+        StateHasChanged();
+
+        return ValueTask.CompletedTask;
+    }
+
+    private static void IonPickerDidDismiss(IonPickerLegacyDismissEventArgs args)
+    {
+        args.Sender!.IsOpen = false; //or _picker.IsOpen = false;
+    }
+}

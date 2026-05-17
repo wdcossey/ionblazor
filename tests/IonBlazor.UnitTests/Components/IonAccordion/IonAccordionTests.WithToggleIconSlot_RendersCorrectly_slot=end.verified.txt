@@ -1,0 +1,1 @@
+﻿<ion-accordion toggle-icon-slot="end"></ion-accordion>

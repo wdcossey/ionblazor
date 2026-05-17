@@ -1,0 +1,373 @@
+﻿@page "/"
+
+@inject IJSRuntime JsRuntime
+
+    <IonImg Src="/img/blazor.svg" Alt="blazor" style="max-width: 200px; max-height: 200px"></IonImg>
+
+    <IonList Inset="true">
+        <IonItem Button="@true" Detail="@false" id="select-fruits">
+            <IonLabel>Favorite Fruits</IonLabel>
+            <div slot="end">@($"{workingSelectedFruits.Count} Items")</div>
+        </IonItem>
+    </IonList>
+
+    <IonButton Expand="@IonButtonExpand.Block" Color="@IonColor.Danger" @onclick="@(() => PresentToast("bottom", "Hello World!"))">Present Toast At the Bottom</IonButton>
+
+    <IonList>
+        <IonItemSliding IonDrag="@(args => { Console.WriteLine("IonDrag -- Amount: {0}; Ratio: {1}", args.Amount, args.Ratio); })">
+            <IonItem>
+                <IonLabel aria-label="Sliding Item with End Options">Sliding Item with End Options</IonLabel>
+            </IonItem>
+
+            <IonItemOptions IonSwipe="@(args => { Console.WriteLine("IonSwipe -- Side: {0}", new object[] { args.Side ?? "<unknown>" }); })">
+                <IonItemOption>Favorite</IonItemOption>
+                <IonItemOption Color="@IonColor.Danger">Delete</IonItemOption>
+            </IonItemOptions>
+        </IonItemSliding>
+
+        <IonItemSliding>
+            <IonItemOptions Side="@IonItemOptionsSide.Start">
+                <IonItemOption Color="@IonColor.Success">Archive</IonItemOption>
+            </IonItemOptions>
+
+            <IonItem>
+                <IonLabel>Sliding Item with Start Options</IonLabel>
+            </IonItem>
+        </IonItemSliding>
+
+        <IonItemSliding>
+            <IonItemOptions Side="@IonItemOptionsSide.Start">
+                <IonItemOption Color="@IonColor.Success">Archive</IonItemOption>
+            </IonItemOptions>
+
+            <IonItem>
+                <IonLabel>Sliding Item with Options on Both Sides</IonLabel>
+            </IonItem>
+
+            <IonItemOptions Side="@IonItemOptionsSide.End">
+                <IonItemOption>Favorite</IonItemOption>
+                <IonItemOption Color="@IonColor.Danger">Delete</IonItemOption>
+            </IonItemOptions>
+        </IonItemSliding>
+
+        <IonItemSliding>
+            <IonItemOptions Side="@IonItemOptionsSide.Start">
+                <IonItemOption Color="@IonColor.Success">Archive</IonItemOption>
+            </IonItemOptions>
+
+            <IonItemOptions Side="@IonItemOptionsSide.End">
+                <IonItemOption>Favorite</IonItemOption>
+                <IonItemOption Color="@IonColor.Danger">Delete</IonItemOption>
+            </IonItemOptions>
+        </IonItemSliding>
+    </IonList>
+
+    <IonDateTimeButton DateTime="datetime"></IonDateTimeButton>
+
+    <IonModal>
+        <IonDateTime id="datetime"></IonDateTime>
+    </IonModal>
+
+    <IonButton id="open-modal" Expand="block">Open</IonButton>
+
+    <IonModal @ref="_selectFruitsModalRef" Trigger="select-fruits" IonModalDidDismiss="IonModalDidDismiss">
+        <IonHeader>
+            <IonToolbar>
+                <IonButtons slot="start">
+                    <IonButton @onclick="@CancelChanges">Cancel</IonButton>
+                </IonButtons>
+                <IonTitle>Favorite Fruits</IonTitle>
+                <IonButtons slot="end">
+                    <IonButton @onclick="@ConfirmChanges">Done</IonButton>
+                </IonButtons>
+            </IonToolbar>
+            <IonToolbar>
+                <IonSearchbar Debounce="1000" Value="@_searchbarValue" IonInput="@(SearchbarCallback)"></IonSearchbar>
+            </IonToolbar>
+        </IonHeader>
+        <IonContent>
+            <IonList id="modal-list" Inset="@false">
+                @foreach (var item in RenderList)
+                {
+                    var isChecked = workingSelectedFruits.Contains(item.value);
+                    <IonItem>
+                        <IonCheckbox aria-label="@item.text" Value="@item.value" Checked="@isChecked" IonChange="IonChange">
+                            <IonLabel>@item.text</IonLabel>
+                        </IonCheckbox>
+                    </IonItem>
+                }
+            </IonList>
+        </IonContent>
+    </IonModal>
+
+    <IonModal Trigger="open-modal" @ref="@_inputModalRef">
+        <IonHeader>
+            <IonToolbar>
+                <IonButtons slot="start">
+                    <IonButton @onclick="@Cancel">Cancel</IonButton>
+                </IonButtons>
+                <IonTitle>Welcome</IonTitle>
+                <IonButtons slot="end">
+                    <IonButton @onclick="@Confirm" Strong="@true">Confirm</IonButton>
+                </IonButtons>
+            </IonToolbar>
+        </IonHeader>
+        <IonContent class="ion-padding">
+            <IonItem>
+                <IonLabel Position="@IonLabelPosition.Stacked">Enter your name</IonLabel>
+                <IonInput @ref="@_inputNameRef"
+                          id="input-name"
+                          Type="@IonInputType.Text"
+                          Placeholder="Your name"
+                          IonChange="@(args => _inputNameValue = args.Value)"
+                          IonInputEvent="@(args => _inputNameValue = args.Value)">
+                </IonInput>
+
+                @*
+await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputNameRef, InputNameObjectReference);
+        await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionInput", inputNameRef, InputNameInputObjectReference);
+
+*@
+            </IonItem>
+        </IonContent>
+    </IonModal>
+
+    <IonList>
+        <IonItem>
+            <IonSelect TValue="@(string)" Label="Default label"  Multiple="@true" Placeholder="Favorite Fruit" IonChange="@(args =>
+                                                                                                                                {
+                                                                                                                                    Console.WriteLine(args.Value!.ToString());
+                                                                                                                                    Console.WriteLine(string.Join("|", args.Sender!.Value ?? []));
+                                                                                                                                })">
+                <IonSelectOption Value="apple">Apple</IonSelectOption>
+                <IonSelectOption Value="banana">Banana</IonSelectOption>
+                <IonSelectOption Value="orange">Orange</IonSelectOption>
+            </IonSelect>
+        </IonItem>
+    </IonList>
+
+    <IonButton id="click-trigger">Left-Click Me</IonButton>
+    <IonPopover Trigger="click-trigger" TriggerAction="@IonPopoverTriggerAction.Click">
+      <IonContent class="ion-padding">Hello World!</IonContent>
+    </IonPopover>
+
+    <IonButton id="open-action-sheet">Open ActionSheet by Trigger</IonButton>
+    <IonButton @onclick="@(async () => { await _actionSheet.PresentAsync(); })" >Open ActionSheet by Method</IonButton>
+
+    <IonButton @ref="_buttonRef">Focus Me</IonButton>
+    <IonButton @onclick="@(() => { _ = MainApp?.SetFocusAsync(_buttonRef.IonElement); })" >Focus Button</IonButton>
+
+    <IonActionSheet
+        @ref="_actionSheet"
+        TButtonData="ActionSheetButtonData"
+        Trigger="open-action-sheet"
+        Header="Actions"
+        DidPresent="@DidPresent"
+        DidDismiss="@DidDismiss"
+        ButtonHandler="@OnButtonHandler"
+        ButtonsBuilder="@ButtonsBuilder"></IonActionSheet>
+
+    @*<ion-icon name="chevron-back"></ion-icon>*@
+    @*    {
+      text: 'Delete',
+      role: 'destructive',
+      data: {
+        action: 'delete'
+      }
+    },
+    {
+      text: 'Share',
+      data: {
+        action: 'share'
+      }
+    },
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      data: {
+        action: 'cancel'
+      }
+    }*@
+
+
+@code {
+
+    [CascadingParameter(Name = "ion-app")] private IonApp? MainApp { get; init; }
+
+    private IonModal _selectFruitsModalRef = null!;     //document.querySelector('ion-modal');
+    private IonInput _inputNameRef = null!;             //ion-input#input-name
+    private IonButton _buttonRef = null!;
+    private IonModal _inputModalRef = null!;
+
+    IonActionSheet<ActionSheetButtonData> _actionSheet = null!;
+
+    //IJSObjectReference selectedFruitsText;// = document.querySelector('#selected-fruits');
+
+    private readonly List<dynamic> cards = new();
+    private string? Title;
+    private string? _content;
+    private string? _searchbarValue;
+    private string? _inputNameValue;
+
+    private (string text, string value)[] fruits = new (string text, string value)[]
+    {
+        (text: "Apple", value: "apple"),
+        (text: "Apricot", value: "apricot") ,
+        (text: "Banana", value: "banana") ,
+        (text: "Blackberry", value: "blackberry") ,
+        (text: "Blueberry", value: "blueberry") ,
+        (text: "Cherry", value: "cherry") ,
+        (text: "Cranberry", value: "cranberry") ,
+        (text: "Grape", value: "grape") ,
+        (text: "Grapefruit", value: "grapefruit") ,
+        (text: "Guava", value: "guava") ,
+        (text: "Jackfruit", value: "jackfruit") ,
+        (text: "Lime", value: "lime") ,
+        (text: "Mango", value: "mango") ,
+        (text: "Nectarine", value: "nectarine") ,
+        (text: "Orange", value: "orange") ,
+        (text: "Papaya", value: "papaya") ,
+        (text: "Passionfruit", value: "passionfruit") ,
+        (text: "Peach", value: "peach") ,
+        (text: "Pear", value: "pear") ,
+        (text: "Plantain", value: "plantain") ,
+        (text: "Plum", value: "plum") ,
+        (text: "Pineapple", value: "pineapple") ,
+        (text: "Pomegranate", value: "pomegranate") ,
+        (text: "Raspberry", value: "raspberry") ,
+        (text: "Strawberry", value: "strawberry")
+    };
+
+    private List<string> selectedFruits = new List<string>();
+    private HashSet<string> workingSelectedFruits = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+
+    private (string text, string value)[] RenderList { get; set; } = [];
+
+    private (string text, string value)[] FilterList(string? searchQuery)
+    {
+        if (string.IsNullOrWhiteSpace(searchQuery))
+            return fruits;
+
+        var normalizedQuery = searchQuery.ToLowerInvariant();
+
+        return fruits.Where(fruit => fruit.value.Contains(normalizedQuery)).ToArray();
+    }
+
+    protected override void OnInitialized()
+    {
+        RenderList = FilterList(null);
+        base.OnInitialized();
+    }
+
+    public class CustomEventHelper<TArgs>
+    {
+        private readonly Func<TArgs, Task> _callback;
+
+        public CustomEventHelper(Func<TArgs, Task> callback) => _callback = callback;
+
+        [JSInvokable]
+        public Task OnCallbackEvent(TArgs args) => _callback(args);
+    }
+
+    /**
+   * Reset any working changes
+   * and dismiss the modal.
+   */
+    private async void CancelChanges() {
+        workingSelectedFruits = selectedFruits.ToHashSet();
+        await _selectFruitsModalRef.DismissAsync(role: "cancel");
+        //1var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
+        //await modal.InvokeVoidAsync("dismiss", null, "cancel"); //modal.dismiss(undefined, 'cancel');
+        StateHasChanged();
+    }
+
+    /**
+   * Return the selected
+   * fruits to the parent page.
+   */
+    private void ConfirmChanges() {
+        selectedFruits = workingSelectedFruits.ToList();
+        //var modal = await JsRuntime.InvokeAsync<IJSObjectReference>("document.querySelector", "ion-modal#selected-fruits");
+        //await modal.InvokeVoidAsync("dismiss", selectedFruits); //modal.dismiss(selectedFruits)
+        _ = _selectFruitsModalRef
+            .DismissAsync(data: selectedFruits)
+            .AsTask()
+            .ContinueWith(_ =>
+            {
+                InvokeAsync(StateHasChanged);
+            });
+    }
+
+    private async Task Cancel()
+    {
+        await _inputModalRef.DismissAsync(role: "cancel");
+    }
+
+    private async Task Confirm()
+    {
+        await _inputModalRef.DismissAsync(_inputNameValue, "confirm");
+    }
+
+    private void PresentToast(string position, string message) {
+        _ = IonToastController.PresentAsync(options =>
+        {
+            options.Message = message;
+            options.Position = position;
+        });
+    }
+
+    private Task DidPresent(ActionSheetEventArgs<ActionSheetButtonData> args)
+    {
+        //await (args.Sender?.DismissAsync(null, "manual") ?? ValueTask.FromResult<bool>(false));
+        return Task.CompletedTask;
+    }
+
+    private void DidDismiss(ActionSheetDismissEventArgs<ActionSheetButtonData> args) {
+        //presentToast("bottom", $"Role: {args.Role}; Data: {args.Data}");
+    }
+
+    private void SearchbarCallback(IonSearchbarInputEventArgs args)
+    {
+        RenderList = FilterList(args.Value);
+        StateHasChanged();
+    }
+
+    private void IonModalDidDismiss(IonModalDismissEventArgs args)
+    {
+        _searchbarValue = null;
+        StateHasChanged();
+    }
+
+    private void IonChange(IonCheckboxChangeEventArgs args)
+    {
+    //{"checked":true,"value":"apricot"}
+        //var tagName = args["tagName"]?.GetValue<string>();
+        //
+        //if (tagName?.Equals("ION-CHECKBOX", StringComparison.InvariantCultureIgnoreCase) is not true)
+        //    return Task.CompletedTask;
+        //
+        //
+        //var detail = (@checked: args["detail"]?["checked"]?.GetValue<bool>(), @value: args["detail"]?["value"]?.GetValue<string>());
+
+        if (args.Checked is true)
+        {
+            workingSelectedFruits.Add(args.Value!);
+        }
+        else
+        {
+            workingSelectedFruits.Remove(args.Value!);
+        }
+    }
+
+    private static void ButtonsBuilder(ActionSheetButtonBuilder builder)
+    {
+        builder
+            .Add(new BasicActionSheetButton { Text = "Delete", Role = "destructive", Icon = "trash-outline", Data = new ActionSheetButtonData { Action = "delete" } })
+            .Add(new BasicActionSheetButton { Text = "Share", Icon = "share" })
+            .Add(new BasicActionSheetButton { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } });
+    }
+
+    private void OnButtonHandler(ActionSheetButtonHandlerEventArgs<ActionSheetButtonData> args) {
+        PresentToast(IonToastPosition.Bottom, $"Button Index: {args.Index}; Role: {args.Button?.Role}; Text: {args.Button?.Text}; Action: {args.Data?.Action};");
+    }
+}

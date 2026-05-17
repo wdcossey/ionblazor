@@ -1,0 +1,1 @@
+﻿<ion-tab-bar color="primary"></ion-tab-bar>

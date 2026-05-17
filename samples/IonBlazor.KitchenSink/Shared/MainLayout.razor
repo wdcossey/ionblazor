@@ -1,0 +1,36 @@
+﻿@inherits LayoutComponentBase
+
+<IonApp Mode="@IonMode.Undefined">
+
+    <IonSplitPane When="md" ContentId="main-content">
+
+        <NavMenu ContentId="main-content"/>
+
+        <div class="ion-page" id="main-content">
+            <IonHeader>
+                <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonMenuButton/>
+                    </IonButtons>
+                    <IonTitle>Content</IonTitle>
+
+                    <IonButtons slot="end">
+
+                        <IonButton @onclick="@ToggleSystemTheme">
+                            <IonIcon slot="icon-only" Name="@_systemThemeIconName"></IonIcon>
+                        </IonButton>
+
+                        <IonButton @onclick="@ToggleDarkMode">
+                            <IonIcon slot="icon-only" Name="@_themeIconName"></IonIcon>
+                        </IonButton>
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
+
+            <IonContent @ref="@_mainContent" class="container">
+                @Body
+            </IonContent>
+        </div>
+    </IonSplitPane>
+
+</IonApp>

@@ -1,0 +1,1 @@
+﻿<ion-datetime color="primary" show-default-time-label="true"></ion-datetime>

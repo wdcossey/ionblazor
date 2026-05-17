@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>IonicTest</title>
+    <base href="/" />
+
+    <!--<script type="module" src="_content/IonBlazor/@ionic/core/dist/ionic/index.esm.js"></script>-->
+    <script type="module" src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="_content/IonBlazor/@ionic/core/dist/ionic/ionic.js"></script>
+    <script type="module">
+        import { createAnimation, createGesture, loadingController, menuController, modalController, pickerController, toastController } from './_content/IonBlazor/@ionic/core/dist/ionic/index.esm.js';
+        window.createAnimation = createAnimation;
+    </script>
+
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/core.css" />
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="_content/IonBlazor/@ionic/core/css/palettes/dark.class.css" />
+
+<!--    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />-->
+
+    <script type="module" src="@maskito/core/index.esm.js"></script>
+
+    <script type="module">
+        import { Maskito, maskitoTransform } from './@maskito/core/index.esm.js';
+        window.Maskito = Maskito;
+        window.maskitoTransform = maskitoTransform;
+
+        window.InitMaskito = async function (ionInput, options) {
+            const convertedMask = options.mask.map(item => {
+                return item === "\\d" ? /\d/ : item;
+            });
+
+            const finalMaskOptions = { mask: convertedMask };
+
+            const nativeEl = await ionInput.getInputElement();
+            new Maskito(nativeEl, finalMaskOptions);
+        };
+
+    </script>
+
+    <link href="css/app.css" rel="stylesheet" />
+    <!--<link href="theme/md3/theme.css" rel="stylesheet" />-->
+    <link href="theme/variables.css" rel="stylesheet" />
+
+    <link href="IonBlazor.KitchenSink.styles.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <script>
+        window.Ionic = {
+            config: {
+                //rippleEffect: false,
+                mode: 'md',
+                innerHTMLTemplatesEnabled: true,
+                statusTap: true
+            }
+        }
+    </script>
+
+    <style>
+        ::selection {
+            background: var(--ion-color-primary);
+            color: var(--ion-color-primary-contrast);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="status-bar-safe-area"></div>
+
+    <div id="app-host">Loading...</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script>
+        Object.defineProperty(Object.prototype, "getProperty", {
+            value: function getProperty(key) {
+                return this[key];
+            },
+            writable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Object.prototype, "setProperty", {
+            value: function setProperty(key, value) {
+                this[key] = JSON.parse(value);
+            },
+            writable: true,
+            configurable: true
+        });
+    </script>
+
+
+    <script>
+        // Use matchMedia to check the user preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Initialize the dark palette based on the initial
+        // value of the prefers-color-scheme media query
+        toggleDarkPalette(prefersDark.matches);
+
+        // Listen for changes to the prefers-color-scheme media query
+        prefersDark.addEventListener('change', (mediaQuery) => toggleDarkPalette(mediaQuery.matches));
+
+        // Add or remove the "ion-palette-dark" class on the html element
+        function toggleDarkPalette(shouldAdd) {
+            document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
+        }
+
+        window.prefersDarkColorScheme = function () { return window.matchMedia('(prefers-color-scheme: dark)').matches };
+
+    </script>
+
+    <script src="_framework/blazor.webview.js" autostart="false"></script>
+
+</body>
+
+<!--<script type="module" src="/js/index.bundle.js"></script>-->
+
+</html>

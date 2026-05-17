@@ -1,0 +1,1 @@
+﻿<ion-item-option expandable="false"></ion-item-option>

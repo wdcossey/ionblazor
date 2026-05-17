@@ -1,0 +1,1 @@
+﻿<ion-button button-type="button" form="" strong="false"></ion-button>

@@ -1,0 +1,1 @@
+﻿<ion-spinner color="danger" paused="false"></ion-spinner>

@@ -1,0 +1,1 @@
+﻿<ion-picker-column disabled="false"><ion-picker-column-option value="a">Option A</ion-picker-column-option></ion-picker-column>

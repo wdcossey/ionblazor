@@ -1,0 +1,1 @@
+﻿<ion-picker-legacy backdrop-dismiss="false"></ion-picker-legacy>

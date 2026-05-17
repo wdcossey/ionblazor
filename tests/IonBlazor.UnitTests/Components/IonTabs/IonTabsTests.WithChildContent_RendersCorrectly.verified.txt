@@ -1,0 +1,1 @@
+﻿<ion-tabs><ion-tab tab="home"></ion-tab></ion-tabs>

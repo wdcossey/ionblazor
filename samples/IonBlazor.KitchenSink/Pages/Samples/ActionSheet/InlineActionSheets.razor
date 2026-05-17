@@ -1,0 +1,26 @@
+﻿<IonButton id="open-action-sheet">Open</IonButton>
+<IonActionSheet
+    TButtonData="ActionSheetButtonData"
+    Trigger="open-action-sheet"
+    Header="Actions"
+    ButtonsBuilder="@ButtonsBuilder"
+    DidDismiss="@DidDismiss"></IonActionSheet>
+
+@code {
+
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private static void ButtonsBuilder(ActionSheetButtonBuilder builder)
+    {
+        builder
+            .Add(new BasicActionSheetButton { Text = "Delete", Role = "destructive", Data = new ActionSheetButtonData { Action = "delete" } })
+            .Add(new BasicActionSheetButton { Text = "Share" })
+            .Add(new BasicActionSheetButton { Text = "Cancel", Role = "cancel", Data = new ActionSheetButtonData { Action = "cancel" } });
+    }
+
+    private void DidDismiss(ActionSheetDismissEventArgs<ActionSheetButtonData> args)
+    {
+        Console?.Add($"Dismissed with Role: {args.Role}; Action: {args.Data?.Action}");
+    }
+}

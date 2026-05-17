@@ -1,0 +1,10 @@
+﻿@namespace IonBlazor.Components
+
+@inherits IonSelectOptionBase<int>
+
+<ion-select-option @ref="IonElement"
+                   @attributes="@Attributes"
+                   disabled="@Disabled.AsString()"
+                   value="@Value">
+    @ChildContent
+</ion-select-option>

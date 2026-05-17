@@ -1,0 +1,1 @@
+﻿<ion-menu max-edge-start="" swipe-gesture="false"></ion-menu>

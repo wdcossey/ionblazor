@@ -1,0 +1,1 @@
+﻿<ion-input label="My Label"></ion-input>

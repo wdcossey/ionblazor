@@ -1,0 +1,1 @@
+﻿<ion-segment-view disabled="false"><div>Segment Content</div></ion-segment-view>

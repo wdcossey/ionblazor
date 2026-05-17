@@ -1,0 +1,62 @@
+﻿@page "/samples/list"
+
+<style>
+    device-preview .content ion-list {
+        padding: 32px 0;
+    }
+</style>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Basic Usage</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <BasicUsage/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h3>IonListOf&#60;T&gt;</h3>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <ListOf/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h3>Empty IonListOf&#60;T&gt;</h3>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign" >
+            <ListOfEmpty/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>Inset List</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <InsetList/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
+        <h2>List Lines</h2>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <ListLines/>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>

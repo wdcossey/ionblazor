@@ -1,0 +1,2 @@
+﻿<ion-modal mode="ios" ibz-id><p>Modal content</p></ion-modal>
+

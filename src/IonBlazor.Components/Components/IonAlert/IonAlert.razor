@@ -1,0 +1,17 @@
+﻿@namespace IonBlazor.Components
+@inherits IonJsComponent
+
+<ion-alert @ref="@IonElement"
+           @attributes="@Attributes"
+           animated="@Animated.AsString()"
+           backdrop-dismiss="@BackdropDismiss.AsString()"
+           css-class="@CssClass"
+           header="@Header"
+           is-open="@IsOpen.AsString()"
+           keyboard-close="@(KeyboardClose.AsString())"
+           message="@Message"
+           mode="@Mode"
+           sub-header="@SubHeader"
+           translucent="@Translucent.AsString()"
+           trigger="@Trigger">
+</ion-alert>

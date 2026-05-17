@@ -1,0 +1,2 @@
+﻿<ion-modal id="modal" ibz-id><p>Modal content</p></ion-modal>
+

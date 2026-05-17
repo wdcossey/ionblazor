@@ -1,0 +1,1 @@
+﻿<ion-item-options side="end"><ion-item-option>Delete</ion-item-option></ion-item-options>

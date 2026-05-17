@@ -1,0 +1,64 @@
+﻿<IonList>
+    <IonItem>
+        <IonInput @ref="_card" Label="Card number" Placeholder="0000 0000 0000 0000"></IonInput>
+    </IonItem>
+    <IonItem>
+        <IonInput @ref="_phone" Label="US phone number" Placeholder="+1 (xxx) xxx-xxxx"></IonInput>
+    </IonItem>
+</IonList>
+
+@code {
+    private IonInput _card = null!;
+    private IonInput _phone = null!;
+    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
+
+    private async Task InitPhoneMask()
+    {
+        var options = new { mask = new[] { "+", "1", " ", "(", "\\d", "\\d", "\\d", ")", " ", "\\d", "\\d", "\\d", "-", "\\d", "\\d", "\\d", "\\d" } };
+        await JsRuntime.InvokeVoidAsync("window.InitMaskito", _phone.IonElement, options );
+
+        /*
+        //If you need to set an initial value, you can use maskitoTransform to ensure the value is valid
+        ionInput.value = window.maskitoTransform('5555551212', phoneMaskOptions);
+        */
+    }
+
+    private async Task InitCardMask()
+    {
+        var options = new { mask = new[]
+        {
+            "\\d", "\\d", "\\d", "\\d", " ",
+            "\\d", "\\d", "\\d", "\\d", " ",
+            "\\d", "\\d", "\\d", "\\d", " ",
+            "\\d", "\\d", "\\d", "\\d", " ",
+            "\\d", "\\d", "\\d"
+        } };
+
+        await JsRuntime.InvokeVoidAsync("window.InitMaskito", _card.IonElement, options );
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+        {
+            return;
+        }
+
+        await InitPhoneMask();
+        await InitCardMask();
+
+    }
+
+    @*
+const phoneMaskOptions = {
+      mask: ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+    };
+
+document.querySelector("[_bl_5abb99a6-c884-4c69-a890-2d01a04c7082]").getInputElement().then(function(result) {
+    result.placeholder="+1 (xxx) xxx-xxxx";
+    new window.Maskito(result, phoneMaskOptions);
+});
+*@
+}

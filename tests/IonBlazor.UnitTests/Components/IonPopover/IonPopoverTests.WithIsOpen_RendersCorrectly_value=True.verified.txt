@@ -1,0 +1,1 @@
+﻿<ion-popover is-open="true"><p>Popover content</p></ion-popover>

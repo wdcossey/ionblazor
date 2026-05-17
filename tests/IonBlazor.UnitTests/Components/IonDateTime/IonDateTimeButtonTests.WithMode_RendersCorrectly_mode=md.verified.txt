@@ -1,0 +1,1 @@
+﻿<ion-datetime-button datetime="datetime-id" disabled="false" mode="md"></ion-datetime-button>

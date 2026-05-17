@@ -1,0 +1,1 @@
+﻿<ion-col offset="2"></ion-col>

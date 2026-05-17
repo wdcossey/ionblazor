@@ -1,0 +1,1 @@
+﻿<ion-range><ion-icon slot="start" name="volume-low"></ion-icon></ion-range>

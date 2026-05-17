@@ -1,0 +1,1 @@
+﻿<ion-tab-button layout="icon-top" mode="md" tab="home"></ion-tab-button>

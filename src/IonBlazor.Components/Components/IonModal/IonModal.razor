@@ -1,0 +1,25 @@
+﻿@namespace IonBlazor.Components
+@inherits IonJsContentComponent
+
+<ion-modal @ref="IonElement"
+           @attributes="@Attributes"
+           animated="@Animated.AsString()"
+           backdrop-breakpoint="@BackdropBreakpoint"
+           backdrop-dismiss="@BackdropDismiss.AsString()"
+           expand-to-scroll="@ExpandToScroll.AsString()"
+           focus-trap="@focusTrap.AsString()"
+           handle="@Handle.AsString()"
+           handle-behavior="@HandleBehavior"
+           breakpoints="@Breakpoints"
+           initial-breakpoint="@InitialBreakpoint?.ToString("#.#")"
+           is-open="@IsOpen.AsString()"
+           keep-contents-mounted="@KeepContentsMounted.AsString()"
+           keyboard-close="@KeyboardClose.AsString()"
+           mode="@Mode"
+           show-backdrop="@ShowBackdrop.AsString()"
+           trigger="@Trigger"
+           ibz-id="@_id">
+    @ChildContent
+</ion-modal>
+
+@((MarkupString)Script)

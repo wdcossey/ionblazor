@@ -1,0 +1,31 @@
+﻿@page "/samples/item-sliding"
+
+<PlaygroundContainer FillWidth="true" >
+    <Header>
+        <h2>Basic Usage</h2>
+        <p>Sliding item options are placed on the <code>"end"</code> side of the item by default. This means that options are revealed when the item is swiped from end to start, i.e. from right to left in LTR, but from left to right in RTL. To place them on the opposite side, so that they are revealed when swiping in the opposite direction, set the side attribute to <code>"start"</code> on the <a href="/docs/api/item-options">item options</a> element. Up to two item options can be used at the same time in order to reveal two different sets of options depending on the swiping direction.</p>
+    </Header>
+    <ChildContent>
+        <IonicTest.Pages.Samples.ItemSliding.BasicUsage/>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer FillWidth="true" >
+    <Header>
+        <h2>Icon Options</h2>
+        <p>When an icon is placed alongside text in the <a href="/docs/api/item-option">item option</a>, it will display the icon on top of the text by default. The slot on the icon can be changed to any of the available <a href="/docs/api/item-option#slots">item option slots</a> to change its position.</p>
+    </Header>
+    <ChildContent>
+        <IonicTest.Pages.Samples.ItemSliding.IconOptions/>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer FillWidth="true" >
+    <Header>
+        <h2>Expandable Options</h2>
+        <p>Options can be expanded to take up the full width of the parent <code>ion-item</code> if you swipe past a certain point. This can be combined with the <code>ionSwipe</code> event on the <a href="/docs/api/item-options">item options</a> to call a method when the item is fully swiped.</p>
+    </Header>
+    <ChildContent>
+        <IonicTest.Pages.Samples.ItemSliding.ExpandableOptions/>
+    </ChildContent>
+</PlaygroundContainer>

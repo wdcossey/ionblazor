@@ -1,0 +1,1 @@
+﻿<ion-loading message="" spinner="dots"></ion-loading>

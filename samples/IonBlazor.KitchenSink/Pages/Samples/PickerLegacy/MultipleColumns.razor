@@ -1,0 +1,71 @@
+﻿@namespace IonicTest.Pages.Samples.PickerLegacy
+
+<IonButton id="open-multi-picker">Open</IonButton>
+<IonPickerLegacy TColumn="PickerColumn"
+           TColumnOption="PickerColumnOption"
+           TButton="PickerButton"
+           ColumnsBuilder="@ColumnsBuilder"
+           ButtonsBuilder="@ButtonsBuilder"
+           Trigger="open-multi-picker"></IonPickerLegacy>
+
+<p>@((MarkupString)_message)</p>
+
+@code{
+
+    string _message = string.Empty;
+
+    private void ColumnsBuilder(PickerLegacyColumnBuilder builder)
+    {
+        builder
+            .Add<PickerColumn>(column =>
+            {
+                column.Name = "meat";
+                column.Options =
+                [
+                    new PickerColumnOption { Text = "Pepperoni", Value = "pepperoni" },
+                    new PickerColumnOption { Text = "Smoked Ham", Value = "smoked-ham" },
+                    new PickerColumnOption { Text = "Crispy Bacon", Value = "bacon" }
+                ];
+            })
+            .Add<PickerColumn>(column =>
+            {
+                column.Name = "veggies";
+                column.Options =
+                [
+                    new PickerColumnOption { Text = "Red onion", Value = "red-onion" },
+                    new PickerColumnOption { Text = "Peppers", Value = "peppers" },
+                    new PickerColumnOption { Text = "Black olives", Value = "black-olives" }
+                ];
+            })
+            .Add<PickerColumn>(column =>
+            {
+                column.Name = "crust";
+                column.Options =
+                [
+                    new PickerColumnOption { Text = "Pan style", Value = "pan" },
+                    new PickerColumnOption { Text = "Hand tossed", Value = "hand-tossed" },
+                    new PickerColumnOption { Text = "Stuffed crust", Value = "stuffed-crust" }
+                ];
+            });
+    }
+
+    private void ButtonsBuilder(PickerLegacyButtonBuilder builder)
+    {
+        builder
+            .Add(new PickerButton { Text = "Cancel", Role = "cancel" })
+            .Add(new PickerButton { Text = "Confirm", Handler = ConfirmHandler });
+    }
+
+
+    private ValueTask ConfirmHandler(Dictionary<string, PickedColumnOption>? value)
+    {
+        if (value is null)
+            return ValueTask.CompletedTask;
+
+        _message = $"You selected a <b>{value["crust"].Text}</b> pizza with <b>{value["meat"].Text}</b> and <b>{value["veggies"].Text}</b>";
+        StateHasChanged();
+
+        return ValueTask.CompletedTask;
+    }
+
+}

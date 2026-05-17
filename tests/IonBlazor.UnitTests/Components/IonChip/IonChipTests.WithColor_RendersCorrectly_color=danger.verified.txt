@@ -1,0 +1,1 @@
+﻿<ion-chip color="danger"></ion-chip>

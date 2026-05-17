@@ -1,0 +1,1 @@
+﻿<ion-label>Label text</ion-label>

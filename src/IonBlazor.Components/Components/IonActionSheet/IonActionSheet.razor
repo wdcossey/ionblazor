@@ -1,0 +1,17 @@
+﻿@namespace IonBlazor.Components
+@inherits IonJsComponent
+@typeparam TButtonData
+
+<ion-action-sheet @ref="@IonElement"
+                  @attributes="@Attributes"
+                  animated="@Animated.AsString()"
+                  backdrop-dismiss="@BackdropDismiss.AsString()"
+                  css-class="@CssClass"
+                  header="@Header"
+                  is-open="@IsOpen.AsString()"
+                  keyboard-close="@KeyboardClose.AsString()"
+                  mode="@Mode"
+                  sub-header="@SubHeader"
+                  translucent="@Translucent.AsString()"
+                  trigger="@Trigger">
+</ion-action-sheet>

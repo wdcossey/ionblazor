@@ -1,0 +1,16 @@
+::deep ion-grid {
+    --ion-grid-width: 50%;
+
+    --ion-grid-width-xs: 50%;
+    --ion-grid-width-sm: 288px;
+    --ion-grid-width-md: 384px;
+    --ion-grid-width-lg: 480px;
+    --ion-grid-width-xl: 570px;
+}
+
+::deep ion-col {
+    background-color: var(--ion-color-primary);
+    border: solid 1px var(--ion-color-primary-contrast);
+    color: var(--ion-color-primary-contrast);
+    text-align: center;
+}

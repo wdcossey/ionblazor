@@ -1,0 +1,1 @@
+﻿<ion-infinite-scroll-content loading-text="Loading more..."></ion-infinite-scroll-content>

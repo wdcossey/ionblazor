@@ -1,0 +1,33 @@
+﻿@using System.Text.Json.Nodes
+@using System.Text.RegularExpressions
+
+<IonList>
+    <IonItem>
+        <IonInput @ref="_input" Label="Alphanumeric Characters"></IonInput>
+    </IonItem>
+</IonList>
+
+@code {
+    private IonInput _input = null!;
+
+    private static readonly Regex AlphanumericRegex = new("[^a-zA-Z0-9]");
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+        {
+            return;
+        }
+
+        await _input.AddEventListener("ionInput", IonicEventCallback<JsonObject?>.Create(async args =>
+        {
+            var value = args?["detail"]?["value"]?.GetValue<string?>() ?? string.Empty;
+
+            // Removes non alphanumeric characters
+            await _input.SetValueAsync(AlphanumericRegex.Replace(value, string.Empty));
+        }) );
+    }
+}
+

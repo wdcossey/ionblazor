@@ -1,0 +1,16 @@
+﻿<IonButton  @onclick="@(() => _alert.IsOpen = true)">Click Me</IonButton>
+<IonAlert @ref="_alert"
+          Header="A Short Title Is Best"
+          SubHeader="A Sub Header Is Optional"
+          Message="A message should be a short, complete sentence."
+          ButtonsBuilder="@(builder => builder.Add(new AlertButton { Text = "Action" } ))"
+          IonAlertDidDismiss="IonAlertDidDismiss"></IonAlert>
+
+@code{
+    private IonAlert _alert = null!;
+
+    private void IonAlertDidDismiss()
+    {
+        _alert.IsOpen = false;
+    }
+}

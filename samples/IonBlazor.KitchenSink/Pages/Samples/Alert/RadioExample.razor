@@ -1,0 +1,36 @@
+﻿<IonButton id="present-alert-radio-example">Click Me</IonButton>
+<IonAlert Trigger="present-alert-radio-example"
+          Header="Select your favorite color"
+          IonAlertDidDismiss="IonAlertDidDismiss"
+          ButtonsBuilder="@ButtonsBuilder"
+          InputsBuilder="@InputsBuilder"
+/>
+
+@code{
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
+
+    private void IonAlertDidDismiss(IonAlertDismissEventArgs args)
+    {
+        Console?.Add($"Dismissed with role: {args.Role}");
+
+        if (args.Role != "ok")
+            return;
+
+        Console?.Add($"{(args.Values as AlertValues)?.Values}");
+    }
+
+    private static void ButtonsBuilder(AlertButtonBuilder builder)
+    {
+        builder.Add(new AlertButton { Text = "OK", Role = "ok" });
+    }
+
+    private static void InputsBuilder(AlertInputBuilder builder)
+    {
+        builder
+            .Add(new AlertInputRadio { Label = "Red", Checked = true, Value = "red" })
+            .Add(new AlertInputRadio { Label = "Blue", Value = "blue" })
+            .Add(new AlertInputRadio { Label = "Green", Value = "green" });
+    }
+
+}

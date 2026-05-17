@@ -1,0 +1,1 @@
+﻿<ion-backdrop stop-propagation="true" tappable="true" visible="false"></ion-backdrop>
