@@ -1,19 +1,21 @@
 name: Build and Publish NuGet Packages
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
   workflow_dispatch:
     inputs:
       version:
-        description: 'Package version override (e.g. 1.0.0). Leave empty to use version from CommonNuget.props.'
+        description: 'Package version override (e.g. 0.887.1). Leave empty to derive from the @ionic/core version in package.json as 0.{maj}{min}{pat}.0.'
         required: false
         type: string
+      publish:
+        description: 'Push the packed .nupkg files to NuGet.org. Leave unchecked for a dry run that only uploads artifacts.'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build-and-publish:
-    name: Build, Pack and Publish
+    name: Build, Pack (Publish if requested)
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -39,15 +41,24 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      # Version scheme: 0.{ionicMajor}{ionicMinor}{ionicPatch}.{revision}
+      # Source of truth for the Ionic version is the @ionic/core entry in package.json.
+      # Revision defaults to 0; pass an explicit `version` input to override (e.g. 0.887.2).
       - name: Determine package version
         id: version
         run: |
-          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            VERSION="${GITHUB_REF#refs/tags/v}"
-          elif [[ -n "${{ inputs.version }}" ]]; then
+          if [[ -n "${{ inputs.version }}" ]]; then
             VERSION="${{ inputs.version }}"
           else
-            VERSION=$(grep -oP '(?<=<PackageVersion>).*(?=</PackageVersion>)' CommonNuget.props)
+            IONIC=$(jq -r '.dependencies["@ionic/core"]' package.json | tr -d '^~ ')
+            MAJ=$(echo "$IONIC" | cut -d. -f1)
+            MIN=$(echo "$IONIC" | cut -d. -f2)
+            PAT=$(echo "$IONIC" | cut -d. -f3)
+            if [[ -z "$MAJ" || -z "$MIN" || -z "$PAT" ]]; then
+              echo "Failed to parse @ionic/core version from package.json (got '$IONIC')" >&2
+              exit 1
+            fi
+            VERSION="0.${MAJ}${MIN}${PAT}.0"
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Package version: $VERSION"
@@ -93,14 +104,21 @@ jobs:
             -p:PackageVersion=${{ steps.version.outputs.version }} \
             --output nupkgs
 
-      # IonBlazor references IonBlazor.Components as a NuGet package in Release mode,
-      # so we add the freshly packed packages as a local source before packing it.
+      # IonBlazor and IonBlazor.Mcp reference IonBlazor.Components as a NuGet package in
+      # Release mode, so we add the freshly packed packages as a local source before packing them.
       - name: Add local NuGet source
         run: dotnet nuget add source ${{ github.workspace }}/nupkgs --name local
 
       - name: Pack IonBlazor
         run: |
           dotnet pack src/IonBlazor/IonBlazor.csproj \
+            -c Release \
+            -p:PackageVersion=${{ steps.version.outputs.version }} \
+            --output nupkgs
+
+      - name: Pack IonBlazor.Mcp
+        run: |
+          dotnet pack src/IonBlazor.Mcp/IonBlazor.Mcp.csproj \
             -c Release \
             -p:PackageVersion=${{ steps.version.outputs.version }} \
             --output nupkgs
@@ -116,6 +134,7 @@ jobs:
           retention-days: 7
 
       - name: Publish packages to NuGet.org
+        if: ${{ inputs.publish }}
         run: |
           dotnet nuget push 'nupkgs/*.nupkg' \
             --api-key ${{ secrets.NUGET_API_KEY }} \
