@@ -27,6 +27,20 @@ public class IonSegmentViewTests : IonTestContext
         await Verify(cut.Markup, settings);
     }
 
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task WithSwipeGesture_RendersCorrectly(bool value)
+    {
+        VerifySettings settings = new();
+        settings.UseTextForParameters($"value={value}");
+
+        var cut = Render<IonSegmentView>(parameters => parameters
+            .Add(p => p.SwipeGesture, value));
+
+        await Verify(cut.Markup, settings);
+    }
+
     [Fact]
     public async Task WithChildContent_RendersCorrectly()
     {

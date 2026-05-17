@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 
@@ -235,6 +236,112 @@ public class IonModalTests : IonTestContext
             .Should().BeAssignableTo<ElementReference>()
             .Which.Should().Be(cut.Instance.IonElement);
         invocation.Arguments[1].Should().Be(0.5d);
+    }
+
+    // ---------------------------------------------------------------------------
+    // Drag events (sheet / card modal gestures)
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonDragStart_Fires_WithSender()
+    {
+        IonModalDragStartEventArgs? captured = null;
+
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>")
+            .Add(p => p.IonDragStart, args => captured = args));
+
+        await InvokeIonEventAsync("ionDragStart", new JsonObject());
+
+        captured.Should().NotBeNull();
+        captured!.Sender.Should().Be(cut.Instance);
+    }
+
+    [Fact]
+    public async Task IonDragMove_Fires_WithFlattenedDetail()
+    {
+        IonModalDragMoveEventArgs? captured = null;
+
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>")
+            .Add(p => p.IonDragMove, args => captured = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject
+            {
+                ["currentY"] = 120,
+                ["deltaY"] = 12,
+                ["velocityY"] = 0.5,
+                ["progress"] = 0.75,
+                ["snapBreakpoint"] = 0.5
+            }
+        };
+        await InvokeIonEventAsync("ionDragMove", payload);
+
+        captured.Should().NotBeNull();
+        captured!.Sender.Should().Be(cut.Instance);
+        captured.CurrentY.Should().Be(120m);
+        captured.DeltaY.Should().Be(12m);
+        captured.VelocityY.Should().Be(0.5m);
+        captured.Progress.Should().Be(0.75m);
+        captured.SnapBreakpoint.Should().Be(0.5m);
+    }
+
+    [Fact]
+    public async Task IonDragEnd_Fires_WithFlattenedDetail()
+    {
+        IonModalDragEndEventArgs? captured = null;
+
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>")
+            .Add(p => p.IonDragEnd, args => captured = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject
+            {
+                ["currentY"] = 200,
+                ["deltaY"] = -25,
+                ["velocityY"] = 1.2,
+                ["progress"] = 1.0,
+                ["snapBreakpoint"] = 1.0
+            }
+        };
+        await InvokeIonEventAsync("ionDragEnd", payload);
+
+        captured.Should().NotBeNull();
+        captured!.Sender.Should().Be(cut.Instance);
+        captured.CurrentY.Should().Be(200m);
+        captured.DeltaY.Should().Be(-25m);
+        captured.VelocityY.Should().Be(1.2m);
+        captured.Progress.Should().Be(1.0m);
+        captured.SnapBreakpoint.Should().Be(1.0m);
+    }
+
+    [Fact]
+    public async Task IonDragEnd_Fires_WithNullSnapBreakpoint_ForCardModal()
+    {
+        IonModalDragEndEventArgs? captured = null;
+
+        Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>")
+            .Add(p => p.IonDragEnd, args => captured = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject
+            {
+                ["currentY"] = 50,
+                ["deltaY"] = -5,
+                ["velocityY"] = 0.1,
+                ["progress"] = 0.2
+            }
+        };
+        await InvokeIonEventAsync("ionDragEnd", payload);
+
+        captured.Should().NotBeNull();
+        captured!.SnapBreakpoint.Should().BeNull();
     }
 
     // ---------------------------------------------------------------------------

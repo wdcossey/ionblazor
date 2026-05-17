@@ -4,11 +4,16 @@ namespace IonBlazor.Components;
 
 public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
 {
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
+
     private readonly string _id = $"ibz-modal-{Stopwatch.GetTimestamp():x}";
 
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionBreakpointDidChangeReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionDragEndReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionDragMoveReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionDragStartReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionModalDidDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionModalDidPresentReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionModalWillDismissReference;
@@ -239,6 +244,24 @@ public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
     public EventCallback<IonModalBreakpointDidChangeEventArgs> IonBreakpointDidChange { get; set; }
 
     /// <summary>
+    /// Event that is emitted when the sheet modal or card modal gesture ends.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IonModalDragEndEventArgs> IonDragEnd { get; set; }
+
+    /// <summary>
+    /// Event that is emitted when the sheet modal or card modal gesture moves.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IonModalDragMoveEventArgs> IonDragMove { get; set; }
+
+    /// <summary>
+    /// Event that is emitted when the sheet modal or card modal gesture starts.
+    /// </summary>
+    [Parameter]
+    public EventCallback<IonModalDragStartEventArgs> IonDragStart { get; set; }
+
+    /// <summary>
     /// Emitted after the modal has dismissed.
     /// </summary>
     [Parameter]
@@ -302,6 +325,41 @@ public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
                 Sender = this,
                 Breakpoint = args?["detail"]?["breakpoint"]?.GetValue<double>()
             });
+        });
+
+        _ionDragEndReference = IonicEventCallback<JsonObject?>.Create(async args =>
+        {
+            __ionModalDragEventDetail detail = args?["detail"]?.Deserialize<__ionModalDragEventDetail>(JsonOptions) ?? new __ionModalDragEventDetail();
+
+            await IonDragEnd.InvokeAsync(new IonModalDragEndEventArgs
+            {
+                Sender = this,
+                CurrentY = detail.CurrentY,
+                DeltaY = detail.DeltaY,
+                VelocityY = detail.VelocityY,
+                Progress = detail.Progress,
+                SnapBreakpoint = detail.SnapBreakpoint
+            });
+        });
+
+        _ionDragMoveReference = IonicEventCallback<JsonObject?>.Create(async args =>
+        {
+            __ionModalDragEventDetail detail = args?["detail"]?.Deserialize<__ionModalDragEventDetail>(JsonOptions) ?? new __ionModalDragEventDetail();
+
+            await IonDragMove.InvokeAsync(new IonModalDragMoveEventArgs
+            {
+                Sender = this,
+                CurrentY = detail.CurrentY,
+                DeltaY = detail.DeltaY,
+                VelocityY = detail.VelocityY,
+                Progress = detail.Progress,
+                SnapBreakpoint = detail.SnapBreakpoint
+            });
+        });
+
+        _ionDragStartReference = IonicEventCallback<JsonObject?>.Create(async _ =>
+        {
+            await IonDragStart.InvokeAsync(new IonModalDragStartEventArgs { Sender = this });
         });
 
         _ionModalDidDismissReference = IonicEventCallback<JsonObject?>.Create(async args =>
@@ -383,6 +441,9 @@ public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionBreakpointDidChange", _ionBreakpointDidChangeReference),
+            IonEvent.Set("ionDragEnd", _ionDragEndReference),
+            IonEvent.Set("ionDragMove", _ionDragMoveReference),
+            IonEvent.Set("ionDragStart", _ionDragStartReference),
             IonEvent.Set("ionModalDidDismiss", _ionModalDidDismissReference),
             IonEvent.Set("ionModalDidPresent", _ionModalDidPresentReference),
             IonEvent.Set("ionModalWillDismiss", _ionModalWillDismissReference),
@@ -408,6 +469,9 @@ public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
         _didDismissReference.Dispose();
         _didPresentReference.Dispose();
         _ionBreakpointDidChangeReference.Dispose();
+        _ionDragEndReference.Dispose();
+        _ionDragMoveReference.Dispose();
+        _ionDragStartReference.Dispose();
         _ionModalDidDismissReference.Dispose();
         _ionModalDidPresentReference.Dispose();
         _ionModalWillDismissReference.Dispose();
@@ -430,4 +494,16 @@ public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
 
         return new IonModalDismissEventArgs() { Sender = this, Data = data, Role = role };
     }
+
+    // ReSharper disable once InconsistentNaming
+    // ReSharper disable once ClassNeverInstantiated.Global
+    internal record __ionModalDragEventDetail
+    {
+        public decimal CurrentY { get; init; }
+        public decimal DeltaY { get; init; }
+        public decimal VelocityY { get; init; }
+        public decimal Progress { get; init; }
+        public decimal? SnapBreakpoint { get; init; }
+    }
+
 }
