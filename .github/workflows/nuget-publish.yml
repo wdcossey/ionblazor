@@ -1,0 +1,123 @@
+name: Build and Publish NuGet Packages
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version override (e.g. 1.0.0). Leave empty to use version from CommonNuget.props.'
+        required: false
+        type: string
+
+jobs:
+  build-and-publish:
+    name: Build, Pack and Publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build webpack bundle
+        run: npm run build
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Determine package version
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/v}"
+          elif [[ -n "${{ inputs.version }}" ]]; then
+            VERSION="${{ inputs.version }}"
+          else
+            VERSION=$(grep -oP '(?<=<PackageVersion>).*(?=</PackageVersion>)' CommonNuget.props)
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Package version: $VERSION"
+
+      - name: Restore NuGet packages
+        run: dotnet restore IonBlazor.sln
+
+      - name: Build solution (Debug)
+        run: dotnet build IonBlazor.sln --no-restore
+
+      - name: Run tests
+        run: dotnet test IonBlazor.sln --no-build --verbosity normal
+
+      - name: Create output directory
+        run: mkdir -p nupkgs
+
+      # Pack packages that have no cross-project dependencies in Release mode first
+      - name: Pack IonBlazor.Components
+        run: |
+          dotnet pack src/IonBlazor.Components/IonBlazor.Components.csproj \
+            -c Release \
+            -p:PackageVersion=${{ steps.version.outputs.version }} \
+            --output nupkgs
+
+      - name: Pack IonBlazor.StaticAssets
+        run: |
+          dotnet pack src/IonBlazor.StaticAssets/IonBlazor.StaticAssets.csproj \
+            -c Release \
+            -p:PackageVersion=${{ steps.version.outputs.version }} \
+            --output nupkgs
+
+      - name: Pack IonBlazor.StaticAssets.Ionic
+        run: |
+          dotnet pack src/IonBlazor.StaticAssets.Ionic/IonBlazor.StaticAssets.Ionic.csproj \
+            -c Release \
+            -p:PackageVersion=${{ steps.version.outputs.version }} \
+            --output nupkgs
+
+      - name: Pack IonBlazor.StaticAssets.Ionic.Svg
+        run: |
+          dotnet pack src/IonBlazor.StaticAssets.Ionic.Svg/IonBlazor.StaticAssets.Ionic.Svg.csproj \
+            -c Release \
+            -p:PackageVersion=${{ steps.version.outputs.version }} \
+            --output nupkgs
+
+      # IonBlazor references IonBlazor.Components as a NuGet package in Release mode,
+      # so we add the freshly packed packages as a local source before packing it.
+      - name: Add local NuGet source
+        run: dotnet nuget add source ${{ github.workspace }}/nupkgs --name local
+
+      - name: Pack IonBlazor
+        run: |
+          dotnet pack src/IonBlazor/IonBlazor.csproj \
+            -c Release \
+            -p:PackageVersion=${{ steps.version.outputs.version }} \
+            --output nupkgs
+
+      - name: List packages
+        run: ls -la nupkgs/
+
+      - name: Upload packages as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages-${{ steps.version.outputs.version }}
+          path: nupkgs/*.nupkg
+          retention-days: 7
+
+      - name: Publish packages to NuGet.org
+        run: |
+          dotnet nuget push 'nupkgs/*.nupkg' \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
