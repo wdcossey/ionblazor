@@ -51,4 +51,17 @@ public abstract class IonTestContext : BunitContext
         var dotNetRef = (DotNetObjectReference<IonicEventCallback<TArgs>>)target.Reference!;
         await dotNetRef.Value.OnCallbackEvent(args);
     }
+
+    /// <summary>
+    /// Locates the void-payload <see cref="IonicEventCallback"/> registered for <paramref name="eventName"/>
+    /// and invokes it, simulating an Ionic event that carries no detail payload (e.g. <c>ionPullStart</c>).
+    /// </summary>
+    protected async Task InvokeIonEventAsync(string eventName)
+    {
+        JSRuntimeInvocation invocation = JSInterop.Invocations["attachListeners"].Single();
+        IEnumerable<IonEvent> events = (IEnumerable<IonEvent>)invocation.Arguments[0]!;
+        IonEvent target = events.Single(e => e.Event == eventName);
+        var dotNetRef = (DotNetObjectReference<IonicEventCallback>)target.Reference!;
+        await dotNetRef.Value.OnCallbackEvent();
+    }
 }

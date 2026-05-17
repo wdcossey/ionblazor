@@ -3,6 +3,8 @@
 public sealed partial class IonRefresher: IonJsContentComponent
 {
     private readonly DotNetObjectReference<IonicEventCallback> _ionPullReference;
+    private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _ionPullEndReference;
+    private readonly DotNetObjectReference<IonicEventCallback> _ionPullStartReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionRefreshReference;
     private readonly DotNetObjectReference<IonicEventCallback> _ionStartReference;
 
@@ -58,6 +60,17 @@ public sealed partial class IonRefresher: IonJsContentComponent
     [Parameter] public EventCallback<IonRefresherIonPullEventArgs> IonPull { get; set; }
 
     /// <summary>
+    /// Emitted when the refresher has returned to the inactive state after a pull gesture.
+    /// This fires whether the refresh completed successfully or was canceled.
+    /// </summary>
+    [Parameter] public EventCallback<IonRefresherIonPullEndEventArgs> IonPullEnd { get; set; }
+
+    /// <summary>
+    /// Emitted when the user begins to start pulling down.
+    /// </summary>
+    [Parameter] public EventCallback<IonRefresherIonPullEventArgs> IonPullStart { get; set; }
+
+    /// <summary>
     /// Emitted when the user lets go of the content and has pulled down further than the pullMin or
     /// pulls the content down and exceeds the pullMax.
     /// Updates the refresher state to refreshing.
@@ -73,6 +86,25 @@ public sealed partial class IonRefresher: IonJsContentComponent
     public IonRefresher()
     {
         _ionPullReference = IonicEventCallback.Create(async () => await IonPull.InvokeAsync(new IonRefresherIonPullEventArgs { Sender  = this }));
+
+        _ionPullEndReference = IonicEventCallback<JsonObject?>.Create(async args =>
+        {
+            var reason = args?["detail"]?["reason"]?.GetValue<string>() ?? string.Empty;
+
+            await IonPullEnd.InvokeAsync(new IonRefresherIonPullEndEventArgs()
+            {
+                Sender = this,
+                Reason =
+                    reason.ToLowerInvariant() switch
+                    {
+                        "cancel" => RefresherPullEndEventDetailReason.Cancel,
+                        "complete" => RefresherPullEndEventDetailReason.Complete,
+                        _ => RefresherPullEndEventDetailReason.Undefined
+                    }
+            });
+        });
+
+        _ionPullStartReference = IonicEventCallback.Create(async () => await IonPullStart.InvokeAsync(new IonRefresherIonPullEventArgs { Sender  = this }));
 
         _ionRefreshReference = IonicEventCallback.Create(async () => await IonRefresh.InvokeAsync(new IonRefresherIonRefreshEventArgs { Sender  = this }));
 
@@ -123,6 +155,8 @@ public sealed partial class IonRefresher: IonJsContentComponent
         await this.AttachIonListenersAsync(
             IonElement,
             IonEvent.Set("ionPull", _ionPullReference),
+            IonEvent.Set("ionPullEnd", _ionPullEndReference),
+            IonEvent.Set("ionPullStart", _ionPullStartReference),
             IonEvent.Set("ionRefresh", _ionRefreshReference),
             IonEvent.Set("ionStart", _ionStartReference)
         );
@@ -131,6 +165,8 @@ public sealed partial class IonRefresher: IonJsContentComponent
     public override async ValueTask DisposeAsync()
     {
         _ionPullReference.Dispose();
+        _ionPullEndReference.Dispose();
+        _ionPullStartReference.Dispose();
         _ionRefreshReference.Dispose();
         _ionStartReference.Dispose();
         await base.DisposeAsync();

@@ -11,6 +11,13 @@ public partial class IonSegmentView : IonContentComponent
     public bool Disabled { get; set; }
 
     /// <summary>
+    /// If <b>true</b>, the segment view supports swipe gestures to navigate between segments.
+    /// When omitted, defaults to Ionic's behaviour (<b>true</b>).
+    /// </summary>
+    [Parameter]
+    public bool? SwipeGesture { get; set; }
+
+    /// <summary>
     /// Emitted when the segment view is scrolled.
     /// </summary>
     [Parameter] public EventCallback<IonSegmentViewScrollEvent> IonSegmentViewScroll { get; set; }

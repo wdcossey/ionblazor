@@ -4,7 +4,8 @@
 <ion-segment-view
     @ref="@IonElement"
     @attributes="@Attributes"
-    disabled="@Disabled.AsString()">
+    disabled="@Disabled.AsString()"
+    swipe-gesture="@SwipeGesture.AsString()">
     <CascadingValue TValue="@IIonComponent" Name="@(nameof(IonSegmentContent.Parent))" Value="@(this)" IsFixed="@true">
         @ChildContent
     </CascadingValue>

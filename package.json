@@ -8,13 +8,13 @@
   },
   "devDependencies": {
     "typescript": "^5.9.3",
-    "webpack": "^5.101.0",
+    "webpack": "^5.106.2",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "@ionic/cli": "^7.2.1",
-    "@ionic/core": "^8.7.2",
-    "@ionic/docs": "^8.7.2",
-    "@maskito/core": "^3.10.3"
+    "@ionic/core": "^8.8.7",
+    "@ionic/docs": "^8.8.7",
+    "@maskito/core": "^3.11.1"
   }
 }

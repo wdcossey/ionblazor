@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 
@@ -102,6 +103,46 @@ public class IonRefresherTests : IonTestContext
         invocation.Arguments[0]
             .Should().BeAssignableTo<ElementReference>()
             .Which.Should().Be(cut.Instance.IonElement);
+    }
+
+    // ---------------------------------------------------------------------------
+    // Pull events (ionPullStart / ionPullEnd)
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonPullStart_Fires_WithSender()
+    {
+        IonRefresherIonPullEventArgs? captured = null;
+
+        var cut = Render<IonRefresher>(parameters => parameters
+            .Add(p => p.IonPullStart, args => captured = args));
+
+        await InvokeIonEventAsync("ionPullStart");
+
+        captured.Should().NotBeNull();
+        captured!.Sender.Should().Be(cut.Instance);
+    }
+
+    [Theory]
+    [InlineData("complete", RefresherPullEndEventDetailReason.Complete)]
+    [InlineData("cancel", RefresherPullEndEventDetailReason.Cancel)]
+    [InlineData("something-else", RefresherPullEndEventDetailReason.Undefined)]
+    public async Task IonPullEnd_Fires_WithMappedReason(string reason, RefresherPullEndEventDetailReason expected)
+    {
+        IonRefresherIonPullEndEventArgs? captured = null;
+
+        var cut = Render<IonRefresher>(parameters => parameters
+            .Add(p => p.IonPullEnd, args => captured = args));
+
+        var payload = new JsonObject
+        {
+            ["detail"] = new JsonObject { ["reason"] = reason }
+        };
+        await InvokeIonEventAsync("ionPullEnd", payload);
+
+        captured.Should().NotBeNull();
+        captured!.Sender.Should().Be(cut.Instance);
+        captured.Reason.Should().Be(expected);
     }
 
     // ---------------------------------------------------------------------------
