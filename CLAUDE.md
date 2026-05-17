@@ -146,6 +146,7 @@ Components currently wired for `@bind`: `IonInput`, `IonTextarea`, `IonSearchbar
   - The manifest is versioned with Ionic and updates automatically when the Ionic version in `package.json` is bumped
   - Generator type: one-shot `.cs` script (runnable via `dotnet run`)
 - **bUnit tests**: Tests should eventually be generated alongside components. The existing tests define the patterns to follow.
+- **TypeScript compilation → npm**: `IonBlazor.StaticAssets` currently compiles `Typescript/*.ts` → `wwwroot/*.js` via `Microsoft.TypeScript.MSBuild` during `dotnet build`. Because the project cross-targets 5 TFMs that build in parallel and share one `wwwroot/`, the static-web-asset resolver can race the TS compile and fail with `error : No file exists for the asset at either location '.../wwwroot/common.js'` on a random subset of TFMs. Workaround in `.github/workflows/nuget-publish.yml`: the `Pack IonBlazor.StaticAssets` step passes `-p:BuildInParallel=false -maxCpuCount:1`. Proper fix is to move the TS compile to npm (`tsc -p src/IonBlazor.StaticAssets/tsconfig.json` in `package.json`'s build script), drop the `Microsoft.TypeScript.MSBuild` PackageReference, and remove the workflow workaround. Mirrors how the webpack bundle for `IonBlazor` is already handled.
 
 ## Testing
 
