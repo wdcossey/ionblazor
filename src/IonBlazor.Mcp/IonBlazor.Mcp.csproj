@@ -15,7 +15,6 @@
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>ionblazor-mcp</ToolCommandName>
         <PackageId>IonBlazor.Mcp</PackageId>
-        <Version>0.1.0</Version>
         <Authors>wdcossey</Authors>
         <Description>Model Context Protocol (MCP) server that exposes the IonBlazor component library as AI-callable tools (list, find, get metadata) for use with Claude Code, Claude Desktop, and other MCP clients.</Description>
         <PackageTags>mcp, modelcontextprotocol, ionblazor, ionic, blazor, ai, claude, copilot</PackageTags>
@@ -23,7 +22,6 @@
         <PackageProjectUrl>https://github.com/wdcossey/ionblazor</PackageProjectUrl>
         <RepositoryUrl>https://github.com/wdcossey/ionblazor</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageOutputPath>$(MSBuildThisFileDirectory)bin\nupkg\</PackageOutputPath>
     </PropertyGroup>
 
     <ItemGroup>

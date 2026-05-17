@@ -1,6 +1,9 @@
 <Project>
     <PropertyGroup>
-        <PackageVersion>0.872.1</PackageVersion>
+        <!-- PackageVersion is supplied by the nuget-publish.yml workflow.
+             Derived from the @ionic/core version in package.json as 0.{maj}{min}{pat}.{revision},
+             or taken verbatim from a v*.*.* git tag / workflow_dispatch input.
+             Local `dotnet pack` produces 1.0.0 unless -p:PackageVersion= is passed. -->
         <TargetFrameworks>net6.0;net7.0;net8.0;net9.0;net10.0</TargetFrameworks>
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
         <WindowsPackageType>None</WindowsPackageType>
