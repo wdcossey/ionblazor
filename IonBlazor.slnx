@@ -1,0 +1,26 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/samples/">
+    <Project Path="samples/IonBlazor.Barebones/IonBlazor.Barebones.csproj" />
+    <Project Path="samples/IonBlazor.KitchenSink/IonBlazor.KitchenSink.csproj">
+      <Deploy Solution="*|Any CPU" />
+    </Project>
+    <Project Path="samples/IonBlazor.Wasm/IonBlazor.Wasm.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/IonBlazor.Components/IonBlazor.Components.csproj" />
+    <Project Path="src/IonBlazor.Mcp/IonBlazor.Mcp.csproj" />
+    <Project Path="src/IonBlazor.StaticAssets.Ionic.Svg/IonBlazor.StaticAssets.Ionic.Svg.csproj" />
+    <Project Path="src/IonBlazor.StaticAssets.Ionic/IonBlazor.StaticAssets.Ionic.csproj" />
+    <Project Path="src/IonBlazor.StaticAssets/IonBlazor.StaticAssets.csproj" />
+    <Project Path="src/IonBlazor/IonBlazor.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/IonBlazor.UnitTests/IonBlazor.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tools/" />
+</Solution>

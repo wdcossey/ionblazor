@@ -64,13 +64,13 @@ jobs:
           echo "Package version: $VERSION"
 
       - name: Restore NuGet packages
-        run: dotnet restore IonBlazor.sln
+        run: dotnet restore IonBlazor.CI.slnf
 
       - name: Build solution (Debug)
-        run: dotnet build IonBlazor.sln --no-restore
+        run: dotnet build IonBlazor.CI.slnf --no-restore
 
       - name: Run tests
-        run: dotnet test IonBlazor.sln --no-build --verbosity normal
+        run: dotnet test IonBlazor.CI.slnf --no-build --verbosity normal
 
       - name: Create output directory
         run: mkdir -p nupkgs
