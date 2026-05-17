@@ -84,7 +84,7 @@ public sealed partial class IonFabButton : IonContentComponent, IIonModeComponen
 
     /// <summary>
     /// The size of the button. Set this to small in order to have a mini fab button.<br/>
-    /// Default: <see cref="IonFabButtonSize.Default"/>
+    /// Default: <see cref="IonFabButtonSize.Undefined"/>
     /// </summary>
     [Parameter]
     public string? Size { get; set; } = IonFabButtonSize.Undefined;
