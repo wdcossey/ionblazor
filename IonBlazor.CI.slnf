@@ -1,0 +1,14 @@
+{
+  "solution": {
+    "path": "IonBlazor.slnx",
+    "projects": [
+      "src\\IonBlazor\\IonBlazor.csproj",
+      "src\\IonBlazor.Components\\IonBlazor.Components.csproj",
+      "src\\IonBlazor.Mcp\\IonBlazor.Mcp.csproj",
+      "src\\IonBlazor.StaticAssets\\IonBlazor.StaticAssets.csproj",
+      "src\\IonBlazor.StaticAssets.Ionic\\IonBlazor.StaticAssets.Ionic.csproj",
+      "src\\IonBlazor.StaticAssets.Ionic.Svg\\IonBlazor.StaticAssets.Ionic.Svg.csproj",
+      "tests\\IonBlazor.UnitTests\\IonBlazor.UnitTests.csproj"
+    ]
+  }
+}
