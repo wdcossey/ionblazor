@@ -114,7 +114,7 @@ public static class ComponentRegistry
         var nullCtx = new NullabilityInfoContext();
         return GetParameterProperties(type)
             .Where(p => !IsEventCallback(p.PropertyType))
-            .Select(p => new ComponentParameter(p.Name, FormatType(p, nullCtx), XmlDocReader.GetSummary(p)))
+            .Select(p => new ComponentParameter(p.Name, TypeFormatter.FormatProperty(p, nullCtx), XmlDocReader.GetSummary(p)))
             .OrderBy(p => p.Name, StringComparer.Ordinal)
             .ToList();
     }
@@ -127,7 +127,7 @@ public static class ComponentRegistry
             .Where(p => p.GetMethod is { IsPublic: true } || p.SetMethod is { IsPublic: true })
             .Select(p => new ComponentCascadingParameter(
                 p.Name,
-                FormatType(p, nullCtx),
+                TypeFormatter.FormatProperty(p, nullCtx),
                 p.GetCustomAttribute<CascadingParameterAttribute>()?.Name,
                 XmlDocReader.GetSummary(p)))
             .OrderBy(p => p.Name, StringComparer.Ordinal)
@@ -150,8 +150,8 @@ public static class ComponentRegistry
             return null;
 
         var payloadType = prop.PropertyType.GetGenericArguments()[0];
-        var formatted = FormatType(payloadType);
-        if (IsValueType(payloadType))
+        var formatted = TypeFormatter.Format(payloadType);
+        if (TypeFormatter.IsValueType(payloadType))
             return formatted;
 
         var info = nullCtx.Create(prop);
@@ -204,9 +204,9 @@ public static class ComponentRegistry
             .Where(IsAsyncReturn)
             .Select(m => new ComponentMethod(
                 m.Name,
-                FormatType(m.ReturnType),
+                TypeFormatter.Format(m.ReturnType),
                 m.GetParameters()
-                    .Select(p => new ComponentMethodParameter(p.Name ?? "_", FormatParameterType(p, nullCtx)))
+                    .Select(p => new ComponentMethodParameter(p.Name ?? "_", TypeFormatter.FormatParameter(p, nullCtx)))
                     .ToList(),
                 XmlDocReader.GetSummary(m)))
             .OrderBy(m => m.Name, StringComparer.Ordinal)
@@ -231,53 +231,4 @@ public static class ComponentRegistry
         return t.IsGenericType && t.GetGenericTypeDefinition() == typeof(EventCallback<>);
     }
 
-    private static string FormatType(PropertyInfo prop, NullabilityInfoContext nullCtx)
-    {
-        var formatted = FormatType(prop.PropertyType);
-        if (IsValueType(prop.PropertyType))
-            return formatted;
-
-        var info = nullCtx.Create(prop);
-        return info.ReadState == NullabilityState.Nullable && !formatted.EndsWith('?')
-            ? formatted + "?"
-            : formatted;
-    }
-
-    private static string FormatParameterType(ParameterInfo param, NullabilityInfoContext nullCtx)
-    {
-        var formatted = FormatType(param.ParameterType);
-        if (IsValueType(param.ParameterType))
-            return formatted;
-
-        var info = nullCtx.Create(param);
-        return info.WriteState == NullabilityState.Nullable && !formatted.EndsWith('?')
-            ? formatted + "?"
-            : formatted;
-    }
-
-    private static bool IsValueType(Type t) =>
-        t.IsValueType && (!t.IsGenericType || t.GetGenericTypeDefinition() != typeof(Nullable<>));
-
-    private static string FormatType(Type t)
-    {
-        if (Nullable.GetUnderlyingType(t) is Type underlying)
-            return FormatType(underlying) + "?";
-
-        if (t == typeof(void)) return "void";
-        if (t == typeof(string)) return "string";
-        if (t == typeof(bool)) return "bool";
-        if (t == typeof(int)) return "int";
-        if (t == typeof(long)) return "long";
-        if (t == typeof(double)) return "double";
-        if (t == typeof(float)) return "float";
-        if (t == typeof(decimal)) return "decimal";
-        if (t == typeof(object)) return "object";
-
-        if (!t.IsGenericType)
-            return t.Name;
-
-        var baseName = t.Name[..t.Name.IndexOf('`')];
-        var args = string.Join(", ", t.GetGenericArguments().Select(FormatType));
-        return $"{baseName}<{args}>";
-    }
 }
