@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFrameworks>;</TargetFrameworks>
-    <!--<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>-->
-    <!--<TargetFrameworks>;net8.0-android;net8.0-maccatalyst</TargetFrameworks>-->
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+    <!--<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>-->
+    <!--<TargetFrameworks>;net10.0-android;net01.0-maccatalyst</TargetFrameworks>-->
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
     <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-    <!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
+    <!-- <TargetFrameworks>$(TargetFrameworks);net10.0-tizen</TargetFrameworks> -->
     <OutputType>Exe</OutputType>
     <RootNamespace>IonicTest</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -38,7 +38,7 @@
   </PropertyGroup>
 
     <!--
-    <PropertyGroup Condition=" '$(TargetFramework)'=='net9.0-maccatalyst' ">
+    <PropertyGroup Condition=" '$(TargetFramework)'=='net10.0-maccatalyst' ">
             <CodesignEntitlements>Platforms\MacCatalyst\Entitlements.plist</CodesignEntitlements>
             <CodesignKey>Apple Development: ()</CodesignKey>
             <CodesignProvision>com.companyname.ionictest</CodesignProvision>
@@ -64,11 +64,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.4" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.4" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.60" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.60" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="10.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.60" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="10.0.60" />
     <!--<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.7.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
