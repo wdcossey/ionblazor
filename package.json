@@ -9,7 +9,6 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@ionic/cli": "^7.2.1",
     "@ionic/core": "^8.8.7",
     "@ionic/docs": "^8.8.7",
     "@maskito/core": "^3.11.1"
