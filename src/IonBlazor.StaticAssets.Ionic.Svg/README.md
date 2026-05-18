@@ -18,7 +18,7 @@ dotnet add package IonBlazor.StaticAssets.Ionic.Svg
 
 ## Supported frameworks
 
-`net6.0`, `net7.0`, `net8.0`, `net9.0`, `net10.0`.
+`net8.0`, `net9.0`, `net10.0`.
 
 ## Links
 

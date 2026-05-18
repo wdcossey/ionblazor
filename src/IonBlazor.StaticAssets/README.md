@@ -36,7 +36,7 @@ You normally don't reference them directly — the C# component types in `IonBla
 
 ## Supported frameworks
 
-`net6.0`, `net7.0`, `net8.0`, `net9.0`, `net10.0`.
+`net8.0`, `net9.0`, `net10.0`.
 
 ## Links
 
