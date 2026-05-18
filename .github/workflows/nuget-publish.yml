@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Package version override (e.g. 0.887.1). Leave empty to derive from the @ionic/core version in package.json as 0.{maj}{min}{pat}.0.'
+        description: 'Package version override (e.g. 0.887.1). Leave empty to derive from the @ionic/core version in package.json as 0.{maj}{min}{pat}.{github.run_number}.'
         required: false
         type: string
       publish:
@@ -41,9 +41,12 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      # Version scheme: 0.{ionicMajor}{ionicMinor}{ionicPatch}.{revision}
+      # Version scheme: 0.{ionicMajor}{ionicMinor}{ionicPatch}.{github.run_number}
       # Source of truth for the Ionic version is the @ionic/core entry in package.json.
-      # Revision defaults to 0; pass an explicit `version` input to override (e.g. 0.887.2).
+      # The revision is github.run_number so successive runs against the same Ionic version
+      # produce unique, monotonically-increasing package versions (re-runs of the same run
+      # reuse the number, which is the desired idempotent behaviour).
+      # Pass an explicit `version` input to override (e.g. 0.887.2).
       - name: Determine package version
         id: version
         run: |
@@ -58,7 +61,7 @@ jobs:
               echo "Failed to parse @ionic/core version from package.json (got '$IONIC')" >&2
               exit 1
             fi
-            VERSION="0.${MAJ}${MIN}${PAT}.0"
+            VERSION="0.${MAJ}${MIN}${PAT}.${{ github.run_number }}"
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Package version: $VERSION"
