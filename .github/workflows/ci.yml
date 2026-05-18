@@ -32,7 +32,7 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
-      - name: Build webpack bundle
+      - name: Compile TypeScript
         run: npm run build
 
       - name: Setup .NET SDK

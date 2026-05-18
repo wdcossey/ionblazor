@@ -17,17 +17,19 @@ ionblazor/
 
 ## Two Ecosystems
 
-This project spans C# and JS. The npm side exists **only** to bundle Ionic's static assets into the NuGet package. It is not a requirement — users can opt out and reference Ionic via `<script>` tags themselves, pointing to any Ionic version they choose.
+This project spans C# and JS. The npm side compiles the JS interop modules from `src/IonBlazor.StaticAssets/Typescript/*.ts` to `src/IonBlazor.StaticAssets/wwwroot/*.js` via `tsc` (`npm run build`).
 
-- npm/bundling: managed in `IonBlazor.StaticAssets`
-- Ionic version is pinned in `package.json`
+The bundled `@ionic/core` JS and CSS that ship in `IonBlazor.StaticAssets.Ionic` come straight from `node_modules/@ionic/core/` — copied by an MSBuild target in that csproj, no JS bundler involved. End users of the NuGet packages can opt out and reference Ionic via `<script>` tags themselves (CDN or otherwise) by skipping the `IonBlazor.StaticAssets.Ionic*` packages.
+
+- npm scripts and Ionic pin: `package.json` at the repo root
+- TypeScript sources: `src/IonBlazor.StaticAssets/Typescript/` (compiled outputs are gitignored)
 - Target frameworks: `net6.0;net7.0;net8.0;net9.0;net10.0`
   - `net6.0` — EOL November 12, 2024 — remove in a future revision
   - `net7.0` — EOL May 14, 2024 — remove in a future revision
   - `net8.0` — LTS, EOL November 10, 2026
   - `net9.0` — STS, EOL November 10, 2026
   - `net10.0` — LTS, EOL ~November 2027
-- Build order: npm assets do **not** need to build before the C# project for development
+- **Build order: `npm install && npm run build` MUST run before `dotnet build`.** `IonBlazor.StaticAssets.csproj` has an MSBuild guard (`EnsureTypeScriptCompiled`) that fails early with a clear message if `wwwroot/common.js` is missing.
 
 ## Component Design Principles
 
@@ -146,7 +148,6 @@ Components currently wired for `@bind`: `IonInput`, `IonTextarea`, `IonSearchbar
   - The manifest is versioned with Ionic and updates automatically when the Ionic version in `package.json` is bumped
   - Generator type: one-shot `.cs` script (runnable via `dotnet run`)
 - **bUnit tests**: Tests should eventually be generated alongside components. The existing tests define the patterns to follow.
-- **TypeScript compilation → npm**: `IonBlazor.StaticAssets` currently compiles `Typescript/*.ts` → `wwwroot/*.js` via `Microsoft.TypeScript.MSBuild` during `dotnet build`. Because the project cross-targets 5 TFMs that build in parallel and share one `wwwroot/`, the static-web-asset resolver can race the TS compile and fail with `error : No file exists for the asset at either location '.../wwwroot/common.js'` on a random subset of TFMs. Workaround in `.github/workflows/nuget-publish.yml`: the `Pack IonBlazor.StaticAssets` step passes `-p:BuildInParallel=false -maxCpuCount:1`. Proper fix is to move the TS compile to npm (`tsc -p src/IonBlazor.StaticAssets/tsconfig.json` in `package.json`'s build script), drop the `Microsoft.TypeScript.MSBuild` PackageReference, and remove the workflow workaround. Mirrors how the webpack bundle for `IonBlazor` is already handled.
 
 ## Testing
 

@@ -29,6 +29,32 @@ public partial class RefresherSample
         await args.Sender!.CompleteAsync();
     }
 
+    #region Pull Start / Pull End Events
+
+    private string _pullEventLog = "(no events yet)";
+
+    private Task PullStartCallback(IonRefresherIonPullEventArgs args)
+    {
+        _pullEventLog = "ionPullStart fired";
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task PullEndCallback(IonRefresherIonPullEndEventArgs args)
+    {
+        _pullEventLog = $"ionPullEnd fired — reason: {args.Reason}";
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private async Task PullEventsIonRefreshCallback(IonRefresherIonRefreshEventArgs args)
+    {
+        await Task.Delay(2000);
+        await args.Sender!.CompleteAsync();
+    }
+
+    #endregion
+
     #region Advanced Usage
 
     private static readonly string[] Names = [

@@ -20,6 +20,10 @@
         }
     </style>
 
+    <IonItem>
+        <IonToggle @bind-Checked="_swipeGesture">Swipe Gesture (@(_swipeGesture == true ? "on" : "off"))</IonToggle>
+    </IonItem>
+
     <IonSegment>
         <IonSegmentButton Value="first" ContentId="first">
             <IonLabel>First</IonLabel>
@@ -31,9 +35,13 @@
             <IonLabel>Third</IonLabel>
         </IonSegmentButton>
     </IonSegment>
-    <IonSegmentView>
+    <IonSegmentView SwipeGesture="@_swipeGesture">
         <IonSegmentContent id="first">First</IonSegmentContent>
         <IonSegmentContent id="second">Second</IonSegmentContent>
         <IonSegmentContent id="third">Third</IonSegmentContent>
     </IonSegmentView>
 </div>
+
+@code {
+    private bool? _swipeGesture = true;
+}
