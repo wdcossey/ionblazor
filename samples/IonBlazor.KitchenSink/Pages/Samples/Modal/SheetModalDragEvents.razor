@@ -1,0 +1,55 @@
+﻿<IonHeader>
+    <IonToolbar>
+        <IonTitle>App</IonTitle>
+    </IonToolbar>
+</IonHeader>
+<IonContent class="ion-padding">
+    <IonButton id="open-drag-events-modal" Expand="block">Open Sheet Modal</IonButton>
+    <p>
+        *** This demo is hosted in a <b>&lt;ion-app&gt;</b>, the modal will <b>not</b> be bound to this preview pane!
+    </p>
+    <p>Drag the modal handle to fire <code>ionDragStart</code>, <code>ionDragMove</code>, and <code>ionDragEnd</code>.</p>
+    <pre>@_log</pre>
+
+    <IonModal Trigger="open-drag-events-modal"
+              Handle="@true"
+              Breakpoints="@(new []{0d, 0.25d, 0.5d, 0.75d})"
+              InitialBreakpoint="@(0.25d)"
+              IonDragStart="OnDragStart"
+              IonDragMove="OnDragMove"
+              IonDragEnd="OnDragEnd">
+        <IonContent class="ion-padding">
+            <h2>Drag this sheet</h2>
+            <p>Open the parent page console pane to watch every move event, or rely on the summary text on the host page.</p>
+        </IonContent>
+    </IonModal>
+</IonContent>
+
+@code {
+    private string _log = "(no drag events yet)";
+
+    private Task OnDragStart(IonModalDragStartEventArgs args)
+    {
+        _log = "ionDragStart fired";
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task OnDragMove(IonModalDragMoveEventArgs args)
+    {
+        _log =
+            $"ionDragMove — currentY={args.CurrentY:0.##}, deltaY={args.DeltaY:0.##}, " +
+            $"velocityY={args.VelocityY:0.##}, progress={args.Progress:0.##}, snapBreakpoint={args.SnapBreakpoint?.ToString("0.##") ?? "(card)"}";
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task OnDragEnd(IonModalDragEndEventArgs args)
+    {
+        _log =
+            $"ionDragEnd — currentY={args.CurrentY:0.##}, deltaY={args.DeltaY:0.##}, " +
+            $"velocityY={args.VelocityY:0.##}, progress={args.Progress:0.##}, snapBreakpoint={args.SnapBreakpoint?.ToString("0.##") ?? "(card)"}";
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+}

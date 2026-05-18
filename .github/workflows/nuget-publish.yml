@@ -33,7 +33,7 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
-      - name: Build webpack bundle
+      - name: Compile TypeScript
         run: npm run build
 
       - name: Setup .NET SDK
@@ -83,15 +83,11 @@ jobs:
             -p:PackageVersion=${{ steps.version.outputs.version }} \
             --output nupkgs
 
-      # Pack cross-TFMs sequentially: parallel builds race against the shared
-      # wwwroot/ directory that TypeScript compilation writes to per-TFM.
       - name: Pack IonBlazor.StaticAssets
         run: |
           dotnet pack src/IonBlazor.StaticAssets/IonBlazor.StaticAssets.csproj \
             -c Release \
             -p:PackageVersion=${{ steps.version.outputs.version }} \
-            -p:BuildInParallel=false \
-            -maxCpuCount:1 \
             --output nupkgs
 
       - name: Pack IonBlazor.StaticAssets.Ionic

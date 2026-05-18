@@ -2,14 +2,11 @@
   "name": "blazor-ionic-framework",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "build": "webpack ./_npm/index.js --output-path src/IonBlazor/wwwroot --output-filename ionBlazor.bundle.js"
+    "build": "tsc -p src/IonBlazor.StaticAssets/tsconfig.json"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
-    "webpack": "^5.106.2",
-    "webpack-cli": "^6.0.1"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@ionic/cli": "^7.2.1",

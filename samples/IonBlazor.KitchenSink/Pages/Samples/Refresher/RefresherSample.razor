@@ -102,6 +102,38 @@
 
 <PlaygroundContainer>
     <Header>
+        <h2>Pull Start / Pull End Events</h2>
+        <p>
+            <code>ionPullStart</code> fires once the user begins the pull-down gesture, while
+            <code>ionPullEnd</code> fires after the refresher returns to the inactive state and
+            carries the reason: <code>complete</code> or <code>cancel</code>.
+        </p>
+    </Header>
+    <ChildContent>
+        <DevicePreview Mode="@IonMode.MaterialDesign">
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Pull to Refresh</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+
+            <IonContent class="ion-padding">
+                <IonRefresher slot="fixed"
+                              IonPullStart="PullStartCallback"
+                              IonPullEnd="PullEndCallback"
+                              IonRefresh="PullEventsIonRefreshCallback">
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
+
+                <p>Pull this content down. The last event log is shown below.</p>
+                <pre>@_pullEventLog</pre>
+            </IonContent>
+        </DevicePreview>
+    </ChildContent>
+</PlaygroundContainer>
+
+<PlaygroundContainer>
+    <Header>
         <h2>Advanced Usage</h2>
     </Header>
     <ChildContent>
