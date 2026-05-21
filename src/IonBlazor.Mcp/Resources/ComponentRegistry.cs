@@ -46,20 +46,35 @@ public static class ComponentRegistry
         BindProperties: GetBinds(type).Select(b => b.PropertyName).ToList(),
         Description: XmlDocReader.GetSummary(type));
 
-    private static ComponentMetadata BuildMetadata(Type type) => new(
-        Name: GetDisplayName(type),
-        FullName: type.FullName ?? type.Name,
-        BaseClass: GetBaseClassName(type),
-        HasChildContent: HasChildContent(type),
-        HasJsInterop: typeof(IonJsComponent).IsAssignableFrom(type),
-        JsImportName: GetJsImportName(type),
-        Interfaces: GetIonInterfaces(type),
-        Parameters: GetParameters(type),
-        CascadingParameters: GetCascadingParameters(type),
-        Events: GetEvents(type),
-        Binds: GetBinds(type),
-        JsMethods: GetJsMethods(type),
-        Description: XmlDocReader.GetSummary(type));
+    private static ComponentMetadata BuildMetadata(Type type)
+    {
+        var parameters = GetParameters(type);
+        var valueSets = parameters
+            .Where(p => p.ValueSetName is not null)
+            .Select(p => p.ValueSetName!)
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(n => n, StringComparer.Ordinal)
+            .Select(ValueSetRegistry.GetMetadata)
+            .Where(m => m is not null)
+            .Select(m => m!)
+            .ToList();
+
+        return new ComponentMetadata(
+            Name: GetDisplayName(type),
+            FullName: type.FullName ?? type.Name,
+            BaseClass: GetBaseClassName(type),
+            HasChildContent: HasChildContent(type),
+            HasJsInterop: typeof(IonJsComponent).IsAssignableFrom(type),
+            JsImportName: GetJsImportName(type),
+            Interfaces: GetIonInterfaces(type),
+            Parameters: parameters,
+            CascadingParameters: GetCascadingParameters(type),
+            Events: GetEvents(type),
+            Binds: GetBinds(type),
+            JsMethods: GetJsMethods(type),
+            ValueSets: valueSets,
+            Description: XmlDocReader.GetSummary(type));
+    }
 
     private static string GetDisplayName(Type type)
     {
@@ -114,10 +129,19 @@ public static class ComponentRegistry
         var nullCtx = new NullabilityInfoContext();
         return GetParameterProperties(type)
             .Where(p => !IsEventCallback(p.PropertyType))
-            .Select(p => new ComponentParameter(p.Name, TypeFormatter.FormatProperty(p, nullCtx), XmlDocReader.GetSummary(p)))
+            .Select(p => new ComponentParameter(
+                p.Name,
+                TypeFormatter.FormatProperty(p, nullCtx),
+                ResolveValueSetName(type, p),
+                XmlDocReader.GetSummary(p)))
             .OrderBy(p => p.Name, StringComparer.Ordinal)
             .ToList();
     }
+
+    private static string? ResolveValueSetName(Type componentType, PropertyInfo prop) =>
+        prop.PropertyType == typeof(string)
+            ? ValueSetRegistry.ResolveForProperty(componentType, prop.Name)
+            : null;
 
     private static IReadOnlyList<ComponentCascadingParameter> GetCascadingParameters(Type type)
     {

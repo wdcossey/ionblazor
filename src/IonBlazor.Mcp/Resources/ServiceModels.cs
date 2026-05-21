@@ -25,6 +25,18 @@ public sealed record ServiceOptions(
     string Name,
     string FullName,
     IReadOnlyList<ServiceOptionProperty> Properties,
+    IReadOnlyList<ServiceOptionBuilder> Builders,
     string? Description = null);
 
-public sealed record ServiceOptionProperty(string Name, string TypeName, string? Description = null);
+public sealed record ServiceOptionProperty(
+    string Name,
+    string TypeName,
+    string? DefaultValue = null,
+    string? Description = null);
+
+public sealed record ServiceOptionBuilder(
+    string PropertyName,
+    string DelegateSignature,
+    string BuilderTypeName,
+    IReadOnlyList<ServiceMethod> BuilderMethods,
+    string? Description = null);
