@@ -12,8 +12,8 @@ public static class ComponentTools
 
     [McpServerTool, Description(
         "Lists every IonBlazor component along with its base class, JS-interop status, " +
-        "child-content support, and the marker interfaces it implements " +
-        "(IIonModeComponent, IIonColorComponent, etc.).")]
+        "child-content support, the marker interfaces it implements " +
+        "(IIonModeComponent, IIonColorComponent, etc.), and its two-way @bind-able properties.")]
     public static string ListComponents()
     {
         var components = ComponentRegistry.ListAll();
@@ -21,8 +21,8 @@ public static class ComponentTools
         var sb = new StringBuilder();
         sb.Append("# IonBlazor Components (").Append(components.Count).AppendLine(")");
         sb.AppendLine();
-        sb.AppendLine("| Name | Base | JS | ChildContent | Interfaces |");
-        sb.AppendLine("| --- | --- | --- | --- | --- |");
+        sb.AppendLine("| Name | Base | JS | ChildContent | Interfaces | @bind |");
+        sb.AppendLine("| --- | --- | --- | --- | --- | --- |");
 
         foreach (var c in components)
         {
@@ -31,6 +31,7 @@ public static class ComponentTools
               .Append(" | ").Append(c.HasJsInterop ? "Yes" : "-")
               .Append(" | ").Append(c.HasChildContent ? "Yes" : "-")
               .Append(" | ").Append(c.Interfaces.Count == 0 ? "-" : string.Join(", ", c.Interfaces))
+              .Append(" | ").Append(c.BindProperties.Count == 0 ? "-" : string.Join(", ", c.BindProperties))
               .AppendLine(" |");
         }
 
@@ -123,11 +124,20 @@ public static class ComponentTools
           .AppendLine(meta.Interfaces.Count == 0 ? "(none)" : string.Join(", ", meta.Interfaces.Select(i => $"`{i}`")));
         sb.AppendLine();
 
+        sb.AppendLine("> **Slots & arbitrary attributes:** Ionic named slots are not component parameters. Every");
+        sb.AppendLine("> IonBlazor component captures unmatched attributes via `[Parameter(CaptureUnmatchedValues");
+        sb.AppendLine("> = true)] AdditionalAttributes`, so a named slot is a de-facto HTML attribute — place");
+        sb.AppendLine("> content into one with `slot=\"start\"` / `slot=\"end\"` on the child element, exactly as you");
+        sb.AppendLine("> would pass `id` or `class`. The valid slot names per component are Ionic web-component");
+        sb.AppendLine("> metadata; see the Ionic docs for the wrapped element.");
+        sb.AppendLine();
+
         AppendBinds(sb, meta);
         AppendParameters(sb, meta);
         AppendCascadingParameters(sb, meta);
         AppendEvents(sb, meta);
         AppendJsMethods(sb, meta);
+        AppendValueSets(sb, meta);
 
         return sb.ToString();
     }
@@ -162,14 +172,49 @@ public static class ComponentTools
             sb.AppendLine();
             return;
         }
-        sb.AppendLine("| Name | Type | Description |");
-        sb.AppendLine("| --- | --- | --- |");
+        sb.AppendLine("| Name | Type | Value set | Description |");
+        sb.AppendLine("| --- | --- | --- | --- |");
         foreach (var p in meta.Parameters)
             sb.Append("| ").Append(p.Name)
               .Append(" | `").Append(p.TypeName).Append('`')
+              .Append(" | ").Append(p.ValueSetName is null ? "-" : $"`{p.ValueSetName}`")
               .Append(" | ").Append(FormatCellDescription(p.Description))
               .AppendLine(" |");
         sb.AppendLine();
+    }
+
+    private static void AppendValueSets(StringBuilder sb, ComponentMetadata meta)
+    {
+        if (meta.ValueSets.Count == 0)
+            return;
+
+        sb.AppendLine("## Value sets");
+        sb.AppendLine();
+        sb.AppendLine("These static classes hold the conventional `const string` values for the matching `string` parameters above.");
+        sb.AppendLine("They are advisory — the parameters accept any `string`, which keeps the surface forward-compatible with");
+        sb.AppendLine("future Ionic updates.");
+        sb.AppendLine();
+
+        foreach (var vs in meta.ValueSets)
+        {
+            sb.Append("### `").Append(vs.Name).AppendLine("`");
+            sb.AppendLine();
+            if (!string.IsNullOrEmpty(vs.Description))
+            {
+                sb.AppendLine(vs.Description);
+                sb.AppendLine();
+            }
+            sb.AppendLine("| Constant | Value | Description |");
+            sb.AppendLine("| --- | --- | --- |");
+            foreach (var v in vs.Values)
+            {
+                sb.Append("| `").Append(vs.Name).Append('.').Append(v.ConstantName).Append('`')
+                  .Append(" | ").Append(v.Value is null ? "`null`" : $"`\"{v.Value}\"`")
+                  .Append(" | ").Append(FormatCellDescription(v.Description))
+                  .AppendLine(" |");
+            }
+            sb.AppendLine();
+        }
     }
 
     private static void AppendCascadingParameters(StringBuilder sb, ComponentMetadata meta)

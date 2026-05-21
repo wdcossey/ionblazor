@@ -23,9 +23,10 @@ public sealed record ComponentMetadata(
     IReadOnlyList<ComponentEvent> Events,
     IReadOnlyList<ComponentBind> Binds,
     IReadOnlyList<ComponentMethod> JsMethods,
+    IReadOnlyList<ValueSetMetadata> ValueSets,
     string? Description = null);
 
-public sealed record ComponentParameter(string Name, string TypeName, string? Description = null);
+public sealed record ComponentParameter(string Name, string TypeName, string? ValueSetName = null, string? Description = null);
 
 public sealed record ComponentCascadingParameter(string Name, string TypeName, string? CascadingName, string? Description = null);
 

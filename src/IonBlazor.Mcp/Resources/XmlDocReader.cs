@@ -46,6 +46,15 @@ internal static class XmlDocReader
         return ResolveInheritedPropertySummary(prop, docs);
     }
 
+    public static string? GetSummary(FieldInfo field)
+    {
+        var id = GetFieldXmlId(field);
+        if (id is null) return null;
+
+        var docs = _docs.Value;
+        return docs.Summaries.TryGetValue(id, out var direct) ? direct : null;
+    }
+
     public static string? GetSummary(MethodInfo method)
     {
         var id = GetMethodXmlId(method);
@@ -260,6 +269,15 @@ internal static class XmlDocReader
             return null;
         var typeName = GetTypeNameForXmlId(declaring);
         return typeName is null ? null : $"P:{typeName}.{prop.Name}";
+    }
+
+    private static string? GetFieldXmlId(FieldInfo field)
+    {
+        var declaring = field.DeclaringType;
+        if (declaring is null)
+            return null;
+        var typeName = GetTypeNameForXmlId(declaring);
+        return typeName is null ? null : $"F:{typeName}.{field.Name}";
     }
 
     private static string? GetMethodXmlId(MethodInfo method)
