@@ -124,12 +124,12 @@ public static class ComponentTools
           .AppendLine(meta.Interfaces.Count == 0 ? "(none)" : string.Join(", ", meta.Interfaces.Select(i => $"`{i}`")));
         sb.AppendLine();
 
-        sb.AppendLine("> **Slots & arbitrary attributes:** Ionic named slots are not component parameters. Every");
+        sb.AppendLine("> **Slots & arbitrary attributes:** Ionic named slots are not component parameters. `slot` is");
+        sb.AppendLine("> a standard global HTML attribute (Shadow DOM), so it is handled like `id` or `class` — every");
         sb.AppendLine("> IonBlazor component captures unmatched attributes via `[Parameter(CaptureUnmatchedValues");
-        sb.AppendLine("> = true)] AdditionalAttributes`, so a named slot is a de-facto HTML attribute — place");
-        sb.AppendLine("> content into one with `slot=\"start\"` / `slot=\"end\"` on the child element, exactly as you");
-        sb.AppendLine("> would pass `id` or `class`. The valid slot names per component are Ionic web-component");
-        sb.AppendLine("> metadata; see the Ionic docs for the wrapped element.");
+        sb.AppendLine("> = true)] AdditionalAttributes`. Place content into a slot with `slot=\"start\"` / `slot=\"end\"`");
+        sb.AppendLine("> on the child element. The valid slot *names* per component are defined by the wrapped Ionic");
+        sb.AppendLine("> web component; see the Ionic docs for that element.");
         sb.AppendLine();
 
         AppendBinds(sb, meta);
