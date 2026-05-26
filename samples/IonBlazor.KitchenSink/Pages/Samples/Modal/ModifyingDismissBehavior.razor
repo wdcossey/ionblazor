@@ -1,4 +1,6 @@
-﻿<IonHeader>
+﻿@inject IonActionSheetService ActionSheetService
+
+<IonHeader>
     <IonToolbar>
         <IonTitle>App</IonTitle>
     </IonToolbar>
@@ -67,7 +69,7 @@
 
         TaskCompletionSource<bool> completionSource = new TaskCompletionSource<bool>();
 
-        await IonActionSheetController.PresentAsync(options =>
+        await ActionSheetService.PresentAsync(options =>
         {
             options.Header = "Are you sure?";
             options.ButtonsBuilder = builder =>

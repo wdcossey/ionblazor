@@ -9,11 +9,10 @@
         *** This demo is hosted in a <b>&lt;ion-app&gt;</b>, the modal will <b>not</b> be bound to this preview pane!
     </p>
     <p>Drag the modal handle to fire <code>ionDragStart</code>, <code>ionDragMove</code>, and <code>ionDragEnd</code>.</p>
-    <pre>@_log</pre>
 
     <IonModal Trigger="open-drag-events-modal"
               Handle="@true"
-              Breakpoints="@(new []{0d, 0.25d, 0.5d, 0.75d})"
+              Breakpoints="@([0, 0.25, 0.5, 0.75, 1])"
               InitialBreakpoint="@(0.25d)"
               IonDragStart="OnDragStart"
               IonDragMove="OnDragMove"
@@ -26,29 +25,40 @@
 </IonContent>
 
 @code {
-    private string _log = "(no drag events yet)";
+    //private string _log = "(no drag events yet)";
+    decimal _currentSnap = 0.25m;
+
+    [CascadingParameter(Name = nameof(Console))]
+    private PlaygroundConsole? Console { get; init; }
 
     private Task OnDragStart(IonModalDragStartEventArgs args)
     {
-        _log = "ionDragStart fired";
+        //_log = "ionDragStart fired";
         StateHasChanged();
         return Task.CompletedTask;
     }
 
     private Task OnDragMove(IonModalDragMoveEventArgs args)
     {
-        _log =
-            $"ionDragMove — currentY={args.CurrentY:0.##}, deltaY={args.DeltaY:0.##}, " +
-            $"velocityY={args.VelocityY:0.##}, progress={args.Progress:0.##}, snapBreakpoint={args.SnapBreakpoint?.ToString("0.##") ?? "(card)"}";
+
+        if (_currentSnap != args.SnapBreakpoint.GetValueOrDefault(0m))
+        {
+            _currentSnap = args.SnapBreakpoint.GetValueOrDefault(0m);
+            Console?.Add($"Current snap breakpoint: {args.SnapBreakpoint}");
+        }
+
+        //_log =
+        //    $"ionDragMove — currentY={args.CurrentY:0.##}, deltaY={args.DeltaY:0.##}, " +
+        //    $"velocityY={args.VelocityY:0.##}, progress={args.Progress:0.##}, snapBreakpoint={args.SnapBreakpoint?.ToString("0.##") ?? "(card)"}";
         StateHasChanged();
         return Task.CompletedTask;
     }
 
     private Task OnDragEnd(IonModalDragEndEventArgs args)
     {
-        _log =
-            $"ionDragEnd — currentY={args.CurrentY:0.##}, deltaY={args.DeltaY:0.##}, " +
-            $"velocityY={args.VelocityY:0.##}, progress={args.Progress:0.##}, snapBreakpoint={args.SnapBreakpoint?.ToString("0.##") ?? "(card)"}";
+        //_log =
+        //    $"ionDragEnd — currentY={args.CurrentY:0.##}, deltaY={args.DeltaY:0.##}, " +
+        //    $"velocityY={args.VelocityY:0.##}, progress={args.Progress:0.##}, snapBreakpoint={args.SnapBreakpoint?.ToString("0.##") ?? "(card)"}";
         StateHasChanged();
         return Task.CompletedTask;
     }

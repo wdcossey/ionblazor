@@ -1,4 +1,5 @@
-﻿
+@inject IonToastService ToastService
+
 <IonHeader>
   <IonToolbar>
     <IonTitle>Toast</IonTitle>
@@ -22,7 +23,7 @@
 
     private async ValueTask PresentToastAsync(string position)
     {
-        await IonToastController.PresentAsync(options =>
+        await ToastService.PresentAsync(options =>
         {
             options.Message = "Hello World!";
             options.Position = position;

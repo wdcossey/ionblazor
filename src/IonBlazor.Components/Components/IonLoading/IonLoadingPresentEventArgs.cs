@@ -8,7 +8,7 @@ public sealed record IonLoadingPresentEventArgs
     public IIonLoading? Sender { get; internal init; }
 
     /// <summary>
-    /// The HTML attributes that were passed to the loader, used by <see cref="IonLoadingController"/>
+    /// The HTML attributes that were passed to the loader, used by <see cref="IonLoadingService"/>.
     /// </summary>
     public Dictionary<string, string>? HtmlAttributes { get; internal init; }
 }

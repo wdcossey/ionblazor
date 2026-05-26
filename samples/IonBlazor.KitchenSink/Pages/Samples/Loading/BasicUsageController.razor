@@ -1,4 +1,6 @@
-﻿<IonButton @onclick="@(Present)">Click Me</IonButton>
+@inject IonLoadingService LoadingService
+
+<IonButton @onclick="@(Present)">Click Me</IonButton>
 
 @code
 {
@@ -9,7 +11,7 @@
 
     private async Task Present()
     {
-        IonLoadingReference ionLoading = await IonLoadingController.CreateAsync(config =>
+        IonLoadingReference ionLoading = await LoadingService.CreateAsync(config =>
         {
             config.Spinner = IonSpinnerName.LinesSmall;
             config.Message = "Dismissing after <strong>10</strong> seconds... Interrupting in <i>5</i> seconds...";

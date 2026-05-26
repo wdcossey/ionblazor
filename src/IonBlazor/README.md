@@ -43,6 +43,41 @@ Add the namespaces to `_Imports.razor`:
 }
 ```
 
+## Overlay services (Controllers → Services)
+
+The four overlay controllers (`IonAlertController`, `IonActionSheetController`, `IonToastController`,
+`IonLoadingController`) have been replaced by **scoped DI services** — `IonAlertService`,
+`IonActionSheetService`, `IonToastService`, `IonLoadingService`. The old controllers are now
+`[Obsolete(error: true)]` stubs and will fail the build with a pointer to the migration recipe.
+
+Register all four services with one call in `Program.cs` / `MauiProgram.cs`:
+
+```csharp
+builder.Services.AddIonBlazor();
+```
+
+Then inject and call:
+
+```razor
+@inject IonAlertService AlertService
+
+@code {
+    private async Task Show()
+    {
+        await AlertService.PresentAsync(options =>
+        {
+            options.Header = "Heads up";
+            options.Message = "Hello.";
+        });
+    }
+}
+```
+
+Remove every `<IonAlertController/>`, `<IonActionSheetController/>`, `<IonToastController/>`, and
+`<IonLoadingController/>` tag from your root layout after switching. See the
+[IonBlazor.Components README](https://www.nuget.org/packages/IonBlazor.Components) for full details
+including the per-service migration mapping and the dropped `IonLoadingController.Create` sync wrapper.
+
 ## Package family
 
 | Package                            | Use when                                                                    |

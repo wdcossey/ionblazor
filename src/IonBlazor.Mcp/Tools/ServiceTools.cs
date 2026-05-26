@@ -11,12 +11,15 @@ public static class ServiceTools
     private const int InlineDescriptionMaxLength = 140;
 
     [McpServerTool, Description(
-        "Lists every IonBlazor static service controller (IonActionSheetController, IonAlertController, " +
-        "IonLoadingController, IonToastController) along with the associated *Options type and the number of " +
-        "public static methods. Use this for queries like 'how do I show a toast programmatically' or " +
-        "'which IonBlazor overlay services exist'. Important: each controller is a ComponentBase subclass " +
-        "that must be rendered once at the app root (e.g. App.razor or MainLayout.razor) before its static " +
-        "methods can be invoked — call GetServiceMetadata for the exact setup snippet.")]
+        "Lists every IonBlazor overlay service (IonAlertService, IonActionSheetService, " +
+        "IonToastService, IonLoadingService) with its kind (Injected vs Legacy), the associated " +
+        "*Options type and the number of callable methods. Use this for queries like 'how do I show a " +
+        "toast programmatically' or 'which IonBlazor overlay services exist'. The current shipping " +
+        "pattern is Injected: services are registered via AddIonBlazor() and consumed with @inject. " +
+        "The Legacy ComponentBase + static method pattern is retained in the registry for backwards " +
+        "compatibility (rendered tag at app root captures IJSRuntime into a static field), but the " +
+        "shipped controllers are now [Obsolete(error: true)] stubs. Call GetServiceMetadata for the " +
+        "exact setup snippet of either kind.")]
     public static string ListServices()
     {
         var services = ServiceRegistry.ListAll();
@@ -24,17 +27,18 @@ public static class ServiceTools
         var sb = new StringBuilder();
         sb.Append("# IonBlazor Services (").Append(services.Count).AppendLine(")");
         sb.AppendLine();
-        sb.AppendLine("> Each controller below is a `ComponentBase` subclass, not a DI service. The static");
-        sb.AppendLine("> methods only work after the controller's tag has been rendered once at the app root");
-        sb.AppendLine("> (e.g. `<IonAlertController />` in `App.razor` or `MainLayout.razor`). That render");
-        sb.AppendLine("> captures `IJSRuntime` into a static field used by every subsequent static call.");
+        sb.AppendLine("> Two patterns currently coexist:");
+        sb.AppendLine("> - **Injected** — register via `services.AddIonBlazor()` and consume with `@inject`.");
+        sb.AppendLine("> - **Legacy** — `ComponentBase` subclass; render its tag once at the app root, then");
+        sb.AppendLine(">   call its static methods. Being phased out in favour of Injected services.");
         sb.AppendLine();
-        sb.AppendLine("| Name | Options | Methods | Description |");
-        sb.AppendLine("| --- | --- | --- | --- |");
+        sb.AppendLine("| Name | Kind | Options | Methods | Description |");
+        sb.AppendLine("| --- | --- | --- | --- | --- |");
 
         foreach (var s in services)
         {
             sb.Append("| ").Append(s.Name)
+              .Append(" | ").Append(s.Kind)
               .Append(" | ").Append(s.OptionsTypeName is null ? "-" : $"`{s.OptionsTypeName}`")
               .Append(" | ").Append(s.MethodCount)
               .Append(" | ").Append(FormatCellDescription(s.Description))
@@ -45,15 +49,16 @@ public static class ServiceTools
     }
 
     [McpServerTool, Description(
-        "Returns full metadata for a single IonBlazor service controller: type-level summary, the required " +
-        "host-component setup snippet, all public static methods (signatures, parameters, return types, " +
-        "summaries), and the associated *Options record — every property with its type, default value and " +
-        "summary, plus any builder properties expanded to their delegate signature and the fluent builder's " +
-        "public methods (e.g. ButtonsBuilder/InputsBuilder). Use this to learn the exact API for " +
-        "IonAlertController.PresentAsync, IonToastController.PresentAsync, IonLoadingController.CreateAsync, " +
-        "etc. Service name must be exact PascalCase, e.g. 'IonToastController'.")]
+        "Returns full metadata for a single IonBlazor overlay service: kind (Injected vs Legacy), " +
+        "type-level summary, the required setup snippet for that kind, every callable method " +
+        "(signatures, parameters, return types, summaries), and the associated *Options record — " +
+        "every property with its type, default value and summary, plus any builder properties expanded " +
+        "to their delegate signature and the fluent builder's public methods (e.g. ButtonsBuilder, " +
+        "InputsBuilder). Use this to learn the exact API for IonAlertService.PresentAsync, " +
+        "IonToastService.PresentAsync, IonLoadingService.CreateAsync, etc. Service name must be " +
+        "exact PascalCase, e.g. 'IonAlertService'.")]
     public static string GetServiceMetadata(
-        [Description("Exact service name, e.g. 'IonActionSheetController', 'IonAlertController', 'IonLoadingController', 'IonToastController'.")]
+        [Description("Exact service name, e.g. 'IonAlertService', 'IonActionSheetService', 'IonToastService', 'IonLoadingService'.")]
         string serviceName)
     {
         var meta = ServiceRegistry.GetMetadata(serviceName);
@@ -61,7 +66,7 @@ public static class ServiceTools
             return $"Service '{serviceName}' not found. Use ListServices to see the full inventory.";
 
         var sb = new StringBuilder();
-        sb.Append("# ").AppendLine(meta.Name);
+        sb.Append("# ").Append(meta.Name).Append(" — ").AppendLine(meta.Kind.ToString());
         sb.AppendLine();
         if (!string.IsNullOrEmpty(meta.Description))
         {
@@ -69,6 +74,7 @@ public static class ServiceTools
             sb.AppendLine();
         }
         sb.Append("- **Full name:** `").Append(meta.FullName).AppendLine("`");
+        sb.Append("- **Kind:** ").AppendLine(meta.Kind.ToString());
         if (meta.Options is not null)
             sb.Append("- **Options type:** `").Append(meta.Options.Name).AppendLine("`");
         sb.AppendLine();
@@ -84,10 +90,35 @@ public static class ServiceTools
     {
         sb.AppendLine("## Setup");
         sb.AppendLine();
-        sb.Append("`").Append(meta.Name).AppendLine("` is a `ComponentBase` subclass, not a DI service. It injects");
+
+        if (meta.Kind == ServiceKind.Injected)
+        {
+            sb.Append("`").Append(meta.Name).AppendLine("` is a scoped DI service. Register once and inject");
+            sb.AppendLine("wherever you need it.");
+            sb.AppendLine();
+            sb.AppendLine("In `Program.cs` / `MauiProgram.cs`:");
+            sb.AppendLine();
+            sb.AppendLine("```csharp");
+            sb.AppendLine("builder.Services.AddIonBlazor();");
+            sb.AppendLine("```");
+            sb.AppendLine();
+            sb.AppendLine("In your component:");
+            sb.AppendLine();
+            sb.AppendLine("```razor");
+            sb.Append("@inject IonBlazor.Services.").Append(meta.Name).Append(' ').AppendLine(StripPrefix(meta.Name));
+            sb.AppendLine("```");
+            sb.AppendLine();
+            return;
+        }
+
+        sb.Append("`").Append(meta.Name).AppendLine("` is a `ComponentBase` subclass (legacy pattern). It injects");
         sb.AppendLine("`IJSRuntime` and caches it into a static field during its first render — every static");
         sb.AppendLine("method below reads that field, so the controller's tag MUST be rendered once at the app");
         sb.AppendLine("root before any static call. Without it, `PresentAsync` will throw `NullReferenceException`.");
+        sb.AppendLine();
+        sb.AppendLine("> ⚠ This pattern is being phased out: the static `IJSRuntime` field is shared across all");
+        sb.AppendLine("> Blazor Server circuits, so the last-rendered circuit wins. Prefer the Injected pattern");
+        sb.AppendLine("> when a replacement service exists.");
         sb.AppendLine();
         sb.AppendLine("Place the tag once in `App.razor` (or `MainLayout.razor`):");
         sb.AppendLine();
@@ -101,7 +132,7 @@ public static class ServiceTools
 
     private static void AppendMethods(StringBuilder sb, ServiceMetadata meta)
     {
-        sb.AppendLine("## Static methods");
+        sb.Append("## ").Append(meta.Kind == ServiceKind.Injected ? "Instance" : "Static").AppendLine(" methods");
         sb.AppendLine();
         if (meta.Methods.Count == 0)
         {
@@ -203,6 +234,9 @@ public static class ServiceTools
             sb.AppendLine();
         }
     }
+
+    private static string StripPrefix(string typeName) =>
+        typeName.StartsWith("Ion", StringComparison.Ordinal) ? typeName[3..] : typeName;
 
     private static string FormatCellDescription(string? description)
     {
