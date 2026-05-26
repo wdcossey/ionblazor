@@ -1,4 +1,6 @@
-﻿<IonButton @onclick="@PresentAlertAsync">
+@inject IonAlertService AlertService
+
+<IonButton @onclick="@PresentAlertAsync">
     Click Me
 </IonButton>
 
@@ -9,7 +11,7 @@
 
     private async Task PresentAlertAsync()
     {
-        await IonAlertController.PresentAsync(options =>
+        await AlertService.PresentAsync(options =>
         {
             options.Header = "A Short Title Is Best";
             options.SubHeader = "A Sub Header Is Optional";
@@ -25,7 +27,7 @@
                         button.CssClass = "ion-color-warning";
                         button.Handler = args =>
                         {
-                            Console?.Add($"{nameof(IonAlertController)}::{nameof(AlertButton)}(index: {args.Index}, role: {args.Button!.Role})");
+                            Console?.Add($"{nameof(IonAlertService)}::{nameof(AlertButton)}(index: {args.Index}, role: {args.Button!.Role})");
                             return ValueTask.CompletedTask;
                         };
                     })
@@ -35,11 +37,11 @@
                         button.Role = "cancel";
                         button.Handler = args =>
                         {
-                            Console?.Add($"{nameof(IonAlertController)}::{nameof(AlertButton)}(index: {args.Index}, role: {args.Button!.Role})");
+                            Console?.Add($"{nameof(IonAlertService)}::{nameof(AlertButton)}(index: {args.Index}, role: {args.Button!.Role})");
                             return ValueTask.CompletedTask;
                         };
                     });
-            options.OnDidDismiss = args => Console?.Add($"{nameof(IonAlertController)}::{nameof(IonAlert.IonAlertDidDismiss)}(role: {args.Role})");
+            options.OnDidDismiss = args => Console?.Add($"{nameof(IonAlertService)}::{nameof(IonAlert.IonAlertDidDismiss)}(role: {args.Role})");
         });
     }
 

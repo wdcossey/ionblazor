@@ -1,5 +1,7 @@
-﻿@using IonBlazor.Components.Abstractions
-<IonButton @onclick="@(async () => { await IonActionSheetController.PresentAsync(ConfigureActionSheet); })">
+@using IonBlazor.Components.Abstractions
+@inject IonActionSheetService ActionSheetService
+
+<IonButton @onclick="@(async () => { await ActionSheetService.PresentAsync(ConfigureActionSheet); })">
     Open
 </IonButton>
 

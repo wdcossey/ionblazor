@@ -35,17 +35,31 @@ public static class ServiceRegistry
                         && t.IsSealed
                         && t.IsPublic
                         && t.Namespace == ServicesNamespace
-                        && typeof(ComponentBase).IsAssignableFrom(t)
-                        && !typeof(IonComponent).IsAssignableFrom(t))
+                        && !typeof(IonComponent).IsAssignableFrom(t)
+                        && t.GetCustomAttribute<ObsoleteAttribute>() is null
+                        && IsServiceShape(t))
             .ToList();
     }
 
+    private static bool IsServiceShape(Type t)
+    {
+        // Legacy: ComponentBase + static methods. Injected: anything else with a usable instance method.
+        if (typeof(ComponentBase).IsAssignableFrom(t))
+            return GetCallableMethods(t, instance: false).Count > 0;
+        return GetCallableMethods(t, instance: true).Count > 0;
+    }
+
+    private static ServiceKind GetKind(Type t) =>
+        typeof(ComponentBase).IsAssignableFrom(t) ? ServiceKind.Legacy : ServiceKind.Injected;
+
     private static ServiceSummary BuildSummary(Type type)
     {
-        var methods = GetPublicStaticMethods(type);
+        var kind = GetKind(type);
+        var methods = GetCallableMethods(type, kind == ServiceKind.Injected);
         var optionsType = DetectOptionsType(methods);
         return new ServiceSummary(
             Name: type.Name,
+            Kind: kind,
             OptionsTypeName: optionsType?.Name,
             MethodCount: methods.Count,
             Description: XmlDocReader.GetSummary(type));
@@ -53,22 +67,29 @@ public static class ServiceRegistry
 
     private static ServiceMetadata BuildMetadata(Type type)
     {
-        var methodInfos = GetPublicStaticMethods(type);
+        var kind = GetKind(type);
+        var methodInfos = GetCallableMethods(type, kind == ServiceKind.Injected);
         var optionsType = DetectOptionsType(methodInfos);
 
         return new ServiceMetadata(
             Name: type.Name,
             FullName: type.FullName ?? type.Name,
+            Kind: kind,
             Methods: BuildMethods(methodInfos),
             Options: optionsType is null ? null : BuildOptions(optionsType),
             Description: XmlDocReader.GetSummary(type));
     }
 
-    private static IReadOnlyList<MethodInfo> GetPublicStaticMethods(Type type) =>
-        type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
+    private static IReadOnlyList<MethodInfo> GetCallableMethods(Type type, bool instance)
+    {
+        var flags = BindingFlags.Public | BindingFlags.DeclaredOnly
+                    | (instance ? BindingFlags.Instance : BindingFlags.Static);
+        return type.GetMethods(flags)
             .Where(m => !m.IsSpecialName)
+            .Where(m => m.DeclaringType != typeof(object))
             .Where(m => m.GetCustomAttribute<ObsoleteAttribute>() is null)
             .ToList();
+    }
 
     private static IReadOnlyList<ServiceMethod> BuildMethods(IReadOnlyList<MethodInfo> methods)
     {

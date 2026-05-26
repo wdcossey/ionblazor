@@ -27,6 +27,11 @@
                 <IonIcon aria-hidden="true" Name="sunny-outline" slot="start"></IonIcon>
                 <IonLabel>Weather</IonLabel>
             </IonItem>
+
+            <IonItem Button="@true" @onclick="@(() => NavigationManager.NavigateTo("/toasts"))">
+                <IonIcon aria-hidden="true" Name="notifications-outline" slot="start"></IonIcon>
+                <IonLabel>Toasts</IonLabel>
+            </IonItem>
         </IonList>
     </IonContent>
 </IonMenu>

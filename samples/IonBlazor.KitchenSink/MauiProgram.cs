@@ -14,7 +14,7 @@ public static class MauiProgram
 
         builder.Logging.AddDebug();
         builder.Services.AddMauiBlazorWebView();
-        //builder.Services.AddIonBlazor();
+        builder.Services.AddIonBlazor();
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();

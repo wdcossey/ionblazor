@@ -45,6 +45,96 @@ Add the namespaces to `_Imports.razor`:
 @using IonBlazor.Services
 ```
 
+## Controllers → Services migration
+
+The four overlay controllers (`IonAlertController`, `IonActionSheetController`, `IonToastController`,
+`IonLoadingController`) have been replaced by **scoped DI services** (`IonAlertService`,
+`IonActionSheetService`, `IonToastService`, `IonLoadingService`) with instance methods. Each old
+controller is retained as an `[Obsolete(error: true)]` stub so existing call sites fail the build
+with a pointer to this section.
+
+### Why
+
+The legacy controllers worked by being rendered once at the app root (`<IonAlertController/>` in
+`App.razor` / `MainLayout.razor`) so they could `[Inject]` `IJSRuntime` and stash it in a `static`
+field that every `PresentAsync` static call then read.
+
+On Blazor WebAssembly there's one circuit per browser tab, so this happens to work. On **Blazor
+Server**, `IJSRuntime` is per-circuit — the static field gets overwritten by whichever circuit
+renders last, and every other connected user's calls then dispatch through the wrong circuit. The
+DI version eliminates the static state entirely.
+
+### Register the services
+
+```csharp
+// Program.cs / MauiProgram.cs
+builder.Services.AddIonBlazor();
+```
+
+`AddIonBlazor()` registers all four services scoped — one call covers the lot.
+
+### Migration — same shape for all four
+
+The pattern is identical for every controller. Pick the appropriate row:
+
+| Legacy controller          | Injected service          |
+|----------------------------|---------------------------|
+| `IonAlertController`       | `IonAlertService`         |
+| `IonActionSheetController` | `IonActionSheetService`   |
+| `IonToastController`       | `IonToastService`         |
+| `IonLoadingController`     | `IonLoadingService`       |
+
+### Before — `IonAlertController` (legacy, deprecated)
+
+```razor
+@* Main.razor or MainLayout.razor *@
+<IonAlertController />
+
+@* Some component *@
+@code {
+    private async Task Show()
+    {
+        await IonAlertController.PresentAsync(options =>
+        {
+            options.Header = "Heads up";
+            options.Message = "Hello.";
+        });
+    }
+}
+```
+
+### After — `IonAlertService` (injected)
+
+```razor
+@inject IonAlertService AlertService
+
+@code {
+    private async Task Show()
+    {
+        await AlertService.PresentAsync(options =>
+        {
+            options.Header = "Heads up";
+            options.Message = "Hello.";
+        });
+    }
+}
+```
+
+Then **remove** every `<IonAlertController/>`, `<IonActionSheetController/>`, `<IonToastController/>`,
+and `<IonLoadingController/>` tag from your root layout / `App.razor`.
+
+### `IonLoadingController.Create` (sync) was removed
+
+The synchronous `Create(...)` wrapper on `IonLoadingController` (which internally called
+`CreateAsync(...).GetAwaiter().GetResult()`) has been dropped. Call `IonLoadingService.CreateAsync(...)`
+directly — it returns the same `IonLoadingReference` type as before.
+
+### Compile-time signal
+
+Every `Ion*Controller` is now an `[Obsolete(error: true)]` stub. Old markup tags and static calls
+fail the build with a message pointing at this section. Migrate, register `AddIonBlazor()`, and
+delete the tags from your root layout.
+
 ## MAUI Hybrid
 
 In a MAUI Hybrid solution with multiple Razor projects, only **one** project can ship the static assets — otherwise MAUI's packaging fails with a duplicate-static-asset error.

@@ -95,14 +95,14 @@
     </ChildContent>
 </PlaygroundContainer>
 
-<PlaygroundContainer>
+<PlaygroundContainer EnableConsole="@true">
     <Header>
-        <h3>Sheet Modal Drag Events</h3>
-        <p>
-            Sheet and card modals fire <code>ionDragStart</code>, <code>ionDragMove</code>, and
-            <code>ionDragEnd</code> while the user drags. The move/end events expose the current
-            Y position, deltaY, velocity, progress (0&ndash;1), and snap breakpoint.
-        </p>
+        <h3>Using <code>ionDragMove</code></h3>
+        <p>The <code>ionDragMove</code> event is emitted continuously while the user is actively dragging the modal.
+            This event provides a <a href="#modaldrageventdetail"><code>ModalDragEventDetail</code></a>
+            object containing real-time data, essential for creating highly responsive UI updates that react instantly
+            to the user's touch. For example, the <code>progress</code> value can be used to dynamically darken a
+            header's opacity as the modal is dragged upward.</p>
     </Header>
     <ChildContent>
         <DevicePreview>

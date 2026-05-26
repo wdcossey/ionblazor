@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @inject IJSRuntime JsRuntime
+@inject IonToastService ToastService
 
     <IonImg Src="/img/blazor.svg" Alt="blazor" style="max-width: 200px; max-height: 200px"></IonImg>
 
@@ -309,7 +310,7 @@ await JsRuntime.InvokeVoidAsync("attachIonEventListener", "ionChange", inputName
     }
 
     private void PresentToast(string position, string message) {
-        _ = IonToastController.PresentAsync(options =>
+        _ = ToastService.PresentAsync(options =>
         {
             options.Message = message;
             options.Position = position;

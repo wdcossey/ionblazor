@@ -1,104 +1,32 @@
-﻿namespace IonBlazor.Services;
+namespace IonBlazor.Services;
 
-public sealed class IonLoadingController: ComponentBase
+/// <summary>
+/// <b>Deprecated.</b> Replaced by the injectable <see cref="IonLoadingService"/>. Register via
+/// <c>services.AddIonBlazor()</c> and inject with <c>@inject IonLoadingService</c>. See the README
+/// "Controllers → Services" migration section for details.
+/// </summary>
+[Obsolete(
+    "IonLoadingController has been replaced by the injectable IonLoadingService. " +
+    "Register via services.AddIonBlazor() and inject with @inject IonLoadingService. " +
+    "Remove <IonLoadingController /> from your layout/App.razor. " +
+    "See README 'Controllers → Services' for the migration path.",
+    error: true)]
+public sealed class IonLoadingController
 {
-    private static IJSRuntime _jsRuntime = null!;
+    [Obsolete("Use IonLoadingService.PresentAsync via DI. See README migration.", error: true)]
+    public static ValueTask<string?> PresentAsync(Action<IonLoadingControllerOptions> configure) => ValueTask.FromResult<string?>(null);
 
-    [Inject]
-    private IJSRuntime JsRuntime { get; init; } = null!;
-
-    public static async ValueTask<string?> PresentAsync(Action<IonLoadingControllerOptions> configure)
-    {
-        IonLoadingControllerOptions options = new();
-        configure(options);
-
-        DotNetObjectReference<IonicEventCallback<JsonObject?>>? didDismissHandler = null;
-        DotNetObjectReference<IonicEventCallback<JsonObject?>>? didPresentHandler = null;
-
-        didDismissHandler = IonicEventCallback<JsonObject?>.Create(async args =>
-        {
-            await options.InvokeOnDidDismiss(null, new IonLoadingDismissEventArgs
-            {
-                Sender = null,
-                Role = args?["detail"]?["role"]?.GetValue<string>(),
-                Data = args?["detail"]?["data"]?.Deserialize<JsonElement>(),
-                HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
-            });
-        });
-
-        didPresentHandler = IonicEventCallback<JsonObject?>.Create(async args =>
-        {
-            await options.InvokeOnDidPresent(null, new IonLoadingPresentEventArgs()
-            {
-                Sender = null,
-                HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
-            });
-        });
-
-
-        IJSObjectReference jsComponent = await IonLoadingReference.CreateComponentAsync(_jsRuntime);
-        var result = await jsComponent.InvokeAsync<string?>("present", options, didDismissHandler, didPresentHandler);
-        return result;
-    }
-
-    public static async ValueTask<string?> PresentAsync(
+    [Obsolete("Use IonLoadingService.PresentAsync via DI. See README migration.", error: true)]
+    public static ValueTask<string?> PresentAsync(
         string? message = null,
         int? duration = 3000,
         IDictionary<string, string>? htmlAttributes = null,
         Action<IonLoadingDismissEventArgs>? onDidDismiss = null,
-        Action? onDidPresent = null)
-    {
-        DotNetObjectReference<IonicEventCallback<JsonObject?>>? didDismissHandler = null;
-        DotNetObjectReference<IonicEventCallback<JsonObject?>>? didPresentHandler = null;
+        Action? onDidPresent = null) => ValueTask.FromResult<string?>(null);
 
-        if (onDidDismiss is not null)
-        {
-            didDismissHandler = IonicEventCallback<JsonObject?>.Create(args =>
-            {
-                onDidDismiss.Invoke(new IonLoadingDismissEventArgs
-                {
-                    Sender = null,
-                    Role = args?["detail"]?["role"]?.GetValue<string>(),
-                    Data = args?["detail"]?["data"]?.Deserialize<JsonElement>(),
-                    HtmlAttributes = args?["htmlAttributes"]?.Deserialize<Dictionary<string, string>>()
-                });
+    [Obsolete("Use IonLoadingService.CreateAsync via DI. The synchronous Create wrapper has been removed; call CreateAsync directly. See README migration.", error: true)]
+    public static IonLoadingReference Create(Action<IonLoadingControllerOptions> configure) => throw new NotSupportedException();
 
-                return Task.CompletedTask;
-            });
-        }
-
-        if (onDidPresent is not null)
-        {
-            didPresentHandler = IonicEventCallback<JsonObject?>.Create(args =>
-            {
-                onDidPresent.Invoke();
-                return Task.CompletedTask;
-            });
-        }
-
-        IJSObjectReference jsComponent = await IonLoadingReference.CreateComponentAsync(_jsRuntime);
-        var result = await jsComponent.InvokeAsync<string?>("present", message, duration, htmlAttributes, didDismissHandler, didPresentHandler);
-        return result;
-    }
-
-    public static IonLoadingReference Create(Action<IonLoadingControllerOptions> configure)
-    {
-        return CreateAsync(configure).GetAwaiter().GetResult();
-    }
-
-    public static async Task<IonLoadingReference> CreateAsync(Action<IonLoadingControllerOptions> configure)
-    {
-        IonLoadingControllerOptions configuration = new();
-        configure(configuration);
-
-        IonLoadingReference result = new(_jsRuntime, configuration);
-        await result.CreateAsync();
-        return result;
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        _jsRuntime = JsRuntime;
-    }
+    [Obsolete("Use IonLoadingService.CreateAsync via DI. See README migration.", error: true)]
+    public static Task<IonLoadingReference> CreateAsync(Action<IonLoadingControllerOptions> configure) => throw new NotSupportedException();
 }

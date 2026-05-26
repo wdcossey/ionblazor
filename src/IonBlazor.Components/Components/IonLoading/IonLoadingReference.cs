@@ -108,15 +108,6 @@ public sealed class IonLoadingReference : IIonLoading
         return ((MarkupString)(message ?? string.Empty)).ToString();
     }
 
-    internal static async Task<IJSObjectReference> CreateComponentAsync(IJSRuntime jsRuntime)
-    {
-        IJSObjectReference result = await jsRuntime.ImportAsync(nameof(IonLoadingController));
-
-        if (result is null)
-        {
-            throw new InvalidOperationException($"{nameof(IonLoadingController)} is not initialized");
-        }
-
-        return result;
-    }
+    internal static Task<IJSObjectReference> CreateComponentAsync(IJSRuntime jsRuntime) =>
+        jsRuntime.ImportAsync(nameof(IonLoadingService));
 }
