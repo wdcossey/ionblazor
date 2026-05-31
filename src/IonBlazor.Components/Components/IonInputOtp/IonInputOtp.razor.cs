@@ -131,6 +131,15 @@ public sealed partial class IonInputOtp : IonJsContentComponent, IIonColorCompon
     public EventCallback<IonInputOtp> IonFocus { get; set; }
 
     /// <summary>
+    /// Fires alongside <see cref="IonComplete"/> with the new <see cref="Value"/>, enabling
+    /// <c>@bind-Value</c>. With plain <c>@bind-Value</c> the bound value is updated only once all
+    /// input boxes are filled; use <c>@bind-Value:event="ValueInput"</c> (see <see cref="ValueInput"/>)
+    /// for live, per-keystroke binding instead.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>
     /// The ionInput event is fired each time the user modifies the input's value. Unlike the ionChange event, the
     /// ionInput event is fired for each alteration to the input's value. This typically happens for each keystroke as
     /// the user types.
@@ -140,6 +149,14 @@ public sealed partial class IonInputOtp : IonJsContentComponent, IIonColorCompon
     /// </summary>
     [Parameter]
     public EventCallback<IonInputOtpInputEventArgs> IonInputEvent { get; set; }
+
+    /// <summary>
+    /// Fires alongside <see cref="IonInputEvent"/> with the new <see cref="Value"/> on every keystroke.
+    /// Use with <c>@bind-Value:event="ValueInput"</c> for live (per-keystroke) two-way binding;
+    /// otherwise <c>@bind-Value</c> alone updates only once all boxes are filled via <see cref="ValueChanged"/>.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueInput { get; set; }
 
     public IonInputOtp()
     {
@@ -158,6 +175,8 @@ public sealed partial class IonInputOtp : IonJsContentComponent, IIonColorCompon
         _ionCompleteReference = IonicEventCallback<JsonObject?>.Create(async args =>
         {
             var value = args?["detail"]?["value"]?.GetValue<string?>();
+            Value = value;
+            await ValueChanged.InvokeAsync(value);
             await IonComplete.InvokeAsync(new IonInputOtpCompleteEventArgs { Sender = this, Value = value });
         });
 
@@ -170,6 +189,8 @@ public sealed partial class IonInputOtp : IonJsContentComponent, IIonColorCompon
         {
             var value = args?["detail"]?["value"]?.GetValue<string?>();
             var isTrusted = args?["detail"]?["event"]?["isTrusted"]?.GetValue<bool>() is true;
+            Value = value;
+            await ValueInput.InvokeAsync(value);
             await IonInputEvent.InvokeAsync(new IonInputOtpInputEventArgs { Sender = this, Value = value, Event = new IonInputEvent(isTrusted) });
         });
     }
