@@ -106,6 +106,61 @@ public class IonInputOtpTests : IonTestContext
     }
 
     // ---------------------------------------------------------------------------
+    // @bind-Value: parallel ValueChanged + IonComplete callbacks
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task IonComplete_FiresBoth_ValueChangedAndIonComplete()
+    {
+        string? capturedValue = null;
+        IonInputOtpCompleteEventArgs? capturedArgs = null;
+
+        var cut = Render<IonInputOtp>(parameters => parameters
+            .Add(p => p.ValueChanged, v => capturedValue = v)
+            .Add(p => p.IonComplete, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject
+            {
+                ["value"] = "1234"
+            }
+        };
+        await InvokeIonEventAsync("ionComplete", payload);
+
+        capturedValue.Should().Be("1234");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("1234");
+        cut.Instance.Value.Should().Be("1234");
+    }
+
+    [Fact]
+    public async Task IonInput_FiresBoth_ValueInputAndIonInput()
+    {
+        string? capturedValue = null;
+        IonInputOtpInputEventArgs? capturedArgs = null;
+
+        var cut = Render<IonInputOtp>(parameters => parameters
+            .Add(p => p.ValueInput, v => capturedValue = v)
+            .Add(p => p.IonInputEvent, args => capturedArgs = args));
+
+        var payload = new System.Text.Json.Nodes.JsonObject
+        {
+            ["detail"] = new System.Text.Json.Nodes.JsonObject
+            {
+                ["value"] = "12",
+                ["event"] = new System.Text.Json.Nodes.JsonObject { ["isTrusted"] = true }
+            }
+        };
+        await InvokeIonEventAsync("ionInput", payload);
+
+        capturedValue.Should().Be("12");
+        capturedArgs.Should().NotBeNull();
+        capturedArgs!.Value.Should().Be("12");
+        cut.Instance.Value.Should().Be("12");
+    }
+
+    // ---------------------------------------------------------------------------
     // JsImportName
     // ---------------------------------------------------------------------------
 
