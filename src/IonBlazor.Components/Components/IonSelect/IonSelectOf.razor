@@ -28,12 +28,10 @@
             value="@(Value is null ? null : Value.FirstOrDefault())">
     <CascadingValue Value="@(this)" Name="Parent">
         <CascadingValue Value="@Multiple" Name="IsMultiple">
-            <CascadingValue Value="@(Multiple is true ? typeof(TItem[]) : typeof(TItem))" Name="@nameof(TItem)">
-                @foreach (var item in ItemsSource.Select((val, idx) => KeyValuePair.Create(idx, val)))
-                {
-                    @ItemTemplate(item)
-                }
-            </CascadingValue>
+            @foreach (var item in ItemsSource.Select((val, idx) => KeyValuePair.Create(idx, val)))
+            {
+                @ItemTemplate(item)
+            }
         </CascadingValue>
     </CascadingValue>
 </ion-select>

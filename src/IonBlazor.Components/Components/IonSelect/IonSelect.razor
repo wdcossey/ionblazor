@@ -27,9 +27,7 @@
             value="@(Value is null ? null : Value.FirstOrDefault())">
     <CascadingValue Value="@(this)" Name="Parent">
         <CascadingValue Value="@Multiple" Name="IsMultiple">
-            <CascadingValue Value="@(Multiple is true ? typeof(TValue[]) : typeof(TValue))" Name="@nameof(TValue)">
-                @ChildContent
-            </CascadingValue>
+            @ChildContent
         </CascadingValue>
     </CascadingValue>
 </ion-select>
