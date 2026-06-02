@@ -18,7 +18,7 @@ jobs:
     name: Build, Pack (Publish if requested)
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write   # needed to push the release tag when publishing
 
     steps:
       - name: Checkout repository
@@ -143,3 +143,22 @@ jobs:
             --api-key ${{ secrets.NUGET_API_KEY }} \
             --source https://api.nuget.org/v3/index.json \
             --skip-duplicate
+
+      # Tag the checked-out commit so each NuGet release maps to an exact revision.
+      # Only runs on a real publish (not a dry run) and is idempotent: a re-run that
+      # reuses the same version (same github.run_number) skips an already-existing tag.
+      - name: Tag released version
+        if: ${{ inputs.publish }}
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          TAG="v${VERSION}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --tags origin "refs/tags/${TAG}" >/dev/null 2>&1; then
+            echo "Tag ${TAG} already exists on origin; skipping."
+          else
+            git tag -a "${TAG}" -m "Release ${TAG}"
+            git push origin "${TAG}"
+            echo "Created and pushed tag ${TAG}"
+          fi
