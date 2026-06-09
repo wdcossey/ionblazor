@@ -55,15 +55,25 @@ public static class ServiceTools
         "every property with its type, default value and summary, plus any builder properties expanded " +
         "to their delegate signature and the fluent builder's public methods (e.g. ButtonsBuilder, " +
         "InputsBuilder). Use this to learn the exact API for IonAlertService.PresentAsync, " +
-        "IonToastService.PresentAsync, IonLoadingService.CreateAsync, etc. Service name must be " +
-        "exact PascalCase, e.g. 'IonAlertService'.")]
+        "IonToastService.PresentAsync, IonLoadingService.CreateAsync, etc. " +
+        "Pass the service name as 'serviceName' (the generic alias 'name' is also accepted). " +
+        "Service name must be exact PascalCase, e.g. 'IonAlertService'.")]
     public static string GetServiceMetadata(
-        [Description("Exact service name, e.g. 'IonAlertService', 'IonActionSheetService', 'IonToastService', 'IonLoadingService'.")]
-        string serviceName)
+        [Description("Exact service name, e.g. 'IonAlertService', 'IonActionSheetService', 'IonToastService', 'IonLoadingService'. Optional only because 'name' is accepted as an alias — supply exactly one.")]
+        string? serviceName = null,
+        [Description("Alias for 'serviceName'. Accepted so a uniform 'name' parameter works across all getter tools.")]
+        string? name = null)
     {
-        var meta = ServiceRegistry.GetMetadata(serviceName);
+        var resolved = string.IsNullOrWhiteSpace(serviceName) ? name : serviceName;
+        if (string.IsNullOrWhiteSpace(resolved))
+            return ToolErrors.MissingName(
+                "get_service_metadata", "serviceName", "list_services",
+                [("serviceName", serviceName), ("name", name)]);
+
+        var meta = ServiceRegistry.GetMetadata(resolved);
         if (meta is null)
-            return $"Service '{serviceName}' not found. Use ListServices to see the full inventory.";
+            return ToolErrors.NotFound(
+                "get_service_metadata", "service", "serviceName", resolved, "list_services");
 
         var sb = new StringBuilder();
         sb.Append("# ").Append(meta.Name).Append(" — ").AppendLine(meta.Kind.ToString());
