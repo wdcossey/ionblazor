@@ -238,6 +238,43 @@ public class IonModalTests : IonTestContext
         invocation.Arguments[1].Should().Be(0.5d);
     }
 
+    // Sheet breakpoints are surfaced as data attributes that the IonBlazor JS initializer applies
+    // to the element's JS properties before Stencil loads it (they cannot be set via interop after
+    // render — Ionic computes its sorted breakpoints once, in componentDidLoad).
+
+    [Fact]
+    public void Breakpoints_RenderAsDataAttributes_ForInitializer()
+    {
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>")
+            .Add(p => p.Breakpoints, [0, 0.25, 0.5, 1])
+            .Add(p => p.InitialBreakpoint, 0.25));
+
+        cut.Markup.Should().Contain("""data-ibz-breakpoints="[0,0.25,0.5,1]" """);
+        cut.Markup.Should().Contain("""data-ibz-initial-breakpoint="0.25" """);
+    }
+
+    [Fact]
+    public void Breakpoints_DataAttributes_AbsentWhenNoneSet()
+    {
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>"));
+
+        cut.Markup.Should().NotContain("data-ibz-breakpoints");
+        cut.Markup.Should().NotContain("data-ibz-initial-breakpoint");
+    }
+
+    [Fact]
+    public void InitialBreakpoint_DataAttribute_AbsentWhenBreakpointsNotSet()
+    {
+        // initialBreakpoint is meaningless without breakpoints, so it is not emitted on its own.
+        var cut = Render<IonModal>(parameters => parameters
+            .AddChildContent("<p>Modal content</p>")
+            .Add(p => p.InitialBreakpoint, 0.25));
+
+        cut.Markup.Should().NotContain("data-ibz-initial-breakpoint");
+    }
+
     // ---------------------------------------------------------------------------
     // Drag events (sheet / card modal gestures)
     // ---------------------------------------------------------------------------

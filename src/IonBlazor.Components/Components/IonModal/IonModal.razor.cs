@@ -1,12 +1,8 @@
-﻿using System.Diagnostics;
-
-namespace IonBlazor.Components;
+﻿namespace IonBlazor.Components;
 
 public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
 {
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
-
-    private readonly string _id = $"ibz-modal-{Stopwatch.GetTimestamp():x}";
 
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didDismissReference;
     private readonly DotNetObjectReference<IonicEventCallback<JsonObject?>> _didPresentReference;
@@ -24,17 +20,17 @@ public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
 
     internal override string JsImportName => nameof(IonModal);
 
-    private string Script => Breakpoints?.Length > 0 ?
-                              $$"""
-                              <script>
-                                var modal = document.querySelector(`[ibz-id="{{_id}}"]`);
-                                if (modal) {
-                                    modal.initialBreakpoint = {{InitialBreakpoint}};
-                                    modal.breakpoints = [{{string.Join(",", Breakpoints)}}];
-                                }
+    // `breakpoints` (number[]) and `initialBreakpoint` are JS properties on ion-modal, and the
+    // internal sorted breakpoints array is computed only once, in the component's componentDidLoad.
+    // Blazor's async JS interop runs after that, so we surface the values as plain data attributes
+    // that a host-side observer copies onto the real JS properties before Stencil loads the element.
+    private string? BreakpointsJson =>
+        Breakpoints?.Length > 0 ? JsonSerializer.Serialize(Breakpoints) : null;
 
-                              </script>
-                              """ : "";
+    private string? InitialBreakpointAttr =>
+        Breakpoints?.Length > 0 && InitialBreakpoint is { } value
+            ? value.ToString(System.Globalization.CultureInfo.InvariantCulture)
+            : null;
 
     //private readonly DotNetObjectReference<IonicEventCallbackResult<JsonObject?, bool>>? _canDismissCallbackReference;
     //private Func<Task<bool>>? _canDismissCallback;
@@ -454,11 +450,10 @@ public sealed partial class IonModal : IonJsContentComponent, IIonModeComponent
 
         await JsComponent.InvokeVoidAsync("canDismissCallback", IonElement, _canDismissReference);
 
-        if (Breakpoints?.Length > 0)
-        {
-            //await JsComponent.InvokeVoidAsync("initialBreakpoint", _self, InitialBreakpoint);
-            //await JsComponent.InvokeVoidAsync("breakpoints", _self, Breakpoints);
-        }
+        // Note: sheet `breakpoints` / `initialBreakpoint` are applied before Stencil loads the
+        // element by the IonBlazor JS initializer (see Typescript/IonBlazor.lib.module.ts), reading
+        // the data attributes rendered by this component. They cannot be set here because Ionic
+        // computes its sorted breakpoints once, in componentDidLoad, before this interop runs.
 
         if (string.IsNullOrWhiteSpace(EnterAnimation) is false)
             await JsComponent.InvokeVoidAsync("enterAnimation", IonElement, EnterAnimation);
