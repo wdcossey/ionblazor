@@ -1,2 +1,1 @@
-﻿<ion-modal animated="true" ibz-id><p>Modal content</p></ion-modal>
-
+﻿<ion-modal animated="true"><p>Modal content</p></ion-modal>

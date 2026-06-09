@@ -86,6 +86,30 @@ await JsComponent.InvokeVoidAsync("present", IonElement);
 await JsComponent.InvokeAsync<bool>("dismiss", IonElement);
 ```
 
+## Blazor JS Initializer (sheet-modal breakpoints)
+
+`IonModal`'s `breakpoints` (`number[]`) and `initialBreakpoint` (`number`) are JS **properties** on
+`ion-modal`, not HTML attributes — `breakpoints` has no observed attribute, and Ionic computes its
+internal **sorted** breakpoints array exactly once in `componentDidLoad` (it is not reactive).
+Blazor's JS interop from `OnAfterRenderAsync` runs *after* that one-shot computation (and
+asynchronously over IPC in Server/Hybrid), so assigning the property from .NET is always too late —
+the sheet drag gesture then reduces over an empty array. **Do not "fix" this by moving the interop
+call around; it cannot win that race.**
+
+The working approach: `IonModal` renders the values as `data-ibz-breakpoints` /
+`data-ibz-initial-breakpoint` data attributes (which Blazor *can* emit at element-creation time). A
+**Blazor JS initializer** — `src/IonBlazor.StaticAssets/Typescript/IonBlazor.lib.module.ts`,
+compiled to `wwwroot/IonBlazor.lib.module.js` — copies them onto the real JS properties in a
+microtask, which is guaranteed to run ahead of Stencil's `requestAnimationFrame`-scheduled
+`componentDidLoad`. It covers both prerendered markup (an initial `querySelectorAll` scan) and
+interactively-rendered modals (a `MutationObserver`). Verified end-to-end in MAUI Hybrid (WebView2);
+the microtask-beats-rAF ordering is spec-guaranteed across engines, so Server/WASM follow the same
+path.
+
+Any `*.lib.module.js` in the RCL `wwwroot` is auto-discovered and run by Blazor before the app boots
+— no `index.html`/registration involvement. The `data-ibz-*` attributes are removed by the
+initializer after it applies them, so they never linger in the live DOM.
+
 ## Two-Way Binding (`@bind-Value` / `@bind-Checked`)
 
 Several form-style components support Blazor `@bind`. The pattern is a parallel `…Changed` /
