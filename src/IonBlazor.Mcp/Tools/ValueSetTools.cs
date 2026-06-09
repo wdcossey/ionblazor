@@ -46,14 +46,25 @@ public static class ValueSetTools
         "Returns every constant in a single IonBlazor value-set class — constant name, the literal string " +
         "value it maps to, and the XML doc summary where present. Use this for the exact options behind a " +
         "parameter like IonInput.Type (IonInputType), IonApp.Mode (IonMode), or IonRippleEffect.Type " +
-        "(IonRippleEffectType). Value-set name must be exact PascalCase, e.g. 'IonInputType'.")]
+        "(IonRippleEffectType). " +
+        "Pass the value-set name as 'valueSetName' (the generic alias 'name' is also accepted). " +
+        "Value-set name must be exact PascalCase, e.g. 'IonInputType'.")]
     public static string GetValueSet(
-        [Description("Exact value-set class name, e.g. 'IonMode', 'IonColor', 'IonInputType', 'IonRippleEffectType'.")]
-        string name)
+        [Description("Exact value-set class name, e.g. 'IonMode', 'IonColor', 'IonInputType', 'IonRippleEffectType'. Optional only because 'name' is accepted as an alias — supply exactly one.")]
+        string? valueSetName = null,
+        [Description("Alias for 'valueSetName'. Accepted so a uniform 'name' parameter works across all getter tools.")]
+        string? name = null)
     {
-        var meta = ValueSetRegistry.GetMetadata(name);
+        var resolved = string.IsNullOrWhiteSpace(valueSetName) ? name : valueSetName;
+        if (string.IsNullOrWhiteSpace(resolved))
+            return ToolErrors.MissingName(
+                "get_value_set", "valueSetName", "list_value_sets",
+                [("valueSetName", valueSetName), ("name", name)]);
+
+        var meta = ValueSetRegistry.GetMetadata(resolved);
         if (meta is null)
-            return $"Value set '{name}' not found. Use ListValueSets to see the full inventory.";
+            return ToolErrors.NotFound(
+                "get_value_set", "value set", "valueSetName", resolved, "list_value_sets");
 
         var sb = new StringBuilder();
         sb.Append("# ").AppendLine(meta.Name);

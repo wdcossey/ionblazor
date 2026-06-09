@@ -96,15 +96,25 @@ public static class ComponentTools
         "JsImportName, interfaces, [Parameter] properties (with types and summaries), " +
         "[CascadingParameter] properties, EventCallback events, two-way @bind support " +
         "(value + parallel changed/input callbacks), and JS interop methods. " +
+        "Pass the component name as 'componentName' (the generic alias 'name' is also accepted). " +
         "Component name must be exact PascalCase (e.g. 'IonInput'). " +
         "Generic components use angle-bracket form (e.g. 'IonSelect<TValue>').")]
     public static string GetComponentMetadata(
-        [Description("Exact component name, e.g. 'IonButton', 'IonInput', 'IonSelect<TValue>'.")]
-        string componentName)
+        [Description("Exact component name, e.g. 'IonButton', 'IonInput', 'IonSelect<TValue>'. Optional only because 'name' is accepted as an alias — supply exactly one.")]
+        string? componentName = null,
+        [Description("Alias for 'componentName'. Accepted so a uniform 'name' parameter works across all getter tools.")]
+        string? name = null)
     {
-        var meta = ComponentRegistry.GetMetadata(componentName);
+        var resolved = string.IsNullOrWhiteSpace(componentName) ? name : componentName;
+        if (string.IsNullOrWhiteSpace(resolved))
+            return ToolErrors.MissingName(
+                "get_component_metadata", "componentName", "list_components",
+                [("componentName", componentName), ("name", name)]);
+
+        var meta = ComponentRegistry.GetMetadata(resolved);
         if (meta is null)
-            return $"Component '{componentName}' not found. Use ListComponents to see the full inventory.";
+            return ToolErrors.NotFound(
+                "get_component_metadata", "component", "componentName", resolved, "list_components");
 
         var sb = new StringBuilder();
         sb.Append("# ").AppendLine(meta.Name);
