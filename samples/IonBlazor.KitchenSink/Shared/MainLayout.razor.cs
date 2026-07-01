@@ -75,15 +75,12 @@ public partial class MainLayout
         StateHasChanged();
     }
 
-#if WINDOWS
     private async Task SetAccentColor(Color color)
     {
         color.ToRgb(out var red, out var green, out var blue);
         await JsRuntime.InvokeVoidAsync("document.body.style.setProperty", "--ion-color-primary", color.ToArgbHex());
         await JsRuntime.InvokeVoidAsync("document.body.style.setProperty", "--ion-color-primary-rgb", $"{red}, {green}, {blue}");
     }
-#endif
-
 
     private async Task ToggleDarkMode()
     {
