@@ -347,8 +347,7 @@ public sealed partial class IonInput : IonJsContentComponent, IIonColorComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionChange", _ionChangeReference),
             IonEvent.Set("ionFocus", _ionFocusReference),

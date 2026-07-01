@@ -112,11 +112,10 @@ public sealed partial class IonReorderGroup : IonJsContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
-            IonEvent.Set("ionItemReorder",  _ionItemReorderReference),
-            IonEvent.Set("ionReorderEnd",   _ionReorderEndReference),
-            IonEvent.Set("ionReorderMove",  _ionReorderMoveReference),
+        await AttachIonListenersAsync(
+            IonEvent.Set("ionItemReorder", _ionItemReorderReference),
+            IonEvent.Set("ionReorderEnd", _ionReorderEndReference),
+            IonEvent.Set("ionReorderMove", _ionReorderMoveReference),
             IonEvent.Set("ionReorderStart", _ionReorderStartReference));
     }
 

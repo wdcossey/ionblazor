@@ -40,7 +40,7 @@ public sealed partial class IonBackdrop : IonComponent, IIonComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionBackdropTap", _ionBackdropTapReference));
+        await AttachIonListenersAsync(IonEvent.Set("ionBackdropTap", _ionBackdropTapReference));
     }
 
     public override async ValueTask DisposeAsync()

@@ -51,7 +51,7 @@ public sealed partial class IonInfiniteScroll : IonJsContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionInfinite", _ionInfiniteReference));
+        await AttachIonListenersAsync(IonEvent.Set("ionInfinite", _ionInfiniteReference));
     }
 
     public override async ValueTask DisposeAsync()

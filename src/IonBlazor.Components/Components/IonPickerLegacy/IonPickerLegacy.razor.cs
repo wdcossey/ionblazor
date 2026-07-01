@@ -223,8 +223,7 @@ public partial class IonPickerLegacy : IonJsComponent, IIonModeComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionPickerDidDismiss", _ionPickerDidDismissReference),

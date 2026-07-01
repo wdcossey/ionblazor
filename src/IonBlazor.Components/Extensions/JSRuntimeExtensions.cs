@@ -11,8 +11,30 @@ internal static class JSRuntimeExtensions
 
     internal static async ValueTask AttachIonListenersAsync(this IJSRuntime jsRuntime, ElementReference reference, params IonEvent[]? args)
     {
-        await using IJSObjectReference jsModule = await jsRuntime.ImportAsync("common");
-        await jsModule.InvokeVoidAsync("attachListeners", args, reference).AsTask();
+        try
+        {
+            await using IJSObjectReference jsModule = await jsRuntime.ImportAsync("common");
+            await jsModule.InvokeVoidAsync("attachListeners", args, reference).AsTask();
+        }
+        catch (Exception ex) when (ex is ObjectDisposedException or JSDisconnectedException or OperationCanceledException)
+        {
+            // The component was disposed while the listeners were being attached — common on
+            // navigation, where the `import` await yields long enough for disposal to run and
+            // dispose the DotNetObjectReferences before they can be serialized. Nothing to attach.
+        }
+    }
+
+    internal static async ValueTask DetachIonListenersAsync(this IJSRuntime jsRuntime, ElementReference reference)
+    {
+        try
+        {
+            await using IJSObjectReference jsModule = await jsRuntime.ImportAsync("common");
+            await jsModule.InvokeVoidAsync("detachListeners", reference).AsTask();
+        }
+        catch (Exception ex) when (ex is ObjectDisposedException or JSDisconnectedException or OperationCanceledException)
+        {
+            // Runtime already torn down; there is nothing left to detach.
+        }
     }
 
     internal static async ValueTask InvokeVoidAsync(this Lazy<Task<IJSObjectReference>>? lazyRef, string identifier, params object?[]? args)

@@ -152,8 +152,7 @@ public sealed partial class IonRefresher: IonJsContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("ionPull", _ionPullReference),
             IonEvent.Set("ionPullEnd", _ionPullEndReference),
             IonEvent.Set("ionPullStart", _ionPullStartReference),

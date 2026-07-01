@@ -246,15 +246,13 @@ public sealed partial class IonRange : IonJsContentComponent, IIonColorComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, new []
-        {
-            IonEvent.Set("ionBlur"         , _ionBlurReference         ),
-            IonEvent.Set("ionChange"       , _ionChangeReference       ),
-            IonEvent.Set("ionFocus"        , _ionFocusReference        ),
-            IonEvent.Set("ionInput"        , _ionInputReference        ),
-            IonEvent.Set("ionKnobMoveEnd"  , _ionKnobMoveEndReference  ),
-            IonEvent.Set("ionKnobMoveStart", _ionKnobMoveStartReference)
-        });
+        await AttachIonListenersAsync(
+            IonEvent.Set("ionBlur", _ionBlurReference),
+            IonEvent.Set("ionChange", _ionChangeReference),
+            IonEvent.Set("ionFocus", _ionFocusReference),
+            IonEvent.Set("ionInput", _ionInputReference),
+            IonEvent.Set("ionKnobMoveEnd", _ionKnobMoveEndReference ),
+            IonEvent.Set("ionKnobMoveStart", _ionKnobMoveStartReference));
 
         //await (await _lazyIonComponent.Value).InvokeVoidAsync("pinFormatter", _self, _pinFormatterReference);
 

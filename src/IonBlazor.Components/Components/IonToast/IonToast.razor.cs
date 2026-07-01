@@ -233,8 +233,7 @@ public sealed partial class IonToast : IonJsComponent, IIonColorComponent, IIonM
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionToastDidDismiss", _ionToastDidDismissReference),

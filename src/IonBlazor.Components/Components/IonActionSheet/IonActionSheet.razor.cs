@@ -196,19 +196,17 @@ public sealed partial class IonActionSheet<TButtonData> : IonJsComponent, IIonMo
                 });
             });
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
+            IonEvent.Set("didDismiss", _didDismissReference),
+            IonEvent.Set("didPresent", _didPresentReference),
 
-            IonEvent.Set("didDismiss", _didDismissReference ),
-            IonEvent.Set("didPresent", _didPresentReference ),
+            IonEvent.Set("ionActionSheetDidDismiss", _ionActionSheetDidDismissReference),
+            IonEvent.Set("ionActionSheetDidPresent", _ionActionSheetDidPresentReference),
+            IonEvent.Set("ionActionSheetWillDismiss", _ionActionSheetWillDismissReference),
+            IonEvent.Set("ionActionSheetWillPresent", _ionActionSheetWillPresentReference),
 
-            IonEvent.Set("ionActionSheetDidDismiss", _ionActionSheetDidDismissReference ),
-            IonEvent.Set("ionActionSheetDidPresent", _ionActionSheetDidPresentReference ),
-            IonEvent.Set("ionActionSheetWillDismiss", _ionActionSheetWillDismissReference ),
-            IonEvent.Set("ionActionSheetWillPresent", _ionActionSheetWillPresentReference ),
-
-            IonEvent.Set("willDismiss", _willDismissReference ),
-            IonEvent.Set("willPresent", _willPresentReference )
+            IonEvent.Set("willDismiss", _willDismissReference),
+            IonEvent.Set("willPresent", _willPresentReference)
         );
 
         await JsComponent.InvokeVoidAsync("addButtons", IonElement, _buttons, _buttonHandlerReference);

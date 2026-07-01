@@ -8,9 +8,15 @@ public abstract class IonTestContext : BunitContext
 {
     protected IonTestContext()
     {
-        JSInterop
-            .SetupModule("./_content/IonBlazor/common.js")
+        BunitJSModuleInterop commonModule = JSInterop
+            .SetupModule("./_content/IonBlazor/common.js");
+
+        commonModule
             .SetupVoid("attachListeners", _ => true)
+            .SetVoidResult();
+
+        commonModule
+            .SetupVoid("detachListeners", _ => true)
             .SetVoidResult();
     }
 

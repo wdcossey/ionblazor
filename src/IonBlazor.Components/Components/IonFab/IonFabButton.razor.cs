@@ -132,8 +132,7 @@ public sealed partial class IonFabButton : IonContentComponent, IIonModeComponen
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionFocus", _ionFocusReference)
         );

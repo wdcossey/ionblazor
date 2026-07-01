@@ -64,8 +64,7 @@ public sealed partial class IonTabs : IonJsContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("ionTabsDidChange", _ionTabsDidChangeReference),
             IonEvent.Set("ionTabsWillChange", _ionTabsWillChangeReference)
         );

@@ -213,8 +213,7 @@ public sealed partial class IonLoading: IonJsContentComponent, IIonLoading, IIon
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("didDismiss", _didDismissReference),
             IonEvent.Set("didPresent", _didPresentReference),
             IonEvent.Set("ionLoadingDidDismiss", _ionLoadingDidDismissReference),
