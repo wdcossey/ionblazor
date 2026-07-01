@@ -146,12 +146,10 @@ public sealed partial class IonToggle : IonJsContentComponent, IIonModeComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, new []
-        {
-            IonEvent.Set("ionBlur"  , _ionBlurReference  ),
+        await AttachIonListenersAsync(
+            IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionChange", _ionChangeReference),
-            IonEvent.Set("ionFocus" , _ionFocusReference ),
-        });
+            IonEvent.Set("ionFocus", _ionFocusReference ));
     }
 
     public override async ValueTask DisposeAsync()

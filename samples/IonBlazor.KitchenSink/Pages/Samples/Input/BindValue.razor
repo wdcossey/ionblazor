@@ -1,0 +1,45 @@
+@namespace IonicTest.Pages.Samples.Input
+
+<IonList>
+  <IonItem>
+    <IonInput Label="Two-way bind (bind-Value, commits on change)"
+              Placeholder="Type then blur / press enter"
+              @bind-Value="_committedValue"></IonInput>
+  </IonItem>
+
+  <IonItem>
+    <IonInput Label="Live bind (bind-Value:event=ValueInput)"
+              Placeholder="Updates on every keystroke"
+              @bind-Value="_liveValue"
+              @bind-Value:event="ValueInput"></IonInput>
+  </IonItem>
+
+  <IonItem>
+    <IonLabel>
+      <p>Committed value: <strong>@_committedValue</strong></p>
+      <p>Live value: <strong>@_liveValue</strong></p>
+    </IonLabel>
+  </IonItem>
+
+  <IonItem>
+    <IonButton @onclick="SetFromCode">Set both from code</IonButton>
+    <IonButton Fill="@IonButtonFill.Outline" @onclick="Clear">Clear</IonButton>
+  </IonItem>
+</IonList>
+
+@code {
+    private string? _committedValue = "Initial value";
+    private string? _liveValue = string.Empty;
+
+    private void SetFromCode()
+    {
+        _committedValue = "Set from C#";
+        _liveValue = "Set from C#";
+    }
+
+    private void Clear()
+    {
+        _committedValue = string.Empty;
+        _liveValue = string.Empty;
+    }
+}

@@ -86,8 +86,7 @@ public sealed partial class IonContent : IonJsContentComponent, IIonColorCompone
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("ionScroll", _ionScrollReference),
             IonEvent.Set("ionScrollEnd", _ionScrollEndReference),
             IonEvent.Set("ionScrollStart", _ionScrollStartReference)

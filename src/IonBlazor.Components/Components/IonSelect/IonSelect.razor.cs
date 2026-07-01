@@ -237,8 +237,7 @@ public partial class IonSelect<TValue> : IonJsContentComponent, IIonColorCompone
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionCancel", _ionCancelReference),
             IonEvent.Set("ionChange", _ionChangeReference),

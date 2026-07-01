@@ -107,8 +107,7 @@ public sealed partial class IonMenu: IonJsContentComponent, IIonModeComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("ionDidClose", _ionDidCloseReference),
             IonEvent.Set("ionDidOpen", _ionDidOpenReference),
             IonEvent.Set("ionWillClose", _ionWillCloseReference),

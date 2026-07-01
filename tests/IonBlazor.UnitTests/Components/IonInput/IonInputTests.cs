@@ -175,6 +175,24 @@ public class IonInputTests : IonTestContext
     }
 
     // ---------------------------------------------------------------------------
+    // Disposal
+    // ---------------------------------------------------------------------------
+
+    [Fact]
+    public async Task Dispose_DetachesListeners_FromElement()
+    {
+        var cut = Render<IonInput>();
+        ElementReference element = cut.Instance.IonElement;
+
+        await cut.Instance.DisposeAsync();
+
+        JSRuntimeInvocation invocation = JSInterop.Invocations["detachListeners"].Single();
+        invocation.Arguments[0]
+            .Should().BeAssignableTo<ElementReference>()
+            .Which.Should().Be(element);
+    }
+
+    // ---------------------------------------------------------------------------
     // JsImportName
     // ---------------------------------------------------------------------------
 

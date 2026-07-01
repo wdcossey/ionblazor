@@ -41,7 +41,7 @@ public sealed partial class IonItemOptions : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionSwipe", _ionSwipeReference));
+        await AttachIonListenersAsync(IonEvent.Set("ionSwipe", _ionSwipeReference));
     }
 
     public override async ValueTask DisposeAsync()

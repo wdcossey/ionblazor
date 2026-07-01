@@ -47,8 +47,7 @@ public sealed partial class IonImg : IonComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("ionError", _ionErrorReference),
             IonEvent.Set("ionImgDidLoad", _ionImgDidLoadReference),
             IonEvent.Set("ionImgWillLoad", _ionImgWillLoadReference)

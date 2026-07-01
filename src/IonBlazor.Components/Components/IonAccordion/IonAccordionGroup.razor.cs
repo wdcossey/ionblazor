@@ -78,7 +78,7 @@ public sealed partial class IonAccordionGroup : IonJsContentComponent, IIonModeC
         //Multiple is not true ? result?.FirstOrDefault() : result;
         //await SetValueAsync(Value);
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionChange", _ionChangeObjectReference));
+        await AttachIonListenersAsync(IonEvent.Set("ionChange", _ionChangeObjectReference));
     }
 
     public override async ValueTask DisposeAsync()

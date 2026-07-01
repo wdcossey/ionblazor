@@ -65,7 +65,7 @@ public sealed partial class IonRadioGroup : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionChange", _ionChangeReference));
+        await AttachIonListenersAsync(IonEvent.Set("ionChange", _ionChangeReference));
     }
 
     public override async ValueTask DisposeAsync()

@@ -47,7 +47,7 @@ public sealed partial class IonSplitPane : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionSplitPaneVisible", _ionSplitPaneVisibleReference));
+        await AttachIonListenersAsync(IonEvent.Set("ionSplitPaneVisible", _ionSplitPaneVisibleReference));
     }
 
     public override async ValueTask DisposeAsync()

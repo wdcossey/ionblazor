@@ -75,7 +75,7 @@ public sealed partial class IonItemSliding : IonJsContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionDrag", _ionDragReference));
+        await AttachIonListenersAsync(IonEvent.Set("ionDrag", _ionDragReference));
     }
 
     public override async ValueTask DisposeAsync()

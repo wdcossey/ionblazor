@@ -150,8 +150,7 @@ public sealed partial class IonCheckbox : IonContentComponent, IIonModeComponent
             return;
 
 
-        await this.AttachIonListenersAsync(
-            IonElement,
+        await AttachIonListenersAsync(
             IonEvent.Set("ionBlur", _ionBlurReference),
             IonEvent.Set("ionChange", _ionChangeReference),
             IonEvent.Set("ionFocus", _ionFocusReference)

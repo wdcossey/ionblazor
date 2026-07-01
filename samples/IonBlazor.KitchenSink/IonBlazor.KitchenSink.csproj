@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>;</TargetFrameworks>
+    <TargetFrameworks>;net10.0-android</TargetFrameworks>
     <!--<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>-->
     <!--<TargetFrameworks>;net10.0-android;net01.0-maccatalyst</TargetFrameworks>-->
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
@@ -21,6 +21,9 @@
     <!-- App Identifier -->
     <ApplicationId>app.ionblazor.kitchensink</ApplicationId>
     <ApplicationIdGuid>050C294C-9CBF-44E0-9B5A-4122C884BCD3</ApplicationIdGuid>
+
+    <!-- Android -->
+    <AndroidUseFastDeployment>false</AndroidUseFastDeployment>
 
     <!-- Versions -->
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

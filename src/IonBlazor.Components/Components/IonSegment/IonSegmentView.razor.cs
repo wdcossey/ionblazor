@@ -47,7 +47,7 @@ public partial class IonSegmentView : IonContentComponent
         if (!firstRender)
             return;
 
-        await this.AttachIonListenersAsync(IonElement, IonEvent.Set("ionSegmentViewScroll", _ionSegmentViewScroll ));
+        await AttachIonListenersAsync(IonEvent.Set("ionSegmentViewScroll", _ionSegmentViewScroll ));
     }
 
     public override async ValueTask DisposeAsync()
